@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>OEM Visit Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <style>
+    :root {
+      --bg: #f2f0eb;
+      --surface: #ffffff;
+      --navy: #0f1923;
+      --navy2: #1a2c3d;
+      --amber: #f59e0b;
+      --amber-d: #d97706;
+      --green: #10b981;
+      --red: #ef4444;
+      --muted: #6b7280;
+      --border: #e2dfd7;
+      --text: #0f1923;
+      --soft: #4b5563;
+      --shadow: 0 2px 8px rgba(0,0,0,0.07);
+      --r: 12px;
+      --nav: 64px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+    body{font-family:'Syne',sans-serif;background:var(--bg);color:var(--text);max-width:480px;margin:0 auto;min-height:100vh}
+    .screen{display:none;min-height:100vh;padding-bottom:calc(var(--nav) + 20px)}
+    .screen.active{display:block}
+
+    /* HEADER */
+    .hdr{background:var(--navy);color:#fff;padding:14px 18px 13px;position:sticky;top:0;z-index:20}
+    .hdr-row{display:flex;align-items:center;justify-content:space-between}
+    .hdr h1{font-size:17px;font-weight:700;letter-spacing:-.3px}
+    .hdr .sub{font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,.45);margin-top:2px}
+    .hdr-acts{display:flex;gap:6px}
+    .icon-btn{width:36px;height:36px;background:rgba(255,255,255,.1);border:none;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#fff;flex-shrink:0}
+    .back-btn{background:none;border:none;color:rgba(255,255,255,.8);display:flex;align-items:center;gap:5px;font-family:'Syne',sans-serif;font-size:14px;font-weight:600;cursor:pointer;padding:0}
+
+    /* BOTTOM NAV */
+    .bnav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;height:var(--nav);background:var(--navy);display:flex;align-items:center;z-index:100}
+    .nitem{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:rgba(255,255,255,.38);cursor:pointer;padding:6px 0;transition:color .15s}
+    .nitem.active{color:var(--amber)}
+    .nitem svg{width:22px;height:22px}
+    .nitem span{font-size:10px;font-weight:700;letter-spacing:.5px}
+
+    /* CARDS & SECTIONS */
+    .card{background:var(--surface);border-radius:var(--r);padding:15px;box-shadow:var(--shadow)}
+    .sec{padding:14px 15px 0}
+    .sec-lbl{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:9px}
+
+    /* BUTTONS */
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:13px 20px;border-radius:10px;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;border:none;cursor:pointer;transition:all .15s;letter-spacing:.2px}
+    .btn-primary{background:var(--amber);color:var(--navy);width:100%}
+    .btn-primary:active{background:var(--amber-d);transform:scale(.98)}
+    .btn-ghost{background:transparent;color:var(--soft);padding:8px 2px;font-size:13px}
+    .btn-danger{background:#fee2e2;color:var(--red);width:100%}
+    .fab{position:fixed;bottom:calc(var(--nav) + 14px);right:18px;width:54px;height:54px;background:var(--amber);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 18px rgba(245,158,11,.38);cursor:pointer;border:none;z-index:50}
+    .fab svg{width:24px;height:24px;color:var(--navy)}
+
+    /* FORMS */
+    .fg{margin-bottom:15px}
+    .flbl{display:block;font-size:11px;font-weight:700;letter-spacing:.5px;color:var(--soft);margin-bottom:6px;text-transform:uppercase}
+    .finput,.fsel,.fta{width:100%;padding:12px 14px;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;font-family:'Syne',sans-serif;font-size:15px;color:var(--text);outline:none;transition:border-color .15s;-webkit-appearance:none;appearance:none}
+    .finput:focus,.fsel:focus,.fta:focus{border-color:var(--amber)}
+    .fta{min-height:95px;resize:vertical;line-height:1.55}
+    .fsel{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px}
+
+    /* TYPE TOGGLE */
+    .ttog{display:flex;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:4px;gap:4px}
+    .ttog-btn{flex:1;padding:10px;border:none;border-radius:8px;background:transparent;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--muted);cursor:pointer;transition:all .15s}
+    .ttog-btn.active{background:var(--navy);color:#fff}
+
+    /* VOICE */
+    .vwrap{position:relative}
+    .vwrap .fta{padding-right:52px}
+    .mic-btn{position:absolute;right:10px;top:10px;width:34px;height:34px;background:var(--navy);border:none;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer}
+    .mic-btn.on{background:var(--red);animation:pulse 1s infinite}
+    .mic-btn svg{width:16px;height:16px;color:#fff}
+    @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,.4)}50%{box-shadow:0 0 0 8px rgba(239,68,68,0)}}
+
+    /* TOPICS */
+    .tgrid{display:flex;flex-direction:column;gap:8px}
+    .titem{display:flex;align-items:center;gap:10px;padding:11px 14px;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;cursor:pointer;transition:all .15s;user-select:none}
+    .titem.chk{background:#fff8eb;border-color:var(--amber)}
+    .tbox{width:20px;height:20px;border-radius:6px;border:2px solid var(--border);background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s}
+    .titem.chk .tbox{background:var(--amber);border-color:var(--amber)}
+    .tbox svg{width:11px;height:11px;color:#fff;display:none}
+    .titem.chk .tbox svg{display:block}
+    .ttxt{font-size:14px;font-weight:600;flex:1}
+
+    /* ACTION ITEM ROWS */
+    .ai-row{display:flex;gap:7px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--border)}
+    .ai-row:last-child{border-bottom:none}
+    .astat{width:22px;height:22px;border-radius:50%;border:2px solid var(--border);background:#fff;cursor:pointer;flex-shrink:0;margin-top:3px;transition:all .15s}
+    .astat.done{background:var(--green);border-color:var(--green)}
+    .ainfo{flex:1}
+    .adesc{font-size:14px;font-weight:600;line-height:1.4}
+    .adesc.done{text-decoration:line-through;color:var(--muted)}
+    .ameta{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);margin-top:3px}
+    .overdue{color:var(--red)!important}
+
+    /* AI FORM ROW */
+    .aiform{display:flex;gap:7px;margin-bottom:8px;align-items:flex-start}
+    .aiform .finput{padding:11px 12px;font-size:14px}
+    .aidate{width:136px;flex-shrink:0;font-size:13px!important}
+    .rm-btn{width:40px;height:44px;background:#fee2e2;border:none;border-radius:10px;color:var(--red);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+
+    /* VISIT CARD */
+    .vcard{background:var(--surface);border-radius:var(--r);padding:14px 15px;box-shadow:var(--shadow);margin-bottom:9px;cursor:pointer;active:opacity:.8;position:relative}
+    .vcard-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:5px}
+    .vcard-name{font-size:15px;font-weight:700}
+    .badge{font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px}
+    .bv{background:#dbeafe;color:#1d4ed8}
+    .bc{background:#d1fae5;color:#065f46}
+    .vcard-meta{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted)}
+    .vcard-topics{font-size:12px;color:var(--soft);margin-top:5px;line-height:1.5}
+
+    /* OEM ITEM */
+    .oitem{display:flex;align-items:center;gap:12px;padding:13px 15px;background:var(--surface);border-radius:var(--r);box-shadow:var(--shadow);margin-bottom:9px;cursor:pointer}
+    .oavatar{width:42px;height:42px;background:var(--navy);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;color:var(--amber);flex-shrink:0;font-family:'DM Mono',monospace;letter-spacing:-.5px}
+    .oinfo{flex:1;min-width:0}
+    .oname{font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .ometa{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);margin-top:2px}
+
+    /* BANNER */
+    .banner{margin:10px 15px;padding:12px 14px;background:#fff8eb;border:1.5px solid var(--amber);border-radius:10px}
+    .bnr-ttl{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--amber-d);margin-bottom:8px}
+    .bnr-item{display:flex;align-items:center;gap:9px;padding:7px 0;border-bottom:1px solid rgba(245,158,11,.18)}
+    .bnr-item:last-child{border-bottom:none;padding-bottom:0}
+
+    /* STATS */
+    .stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px;padding:12px 15px}
+    .scard{background:var(--surface);border-radius:10px;padding:12px 10px;text-align:center;box-shadow:var(--shadow)}
+    .snum{font-family:'DM Mono',monospace;font-size:24px;font-weight:500;color:var(--navy);line-height:1}
+    .slbl{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);margin-top:4px}
+
+    /* SEARCH */
+    .swrap{padding:12px 15px 0;position:relative}
+    .swrap svg{position:absolute;left:27px;top:22px;width:16px;height:16px;color:var(--muted)}
+    .sinput{width:100%;padding:11px 14px 11px 38px;background:var(--surface);border:1.5px solid var(--border);border-radius:10px;font-family:'Syne',sans-serif;font-size:14px;color:var(--text);outline:none}
+    .sinput:focus{border-color:var(--amber)}
+
+    /* DETAIL */
+    .dtl-sec{padding:10px 15px}
+    .dtl-lbl{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:7px}
+    .dtl-box{background:var(--surface);border-radius:10px;padding:13px;font-size:14px;line-height:1.6;box-shadow:var(--shadow)}
+    .tags{display:flex;flex-wrap:wrap;gap:6px}
+    .tag{padding:4px 10px;background:#fff8eb;border:1px solid var(--amber);border-radius:20px;font-size:12px;font-weight:600;color:var(--navy)}
+
+    /* EMPTY */
+    .empty{text-align:center;padding:44px 24px;color:var(--muted)}
+    .empty .ei{font-size:38px;margin-bottom:10px}
+    .empty h3{font-size:15px;font-weight:700;margin-bottom:5px;color:var(--soft)}
+    .empty p{font-size:13px;line-height:1.5}
+
+    /* TOAST */
+    .toast{position:fixed;bottom:calc(var(--nav) + 12px);left:50%;transform:translateX(-50%) translateY(80px);background:var(--navy);color:#fff;padding:11px 20px;border-radius:50px;font-size:13px;font-weight:700;z-index:9999;transition:transform .25s;white-space:nowrap;pointer-events:none}
+    .toast.show{transform:translateX(-50%) translateY(0)}
+
+    /* MISC */
+    .p15{padding:15px}
+    .mono{font-family:'DM Mono',monospace}
+  </style>
+</head>
+<body>
+
+<!-- ======= HOME ======= -->
+<div id="screen-home" class="screen active">
+  <div class="hdr">
+    <div class="hdr-row">
+      <div>
+        <h1>Visit Tracker</h1>
+        <div class="sub" id="home-date"></div>
+      </div>
+      <div class="hdr-acts">
+        <button class="icon-btn" onclick="exportExcel()" title="Export to Excel">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="18" height="18"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+        </button>
+        <button class="icon-btn" onclick="showBackupMenu()" title="Backup / Restore">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="18" height="18"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 5.625c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="stats" id="home-stats"></div>
+  <div class="sec"><div class="sec-lbl">Today's Activity</div><div id="today-visits"></div></div>
+  <div class="sec" style="margin-top:14px"><div class="sec-lbl">Pending Tasks</div><div id="pending-home"></div></div>
+  <button class="fab" onclick="navigate('new-visit')">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+  </button>
+</div>
+
+<!-- ======= NEW VISIT ======= -->
+<div id="screen-new-visit" class="screen">
+  <div class="hdr">
+    <div class="hdr-row">
+      <button class="back-btn" onclick="navigate('home')">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="17" height="17"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/></svg>
+        Back
+      </button>
+      <h1>New Report</h1>
+      <div style="width:60px"></div>
+    </div>
+  </div>
+  <div id="open-banner" style="display:none"></div>
+  <div class="p15">
+    <div class="fg">
+      <label class="flbl">Type</label>
+      <div class="ttog">
+        <button class="ttog-btn active" id="tb-visit" onclick="setType('visit')">📍 Visit</button>
+        <button class="ttog-btn" id="tb-call" onclick="setType('call')">📞 Call</button>
+      </div>
+    </div>
+    <div class="fg">
+      <label class="flbl">Date</label>
+      <input type="date" class="finput" id="v-date">
+    </div>
+    <div class="fg">
+      <label class="flbl">OEM</label>
+      <select class="fsel" id="v-oem" onchange="onOEMSelect()">
+        <option value="">Select OEM...</option>
+      </select>
+    </div>
+    <div class="fg">
+      <label class="flbl">Topics Discussed</label>
+      <div class="tgrid" id="topic-grid"></div>
+      <button class="btn btn-ghost" onclick="addCustomTopic()" style="margin-top:8px">+ Add topic</button>
+    </div>
+    <div class="fg">
+      <label class="flbl">Notes</label>
+      <div class="vwrap">
+        <textarea class="fta" id="v-notes" placeholder="Tap 🎤 to speak or type notes..."></textarea>
+        <button class="mic-btn" id="mic-btn" onclick="toggleVoice()">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="fg">
+      <label class="flbl">Action Items</label>
+      <div id="ai-list"></div>
+      <button class="btn btn-ghost" onclick="addAI()" style="margin-top:4px">+ Add action item</button>
+    </div>
+    <div class="fg">
+      <label class="flbl">Next Visit / Follow-up Date</label>
+      <input type="date" class="finput" id="v-next">
+    </div>
+    <button class="btn btn-primary" onclick="saveVisit()">Save Report</button>
+  </div>
+</div>
+
+<!-- ======= DIRECTORY ======= -->
+<div id="screen-directory" class="screen">
+  <div class="hdr">
+    <div class="hdr-row">
+      <h1>OEM Directory</h1>
+      <button class="icon-btn" onclick="openOEMForm(null)">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="18" height="18"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="swrap">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 15.803a7.5 7.5 0 0010.607 10.607z"/></svg>
+    <input type="text" class="sinput" placeholder="Search name or dealer code..." oninput="renderDir(this.value)">
+  </div>
+  <div style="padding:12px 15px" id="oem-list"></div>
+</div>
+
+<!-- ======= OEM FORM ======= -->
+<div id="screen-oem-form" class="screen">
+  <div class="hdr">
+    <div class="hdr-row">
+      <button class="back-btn" onclick="navigate('directory')">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="17" height="17"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/></svg>
+        Back
+      </button>
+      <h1 id="oem-form-title">Add OEM</h1>
+      <div style="width:60px"></div>
+    </div>
+  </div>
+  <div class="p15">
+    <div class="fg"><label class="flbl">OEM Name *</label><input type="text" class="finput" id="of-name" placeholder="e.g. Bajaj Motors"></div>
+    <div class="fg"><label class="flbl">Dealer Code *</label><input type="text" class="finput mono" id="of-code" placeholder="e.g. DLR-001"></div>
+    <div class="fg"><label class="flbl">City</label><input type="text" class="finput" id="of-city" placeholder="e.g. Bengaluru"></div>
+    <div class="fg"><label class="flbl">Brand / Segment</label><input type="text" class="finput" id="of-brand" placeholder="e.g. Two-Wheeler, EV"></div>
+    <div class="fg"><label class="flbl">Contact Person</label><input type="text" class="finput" id="of-contact" placeholder="e.g. Ramesh Kumar"></div>
+    <div class="fg"><label class="flbl">Contact Number</label><input type="tel" class="finput mono" id="of-phone" placeholder="e.g. 9876543210"></div>
+    <button class="btn btn-primary" onclick="saveOEM()">Save OEM</button>
+    <button class="btn btn-danger" id="del-oem-btn" style="margin-top:10px;display:none" onclick="deleteOEM()">Delete OEM</button>
+  </div>
+</div>
+
+<!-- ======= ACTION ITEMS ======= -->
+<div id="screen-actions" class="screen">
+  <div class="hdr">
+    <div class="hdr-row">
+      <h1>Action Items</h1>
+      <div class="hdr-acts">
+        <button class="icon-btn" id="btn-filter-open" onclick="setFilter('open')" title="Open only" style="background:var(--amber);color:var(--navy)">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="16" height="16"><circle cx="12" cy="12" r="9"/></svg>
+        </button>
+        <button class="icon-btn" id="btn-filter-all" onclick="setFilter('all')" title="All tasks">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM3.75 12h.007v.008H3.75V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-.375 5.25h.007v.008H3.75v-.008zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div style="padding:12px 15px" id="actions-list"></div>
+</div>
+
+<!-- ======= VISIT DETAIL ======= -->
+<div id="screen-visit-detail" class="screen">
+  <div class="hdr">
+    <div class="hdr-row">
+      <button class="back-btn" id="detail-back-btn" onclick="navigate('home')">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="17" height="17"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/></svg>
+        Back
+      </button>
+      <h1>Report</h1>
+      <button class="icon-btn" onclick="copyWA()" title="Copy for WhatsApp">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="18" height="18"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.375"/></svg>
+      </button>
+    </div>
+  </div>
+  <div id="detail-content"></div>
+</div>
+
+<!-- BOTTOM NAV -->
+<nav class="bnav">
+  <div class="nitem active" id="nav-home" onclick="navigate('home')">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"/></svg>
+    <span>Home</span>
+  </div>
+  <div class="nitem" id="nav-directory" onclick="navigate('directory')">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z"/></svg>
+    <span>OEMs</span>
+  </div>
+  <div class="nitem" id="nav-actions" onclick="navigate('actions')">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+    <span>Tasks</span>
+  </div>
+</nav>
+
+<div class="toast" id="toast"></div>
+<input type="file" id="restore-input" accept=".json" style="display:none" onchange="restoreBackup(this)">
+
+<script>
+// ============================================================
+// DATA LAYER
+// ============================================================
+const DB_KEY = 'oem_tracker_v2';
+let db = { oems: [], visits: [], actions: [] };
+const DEFAULT_TOPICS = ['Leasing', 'Principal Moratorium', 'Startups', 'Rate of Interest'];
+let sessionTopics = []; // extra topics added this session
+let visitType = 'visit';
+let editOEM = null;
+let curVisitId = null;
+let actFilter = 'open';
+let recognition = null;
+let listening = false;
+
+function loadDB() {
+  try { const r = localStorage.getItem(DB_KEY); if (r) db = JSON.parse(r); } catch(e) {}
+}
+function saveDB() { localStorage.setItem(DB_KEY, JSON.stringify(db)); }
+
+// ============================================================
+// NAVIGATION
+// ============================================================
+const SCREENS = {
+  'home': 'screen-home',
+  'new-visit': 'screen-new-visit',
+  'directory': 'screen-directory',
+  'oem-form': 'screen-oem-form',
+  'actions': 'screen-actions',
+  'visit-detail': 'screen-visit-detail'
+};
+const NAV_MAP = {
+  'home': 'nav-home', 'new-visit': 'nav-home', 'visit-detail': 'nav-home',
+  'directory': 'nav-directory', 'oem-form': 'nav-directory',
+  'actions': 'nav-actions'
+};
+
+function navigate(screen) {
+  Object.values(SCREENS).forEach(id => { const el = document.getElementById(id); if(el) el.classList.remove('active'); });
+  document.querySelectorAll('.nitem').forEach(n => n.classList.remove('active'));
+  const sid = SCREENS[screen];
+  if (sid) document.getElementById(sid)?.classList.add('active');
+  const nid = NAV_MAP[screen];
+  if (nid) document.getElementById(nid)?.classList.add('active');
+  window.scrollTo(0, 0);
+  if (screen === 'home') renderHome();
+  if (screen === 'new-visit') initNewVisit();
+  if (screen === 'directory') renderDir();
+  if (screen === 'actions') renderActions();
+}
+
+// ============================================================
+// HOME
+// ============================================================
+function renderHome() {
+  const today = todayStr();
+  document.getElementById('home-date').textContent = fmtDate(today);
+
+  const todayV = db.visits.filter(v => v.date === today);
+  const openA = db.actions.filter(a => a.status === 'open');
+  const overdue = openA.filter(a => a.dueDate && a.dueDate < today).length;
+
+  document.getElementById('home-stats').innerHTML = `
+    <div class="scard"><div class="snum">${todayV.length}</div><div class="slbl">Today</div></div>
+    <div class="scard"><div class="snum">${db.visits.length}</div><div class="slbl">Total</div></div>
+    <div class="scard"><div class="snum" style="color:${overdue>0?'var(--red)':'var(--navy)'}">${openA.length}</div><div class="slbl">Open Tasks</div></div>`;
+
+  const tv = document.getElementById('today-visits');
+  if (!todayV.length) {
+    tv.innerHTML = `<div class="empty"><div class="ei">📋</div><h3>No reports today</h3><p>Tap + to log a visit or call</p></div>`;
+  } else {
+    tv.innerHTML = todayV.map(v => {
+      const oem = db.oems.find(o => o.id === v.oemId);
+      const topics = [...(v.topics||[]), ...(v.customTopics||[])];
+      return `<div class="vcard" onclick="showDetail('${v.id}')">
+        <div class="vcard-top">
+          <div class="vcard-name">${oem?.name||'Unknown OEM'}</div>
+          <span class="badge ${v.type==='visit'?'bv':'bc'}">${v.type==='visit'?'📍 Visit':'📞 Call'}</span>
+        </div>
+        <div class="vcard-meta">${oem?.dealerCode||''} · ${oem?.city||''}</div>
+        ${topics.length ? `<div class="vcard-topics">${topics.join(' · ')}</div>` : ''}
+      </div>`;
+    }).join('');
+  }
+
+  const ph = document.getElementById('pending-home');
+  const upcoming = [...openA].sort((a,b) => (a.dueDate||'9')<(b.dueDate||'9')?-1:1).slice(0,5);
+  if (!upcoming.length) {
+    ph.innerHTML = `<p style="color:var(--muted);font-size:13px;padding:6px 0">No pending tasks 🎉</p>`;
+  } else {
+    ph.innerHTML = `<div class="card">${upcoming.map(a => {
+      const oem = oemForAction(a);
+      const od = a.dueDate && a.dueDate < today;
+      return `<div class="ai-row">
+        <button class="astat ${a.status==='closed'?'done':''}" onclick="toggleAction('${a.id}',event)"></button>
+        <div class="ainfo">
+          <div class="adesc ${a.status==='closed'?'done':''}">${a.description}</div>
+          <div class="ameta">${oem?.name||''}${a.dueDate?' · <span class="'+(od?'overdue':'')+'">Due '+fmtDate(a.dueDate)+'</span>':''}</div>
+        </div>
+      </div>`;
+    }).join('')}</div>`;
+  }
+}
+
+// ============================================================
+// NEW VISIT
+// ============================================================
+function initNewVisit() {
+  visitType = 'visit';
+  sessionTopics = [];
+  document.getElementById('tb-visit').classList.add('active');
+  document.getElementById('tb-call').classList.remove('active');
+  document.getElementById('v-date').value = todayStr();
+  document.getElementById('v-notes').value = '';
+  document.getElementById('v-next').value = '';
+  document.getElementById('v-oem').value = '';
+  document.getElementById('open-banner').style.display = 'none';
+  document.getElementById('ai-list').innerHTML = '';
+
+  // Populate OEM dropdown
+  const sel = document.getElementById('v-oem');
+  sel.innerHTML = '<option value="">Select OEM...</option>' +
+    [...db.oems].sort((a,b)=>a.name.localeCompare(b.name))
+      .map(o=>`<option value="${o.id}">${o.name} (${o.dealerCode})</option>`).join('');
+
+  renderTopics();
+}
+
+function setType(t) {
+  visitType = t;
+  document.getElementById('tb-visit').classList.toggle('active', t==='visit');
+  document.getElementById('tb-call').classList.toggle('active', t==='call');
+}
+
+function renderTopics(checked=[]) {
+  const all = [...DEFAULT_TOPICS, ...sessionTopics];
+  document.getElementById('topic-grid').innerHTML = all.map(t => {
+    const c = checked.includes(t);
+    return `<div class="titem ${c?'chk':''}" onclick="this.classList.toggle('chk')">
+      <div class="tbox"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></div>
+      <span class="ttxt">${t}</span>
+    </div>`;
+  }).join('');
+}
+
+function addCustomTopic() {
+  const n = prompt('Topic name:');
+  if (n?.trim()) {
+    sessionTopics.push(n.trim());
+    const checked = getChecked();
+    renderTopics(checked);
+  }
+}
+
+function getChecked() {
+  return [...document.querySelectorAll('.titem.chk .ttxt')].map(el=>el.textContent);
+}
+
+function onOEMSelect() {
+  const oemId = document.getElementById('v-oem').value;
+  const banner = document.getElementById('open-banner');
+  if (!oemId) { banner.style.display='none'; return; }
+  const today = todayStr();
+  const oemVisitIds = db.visits.filter(v=>v.oemId===oemId).map(v=>v.id);
+  const open = db.actions.filter(a=>oemVisitIds.includes(a.visitId) && a.status==='open');
+  if (!open.length) { banner.style.display='none'; return; }
+
+  banner.style.display = 'block';
+  banner.innerHTML = `<div class="banner">
+    <div class="bnr-ttl">⚠️ ${open.length} open item${open.length>1?'s':''} from previous visits</div>
+    ${open.map(a => {
+      const od = a.dueDate && a.dueDate < today;
+      return `<div class="bnr-item">
+        <button class="astat ${a.status==='closed'?'done':''}" style="margin-top:0" onclick="toggleAction('${a.id}',event)"></button>
+        <div class="ainfo">
+          <div class="adesc" style="font-size:13px">${a.description}</div>
+          ${a.dueDate?`<div class="ameta ${od?'overdue':''}">${od?'Overdue · ':''}Due ${fmtDate(a.dueDate)}</div>`:''}
+        </div>
+      </div>`;
+    }).join('')}
+  </div>`;
+}
+
+function addAI() {
+  const list = document.getElementById('ai-list');
+  const d = document.createElement('div');
+  d.className = 'aiform';
+  d.innerHTML = `
+    <input type="text" class="finput" placeholder="Describe the action item" style="flex:1;padding:11px 12px;font-size:14px">
+    <input type="date" class="finput aidate">
+    <button class="rm-btn" onclick="this.parentElement.remove()">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="15" height="15"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+    </button>`;
+  list.appendChild(d);
+  d.querySelector('input').focus();
+}
+
+function saveVisit() {
+  const oemId = document.getElementById('v-oem').value;
+  const date = document.getElementById('v-date').value;
+  if (!oemId) { showToast('Please select an OEM'); return; }
+  if (!date) { showToast('Please select a date'); return; }
+
+  const checked = getChecked();
+  const topics = checked.filter(t => DEFAULT_TOPICS.includes(t));
+  const customTopics = checked.filter(t => !DEFAULT_TOPICS.includes(t));
+  const notes = document.getElementById('v-notes').value.trim();
+  const nextDate = document.getElementById('v-next').value;
+
+  const visitId = 'v_' + Date.now();
+  db.visits.push({ id: visitId, oemId, date, type: visitType, topics, customTopics, notes, nextVisitDate: nextDate||null, createdAt: new Date().toISOString() });
+
+  // Collect action items
+  document.querySelectorAll('#ai-list .aiform').forEach(row => {
+    const inputs = row.querySelectorAll('input');
+    const desc = inputs[0].value.trim();
+    const due = inputs[1].value;
+    if (desc) {
+      const a = { id:'a_'+Date.now()+'_'+Math.random().toString(36).slice(2,6), visitId, description: desc, dueDate: due||null, status:'open' };
+      db.actions.push(a);
+      scheduleReminder(a);
+    }
+  });
+
+  saveDB();
+  sessionTopics = [];
+  showToast('Report saved ✓');
+  navigate('home');
+}
+
+// ============================================================
+// VISIT DETAIL
+// ============================================================
+function showDetail(visitId) {
+  curVisitId = visitId;
+  navigate('visit-detail');
+  const v = db.visits.find(x=>x.id===visitId);
+  const oem = db.oems.find(o=>o.id===v?.oemId);
+  const acts = db.actions.filter(a=>a.visitId===visitId);
+  const allTopics = [...(v.topics||[]), ...(v.customTopics||[])];
+  const today = todayStr();
+
+  document.getElementById('detail-content').innerHTML = `
+    <div class="dtl-sec">
+      <div class="dtl-lbl">OEM</div>
+      <div class="dtl-box">
+        <div style="font-size:16px;font-weight:700">${oem?.name||'Unknown'}</div>
+        <div class="mono" style="font-size:12px;color:var(--muted);margin-top:4px">${oem?.dealerCode||''}${oem?.city?' · '+oem.city:''}</div>
+        <div style="font-size:13px;color:var(--soft);margin-top:4px">${oem?.contactPerson||''}${oem?.phone?' · '+oem.phone:''}</div>
+      </div>
+    </div>
+    <div class="dtl-sec">
+      <div class="dtl-lbl">Details</div>
+      <div class="dtl-box" style="display:flex;gap:16px;flex-wrap:wrap">
+        <div><div style="font-size:12px;color:var(--muted)">Date</div><div class="mono" style="font-size:13px;margin-top:3px">${fmtDate(v.date)}</div></div>
+        <div><div style="font-size:12px;color:var(--muted)">Type</div><span class="badge ${v.type==='visit'?'bv':'bc'}" style="display:inline-block;margin-top:4px">${v.type==='visit'?'📍 Visit':'📞 Call'}</span></div>
+        ${v.nextVisitDate?`<div><div style="font-size:12px;color:var(--muted)">Follow-up</div><div class="mono" style="font-size:13px;margin-top:3px">${fmtDate(v.nextVisitDate)}</div></div>`:''}
+      </div>
+    </div>
+    ${allTopics.length?`<div class="dtl-sec"><div class="dtl-lbl">Topics Discussed</div><div class="tags">${allTopics.map(t=>`<span class="tag">${t}</span>`).join('')}</div></div>`:''}
+    ${v.notes?`<div class="dtl-sec"><div class="dtl-lbl">Notes</div><div class="dtl-box" style="white-space:pre-wrap">${v.notes}</div></div>`:''}
+    ${acts.length?`<div class="dtl-sec">
+      <div class="dtl-lbl">Action Items</div>
+      <div class="card" id="detail-acts">
+        ${acts.map(a=>{
+          const od = a.dueDate && a.status==='open' && a.dueDate < today;
+          return `<div class="ai-row">
+            <button class="astat ${a.status==='closed'?'done':''}" onclick="toggleAction('${a.id}',event)"></button>
+            <div class="ainfo">
+              <div class="adesc ${a.status==='closed'?'done':''}">${a.description}</div>
+              ${a.dueDate?`<div class="ameta ${od?'overdue':''}">Due ${fmtDate(a.dueDate)}</div>`:''}
+            </div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`:''}
+    <div style="padding:15px;padding-top:8px">
+      <button class="btn btn-primary" onclick="copyWA()">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="18" height="18"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.375"/></svg>
+        Copy for WhatsApp
+      </button>
+    </div>`;
+}
+
+// ============================================================
+// OEM DIRECTORY
+// ============================================================
+function renderDir(search='') {
+  let oems = [...db.oems].sort((a,b)=>a.name.localeCompare(b.name));
+  if (search) oems = oems.filter(o=>
+    o.name.toLowerCase().includes(search.toLowerCase()) ||
+    o.dealerCode.toLowerCase().includes(search.toLowerCase())
+  );
+  const list = document.getElementById('oem-list');
+  if (!oems.length) {
+    list.innerHTML = `<div class="empty"><div class="ei">🏢</div><h3>${search?'No results':'No OEMs yet'}</h3><p>${search?'Try a different search':'Tap + to add your first OEM'}</p></div>`;
+    return;
+  }
+  list.innerHTML = oems.map(o=>{
+    const init = o.name.split(' ').map(w=>w[0]||'').join('').toUpperCase().slice(0,2);
+    const vc = db.visits.filter(v=>v.oemId===o.id).length;
+    return `<div class="oitem" onclick="openOEMForm('${o.id}')">
+      <div class="oavatar">${init}</div>
+      <div class="oinfo">
+        <div class="oname">${o.name}</div>
+        <div class="ometa">${o.dealerCode}${o.city?' · '+o.city:''} · ${vc} visit${vc!==1?'s':''}</div>
+      </div>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="16" height="16" style="color:var(--muted);flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
+    </div>`;
+  }).join('');
+}
+
+function openOEMForm(id) {
+  editOEM = id ? db.oems.find(o=>o.id===id) : null;
+  document.getElementById('oem-form-title').textContent = editOEM ? 'Edit OEM' : 'Add OEM';
+  document.getElementById('of-name').value = editOEM?.name||'';
+  document.getElementById('of-code').value = editOEM?.dealerCode||'';
+  document.getElementById('of-city').value = editOEM?.city||'';
+  document.getElementById('of-brand').value = editOEM?.brand||'';
+  document.getElementById('of-contact').value = editOEM?.contactPerson||'';
+  document.getElementById('of-phone').value = editOEM?.phone||'';
+  document.getElementById('del-oem-btn').style.display = editOEM ? 'block' : 'none';
+  navigate('oem-form');
+}
+
+function saveOEM() {
+  const name = document.getElementById('of-name').value.trim();
+  const code = document.getElementById('of-code').value.trim();
+  if (!name) { showToast('OEM name is required'); return; }
+  if (!code) { showToast('Dealer code is required'); return; }
+  const data = {
+    name, dealerCode: code,
+    city: document.getElementById('of-city').value.trim(),
+    brand: document.getElementById('of-brand').value.trim(),
+    contactPerson: document.getElementById('of-contact').value.trim(),
+    phone: document.getElementById('of-phone').value.trim()
+  };
+  if (editOEM) {
+    Object.assign(db.oems.find(o=>o.id===editOEM.id), data);
+  } else {
+    db.oems.push({ id:'oem_'+Date.now(), ...data });
+  }
+  saveDB(); showToast('OEM saved ✓'); navigate('directory');
+}
+
+function deleteOEM() {
+  if (!confirm(`Delete ${editOEM.name}? All visit history will also be removed.`)) return;
+  const vids = db.visits.filter(v=>v.oemId===editOEM.id).map(v=>v.id);
+  db.oems = db.oems.filter(o=>o.id!==editOEM.id);
+  db.visits = db.visits.filter(v=>v.oemId!==editOEM.id);
+  db.actions = db.actions.filter(a=>!vids.includes(a.visitId));
+  saveDB(); showToast('OEM deleted'); navigate('directory');
+}
+
+// ============================================================
+// ACTION ITEMS
+// ============================================================
+function setFilter(f) {
+  actFilter = f;
+  document.getElementById('btn-filter-open').style.background = f==='open' ? 'var(--amber)' : 'rgba(255,255,255,.1)';
+  document.getElementById('btn-filter-open').style.color = f==='open' ? 'var(--navy)' : '#fff';
+  document.getElementById('btn-filter-all').style.background = f==='all' ? 'var(--amber)' : 'rgba(255,255,255,.1)';
+  document.getElementById('btn-filter-all').style.color = f==='all' ? 'var(--navy)' : '#fff';
+  renderActions();
+}
+
+function renderActions() {
+  const today = todayStr();
+  let items = actFilter==='open' ? db.actions.filter(a=>a.status==='open') : [...db.actions];
+  items.sort((a,b)=>{
+    if (a.status!==b.status) return a.status==='open'?-1:1;
+    return (a.dueDate||'9')<(b.dueDate||'9')?-1:1;
+  });
+  const el = document.getElementById('actions-list');
+  if (!items.length) {
+    el.innerHTML = `<div class="empty"><div class="ei">✅</div><h3>All clear!</h3><p>No ${actFilter==='open'?'open ':''}action items</p></div>`;
+    return;
+  }
+  el.innerHTML = items.map(a=>{
+    const oem = oemForAction(a);
+    const visit = db.visits.find(v=>v.id===a.visitId);
+    const od = a.dueDate && a.status==='open' && a.dueDate < today;
+    return `<div class="card" style="margin-bottom:9px">
+      <div class="ai-row" style="border:none;padding:0">
+        <button class="astat ${a.status==='closed'?'done':''}" onclick="toggleAction('${a.id}',event)"></button>
+        <div class="ainfo">
+          <div class="adesc ${a.status==='closed'?'done':''}">${a.description}</div>
+          <div class="ameta">${oem?.name||''}${visit?' · '+fmtDate(visit.date):''}${a.dueDate?' · <span class="'+(od?'overdue':'')+'">Due '+fmtDate(a.dueDate)+'</span>':''}</div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleAction(id, event) {
+  event.stopPropagation();
+  const a = db.actions.find(x=>x.id===id);
+  if (!a) return;
+  a.status = a.status==='open' ? 'closed' : 'open';
+  saveDB();
+  const active = document.querySelector('.screen.active')?.id;
+  if (active==='screen-home') renderHome();
+  else if (active==='screen-actions') renderActions();
+  else if (active==='screen-new-visit') { const oid = document.getElementById('v-oem').value; if(oid) onOEMSelect(); }
+  else if (active==='screen-visit-detail') showDetail(curVisitId);
+}
+
+function oemForAction(action) {
+  const v = db.visits.find(x=>x.id===action.visitId);
+  return v ? db.oems.find(o=>o.id===v.oemId) : null;
+}
+
+// ============================================================
+// VOICE
+// ============================================================
+function toggleVoice() {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) { showToast('Voice not available in this browser'); return; }
+  if (listening) { recognition.stop(); return; }
+  recognition = new SR();
+  recognition.lang = 'en-IN';
+  recognition.continuous = true;
+  recognition.interimResults = false;
+  recognition.onstart = () => { listening=true; document.getElementById('mic-btn').classList.add('on'); };
+  recognition.onresult = e => {
+    const t = Array.from(e.results).map(r=>r[0].transcript).join(' ');
+    const ta = document.getElementById('v-notes');
+    ta.value = (ta.value ? ta.value+' ' : '') + t;
+  };
+  recognition.onend = () => { listening=false; document.getElementById('mic-btn').classList.remove('on'); };
+  recognition.onerror = () => { listening=false; document.getElementById('mic-btn').classList.remove('on'); };
+  recognition.start();
+}
+
+// ============================================================
+// WHATSAPP COPY
+// ============================================================
+function copyWA() {
+  const v = db.visits.find(x=>x.id===curVisitId);
+  if (!v) return;
+  const oem = db.oems.find(o=>o.id===v.oemId);
+  const acts = db.actions.filter(a=>a.visitId===v.id);
+  const topics = [...(v.topics||[]), ...(v.customTopics||[])];
+
+  let txt = `${v.type==='visit'?'📍':'📞'} *${v.type==='visit'?'Visit':'Call'} Report — ${fmtDate(v.date)}*\n`;
+  txt += `*OEM:* ${oem?.name||'N/A'}, ${oem?.city||''} (${oem?.dealerCode||''})\n`;
+  txt += `*Contact:* ${oem?.contactPerson||'—'} | ${oem?.phone||'—'}\n`;
+  if (topics.length) txt += `\n✅ *Topics Discussed:*\n${topics.map(t=>`• ${t}`).join('\n')}\n`;
+  if (v.notes) txt += `\n📝 *Notes:*\n${v.notes}\n`;
+  if (acts.length) txt += `\n📌 *Action Items:*\n${acts.map(a=>`• ${a.description}${a.dueDate?' — Due: '+fmtDate(a.dueDate):''}${a.status==='closed'?' ✓':''}`).join('\n')}\n`;
+  if (v.nextVisitDate) txt += `\n🔁 *Next ${v.type==='visit'?'Visit':'Follow-up'}:* ${fmtDate(v.nextVisitDate)}`;
+
+  navigator.clipboard.writeText(txt).then(()=>showToast('Copied for WhatsApp ✓')).catch(()=>{
+    // Fallback for older Android
+    const ta = document.createElement('textarea');
+    ta.value = txt; ta.style.position='fixed'; ta.style.opacity='0';
+    document.body.appendChild(ta); ta.select();
+    document.execCommand('copy'); document.body.removeChild(ta);
+    showToast('Copied for WhatsApp ✓');
+  });
+}
+
+// ============================================================
+// EXCEL EXPORT
+// ============================================================
+function exportExcel() {
+  if (!db.visits.length) { showToast('No visits to export'); return; }
+  const rows = db.visits.map(v=>{
+    const oem = db.oems.find(o=>o.id===v.oemId);
+    const acts = db.actions.filter(a=>a.visitId===v.id);
+    return {
+      'Date': v.date,
+      'Type': v.type==='visit'?'Visit':'Call',
+      'OEM Name': oem?.name||'',
+      'Dealer Code': oem?.dealerCode||'',
+      'City': oem?.city||'',
+      'Brand / Segment': oem?.brand||'',
+      'Contact Person': oem?.contactPerson||'',
+      'Contact Number': oem?.phone||'',
+      'Topics Discussed': [...(v.topics||[]),...(v.customTopics||[])].join(', '),
+      'Notes': v.notes||'',
+      'Action Items': acts.map(a=>a.description+(a.dueDate?' (Due:'+a.dueDate+')':'')+(a.status==='closed'?' ✓':'')).join(' | '),
+      'Next Visit / Follow-up': v.nextVisitDate||''
+    };
+  });
+  const ws = XLSX.utils.json_to_sheet(rows);
+  // Auto column width
+  const cols = Object.keys(rows[0]).map(k=>({ wch: Math.max(k.length, ...rows.map(r=>String(r[k]||'').length).slice(0,50)) + 2 }));
+  ws['!cols'] = cols;
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'Visit Reports');
+  XLSX.writeFile(wb, `OEM_Visits_${todayStr()}.xlsx`);
+  showToast('Excel exported ✓');
+}
+
+// ============================================================
+// BACKUP / RESTORE
+// ============================================================
+function showBackupMenu() {
+  const choice = confirm('Tap OK to download backup (JSON)\nTap Cancel to restore from file');
+  if (choice) {
+    const blob = new Blob([JSON.stringify(db, null, 2)], {type:'application/json'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `oem_backup_${todayStr()}.json`;
+    a.click();
+    showToast('Backup downloaded ✓');
+  } else {
+    document.getElementById('restore-input').click();
+  }
+}
+
+function restoreBackup(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (!Array.isArray(data.oems) || !Array.isArray(data.visits)) { showToast('Invalid backup file'); return; }
+      if (!confirm(`Restore ${data.oems.length} OEMs and ${data.visits.length} visits? Current data will be replaced.`)) return;
+      db = data;
+      if (!db.actions) db.actions = [];
+      saveDB(); renderHome(); showToast('Restored ✓');
+    } catch { showToast('Could not read file'); }
+  };
+  reader.readAsText(file);
+  input.value = '';
+}
+
+// ============================================================
+// REMINDERS
+// ============================================================
+function scheduleReminder(action) {
+  if (!('Notification' in window) || !action.dueDate) return;
+  if (Notification.permission === 'default') Notification.requestPermission();
+  if (Notification.permission === 'granted') {
+    const due = new Date(action.dueDate + 'T09:00:00').getTime();
+    const delay = due - Date.now();
+    if (delay > 0) {
+      setTimeout(() => {
+        try { new Notification('OEM Tracker — Action Due', { body: action.description, tag: action.id }); } catch(e) {}
+      }, delay);
+    }
+  }
+}
+
+// ============================================================
+// UTILS
+// ============================================================
+function todayStr() { return new Date().toISOString().split('T')[0]; }
+
+function fmtDate(d) {
+  if (!d) return '—';
+  const dt = new Date(d + 'T00:00:00');
+  return dt.toLocaleDateString('en-IN', {day:'2-digit', month:'short', year:'numeric'});
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2500);
+}
+
+// ============================================================
+// INIT
+// ============================================================
+loadDB();
+renderHome();
+if ('Notification' in window && Notification.permission==='default') Notification.requestPermission();
+</script>
+</body>
+</html>
