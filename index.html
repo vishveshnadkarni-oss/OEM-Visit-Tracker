@@ -414,12 +414,12 @@ body{font-family:'Syne',sans-serif;background:var(--bg);color:var(--text);max-wi
         <strong>Step 3:</strong> Upload the filled CSV here
       </div>
     </div>
-    <button class="btn btn-outline" onclick="downloadCSVTemplate()" style="margin-bottom:12px">
+    <button class="btn btn-outline" onclick="downloadXLSXTemplate()" style="margin-bottom:12px">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="18" height="18"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
-      Download Template CSV
+      Download Template (.xlsx)
     </button>
-    <div class="fg"><label class="flbl">Upload Filled CSV</label>
-      <input type="file" accept=".csv" id="csv-upload" onchange="importCSV(this)" style="padding:10px;background:var(--bg);border:1.5px dashed var(--border);border-radius:10px;width:100%;font-family:'Syne',sans-serif;font-size:13px">
+    <div class="fg"><label class="flbl">Upload Filled File (.xlsx or .csv)</label>
+      <input type="file" accept=".csv,.xlsx,.xls" id="csv-upload" onchange="importFile(this)" style="padding:10px;background:var(--bg);border:1.5px dashed var(--border);border-radius:10px;width:100%;font-family:'Syne',sans-serif;font-size:13px">
     </div>
     <div id="csv-preview" style="margin-top:8px"></div>
   </div>
@@ -1111,43 +1111,115 @@ function exportExcel(){
 }
 
 // ============================================================
-// CSV IMPORT / TEMPLATE
+// IMPORT / TEMPLATE  (Excel + CSV)
 // ============================================================
-function downloadCSVTemplate(){
-  const cols=['Name','Code','OEM_Type','Segment','Brand','City1','Address1','City2','Address2','Contact1_Name','Contact1_Phone','Contact1_Location','Contact1_Note','Contact2_Name','Contact2_Phone','Contact2_Location','Contact2_Note','Notes'];
-  const sample=['Bajaj Auto','DLR-001','OEM','Industrial','Two-Wheeler','Bengaluru','100 MG Road','Chennai','50 Anna Salai','Ramesh Kumar','9876543210','Bengaluru','Handles VMC','Priya S','9123456780','Chennai','','Closed 10% subvention deal'];
-  const csv=cols.join(',')+'\n'+sample.map(v=>`"${v}"`).join(',');
-  const a=document.createElement('a');
-  a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);
-  a.download='OEM_Import_Template.csv'; a.click();
+function downloadXLSXTemplate(){
+  // Sheet 1 — OEMs
+  const oemCols=['Name','Code','OEM_Type','Segment','Subcategories','Dealer_OEM_Brands','City1','Address1','City2','Address2','City3','Address3','Notes'];
+  const oemSample={
+    Name:'GPY Machine Tools',Code:'OEM-001',OEM_Type:'Dealer',Segment:'Industrial',
+    Subcategories:'Machine Tools, Laser',Dealer_OEM_Brands:'Haitian, DMG Mori',
+    City1:'Bengaluru',Address1:'100 MG Road',City2:'Chennai',Address2:'50 Anna Salai',City3:'',Address3:'',
+    Notes:'Closed subvention deal at 10% and 0.5% PF'
+  };
+  const wsOEM=XLSX.utils.json_to_sheet([oemSample],{header:oemCols});
+  wsOEM['!cols']=oemCols.map(c=>({wch:Math.max(c.length,20)}));
+
+  // Sheet 2 — Contacts
+  const ctCols=['OEM_Name','Name','Phone','Position','Location','Note'];
+  const ctSamples=[
+    {OEM_Name:'GPY Machine Tools',Name:'Ramesh Kumar',Phone:'9876543210',Position:'Sales Manager',Location:'Bengaluru',Note:'Handles VMC'},
+    {OEM_Name:'GPY Machine Tools',Name:'Priya S',Phone:'9123456780',Position:'Service Head',Location:'Chennai',Note:''},
+    {OEM_Name:'GPY Machine Tools',Name:'Ajay Mehta',Phone:'9988776655',Position:'Director',Location:'Mumbai',Note:'Key decision maker'},
+  ];
+  const wsCT=XLSX.utils.json_to_sheet(ctSamples,{header:ctCols});
+  wsCT['!cols']=ctCols.map(c=>({wch:Math.max(c.length,20)}));
+
+  const wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,wsOEM,'OEMs');
+  XLSX.utils.book_append_sheet(wb,wsCT,'Contacts');
+  XLSX.writeFile(wb,'OEM_Import_Template.xlsx');
   showToast('Template downloaded ✓');
 }
 
-async function importCSV(input){
+async function importFile(input){
   const file=input.files[0]; if(!file) return;
-  const text=await file.text();
-  const lines=text.split('\n').filter(l=>l.trim());
-  const headers=lines[0].split(',').map(h=>h.replace(/"/g,'').trim());
-  const rows=lines.slice(1).map(l=>{
-    const vals=l.match(/(".*?"|[^,]+|(?<=,)(?=,)|^(?=,)|(?<=,)$)/g)||[];
-    const obj={};
-    headers.forEach((h,i)=>{ obj[h]=(vals[i]||'').replace(/"/g,'').trim(); });
-    return obj;
-  }).filter(r=>r['Name']);
+  const isXLS=file.name.match(/\.(xlsx|xls)$/i);
+  let oemRows=[], ctRows=[];
 
-  let added=0,skipped=0;
-  rows.forEach(r=>{
-    if(db.oems.find(o=>o.code===r['Code']&&r['Code'])){skipped++;return;}
+  if(isXLS){
+    const buf=await file.arrayBuffer();
+    const wb=XLSX.read(buf,{type:'array'});
+    // Sheet 1 — OEMs
+    const wsOEM=wb.Sheets[wb.SheetNames[0]];
+    oemRows=XLSX.utils.sheet_to_json(wsOEM,{defval:''});
+    // Sheet 2 — Contacts (optional)
+    if(wb.SheetNames[1]){
+      const wsCT=wb.Sheets[wb.SheetNames[1]];
+      ctRows=XLSX.utils.sheet_to_json(wsCT,{defval:''});
+    }
+  } else {
+    // CSV — single sheet, OEMs only
+    const text=await file.text();
+    const lines=text.split('\n').filter(l=>l.trim());
+    const headers=lines[0].split(',').map(h=>h.replace(/"/g,'').trim());
+    oemRows=lines.slice(1).map(l=>{
+      const vals=[...l.matchAll(/"([^"]*)"|([^,]*)/g)].map(m=>(m[1]??m[2]??'').trim());
+      const obj={}; headers.forEach((h,i)=>{obj[h]=vals[i]||'';}); return obj;
+    });
+  }
+
+  oemRows=oemRows.filter(r=>String(r['Name']||'').trim());
+
+  // Build contact map keyed by OEM Name
+  const ctMap={};
+  ctRows.forEach(r=>{
+    const key=String(r['OEM_Name']||'').trim();
+    if(!key) return;
+    if(!ctMap[key]) ctMap[key]=[];
+    const nm=String(r['Name']||'').trim();
+    if(nm) ctMap[key].push({
+      name:nm,
+      phone:String(r['Phone']||'').trim(),
+      position:String(r['Position']||'').trim(),
+      location:String(r['Location']||'').trim(),
+      note:String(r['Note']||'').trim()
+    });
+  });
+
+  let added=0, skipped=0, errors=[];
+  oemRows.forEach(r=>{
+    const name=String(r['Name']||'').trim();
+    const code=String(r['Code']||'').trim();
+    if(!name){errors.push('Row missing Name — skipped');return;}
+    // Skip duplicate by name
+    if(db.oems.find(o=>o.name.toLowerCase()===name.toLowerCase())){skipped++;return;}
+    // Locations
     const locs=[];
-    if(r['City1']) locs.push({city:r['City1'],address:r['Address1']||''});
-    if(r['City2']) locs.push({city:r['City2'],address:r['Address2']||''});
-    const contacts=[];
-    if(r['Contact1_Name']) contacts.push({name:r['Contact1_Name'],phone:r['Contact1_Phone']||'',location:r['Contact1_Location']||'',note:r['Contact1_Note']||''});
-    if(r['Contact2_Name']) contacts.push({name:r['Contact2_Name'],phone:r['Contact2_Phone']||'',location:r['Contact2_Location']||'',note:r['Contact2_Note']||''});
-    db.oems.push({id:'oem_'+Date.now()+'_'+Math.random().toString(36).slice(2,5),name:r['Name'],code:r['Code']||'',oemType:r['OEM_Type']||'OEM',segment:r['Segment']||'Industrial',brand:r['Brand']||'',locations:locs,contacts,notes:r['Notes']||''});
+    ['1','2','3'].forEach(n=>{const c=String(r[`City${n}`]||'').trim();if(c)locs.push({city:c,address:String(r[`Address${n}`]||'').trim()});});
+    // Subcategories
+    const subcats=String(r['Subcategories']||'').split(',').map(s=>s.trim()).filter(Boolean);
+    // Contacts from Contacts sheet
+    const contacts=ctMap[name]||[];
+    db.oems.push({
+      id:'oem_'+Date.now()+'_'+Math.random().toString(36).slice(2,5),
+      name, code,
+      oemType:String(r['OEM_Type']||'OEM').trim(),
+      segment:String(r['Segment']||'Industrial').trim(),
+      subcategories:subcats,
+      dealerOEMs:String(r['Dealer_OEM_Brands']||'').trim(),
+      locations:locs, contacts,
+      notes:String(r['Notes']||'').trim()
+    });
     added++;
   });
-  document.getElementById('csv-preview').innerHTML=`<div class="card" style="background:#d1fae5;border:1.5px solid var(--green)"><div style="font-size:14px;font-weight:700;color:#065f46">✓ ${added} added · ${skipped} skipped (duplicate code)</div></div>`;
+
+  const errHtml=errors.length?`<div style="font-size:12px;color:var(--red);margin-top:6px">${errors.join('<br>')}</div>`:'';
+  document.getElementById('csv-preview').innerHTML=`
+    <div class="card" style="background:#d1fae5;border:1.5px solid var(--green)">
+      <div style="font-size:14px;font-weight:700;color:#065f46">✓ ${added} added · ${skipped} skipped (duplicate name)</div>
+      ${errHtml}
+    </div>`;
   showToast('Importing...');
   await saveAndSync();
   showToast(`${added} OEMs imported ✓`);
