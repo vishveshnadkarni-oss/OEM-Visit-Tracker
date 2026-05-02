@@ -210,10 +210,11 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);max-w
     </div>
     <div class="fg">
       <label class="flbl">Topics Discussed</label>
+      <input type="text" class="finput" placeholder="🔍 Search topics..." oninput="renderTopicDropdown(this.value)" style="font-size:13px;padding:9px 12px;margin-bottom:8px">
       <select class="fsel" id="topic-sel" onchange="addTopicFromDrop(this)"><option value="">Add a topic...</option></select>
       <div id="topic-tags" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:9px;min-height:4px"></div>
       <div class="frow" style="margin-top:9px">
-        <div class="fg"><input type="text" class="finput" id="topic-custom-inp" placeholder="Custom topic..." style="font-size:13px;padding:10px 12px"></div>
+        <div class="fg"><input type="text" class="finput" id="topic-custom-inp" placeholder="New custom topic..." style="font-size:13px;padding:10px 12px"></div>
         <button class="lnk-btn" onclick="addCustomTopicNew()">+ Add</button>
       </div>
     </div>
@@ -231,8 +232,8 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);max-w
     </div>
     <div class="fg" style="margin-bottom:0"><label class="flbl">Next Visit / Follow-up Date</label><input type="date" class="finput" id="v-next"></div>
   </div>
-  <div class="save-bar">
-    <button class="btn btn-primary" onclick="saveVisit()"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="17" height="17"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Save Report</button>
+  <div style="padding:10px 16px;background:var(--bg2);border-top:1px solid var(--border);position:sticky;bottom:var(--nav)">
+    <button class="btn btn-primary" onclick="saveVisit()" style="padding:11px;font-size:13px"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="15" height="15"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Save Report</button>
   </div>
 </div>
 
@@ -362,6 +363,34 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);max-w
   </div>
 </div>
 
+<!-- REPORTS -->
+<div id="screen-reports" class="screen">
+  <div class="hdr">
+    <div class="hdr-row">
+      <h1>Reports</h1>
+      <button class="icon-btn" id="rpt-wa-btn" onclick="shareReportWA()" title="Share on WhatsApp" style="display:none">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="17" height="17"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.375"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="p15">
+    <div class="fg">
+      <label class="flbl">Filter By</label>
+      <div class="ttog" style="margin-bottom:12px">
+        <button class="ttog-btn active" id="rpt-day-btn" onclick="setRptMode('day')">Single Day</button>
+        <button class="ttog-btn" id="rpt-month-btn" onclick="setRptMode('month')">Month</button>
+      </div>
+      <div id="rpt-day-wrap">
+        <input type="date" class="finput" id="rpt-date" onchange="renderReport()">
+      </div>
+      <div id="rpt-month-wrap" style="display:none">
+        <input type="month" class="finput" id="rpt-month" onchange="renderReport()">
+      </div>
+    </div>
+  </div>
+  <div id="rpt-content" style="padding:0 16px"></div>
+</div>
+
 <!-- BOTTOM NAV -->
 <nav class="bnav">
   <div class="nitem active" id="nav-home" onclick="navigate('home')">
@@ -371,6 +400,10 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);max-w
   <div class="nitem" id="nav-directory" onclick="navigate('directory')">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z"/></svg>
     <span>OEMs</span>
+  </div>
+  <div class="nitem" id="nav-reports" onclick="navigate('reports')">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg>
+    <span>Reports</span>
   </div>
   <div class="nitem" id="nav-actions" onclick="navigate('actions')">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
@@ -385,12 +418,13 @@ const GH_OWNER='vishveshnadkarni-oss',GH_REPO='OEM-Visit-Tracker',GH_BRANCH='mai
 const GH_FILES={oems:'data/oems.json',visits:'data/visits.json'};
 const GH_HEADS={oems:null,visits:null};
 const GH_API=`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/`;
-let db={oems:[],visits:[],actions:[]};
+let db={oems:[],visits:[],actions:[],savedTopics:[]};
 const DEFAULT_TOPICS=['Leasing','Principal Moratorium','Startups','Rate of Interest'];
 const SUBCATS={Industrial:['Machine Tools','Plastics','Packaging','Laser','Bending','Pharma','Solar','Wood Working'],Medical:['Imaging','Ophthalmology','Dermatology','Cosmetology','Laser Hair Removal','Lab Testing','Anaesthetic','Refurb Machines']};
-let selectedTopics=[],visitType='visit',oemType='OEM',oemSeg='Medical',customSubcats=[],editOEM=null,curVisitId=null,actFilter='open',homeViewState='today',recognition=null,listening=false;
-function loadLocal(){try{const r=localStorage.getItem('oem_v4');if(r)db=JSON.parse(r);}catch(e){}}
+let selectedTopics=[],visitType='visit',oemType='OEM',oemSeg='Medical',customSubcats=[],editOEM=null,curVisitId=null,actFilter='open',homeViewState='today',rptMode='day',recognition=null,listening=false;
+function loadLocal(){try{const r=localStorage.getItem('oem_v4');if(r){db=JSON.parse(r);if(!db.savedTopics)db.savedTopics=[];}}catch(e){}}
 function saveLocal(){localStorage.setItem('oem_v4',JSON.stringify(db));}
+function allTopics(){return [...new Set([...DEFAULT_TOPICS,...(db.savedTopics||[])])];}
 async function ghGet(p){const r=await fetch(GH_API+p+'?ref='+GH_BRANCH,{headers:{'Authorization':'Bearer '+GH_TOKEN,'Accept':'application/vnd.github+json'}});if(r.status===404)return null;if(!r.ok)throw new Error(r.status);return r.json();}
 async function ghPut(p,c,sha,m){const b={message:m||'backup',content:btoa(unescape(encodeURIComponent(JSON.stringify(c,null,2)))),branch:GH_BRANCH};if(sha)b.sha=sha;const r=await fetch(GH_API+p,{method:'PUT',headers:{'Authorization':'Bearer '+GH_TOKEN,'Content-Type':'application/json','Accept':'application/vnd.github+json'},body:JSON.stringify(b)});if(!r.ok)throw new Error(r.status);return(await r.json()).content?.sha||null;}
 function setSS(s,m){const d=document.getElementById('sync-dot'),l=document.getElementById('sync-lbl');if(!d||!l)return;d.className='sync-dot '+(s==='ok'?'ok':s==='err'?'err':'busy');l.textContent=m;}
@@ -401,9 +435,13 @@ async function pushBackup(){
   setSS('busy','Backing up...');
   try{
     const stamp=todayStr();
+    const [existOems, existVisits] = await Promise.all([
+      ghGet(`backup/oems_${stamp}.json`),
+      ghGet(`backup/visits_${stamp}.json`)
+    ]);
     await Promise.all([
-      ghPut(`backup/oems_${stamp}.json`, db.oems, null, `Backup OEMs ${stamp}`),
-      ghPut(`backup/visits_${stamp}.json`, {visits:db.visits,actions:db.actions}, null, `Backup visits ${stamp}`)
+      ghPut(`backup/oems_${stamp}.json`, db.oems, existOems?.sha||null, `Backup OEMs ${stamp}`),
+      ghPut(`backup/visits_${stamp}.json`, {visits:db.visits,actions:db.actions}, existVisits?.sha||null, `Backup visits ${stamp}`)
     ]);
     setSS('ok','Backup saved · '+fmtTime(new Date()));
     showToast('Backup saved to repo ✓');
@@ -414,9 +452,9 @@ async function pushBackup(){
   }
 }
 async function manualSync(){await loadFromGitHub();}
-const SCREENS={'home':'screen-home','new-visit':'screen-new-visit','directory':'screen-directory','oem-form':'screen-oem-form','oem-detail':'screen-oem-detail','actions':'screen-actions','visit-detail':'screen-visit-detail','csv-import':'screen-csv-import'};
-const NAV_MAP={'home':'nav-home','new-visit':'nav-home','visit-detail':'nav-home','directory':'nav-directory','oem-form':'nav-directory','oem-detail':'nav-directory','csv-import':'nav-directory','actions':'nav-actions'};
-function navigate(s){Object.values(SCREENS).forEach(id=>document.getElementById(id)?.classList.remove('active'));document.querySelectorAll('.nitem').forEach(n=>n.classList.remove('active'));document.getElementById(SCREENS[s])?.classList.add('active');const nid=NAV_MAP[s];if(nid)document.getElementById(nid)?.classList.add('active');window.scrollTo(0,0);if(s==='home')renderHome();if(s==='new-visit')initNewVisit();if(s==='directory')renderDir();if(s==='actions')renderActions();}
+const SCREENS={'home':'screen-home','new-visit':'screen-new-visit','directory':'screen-directory','oem-form':'screen-oem-form','oem-detail':'screen-oem-detail','actions':'screen-actions','visit-detail':'screen-visit-detail','csv-import':'screen-csv-import','reports':'screen-reports'};
+const NAV_MAP={'home':'nav-home','new-visit':'nav-home','visit-detail':'nav-home','directory':'nav-directory','oem-form':'nav-directory','oem-detail':'nav-directory','csv-import':'nav-directory','actions':'nav-actions','reports':'nav-reports'};
+function navigate(s){Object.values(SCREENS).forEach(id=>document.getElementById(id)?.classList.remove('active'));document.querySelectorAll('.nitem').forEach(n=>n.classList.remove('active'));document.getElementById(SCREENS[s])?.classList.add('active');const nid=NAV_MAP[s];if(nid)document.getElementById(nid)?.classList.add('active');window.scrollTo(0,0);if(s==='home')renderHome();if(s==='new-visit')initNewVisit();if(s==='directory')renderDir();if(s==='actions')renderActions();if(s==='reports')initReports();}
 function setHomeView(v){homeViewState=v;['today','oem','location'].forEach(x=>{document.getElementById('hv-'+x)?.classList.toggle('active',x===v);const el=document.getElementById('home-'+x+'-view');if(el)el.style.display=x===v?'block':'none';});if(v==='oem')renderOEMView();if(v==='location')renderLocView();}
 function renderHome(){const today=todayStr();const todayV=db.visits.filter(v=>v.date===today);const openA=db.actions.filter(a=>a.status==='open');const od=openA.filter(a=>a.dueDate&&a.dueDate<today).length;document.getElementById('home-stats').innerHTML=`<div class="scard"><div class="snum">${todayV.length}</div><div class="slbl">Today</div></div><div class="scard"><div class="snum">${db.visits.length}</div><div class="slbl">Total</div></div><div class="scard"><div class="snum" style="color:${od>0?'var(--red)':'var(--text)'}">${openA.length}</div><div class="slbl">Open Tasks</div></div>`;
 const tv=document.getElementById('today-visits');
@@ -430,9 +468,9 @@ function renderOEMView(){const el=document.getElementById('home-oem-view');if(!d
 function renderLocView(){const el=document.getElementById('home-loc-view');if(!db.visits.length){el.innerHTML=`<div class="empty"><div class="ei">📍</div><h3>No visits yet</h3></div>`;return;}const cityMap={};db.visits.forEach(v=>{const city=v.visitLocation||'Unknown';if(!cityMap[city])cityMap[city]={visits:[],oems:new Set()};cityMap[city].visits.push(v);const oem=db.oems.find(o=>o.id===v.oemId);if(oem)cityMap[city].oems.add(oem.name);});const sorted=Object.entries(cityMap).sort((a,b)=>b[1].visits.length-a[1].visits.length);el.innerHTML=sorted.map(([city,data])=>{const lastV=[...data.visits].sort((a,b)=>b.date.localeCompare(a.date))[0];const tc={};data.visits.forEach(v=>[...(v.topics||[]),...(v.customTopics||[])].forEach(t=>tc[t]=(tc[t]||0)+1));const topT=Object.entries(tc).sort((a,b)=>b[1]-a[1]).slice(0,3);const oemList=[...data.oems].slice(0,3).join(', ')+(data.oems.size>3?` +${data.oems.size-3} more`:'');return`<div class="card" style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:7px"><div><div style="font-size:15px;font-weight:700">📍 ${city}</div><div class="mono" style="font-size:11px;color:var(--soft);margin-top:2px">${data.visits.length} visit${data.visits.length!==1?'s':''} · ${data.oems.size} OEM${data.oems.size!==1?'s':''}</div></div><div class="mono" style="font-size:10px;color:var(--muted);text-align:right">${fmtDate(lastV.date)}</div></div><div style="font-size:12px;color:var(--soft);margin-bottom:8px">${oemList}</div>${topT.length?`<div style="display:flex;flex-wrap:wrap;gap:5px">${topT.map(([t,c])=>`<span class="tag" style="font-size:11px">${t} <span style="opacity:.6">${c}×</span></span>`).join('')}</div>`:''}</div>`;}).join('');}
 function initNewVisit(){visitType='visit';selectedTopics=[];document.getElementById('tb-visit').classList.add('active');document.getElementById('tb-call').classList.remove('active');document.getElementById('v-date').value=todayStr();['v-notes','v-next'].forEach(id=>document.getElementById(id).value='');document.getElementById('v-oem').value='';document.getElementById('open-banner').style.display='none';document.getElementById('ai-list').innerHTML='';document.getElementById('v-person-wrap').style.display='none';document.getElementById('v-loc-wrap').style.display='none';document.getElementById('v-new-contact-form').style.display='none';document.getElementById('topic-tags').innerHTML='';document.getElementById('topic-custom-inp').value='';const sel=document.getElementById('v-oem');sel.innerHTML='<option value="">Select...</option>'+[...db.oems].sort((a,b)=>a.name.localeCompare(b.name)).map(o=>`<option value="${o.id}">${o.name}${o.code?' ('+o.code+')':''}</option>`).join('');renderTopicDropdown();}
 function setType(t){visitType=t;document.getElementById('tb-visit').classList.toggle('active',t==='visit');document.getElementById('tb-call').classList.toggle('active',t==='call');}
-function renderTopicDropdown(){const sel=document.getElementById('topic-sel');sel.innerHTML='<option value="">Add a topic...</option>'+DEFAULT_TOPICS.filter(t=>!selectedTopics.includes(t)).map(t=>`<option value="${t}">${t}</option>`).join('');}
+function renderTopicDropdown(search=''){const all=allTopics().filter(t=>!selectedTopics.includes(t)&&(!search||t.toLowerCase().includes(search.toLowerCase())));const sel=document.getElementById('topic-sel');sel.innerHTML='<option value="">Add a topic...</option>'+all.map(t=>`<option value="${t}">${t}</option>`).join('');}
 function addTopicFromDrop(sel){const v=sel.value;if(!v)return;if(!selectedTopics.includes(v)){selectedTopics.push(v);renderTopicTags();renderTopicDropdown();}sel.value='';}
-function addCustomTopicNew(){const inp=document.getElementById('topic-custom-inp');const v=inp.value.trim();if(!v)return;if(!selectedTopics.includes(v)){selectedTopics.push(v);renderTopicTags();}inp.value='';}
+function addCustomTopicNew(){const inp=document.getElementById('topic-custom-inp');const v=inp.value.trim();if(!v)return;if(!selectedTopics.includes(v))selectedTopics.push(v);if(!allTopics().includes(v)){if(!db.savedTopics)db.savedTopics=[];db.savedTopics.push(v);saveLocal();}renderTopicTags();renderTopicDropdown();inp.value='';}
 function removeTopic(t){selectedTopics=selectedTopics.filter(x=>x!==t);renderTopicTags();renderTopicDropdown();}
 function renderTopicTags(){document.getElementById('topic-tags').innerHTML=selectedTopics.map(t=>`<span class="topic-tag">${t}<span class="rm" onclick="removeTopic('${t}')">×</span></span>`).join('');}
 function onOEMSelect(){const oemId=document.getElementById('v-oem').value;const banner=document.getElementById('open-banner');const pWrap=document.getElementById('v-person-wrap');const lWrap=document.getElementById('v-loc-wrap');if(!oemId){banner.style.display='none';pWrap.style.display='none';lWrap.style.display='none';return;}const oem=db.oems.find(o=>o.id===oemId);const locs=(oem?.locations||[]).filter(l=>l.city);if(locs.length){const ls=document.getElementById('v-loc');ls.innerHTML='<option value="">Select location...</option>'+locs.map(l=>`<option value="${l.city}">${l.city}</option>`).join('');lWrap.style.display='block';}else{lWrap.style.display='none';}const contacts=oem?.contacts||[];const ps=document.getElementById('v-person');ps.innerHTML='<option value="">Select contact...</option>'+contacts.map(c=>`<option value="${c.name}">${c.name}${c.position?' — '+c.position:''}${c.location?' ('+c.location+')':''}</option>`).join('')+'<option value="__new__">+ Add new contact...</option>';pWrap.style.display='block';document.getElementById('v-new-contact-form').style.display='none';const today=todayStr();const vids=db.visits.filter(v=>v.oemId===oemId).map(v=>v.id);const open=db.actions.filter(a=>vids.includes(a.visitId)&&a.status==='open');if(!open.length){banner.style.display='none';return;}banner.style.display='block';banner.innerHTML=`<div class="banner"><div class="bnr-ttl">⚠️ ${open.length} open item${open.length>1?'s':''} from previous visits</div>${open.map(a=>{const od=a.dueDate&&a.dueDate<today;return`<div class="bnr-item"><button class="astat ${a.status==='closed'?'done':''}" style="margin-top:0" onclick="toggleAction('${a.id}',event)"></button><div class="ainfo"><div class="adesc" style="font-size:13px">${a.description}</div>${a.dueDate?`<div class="ameta ${od?'overdue':''}">${od?'Overdue · ':''}Due ${fmtDate(a.dueDate)}</div>`:''}</div></div>`;}).join('')}</div>`;}
@@ -468,6 +506,80 @@ function todayStr(){return new Date().toISOString().split('T')[0];}
 function fmtDate(d){if(!d)return'—';return new Date(d+'T00:00:00').toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});}
 function fmtTime(d){return d.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});}
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
+// ── REPORTS ──
+let rptWAText='';
+function initReports(){
+  rptMode='day';
+  document.getElementById('rpt-day-btn').classList.add('active');
+  document.getElementById('rpt-month-btn').classList.remove('active');
+  document.getElementById('rpt-day-wrap').style.display='block';
+  document.getElementById('rpt-month-wrap').style.display='none';
+  document.getElementById('rpt-date').value=todayStr();
+  document.getElementById('rpt-wa-btn').style.display='none';
+  document.getElementById('rpt-content').innerHTML='';
+  renderReport();
+}
+function setRptMode(m){
+  rptMode=m;
+  document.getElementById('rpt-day-btn').classList.toggle('active',m==='day');
+  document.getElementById('rpt-month-btn').classList.toggle('active',m==='month');
+  document.getElementById('rpt-day-wrap').style.display=m==='day'?'block':'none';
+  document.getElementById('rpt-month-wrap').style.display=m==='month'?'block':'none';
+  renderReport();
+}
+function renderReport(){
+  const el=document.getElementById('rpt-content');
+  let visits=[];
+  let label='';
+  if(rptMode==='day'){
+    const d=document.getElementById('rpt-date').value; if(!d)return;
+    visits=db.visits.filter(v=>v.date===d);
+    label=fmtDate(d);
+  } else {
+    const m=document.getElementById('rpt-month').value; if(!m)return;
+    visits=db.visits.filter(v=>v.date.startsWith(m));
+    const [yr,mo]=m.split('-');
+    label=new Date(yr,parseInt(mo)-1,1).toLocaleDateString('en-IN',{month:'long',year:'numeric'});
+  }
+  document.getElementById('rpt-wa-btn').style.display=visits.length?'block':'none';
+  if(!visits.length){el.innerHTML=`<div class="empty"><div class="ei">📭</div><h3>No visits found</h3><p>No reports for ${label}</p></div>`;rptWAText='';return;}
+  // Build summary text (also used for WA)
+  let txt=`📊 *Visit Summary — ${label}*\n`;
+  txt+=`Total: ${visits.length} report${visits.length!==1?'s':''}\n\n`;
+  visits.sort((a,b)=>a.date.localeCompare(b.date)).forEach(v=>{
+    const oem=db.oems.find(o=>o.id===v.oemId);
+    const topics=[...(v.topics||[]),...(v.customTopics||[])];
+    const acts=db.actions.filter(a=>a.visitId===v.id);
+    txt+=`${v.type==='visit'?'📍':'📞'} *${oem?.name||'Unknown'}*`;
+    if(rptMode==='month') txt+=` — ${fmtDate(v.date)}`;
+    txt+='\n';
+    if(v.visitLocation) txt+=`  📍 ${v.visitLocation}\n`;
+    if(v.personMet) txt+=`  👤 ${v.personMet}\n`;
+    if(topics.length) txt+=`  Topics: ${topics.join(', ')}\n`;
+    if(v.notes) txt+=`  Notes: ${v.notes}\n`;
+    if(acts.length) txt+=`  Tasks: ${acts.map(a=>a.description+(a.status==='closed'?' ✓':'')).join(' | ')}\n`;
+    txt+='\n';
+  });
+  rptWAText=txt.trim();
+  el.innerHTML=visits.map(v=>{
+    const oem=db.oems.find(o=>o.id===v.oemId);
+    const topics=[...(v.topics||[]),...(v.customTopics||[])];
+    const acts=db.actions.filter(a=>a.visitId===v.id);
+    return `<div class="vcard" onclick="showDetail('${v.id}')" style="margin-bottom:9px">
+      <div class="vcard-top"><div class="vcard-name">${oem?.name||'Unknown'}</div><span class="badge ${v.type==='visit'?'bv':'bc'}">${v.type==='visit'?'📍':'📞'} ${rptMode==='month'?fmtDate(v.date):v.type==='visit'?'Visit':'Call'}</span></div>
+      ${v.visitLocation||v.personMet?`<div class="vcard-meta">${v.visitLocation?'📍'+v.visitLocation:''}${v.personMet?' · 👤'+v.personMet:''}</div>`:''}
+      ${topics.length?`<div class="vcard-sub">${topics.join(' · ')}</div>`:''}
+      ${acts.length?`<div class="vcard-sub" style="color:${acts.some(a=>a.status==='open')?'var(--amber)':'var(--muted)'}">📌 ${acts.length} task${acts.length!==1?'s':''} · ${acts.filter(a=>a.status==='open').length} open</div>`:''}
+    </div>`;
+  }).join('');
+}
+function shareReportWA(){
+  if(!rptWAText){showToast('Nothing to share');return;}
+  navigator.clipboard.writeText(rptWAText).then(()=>showToast('Summary copied for WhatsApp ✓')).catch(()=>{
+    const ta=document.createElement('textarea');ta.value=rptWAText;ta.style.cssText='position:fixed;opacity:0';document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);showToast('Summary copied ✓');
+  });
+}
+
 loadLocal();renderHome();if('Notification'in window&&Notification.permission==='default')Notification.requestPermission();loadFromGitHub();
 </script>
 </body>
