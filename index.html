@@ -1,1271 +1,1627 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>OEM Visit Tracker</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+<meta http-equiv="Pragma" content="no-cache"/>
+<meta http-equiv="Expires" content="0"/>
+<title>Lead Tracker – BFL OEM v2.5</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <style>
-:root{
-  --bg:#f2f0eb;--surface:#fff;--navy:#0f1923;--navy2:#1a2c3d;
-  --amber:#f59e0b;--amber-d:#d97706;--green:#10b981;--red:#ef4444;
-  --muted:#6b7280;--border:#e2dfd7;--text:#0f1923;--soft:#4b5563;
-  --shadow:0 2px 8px rgba(0,0,0,.07);--r:12px;--nav:64px;
+:root {
+  --bg: #0f1117;
+  --surface: #1a1d27;
+  --surface2: #22263a;
+  --border: #2e3350;
+  --accent: #f5c842;
+  --accent2: #e8a020;
+  --text: #e8eaf0;
+  --muted: #7c82a0;
+  --green: #3ecf8e;
+  --red: #f66;
+  --blue: #5b8df5;
+  --orange: #f5934a;
+  --radius: 12px;
+  --font: 'DM Sans', sans-serif;
 }
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{font-family:'Syne',sans-serif;background:var(--bg);color:var(--text);max-width:480px;margin:0 auto;min-height:100vh}
-.screen{display:none;min-height:100vh;padding-bottom:calc(var(--nav)+24px)}
-.screen.active{display:block}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font-family: var(--font); font-size: 14px; min-height: 100vh; }
 
-/* HEADER */
-.hdr{background:var(--navy);color:#fff;padding:14px 18px 13px;position:sticky;top:0;z-index:20}
-.hdr-row{display:flex;align-items:center;justify-content:space-between}
-.hdr h1{font-size:17px;font-weight:700;letter-spacing:-.3px}
-.hdr .sub{font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,.45);margin-top:2px}
-.hdr-acts{display:flex;gap:6px}
-.icon-btn{width:36px;height:36px;background:rgba(255,255,255,.1);border:none;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#fff;flex-shrink:0}
-.back-btn{background:none;border:none;color:rgba(255,255,255,.8);display:flex;align-items:center;gap:5px;font-family:'Syne',sans-serif;font-size:14px;font-weight:600;cursor:pointer;padding:0}
+/* NAV */
+.nav { background: var(--surface); border-bottom: 1px solid var(--border); padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+.nav-brand { font-family: 'DM Serif Display', serif; font-size: 19px; color: var(--accent); letter-spacing: -0.3px; }
+.nav-brand span { color: var(--muted); font-size: 11px; display: block; font-family: var(--font); font-weight: 400; letter-spacing: 0; }
+.nav-actions { display: flex; gap: 8px; }
+.btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 8px; border: none; cursor: pointer; font-family: var(--font); font-size: 13px; font-weight: 500; transition: all .15s; }
+.btn-primary { background: var(--accent); color: #111; }
+.btn-primary:hover { background: var(--accent2); }
+.btn-ghost { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
+.btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+.btn-sm { padding: 5px 10px; font-size: 12px; }
+.btn-icon { padding: 8px; border-radius: 8px; background: var(--surface2); border: 1px solid var(--border); color: var(--muted); cursor: pointer; transition: all .15s; font-size: 16px; }
+.btn-icon:hover { color: var(--accent); border-color: var(--accent); }
 
-/* BOTTOM NAV */
-.bnav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;height:var(--nav);background:var(--navy);display:flex;align-items:center;z-index:100}
-.nitem{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:rgba(255,255,255,.38);cursor:pointer;padding:6px 0;transition:color .15s}
-.nitem.active{color:var(--amber)}
-.nitem svg{width:22px;height:22px}
-.nitem span{font-size:10px;font-weight:700;letter-spacing:.5px}
+/* TABS */
+.tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); background: var(--surface); padding: 0 16px; overflow-x: auto; }
+.tab { padding: 12px 16px; font-size: 13px; font-weight: 500; color: var(--muted); cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap; transition: all .15s; }
+.tab.active { color: var(--accent); border-bottom-color: var(--accent); }
 
-/* SYNC INDICATOR */
-.sync-bar{display:flex;align-items:center;gap:6px;padding:6px 18px;font-family:'DM Mono',monospace;font-size:11px;background:rgba(255,255,255,.06);color:rgba(255,255,255,.5)}
-.sync-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.25)}
-.sync-dot.ok{background:var(--green)}
-.sync-dot.err{background:var(--red)}
-.sync-dot.busy{background:var(--amber);animation:pulse .8s infinite}
-
-/* CARDS */
-.card{background:var(--surface);border-radius:var(--r);padding:15px;box-shadow:var(--shadow)}
-.sec{padding:14px 15px 0}
-.sec-lbl{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:9px}
-
-/* BUTTONS */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:13px 20px;border-radius:10px;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;border:none;cursor:pointer;transition:all .15s;letter-spacing:.2px;width:100%}
-.btn-primary{background:var(--amber);color:var(--navy)}
-.btn-primary:active{background:var(--amber-d);transform:scale(.98)}
-.btn-ghost{background:transparent;color:var(--soft);padding:8px 2px;font-size:13px;width:auto}
-.btn-danger{background:#fee2e2;color:var(--red)}
-.btn-outline{background:transparent;border:1.5px solid var(--border);color:var(--soft)}
-.fab{position:fixed;bottom:calc(var(--nav)+14px);right:18px;width:54px;height:54px;background:var(--amber);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 18px rgba(245,158,11,.38);cursor:pointer;border:none;z-index:50}
-
-/* FORMS */
-.fg{margin-bottom:14px}
-.flbl{display:block;font-size:11px;font-weight:700;letter-spacing:.5px;color:var(--soft);margin-bottom:6px;text-transform:uppercase}
-.finput,.fsel,.fta{width:100%;padding:12px 14px;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;font-family:'Syne',sans-serif;font-size:15px;color:var(--text);outline:none;transition:border-color .15s;-webkit-appearance:none}
-.finput:focus,.fsel:focus,.fta:focus{border-color:var(--amber)}
-.fta{min-height:80px;resize:vertical;line-height:1.55}
-.fsel{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px}
-.frow{display:flex;gap:9px}
-.frow .fg{flex:1;margin-bottom:0}
-
-/* TOGGLE GROUP */
-.ttog{display:flex;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:4px;gap:4px}
-.ttog-btn{flex:1;padding:10px;border:none;border-radius:8px;background:transparent;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--muted);cursor:pointer;transition:all .15s}
-.ttog-btn.active{background:var(--navy);color:#fff}
-
-/* VOICE */
-.vwrap{position:relative}
-.vwrap .fta{padding-right:52px}
-.mic-btn{position:absolute;right:10px;top:10px;width:34px;height:34px;background:var(--navy);border:none;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer}
-.mic-btn.on{background:var(--red);animation:pulse 1s infinite}
-@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,.4)}50%{box-shadow:0 0 0 8px rgba(239,68,68,0)}}
-
-/* TOPICS */
-.tgrid{display:flex;flex-direction:column;gap:8px}
-.titem{display:flex;align-items:center;gap:10px;padding:11px 14px;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;cursor:pointer;transition:all .15s;user-select:none}
-.titem.chk{background:#fff8eb;border-color:var(--amber)}
-.tbox{width:20px;height:20px;border-radius:6px;border:2px solid var(--border);background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s}
-.titem.chk .tbox{background:var(--amber);border-color:var(--amber)}
-.tbox svg{width:11px;height:11px;color:#fff;display:none}
-.titem.chk .tbox svg{display:block}
-.ttxt{font-size:14px;font-weight:600;flex:1}
-
-/* ACTION ITEMS */
-.ai-row{display:flex;gap:7px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--border)}
-.ai-row:last-child{border-bottom:none}
-.astat{width:22px;height:22px;border-radius:50%;border:2px solid var(--border);background:#fff;cursor:pointer;flex-shrink:0;margin-top:3px;transition:all .15s}
-.astat.done{background:var(--green);border-color:var(--green)}
-.ainfo{flex:1}
-.adesc{font-size:14px;font-weight:600;line-height:1.4}
-.adesc.done{text-decoration:line-through;color:var(--muted)}
-.ameta{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);margin-top:3px}
-.overdue{color:var(--red)!important}
-.aiform{display:flex;gap:7px;margin-bottom:8px;align-items:flex-start}
-.aiform .finput{padding:11px 12px;font-size:14px}
-.aidate{width:136px;flex-shrink:0;font-size:13px!important}
-.rm-btn{width:40px;height:44px;background:#fee2e2;border:none;border-radius:10px;color:var(--red);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-
-/* VISIT CARDS */
-.vcard{background:var(--surface);border-radius:var(--r);padding:14px 15px;box-shadow:var(--shadow);margin-bottom:9px;cursor:pointer;position:relative}
-.vcard-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:5px}
-.vcard-name{font-size:15px;font-weight:700}
-.badge{font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px}
-.bv{background:#dbeafe;color:#1d4ed8}.bc{background:#d1fae5;color:#065f46}
-.bmed{background:#fce7f3;color:#9d174d}.bind{background:#ede9fe;color:#5b21b6}
-.boem{background:#dcfce7;color:#166534}.bdlr{background:#fff7ed;color:#9a3412}
-.vcard-meta{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted)}
-.vcard-topics{font-size:12px;color:var(--soft);margin-top:5px;line-height:1.5}
-
-/* OEM LIST */
-.oitem{display:flex;align-items:center;gap:12px;padding:13px 15px;background:var(--surface);border-radius:var(--r);box-shadow:var(--shadow);margin-bottom:9px;cursor:pointer}
-.oavatar{width:44px;height:44px;background:var(--navy);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:var(--amber);flex-shrink:0;font-family:'DM Mono',monospace;letter-spacing:-.5px}
-.oinfo{flex:1;min-width:0}
-.oname{font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ometa{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);margin-top:2px}
-.obadges{display:flex;gap:4px;margin-top:5px;flex-wrap:wrap}
-
-/* DYNAMIC LIST (locations / contacts) */
-.dyn-item{background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:12px;margin-bottom:8px;position:relative}
-.dyn-item .rm-btn{position:absolute;top:10px;right:10px;width:30px;height:30px}
-.dyn-lbl{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+/* MAIN */
+.main { padding: 16px; max-width: 900px; margin: 0 auto; }
 
 /* STATS */
-.stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px;padding:12px 15px}
-.scard{background:var(--surface);border-radius:10px;padding:12px 10px;text-align:center;box-shadow:var(--shadow)}
-.snum{font-family:'DM Mono',monospace;font-size:24px;font-weight:500;color:var(--navy);line-height:1}
-.slbl{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);margin-top:4px}
+.stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 16px; }
+@media (min-width: 600px) { .stats { grid-template-columns: repeat(4, 1fr); } }
+.stat { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px; }
+.stat-val { font-size: 24px; font-weight: 600; color: var(--accent); }
+.stat-label { font-size: 11px; color: var(--muted); margin-top: 2px; text-transform: uppercase; letter-spacing: .5px; }
 
-/* SEARCH */
-.swrap{padding:12px 15px 0;position:relative}
-.swrap svg{position:absolute;left:27px;top:22px;width:16px;height:16px;color:var(--muted)}
-.sinput{width:100%;padding:11px 14px 11px 38px;background:var(--surface);border:1.5px solid var(--border);border-radius:10px;font-family:'Syne',sans-serif;font-size:14px;color:var(--text);outline:none}
-.sinput:focus{border-color:var(--amber)}
+/* FILTERS */
+.filters { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+.filter-select { background: var(--surface); border: 1px solid var(--border); color: var(--text); border-radius: 8px; padding: 7px 10px; font-family: var(--font); font-size: 13px; flex: 1; min-width: 120px; }
+.search-box { background: var(--surface); border: 1px solid var(--border); color: var(--text); border-radius: 8px; padding: 7px 12px; font-family: var(--font); font-size: 13px; flex: 2; min-width: 140px; }
+.search-box::placeholder { color: var(--muted); }
 
-/* DETAIL */
-.dtl-sec{padding:10px 15px}
-.dtl-lbl{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:7px}
-.dtl-box{background:var(--surface);border-radius:10px;padding:13px;font-size:14px;line-height:1.6;box-shadow:var(--shadow)}
-.tags{display:flex;flex-wrap:wrap;gap:6px}
-.tag{padding:4px 10px;background:#fff8eb;border:1px solid var(--amber);border-radius:20px;font-size:12px;font-weight:600;color:var(--navy)}
+/* LEAD CARDS */
+.leads-list { display: flex; flex-direction: column; gap: 10px; }
+.lead-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px; cursor: pointer; transition: all .15s; position: relative; }
+.lead-card:hover { border-color: var(--accent); }
+.lead-card.overdue { border-left: 3px solid var(--red); }
+.lead-card.due-today { border-left: 3px solid var(--orange); }
+.lead-card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+.lead-company { font-size: 15px; font-weight: 600; color: var(--text); }
+.lead-customer { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.lead-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
+.tag { padding: 3px 8px; border-radius: 20px; font-size: 11px; font-weight: 500; }
+.tag-stage { background: #1e2a4a; color: var(--blue); }
+.tag-priority-high { background: #3a1a1a; color: var(--red); }
+.tag-priority-medium { background: #3a2a10; color: var(--orange); }
+.tag-priority-low { background: #1a2a1a; color: var(--green); }
+.tag-oem { background: var(--surface2); color: var(--muted); }
+.tag-amount { background: #2a2210; color: var(--accent); }
+.lead-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 10px; }
+.lead-followup { font-size: 11px; }
+.lead-followup.overdue { color: var(--red); }
+.lead-followup.due-today { color: var(--orange); }
+.lead-followup.upcoming { color: var(--green); }
+.lead-followup.none { color: var(--muted); }
+.lead-age { font-size: 11px; color: var(--muted); }
 
-/* CONTACT CARD */
-.ccard{background:var(--surface);border-radius:10px;padding:12px 14px;box-shadow:var(--shadow);margin-bottom:8px}
-.ccard-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:3px}
-.ccard-name{font-size:14px;font-weight:700}
-.ccard-loc{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted)}
-.ccard-note{font-size:12px;color:var(--soft);margin-top:5px;font-style:italic}
-
-/* BANNER */
-.banner{margin:10px 15px;padding:12px 14px;background:#fff8eb;border:1.5px solid var(--amber);border-radius:10px}
-.bnr-ttl{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--amber-d);margin-bottom:8px}
-.bnr-item{display:flex;align-items:center;gap:9px;padding:7px 0;border-bottom:1px solid rgba(245,158,11,.18)}
-.bnr-item:last-child{border-bottom:none;padding-bottom:0}
-
-/* EMPTY */
-.empty{text-align:center;padding:44px 24px;color:var(--muted)}
-.empty .ei{font-size:38px;margin-bottom:10px}
-.empty h3{font-size:15px;font-weight:700;margin-bottom:5px;color:var(--soft)}
-.empty p{font-size:13px;line-height:1.5}
-
-/* TOAST */
-.toast{position:fixed;bottom:calc(var(--nav)+12px);left:50%;transform:translateX(-50%) translateY(80px);background:var(--navy);color:#fff;padding:11px 20px;border-radius:50px;font-size:13px;font-weight:700;z-index:9999;transition:transform .25s;white-space:nowrap;pointer-events:none}
-.toast.show{transform:translateX(-50%) translateY(0)}
+/* BADGE */
+.status-badge { padding: 3px 8px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+.status-active { background: #0d2b1f; color: var(--green); }
+.status-lost { background: #2b0d0d; color: var(--red); }
+.status-hold { background: #2b2010; color: var(--orange); }
+.status-won { background: #102b20; color: #6effc2; }
 
 /* MODAL */
-.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:flex-end;justify-content:center}
-.modal-bg.open{display:flex}
-.modal{background:var(--surface);border-radius:18px 18px 0 0;padding:20px 18px 32px;width:100%;max-width:480px}
-.modal h2{font-size:17px;font-weight:700;margin-bottom:16px}
+.overlay { position: fixed; inset: 0; background: rgba(0,0,0,.7); z-index: 200; display: none; align-items: flex-end; justify-content: center; }
+.overlay.open { display: flex; }
+.modal { background: var(--surface); border-radius: 20px 20px 0 0; width: 100%; max-width: 640px; max-height: 92vh; overflow-y: auto; padding: 20px; animation: slideUp .2s ease; }
+@media (min-width: 640px) { .overlay { align-items: center; } .modal { border-radius: 20px; max-height: 88vh; } }
+@keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+.modal-handle { width: 40px; height: 4px; background: var(--border); border-radius: 2px; margin: 0 auto 16px; }
+.modal-title { font-family: 'DM Serif Display', serif; font-size: 20px; color: var(--accent); margin-bottom: 18px; }
 
-/* SUBCAT CHIPS */
-.subcat-grid{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:0}
-.subcat-chip{padding:7px 13px;background:var(--bg);border:1.5px solid var(--border);border-radius:20px;font-size:13px;font-weight:600;color:var(--soft);cursor:pointer;transition:all .15s;user-select:none}
-.subcat-chip.selected{background:#fff8eb;border-color:var(--amber);color:var(--navy)}
+/* FORM */
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.form-full { grid-column: 1 / -1; }
+.form-group { display: flex; flex-direction: column; gap: 5px; }
+label { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
+input, select, textarea { background: var(--bg); border: 1px solid var(--border); color: var(--text); border-radius: 8px; padding: 9px 12px; font-family: var(--font); font-size: 14px; width: 100%; transition: border .15s; }
+input:focus, select:focus, textarea:focus { outline: none; border-color: var(--accent); }
+select option { background: var(--bg); }
+textarea { resize: vertical; min-height: 60px; }
+.form-actions { display: flex; gap: 10px; margin-top: 18px; }
+.form-actions .btn { flex: 1; justify-content: center; }
 
-/* STICKY SAVE BAR */
-.save-bar{position:sticky;bottom:calc(var(--nav));background:var(--surface);padding:12px 15px;border-top:1px solid var(--border);z-index:10;margin-top:10px}
+/* SETTINGS PANEL */
+.settings-panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; margin-bottom: 16px; }
+.settings-panel h3 { font-size: 13px; font-weight: 600; color: var(--accent); margin-bottom: 12px; text-transform: uppercase; letter-spacing: .5px; }
+.settings-note { font-size: 11px; color: var(--muted); margin-top: 8px; line-height: 1.5; }
+.settings-note a { color: var(--blue); }
 
-.p15{padding:15px}
-.mono{font-family:'DM Mono',monospace}
-.divider{height:1px;background:var(--border);margin:14px 0}
+/* DETAIL VIEW */
+.detail-section { margin-bottom: 16px; }
+.detail-section h4 { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; font-weight: 600; margin-bottom: 8px; }
+.detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.detail-item label { font-size: 10px; color: var(--muted); display: block; }
+.detail-item span { font-size: 14px; color: var(--text); }
+.detail-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px; border-top: 1px solid var(--border); padding-top: 16px; }
+
+/* TOAST */
+.toast { position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); background: var(--surface2); border: 1px solid var(--border); color: var(--text); padding: 10px 18px; border-radius: 30px; font-size: 13px; font-weight: 500; z-index: 500; display: none; animation: fadeIn .2s; box-shadow: 0 4px 20px rgba(0,0,0,.4); }
+.toast.show { display: block; }
+.toast.success { border-color: var(--green); color: var(--green); }
+.toast.error { border-color: var(--red); color: var(--red); }
+@keyframes fadeIn { from { opacity: 0; transform: translateX(-50%) translateY(10px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
+
+/* SYNC INDICATOR */
+.sync-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; background: var(--muted); }
+.sync-dot.ok { background: var(--green); }
+.sync-dot.err { background: var(--red); }
+.sync-dot.syncing { background: var(--orange); animation: pulse .8s infinite; }
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .3; } }
+
+/* EMPTY STATE */
+.empty { text-align: center; padding: 48px 16px; }
+.empty-icon { font-size: 40px; margin-bottom: 12px; }
+.empty h3 { font-size: 16px; color: var(--text); margin-bottom: 6px; }
+.empty p { color: var(--muted); font-size: 13px; }
+
+/* SHARE MODAL */
+.share-box { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 12px; font-size: 12px; color: var(--muted); white-space: pre-wrap; word-break: break-word; max-height: 200px; overflow-y: auto; line-height: 1.6; }
+
+/* MULTI SELECT LOCATION */
+.multi-select-wrap { position: relative; flex: 1; min-width: 140px; }
+.multi-select-btn { width: 100%; text-align: left; display: flex; justify-content: space-between; align-items: center; cursor: pointer; background: var(--surface); border: 1px solid var(--border); color: var(--text); border-radius: 8px; padding: 7px 10px; font-family: var(--font); font-size: 13px; }
+.multi-select-btn:hover { border-color: var(--accent); }
+.multi-select-list { display: none; position: absolute; top: calc(100% + 4px); left: 0; right: 0; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; z-index: 150; max-height: 220px; overflow-y: auto; padding: 4px 0; box-shadow: 0 8px 24px rgba(0,0,0,.4); min-width: 180px; }
+.multi-select-list.open { display: block; }
+.multi-select-item { display: flex; align-items: center; gap: 8px; padding: 8px 12px; font-size: 13px; color: var(--text); cursor: pointer; }
+.multi-select-item:hover { background: var(--surface); }
+.multi-select-item input[type=checkbox] { accent-color: var(--accent); width: 14px; height: 14px; cursor: pointer; }
+.import-drop { border: 2px dashed var(--border); border-radius: var(--radius); padding: 24px 16px; text-align: center; cursor: pointer; transition: all .2s; margin-top: 12px; }
+.import-drop:hover, .import-drop.drag { border-color: var(--accent); background: rgba(245,200,66,.04); }
+.import-drop p { color: var(--muted); font-size: 13px; margin-top: 6px; }
+.import-preview-table { width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 10px; }
+.import-preview-table th { background: var(--surface2); color: var(--muted); padding: 6px 8px; text-align: left; font-weight: 600; border-bottom: 1px solid var(--border); }
+.import-preview-table td { padding: 6px 8px; border-bottom: 1px solid var(--border); color: var(--text); white-space: nowrap; max-width: 140px; overflow: hidden; text-overflow: ellipsis; }
+.import-preview-table tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+.import-row-ok td:first-child { border-left: 3px solid var(--green); }
+.import-row-dup td:first-child { border-left: 3px solid var(--orange); }
+.import-row-err td:first-child { border-left: 3px solid var(--red); }
+.import-legend { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 8px; font-size: 11px; color: var(--muted); }
+.import-legend span::before { content: '■ '; }
+.ok-dot::before { color: var(--green); }
+.dup-dot::before { color: var(--orange); }
+.err-dot::before { color: var(--red); }
+.import-scroll { max-height: 260px; overflow: auto; border: 1px solid var(--border); border-radius: 8px; }
 </style>
 </head>
 <body>
 
-<!-- ======= HOME ======= -->
-<div id="screen-home" class="screen active">
-  <div class="hdr">
-    <div class="hdr-row">
-      <div><h1>Visit Tracker</h1><div class="sub" id="home-date"></div></div>
-      <div class="hdr-acts">
-        <button class="icon-btn" onclick="exportExcel()" title="Export Excel">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="18" height="18"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
-        </button>
-        <button class="icon-btn" onclick="manualSync()" title="Sync with GitHub" id="sync-icon-btn">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="18" height="18"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"/></svg>
-        </button>
-      </div>
-    </div>
-    <div class="sync-bar"><div class="sync-dot" id="sync-dot"></div><span id="sync-lbl">Connecting...</span></div>
-  </div>
-  <div class="stats" id="home-stats"></div>
-  <div class="sec"><div class="sec-lbl">Today's Activity</div><div id="today-visits"></div></div>
-  <div class="sec" style="margin-top:14px"><div class="sec-lbl">Pending Tasks</div><div id="pending-home"></div></div>
-  <button class="fab" onclick="navigate('new-visit')">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="24" height="24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
-  </button>
-</div>
-
-<!-- ======= NEW VISIT ======= -->
-<div id="screen-new-visit" class="screen">
-  <div class="hdr">
-    <div class="hdr-row">
-      <button class="back-btn" onclick="navigate('home')">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="17" height="17"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/></svg>Back
-      </button>
-      <h1>New Report</h1><div style="width:60px"></div>
-    </div>
-  </div>
-  <div id="open-banner" style="display:none"></div>
-  <div class="p15">
-    <div class="fg"><label class="flbl">Type</label>
-      <div class="ttog">
-        <button class="ttog-btn active" id="tb-visit" onclick="setType('visit')">📍 Visit</button>
-        <button class="ttog-btn" id="tb-call" onclick="setType('call')">📞 Call</button>
-      </div>
-    </div>
-    <div class="fg"><label class="flbl">Date</label><input type="date" class="finput" id="v-date"></div>
-    <div class="fg"><label class="flbl">OEM / Dealer</label><select class="fsel" id="v-oem" onchange="onOEMSelect()"><option value="">Select...</option></select></div>
-    <div class="fg"><label class="flbl">Topics Discussed</label>
-      <div class="tgrid" id="topic-grid"></div>
-      <button class="btn btn-ghost" onclick="addCustomTopic()" style="margin-top:8px">+ Add topic</button>
-    </div>
-    <div class="fg"><label class="flbl">Notes</label>
-      <div class="vwrap">
-        <textarea class="fta" id="v-notes" placeholder="Tap 🎤 to speak or type..."></textarea>
-        <button class="mic-btn" id="mic-btn" onclick="toggleVoice()">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z"/></svg>
-        </button>
-      </div>
-    </div>
-    <div class="fg"><label class="flbl">Action Items</label>
-      <div id="ai-list"></div>
-      <button class="btn btn-ghost" onclick="addAI()" style="margin-top:4px">+ Add action item</button>
-    </div>
-    <div class="fg"><label class="flbl">Next Visit / Follow-up Date</label><input type="date" class="finput" id="v-next"></div>
-  </div>
-  <div class="save-bar">
-    <button class="btn btn-primary" onclick="saveVisit()">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="18" height="18"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-      Save Report
-    </button>
-  </div>
-</div>
-
-<!-- ======= DIRECTORY ======= -->
-<div id="screen-directory" class="screen">
-  <div class="hdr">
-    <div class="hdr-row">
-      <h1>Directory</h1>
-      <div class="hdr-acts">
-        <button class="icon-btn" onclick="navigate('csv-import')" title="Import CSV">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="18" height="18"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
-        </button>
-        <button class="icon-btn" onclick="openOEMForm(null)">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="18" height="18"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
-        </button>
-      </div>
-    </div>
-  </div>
-  <div class="swrap">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 15.803a7.5 7.5 0 0010.607 10.607z"/></svg>
-    <input type="text" class="sinput" placeholder="Search name, code or city..." oninput="renderDir(this.value)">
-  </div>
-  <div style="padding:12px 15px" id="oem-list"></div>
-</div>
-
-<!-- ======= OEM FORM ======= -->
-<div id="screen-oem-form" class="screen">
-  <div class="hdr">
-    <div class="hdr-row">
-      <button class="back-btn" onclick="navigate('directory')">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="17" height="17"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/></svg>Back
-      </button>
-      <h1 id="oem-form-title">Add OEM</h1><div style="width:60px"></div>
-    </div>
-  </div>
-  <div class="p15">
-    <!-- Basic -->
-    <div class="fg"><label class="flbl">Name *</label><input type="text" class="finput" id="of-name" placeholder="e.g. Bajaj Auto"></div>
-    <div class="fg"><label class="flbl">Code *</label><input type="text" class="finput mono" id="of-code" placeholder="e.g. DLR-001"></div>
-    <div class="frow fg">
-      <div class="fg"><label class="flbl">Type</label>
-        <div class="ttog" style="padding:3px;gap:3px">
-          <button class="ttog-btn active" id="of-type-oem" onclick="setOEMType('OEM')">OEM</button>
-          <button class="ttog-btn" id="of-type-dlr" onclick="setOEMType('Dealer')">Dealer</button>
-        </div>
-      </div>
-      <div class="fg"><label class="flbl">Segment</label>
-        <div class="ttog" style="padding:3px;gap:3px">
-          <button class="ttog-btn active" id="of-seg-med" onclick="setOEMSeg('Medical')">Medical</button>
-          <button class="ttog-btn" id="of-seg-ind" onclick="setOEMSeg('Industrial')">Industrial</button>
-        </div>
-      </div>
-    </div>
-    <!-- Dealer OEM brands — shown only when type = Dealer -->
-    <div class="fg" id="of-dealer-oems-wrap" style="display:none">
-      <label class="flbl">OEM Brands Dealt In</label>
-      <input type="text" class="finput" id="of-dealer-oems" placeholder="e.g. Haitian, DMG Mori, Mazak">
-      <div style="font-size:11px;color:var(--muted);margin-top:5px">Comma-separated list of brands</div>
-    </div>
-
-    <!-- Subcategories — changes based on segment -->
-    <div class="fg" id="of-subcats-wrap">
-      <label class="flbl" id="of-subcats-lbl">Subcategories</label>
-      <div class="subcat-grid" id="of-subcats"></div>
-      <div style="margin-top:8px;display:flex;gap:8px;align-items:center">
-        <input type="text" class="finput" id="of-subcat-custom" placeholder="Custom subcategory" style="font-size:13px;padding:9px 12px">
-        <button class="btn btn-ghost" style="white-space:nowrap;padding:9px 4px" onclick="addCustomSubcat()">+ Add</button>
-      </div>
-    </div>
-
-    <!-- Locations -->
-    <div class="divider"></div>
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-      <label class="flbl" style="margin:0">Locations / Branches</label>
-      <button class="btn btn-ghost" style="padding:4px 0" onclick="addLocRow()">+ Add</button>
-    </div>
-    <div id="of-locs"></div>
-
-    <!-- Contacts -->
-    <div class="divider"></div>
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-      <label class="flbl" style="margin:0">Contacts</label>
-      <button class="btn btn-ghost" style="padding:4px 0" onclick="addContactRow()">+ Add</button>
-    </div>
-    <div id="of-contacts"></div>
-
-    <!-- Notes -->
-    <div class="divider"></div>
-    <div class="fg"><label class="flbl">Notes / Remarks</label>
-      <textarea class="fta" id="of-notes" placeholder="e.g. Closed subvention deal at 10% and 0.5% PF"></textarea>
-    </div>
-  </div>
-  <div class="save-bar">
-    <button class="btn btn-primary" onclick="saveOEM()">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="18" height="18"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-      Save OEM
-    </button>
-    <button class="btn btn-danger" id="del-oem-btn" style="margin-top:10px;display:none" onclick="deleteOEM()">Delete OEM</button>
-  </div>
-</div>
-
-<!-- ======= OEM DETAIL ======= -->
-<div id="screen-oem-detail" class="screen">
-  <div class="hdr">
-    <div class="hdr-row">
-      <button class="back-btn" onclick="navigate('directory')">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="17" height="17"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/></svg>Back
-      </button>
-      <h1 id="oem-detail-title">OEM</h1>
-      <button class="icon-btn" id="edit-oem-btn" onclick="">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="18" height="18"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"/></svg>
-      </button>
-    </div>
-  </div>
-  <div id="oem-detail-content"></div>
-</div>
-
-<!-- ======= ACTIONS ======= -->
-<div id="screen-actions" class="screen">
-  <div class="hdr">
-    <div class="hdr-row">
-      <h1>Action Items</h1>
-      <div class="hdr-acts">
-        <button class="icon-btn" id="btn-filter-open" onclick="setFilter('open')" style="background:var(--amber);color:var(--navy)">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="16" height="16"><circle cx="12" cy="12" r="9"/></svg>
-        </button>
-        <button class="icon-btn" id="btn-filter-all" onclick="setFilter('all')">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM3.75 12h.007v.008H3.75V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-.375 5.25h.007v.008H3.75v-.008zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/></svg>
-        </button>
-      </div>
-    </div>
-  </div>
-  <div style="padding:12px 15px" id="actions-list"></div>
-</div>
-
-<!-- ======= VISIT DETAIL ======= -->
-<div id="screen-visit-detail" class="screen">
-  <div class="hdr">
-    <div class="hdr-row">
-      <button class="back-btn" onclick="navigate('home')">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="17" height="17"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/></svg>Back
-      </button>
-      <h1>Report</h1>
-      <button class="icon-btn" onclick="copyWA()">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="18" height="18"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.375"/></svg>
-      </button>
-    </div>
-  </div>
-  <div id="detail-content"></div>
-</div>
-
-<!-- ======= CSV IMPORT ======= -->
-<div id="screen-csv-import" class="screen">
-  <div class="hdr">
-    <div class="hdr-row">
-      <button class="back-btn" onclick="navigate('directory')">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="17" height="17"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/></svg>Back
-      </button>
-      <h1>CSV Import</h1><div style="width:60px"></div>
-    </div>
-  </div>
-  <div class="p15">
-    <div class="card" style="margin-bottom:16px;background:#fff8eb;border:1.5px solid var(--amber)">
-      <div style="font-size:13px;line-height:1.6;color:var(--navy)">
-        <strong>Step 1:</strong> Download the template below<br>
-        <strong>Step 2:</strong> Fill it in on your laptop<br>
-        <strong>Step 3:</strong> Upload the filled CSV here
-      </div>
-    </div>
-    <button class="btn btn-outline" onclick="downloadXLSXTemplate()" style="margin-bottom:12px">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="18" height="18"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
-      Download Template (.xlsx)
-    </button>
-    <div class="fg"><label class="flbl">Upload Filled File (.xlsx or .csv)</label>
-      <input type="file" accept=".csv,.xlsx,.xls" id="csv-upload" onchange="importFile(this)" style="padding:10px;background:var(--bg);border:1.5px dashed var(--border);border-radius:10px;width:100%;font-family:'Syne',sans-serif;font-size:13px">
-    </div>
-    <div id="csv-preview" style="margin-top:8px"></div>
-  </div>
-</div>
-
-<!-- BOTTOM NAV -->
-<nav class="bnav">
-  <div class="nitem active" id="nav-home" onclick="navigate('home')">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"/></svg>
-    <span>Home</span>
-  </div>
-  <div class="nitem" id="nav-directory" onclick="navigate('directory')">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z"/></svg>
-    <span>OEMs</span>
-  </div>
-  <div class="nitem" id="nav-actions" onclick="navigate('actions')">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-    <span>Tasks</span>
-  </div>
-</nav>
-
+<!-- TOAST -->
 <div class="toast" id="toast"></div>
 
+<!-- NAV -->
+<div class="nav">
+  <div class="nav-brand">
+    LeadTrack
+    <span>BFL OEM South India</span>
+  </div>
+  <div class="nav-actions">
+    <div class="sync-dot" id="syncDot" title="Sync status"></div>
+    <button class="btn-icon" onclick="openSettings()" title="Settings">⚙️</button>
+    <button class="btn btn-primary" onclick="openAddLead()">+ Add</button>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <div class="tab active" onclick="setTab('all',this)">All Leads</div>
+  <div class="tab" onclick="setTab('followup',this)">Follow-up Due</div>
+  <div class="tab" onclick="setTab('active',this)">Active</div>
+  <div class="tab" onclick="setTab('won',this)">Won</div>
+  <div class="tab" onclick="setTab('lost',this)">Lost</div>
+  <div class="tab" onclick="setTab('settings',this)">⚙ Setup</div>
+</div>
+
+<!-- MAIN -->
+<div class="main" id="mainContent">
+  <!-- rendered by JS -->
+</div>
+
+<!-- ADD/EDIT MODAL -->
+<div class="overlay" id="formOverlay" onclick="closeFormModal(event)">
+  <div class="modal">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+      <button onclick="closeForm()" style="background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer;padding:0;line-height:1;">←</button>
+      <div class="modal-title" id="formTitle" style="margin-bottom:0">Add Lead</div>
+    </div>
+    <div class="form-grid" id="leadForm">
+      <!-- Section: Customer -->
+      <div class="form-full"><label style="color:var(--accent);font-size:12px;">📋 CUSTOMER DETAILS</label></div>
+      <div class="form-group">
+        <label>Company Name *</label>
+        <input id="f_company" type="text" placeholder="ABC Industries"/>
+      </div>
+      <div class="form-group">
+        <label>Customer Name *</label>
+        <input id="f_customer" type="text" placeholder="Rajesh Kumar"/>
+      </div>
+      <div class="form-group">
+        <label>Phone Number *</label>
+        <input id="f_phone" type="tel" placeholder="9876543210"/>
+      </div>
+      <div class="form-group">
+        <label>Other Number</label>
+        <input id="f_phone2" type="tel" placeholder="Alternate"/>
+      </div>
+      <div class="form-group form-full">
+        <label>Email</label>
+        <input id="f_email" type="email" placeholder="customer@email.com"/>
+      </div>
+      <div class="form-group">
+        <label>Location / City</label>
+        <input id="f_city" type="text" placeholder="Bengaluru"/>
+      </div>
+      <div class="form-group">
+        <label>Segment</label>
+        <select id="f_segment">
+          <option value="">Select</option>
+          <option>Medical</option>
+          <option>Industrial</option>
+        </select>
+      </div>
+      <div class="form-group form-full">
+        <label>Address</label>
+        <textarea id="f_address" placeholder="Full address (optional)" style="min-height:48px"></textarea>
+      </div>
+
+      <!-- Section: Lead Source -->
+      <div class="form-full" style="margin-top:8px;"><label style="color:var(--accent);font-size:12px;">🔗 LEAD SOURCE</label></div>
+      <div class="form-group">
+        <label>Lead Received From</label>
+        <input id="f_source" type="text" placeholder="Dealer / Person name"/>
+      </div>
+      <div class="form-group">
+        <label>OEM Name</label>
+        <input id="f_oem" type="text" placeholder="e.g. XCMG, Komatsu"/>
+      </div>
+      <div class="form-group">
+        <label>Source Type</label>
+        <select id="f_sourceType">
+          <option value="">Select</option>
+          <option>OEM Referral</option>
+          <option>Dealer Referral</option>
+          <option>DSA</option>
+          <option>Direct Walk-in</option>
+          <option>Existing Customer</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <!-- Section: Deal -->
+      <div class="form-full" style="margin-top:8px;"><label style="color:var(--accent);font-size:12px;">💰 DEAL DETAILS</label></div>
+      <div class="form-group">
+        <label>Machine Requirement</label>
+        <input id="f_machine" type="text" placeholder="e.g. 20T Excavator"/>
+      </div>
+      <div class="form-group">
+        <label>Expected Loan Amt (₹)</label>
+        <input id="f_amount" type="number" placeholder="5000000"/>
+      </div>
+      <div class="form-group">
+        <label>Scheme</label>
+        <select id="f_subvention">
+          <option value="None">None</option>
+          <option value="Subvention">Subvention</option>
+          <option value="Leasing">Leasing</option>
+          <option value="Credit Days Subvention">Credit Days Subvention</option>
+          <option value="Hybrid Flexi">Hybrid Flexi</option>
+          <option value="EMI Holiday">EMI Holiday</option>
+          <option value="Principal Morat">Principal Morat</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Priority</label>
+        <select id="f_priority">
+          <option value="Medium">Medium</option>
+          <option value="High">High</option>
+          <option value="Low">Low</option>
+        </select>
+      </div>
+
+      <!-- Section: Pipeline -->
+      <div class="form-full" style="margin-top:8px;"><label style="color:var(--accent);font-size:12px;">📊 PIPELINE</label></div>
+      <div class="form-group">
+        <label>Stage</label>
+        <select id="f_stage" onchange="if(this.value==='Closed Lost'){document.getElementById('f_status').value='Lost'}">
+          <option>New</option>
+          <option>Contacted</option>
+          <option>Docs Collected</option>
+          <option>Credit Review</option>
+          <option>Sanctioned</option>
+          <option>Disbursed</option>
+          <option>Closed Lost</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Status</label>
+        <select id="f_status">
+          <option value="Active">Active</option>
+          <option value="On Hold">On Hold</option>
+          <option value="Won">Won</option>
+          <option value="Lost">Lost</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Lead Date</label>
+        <input id="f_leadDate" type="date"/>
+      </div>
+      <div class="form-group">
+        <label>Next Follow-up</label>
+        <input id="f_followup" type="date"/>
+      </div>
+      <div class="form-group">
+        <label>Last Contacted</label>
+        <input id="f_lastContact" type="date"/>
+      </div>
+      <div class="form-group form-full">
+        <label>Reason / Remarks</label>
+        <input id="f_reason" type="text" placeholder="e.g. Customer negotiating, On hold pending sanction"/>
+      </div>
+      <div class="form-group form-full">
+        <label>Other Details / Notes</label>
+        <textarea id="f_notes" placeholder="Any additional context..."></textarea>
+      </div>
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-ghost" onclick="closeForm()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveLead()">💾 Save Lead</button>
+    </div>
+  </div>
+</div>
+
+<!-- DETAIL MODAL -->
+<div class="overlay" id="detailOverlay" onclick="closeDetailModal(event)">
+  <div class="modal" id="detailContent"></div>
+</div>
+
+<!-- SHARE MODAL -->
+<div class="overlay" id="shareOverlay" onclick="closeShareModal(event)">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="shareTitle">Share Lead</div>
+    <div id="shareContent"></div>
+    <div style="display:flex;gap:8px;margin-top:14px;">
+      <button class="btn btn-ghost" style="flex:1" onclick="closeShareOverlay()">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- IMPORT MODAL -->
+<input type="file" id="csvFileInput" accept=".csv" style="display:none" onchange="handleFileSelect(this)"/>
+<div class="overlay" id="importOverlay" onclick="closeImportModal(event)">
+  <div class="modal" style="max-width:700px">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Import Leads from CSV</div>
+    <div id="importBody">
+      <!-- filled by JS -->
+    </div>
+  </div>
+</div>
+
 <script>
-// ============================================================
-// GITHUB CONFIG
-// ============================================================
-const GH_TOKEN  = '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';
-const GH_OWNER  = 'vishveshnadkarni-oss';
-const GH_REPO   = 'OEM-Visit-Tracker';
-const GH_BRANCH = 'main';
-const GH_FILES  = { oems: 'data/oems.json', visits: 'data/visits.json' };
-const GH_HEADS  = { oems: null, visits: null }; // SHAs tracked here
-const GH_API    = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/`;
+// ─────────────────────────────────────────
+// STATE
+// ─────────────────────────────────────────
+let leads = [];
+let editingId = null;
+let currentTab = 'all';
+let ghFileSHA = null;
 
-// ============================================================
-// DATA
-// ============================================================
-let db = { oems: [], visits: [], actions: [] };
-const DEFAULT_TOPICS = ['Leasing','Principal Moratorium','Startups','Rate of Interest'];
-let sessionTopics = [];
-let visitType = 'visit';
-let oemType = 'OEM';
-let oemSeg  = 'Medical';
-let editOEM = null;
-let curVisitId = null;
-let curOEMId   = null;
-let actFilter  = 'open';
-let recognition = null;
-let listening   = false;
+const STORAGE_KEY = 'lt_leads_local';
+const SETTINGS_KEY = 'lt_gh_settings';
+const LAST_BACKUP_KEY = 'lt_last_backup_date';
 
-function loadLocal(){
-  try{ const r=localStorage.getItem('oem_tracker_v3'); if(r) db=JSON.parse(r); }catch(e){}
+// ─────────────────────────────────────────
+// UTILS
+// ─────────────────────────────────────────
+function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2); }
+function today() { return new Date().toISOString().slice(0,10); }
+function daysBetween(a, b) {
+  const da = new Date(a), db = new Date(b);
+  return Math.round((db - da) / 86400000);
 }
-function saveLocal(){ localStorage.setItem('oem_tracker_v3',JSON.stringify(db)); }
+function fmtDate(d) {
+  if (!d) return '—';
+  const [y,m,day] = d.split('-');
+  return `${day}/${m}/${y}`;
+}
+function fmtAmt(n) {
+  if (!n) return '—';
+  const num = parseInt(n);
+  if (num >= 10000000) return `₹${(num/10000000).toFixed(2)}Cr`;
+  if (num >= 100000) return `₹${(num/100000).toFixed(1)}L`;
+  return `₹${num.toLocaleString('en-IN')}`;
+}
+function toast(msg, type='') {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = `toast show ${type}`;
+  setTimeout(() => el.className = 'toast', 2500);
+}
 
-// ============================================================
-// GITHUB SYNC
-// ============================================================
-async function ghGet(path){
-  const res = await fetch(GH_API+path+'?ref='+GH_BRANCH,{headers:{'Authorization':'Bearer '+GH_TOKEN,'Accept':'application/vnd.github+json'}});
-  if(res.status===404) return null;
-  if(!res.ok) throw new Error('GH GET failed '+res.status);
+// ─────────────────────────────────────────
+// GITHUB SETTINGS
+// ─────────────────────────────────────────
+function getSettings() {
+  try { return JSON.parse(localStorage.getItem(SETTINGS_KEY)) || {}; } catch { return {}; }
+}
+function saveSettings(s) { localStorage.setItem(SETTINGS_KEY, JSON.stringify(s)); }
+
+// ─────────────────────────────────────────
+// GITHUB API
+// ─────────────────────────────────────────
+async function ghRequest(method, path, body) {
+  const s = getSettings();
+  if (!s.token || !s.owner || !s.repo) return null;
+  const res = await fetch(`https://api.github.com${path}`, {
+    method,
+    headers: {
+      'Authorization': `token ${s.token}`,
+      'Content-Type': 'application/json',
+      'Accept': 'application/vnd.github.v3+json'
+    },
+    body: body ? JSON.stringify(body) : undefined
+  });
+  if (!res.ok) throw new Error(`GitHub ${res.status}: ${res.statusText}`);
   return res.json();
 }
 
-async function ghPut(path, content, sha, msg){
-  const body = {message:msg||'Auto-backup',content:btoa(unescape(encodeURIComponent(JSON.stringify(content,null,2)))),branch:GH_BRANCH};
-  if(sha) body.sha = sha;
-  const res = await fetch(GH_API+path,{method:'PUT',headers:{'Authorization':'Bearer '+GH_TOKEN,'Content-Type':'application/json','Accept':'application/vnd.github+json'},body:JSON.stringify(body)});
-  if(!res.ok) throw new Error('GH PUT failed '+res.status);
-  const j = await res.json();
-  return j.content?.sha||null;
-}
-
-function setSyncStatus(state,msg){
-  const dot=document.getElementById('sync-dot');
-  const lbl=document.getElementById('sync-lbl');
-  if(!dot||!lbl) return;
-  dot.className='sync-dot '+(state==='ok'?'ok':state==='err'?'err':'busy');
-  lbl.textContent=msg;
-}
-
-async function loadFromGitHub(){
-  setSyncStatus('busy','Fetching from GitHub...');
-  try{
-    const [oemsFile, visitsFile] = await Promise.all([ghGet(GH_FILES.oems), ghGet(GH_FILES.visits)]);
-    if(oemsFile){
-      GH_HEADS.oems = oemsFile.sha;
-      db.oems = JSON.parse(decodeURIComponent(escape(atob(oemsFile.content.replace(/\n/g,'')))));
+async function loadFromGithub() {
+  const s = getSettings();
+  if (!s.token) return false;
+  const filePath = s.filePath || 'leads.json';
+  setSyncDot('syncing');
+  try {
+    const data = await ghRequest('GET', `/repos/${s.owner}/${s.repo}/contents/${filePath}`);
+    ghFileSHA = data.sha;
+    // Handle empty file
+    const raw = data.content ? data.content.replace(/\n/g,'') : '';
+    if (!raw) { setSyncDot('ok'); return true; }
+    let decoded;
+    try { decoded = atob(raw); } catch(e) { throw new Error('Could not decode file'); }
+    if (!decoded.trim()) { setSyncDot('ok'); return true; }
+    let parsed;
+    try { parsed = JSON.parse(decoded); } catch(e) { throw new Error('File is corrupted – resetting'); }
+    if (Array.isArray(parsed)) leads = parsed;
+    saveLocal(leads);
+    setSyncDot('ok');
+    return true;
+  } catch(e) {
+    if (e.message.includes('404')) {
+      ghFileSHA = null;
+      setSyncDot('ok');
+      return true;
     }
-    if(visitsFile){
-      GH_HEADS.visits = visitsFile.sha;
-      const vdata = JSON.parse(decodeURIComponent(escape(atob(visitsFile.content.replace(/\n/g,'')))));
-      db.visits  = vdata.visits||[];
-      db.actions = vdata.actions||[];
+    // Corrupted file — delete SHA so next save recreates it cleanly
+    if (e.message.includes('corrupted')) {
+      ghFileSHA = null;
+      setSyncDot('err');
+      toast('Remote file was corrupted. Save a lead to recreate it.', 'error');
+      return false;
     }
-    saveLocal();
-    setSyncStatus('ok','Synced · '+fmtTime(new Date()));
-  }catch(e){
-    setSyncStatus('err','Offline — using local data');
-    console.error(e);
-  }
-  renderHome();
-}
-
-async function syncToGitHub(){
-  setSyncStatus('busy','Saving...');
-  try{
-    const [s1,s2] = await Promise.all([
-      ghPut(GH_FILES.oems, db.oems, GH_HEADS.oems, 'Update OEMs'),
-      ghPut(GH_FILES.visits, {visits:db.visits,actions:db.actions}, GH_HEADS.visits, 'Update visits')
-    ]);
-    if(s1) GH_HEADS.oems   = s1;
-    if(s2) GH_HEADS.visits = s2;
-    setSyncStatus('ok','Synced · '+fmtTime(new Date()));
-  }catch(e){
-    setSyncStatus('err','Sync failed — saved locally');
-    console.error(e);
+    setSyncDot('err');
+    toast('GitHub sync failed: ' + e.message, 'error');
+    return false;
   }
 }
 
-async function saveAndSync(){
-  saveLocal();
-  await syncToGitHub();
-}
-
-async function manualSync(){
-  await loadFromGitHub();
-  renderHome();
-}
-
-// ============================================================
-// NAVIGATION
-// ============================================================
-const SCREENS={
-  'home':'screen-home','new-visit':'screen-new-visit','directory':'screen-directory',
-  'oem-form':'screen-oem-form','oem-detail':'screen-oem-detail',
-  'actions':'screen-actions','visit-detail':'screen-visit-detail','csv-import':'screen-csv-import'
-};
-const NAV_MAP={
-  'home':'nav-home','new-visit':'nav-home','visit-detail':'nav-home',
-  'directory':'nav-directory','oem-form':'nav-directory','oem-detail':'nav-directory','csv-import':'nav-directory',
-  'actions':'nav-actions'
-};
-
-function navigate(screen){
-  Object.values(SCREENS).forEach(id=>document.getElementById(id)?.classList.remove('active'));
-  document.querySelectorAll('.nitem').forEach(n=>n.classList.remove('active'));
-  document.getElementById(SCREENS[screen])?.classList.add('active');
-  const nid=NAV_MAP[screen]; if(nid) document.getElementById(nid)?.classList.add('active');
-  window.scrollTo(0,0);
-  if(screen==='home') renderHome();
-  if(screen==='new-visit') initNewVisit();
-  if(screen==='directory') renderDir();
-  if(screen==='actions') renderActions();
-}
-
-// ============================================================
-// HOME
-// ============================================================
-function renderHome(){
-  const today=todayStr();
-  document.getElementById('home-date').textContent=fmtDate(today);
-  const todayV=db.visits.filter(v=>v.date===today);
-  const openA=db.actions.filter(a=>a.status==='open');
-  const overdue=openA.filter(a=>a.dueDate&&a.dueDate<today).length;
-
-  document.getElementById('home-stats').innerHTML=`
-    <div class="scard"><div class="snum">${todayV.length}</div><div class="slbl">Today</div></div>
-    <div class="scard"><div class="snum">${db.visits.length}</div><div class="slbl">Total</div></div>
-    <div class="scard"><div class="snum" style="color:${overdue>0?'var(--red)':'var(--navy)'}">${openA.length}</div><div class="slbl">Open Tasks</div></div>`;
-
-  const tv=document.getElementById('today-visits');
-  if(!todayV.length){
-    tv.innerHTML=`<div class="empty"><div class="ei">📋</div><h3>No reports today</h3><p>Tap + to log a visit or call</p></div>`;
-  } else {
-    tv.innerHTML=todayV.map(v=>{
-      const oem=db.oems.find(o=>o.id===v.oemId);
-      const topics=[...(v.topics||[]),...(v.customTopics||[])];
-      return `<div class="vcard" onclick="showDetail('${v.id}')">
-        <div class="vcard-top"><div class="vcard-name">${oem?.name||'Unknown'}</div>
-          <span class="badge ${v.type==='visit'?'bv':'bc'}">${v.type==='visit'?'📍 Visit':'📞 Call'}</span></div>
-        <div class="vcard-meta">${oem?.code||''}${oem?.city?' · '+oem.city:''}</div>
-        ${topics.length?`<div class="vcard-topics">${topics.join(' · ')}</div>`:''}
-      </div>`;
-    }).join('');
-  }
-
-  const ph=document.getElementById('pending-home');
-  const upcoming=[...openA].sort((a,b)=>(a.dueDate||'9')<(b.dueDate||'9')?-1:1).slice(0,5);
-  if(!upcoming.length){
-    ph.innerHTML=`<p style="color:var(--muted);font-size:13px;padding:6px 0">No pending tasks 🎉</p>`;
-  } else {
-    ph.innerHTML=`<div class="card">${upcoming.map(a=>{
-      const oem=oemForAction(a);
-      const od=a.dueDate&&a.dueDate<today;
-      return `<div class="ai-row">
-        <button class="astat ${a.status==='closed'?'done':''}" onclick="toggleAction('${a.id}',event)"></button>
-        <div class="ainfo">
-          <div class="adesc ${a.status==='closed'?'done':''}">${a.description}</div>
-          <div class="ameta">${oem?.name||''}${a.dueDate?' · <span class="'+(od?'overdue':'')+'">Due '+fmtDate(a.dueDate)+'</span>':''}</div>
-        </div></div>`;
-    }).join('')}</div>`;
+async function getLatestSHA() {
+  // Always fetch latest SHA before writing to avoid conflicts
+  const s = getSettings();
+  const filePath = s.filePath || 'leads.json';
+  try {
+    const data = await ghRequest('GET', `/repos/${s.owner}/${s.repo}/contents/${filePath}`);
+    return data.sha;
+  } catch(e) {
+    return null; // file doesn't exist yet
   }
 }
 
-// ============================================================
-// NEW VISIT
-// ============================================================
-function initNewVisit(){
-  visitType='visit'; sessionTopics=[];
-  document.getElementById('tb-visit').classList.add('active');
-  document.getElementById('tb-call').classList.remove('active');
-  document.getElementById('v-date').value=todayStr();
-  document.getElementById('v-notes').value='';
-  document.getElementById('v-next').value='';
-  document.getElementById('v-oem').value='';
-  document.getElementById('open-banner').style.display='none';
-  document.getElementById('ai-list').innerHTML='';
-  const sel=document.getElementById('v-oem');
-  sel.innerHTML='<option value="">Select...</option>'+
-    [...db.oems].sort((a,b)=>a.name.localeCompare(b.name)).map(o=>`<option value="${o.id}">${o.name} (${o.code||''})</option>`).join('');
-  renderTopics();
-}
-
-function setType(t){
-  visitType=t;
-  document.getElementById('tb-visit').classList.toggle('active',t==='visit');
-  document.getElementById('tb-call').classList.toggle('active',t==='call');
-}
-
-function renderTopics(checked=[]){
-  const all=[...DEFAULT_TOPICS,...sessionTopics];
-  document.getElementById('topic-grid').innerHTML=all.map(t=>{
-    const c=checked.includes(t);
-    return `<div class="titem ${c?'chk':''}" onclick="this.classList.toggle('chk')">
-      <div class="tbox"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg></div>
-      <span class="ttxt">${t}</span></div>`;
-  }).join('');
-}
-
-function addCustomTopic(){
-  const n=prompt('Topic name:');
-  if(n?.trim()){ sessionTopics.push(n.trim()); renderTopics(getChecked()); }
-}
-
-function getChecked(){ return [...document.querySelectorAll('.titem.chk .ttxt')].map(el=>el.textContent); }
-
-function onOEMSelect(){
-  const oemId=document.getElementById('v-oem').value;
-  const banner=document.getElementById('open-banner');
-  if(!oemId){banner.style.display='none';return;}
-  const today=todayStr();
-  const oemVisitIds=db.visits.filter(v=>v.oemId===oemId).map(v=>v.id);
-  const open=db.actions.filter(a=>oemVisitIds.includes(a.visitId)&&a.status==='open');
-  if(!open.length){banner.style.display='none';return;}
-  banner.style.display='block';
-  banner.innerHTML=`<div class="banner">
-    <div class="bnr-ttl">⚠️ ${open.length} open item${open.length>1?'s':''} from previous visits</div>
-    ${open.map(a=>{
-      const od=a.dueDate&&a.dueDate<today;
-      return `<div class="bnr-item">
-        <button class="astat ${a.status==='closed'?'done':''}" style="margin-top:0" onclick="toggleAction('${a.id}',event)"></button>
-        <div class="ainfo">
-          <div class="adesc" style="font-size:13px">${a.description}</div>
-          ${a.dueDate?`<div class="ameta ${od?'overdue':''}">${od?'Overdue · ':''}Due ${fmtDate(a.dueDate)}</div>`:''}
-        </div></div>`;
-    }).join('')}</div>`;
-}
-
-function addAI(){
-  const list=document.getElementById('ai-list');
-  const d=document.createElement('div'); d.className='aiform';
-  d.innerHTML=`
-    <input type="text" class="finput" placeholder="Describe the action item" style="flex:1;padding:11px 12px;font-size:14px">
-    <input type="date" class="finput aidate">
-    <button class="rm-btn" onclick="this.parentElement.remove()">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="15" height="15"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
-    </button>`;
-  list.appendChild(d); d.querySelector('input').focus();
-}
-
-async function saveVisit(){
-  const oemId=document.getElementById('v-oem').value;
-  const date=document.getElementById('v-date').value;
-  if(!oemId){showToast('Please select an OEM');return;}
-  if(!date){showToast('Please select a date');return;}
-  const checked=getChecked();
-  const topics=checked.filter(t=>DEFAULT_TOPICS.includes(t));
-  const customTopics=checked.filter(t=>!DEFAULT_TOPICS.includes(t));
-  const notes=document.getElementById('v-notes').value.trim();
-  const nextDate=document.getElementById('v-next').value;
-  const visitId='v_'+Date.now();
-  db.visits.push({id:visitId,oemId,date,type:visitType,topics,customTopics,notes,nextVisitDate:nextDate||null,createdAt:new Date().toISOString()});
-  document.querySelectorAll('#ai-list .aiform').forEach(row=>{
-    const inputs=row.querySelectorAll('input');
-    const desc=inputs[0].value.trim(); const due=inputs[1].value;
-    if(desc){
-      const a={id:'a_'+Date.now()+'_'+Math.random().toString(36).slice(2,6),visitId,description:desc,dueDate:due||null,status:'open'};
-      db.actions.push(a); scheduleReminder(a);
-    }
-  });
-  sessionTopics=[];
-  showToast('Saving...');
-  await saveAndSync();
-  showToast('Report saved ✓');
-  navigate('home');
-}
-
-// ============================================================
-// VISIT DETAIL
-// ============================================================
-function showDetail(visitId){
-  curVisitId=visitId; navigate('visit-detail');
-  const v=db.visits.find(x=>x.id===visitId);
-  const oem=db.oems.find(o=>o.id===v?.oemId);
-  const acts=db.actions.filter(a=>a.visitId===visitId);
-  const allTopics=[...(v.topics||[]),...(v.customTopics||[])];
-  const today=todayStr();
-  document.getElementById('detail-content').innerHTML=`
-    <div class="dtl-sec"><div class="dtl-lbl">OEM</div>
-      <div class="dtl-box"><div style="font-size:16px;font-weight:700">${oem?.name||'Unknown'}</div>
-        <div class="mono" style="font-size:12px;color:var(--muted);margin-top:4px">${oem?.code||''}${oem?.city?' · '+oem.city:''}</div>
-      </div></div>
-    <div class="dtl-sec"><div class="dtl-lbl">Details</div>
-      <div class="dtl-box" style="display:flex;gap:16px;flex-wrap:wrap">
-        <div><div style="font-size:12px;color:var(--muted)">Date</div><div class="mono" style="font-size:13px;margin-top:3px">${fmtDate(v.date)}</div></div>
-        <div><div style="font-size:12px;color:var(--muted)">Type</div><span class="badge ${v.type==='visit'?'bv':'bc'}" style="display:inline-block;margin-top:4px">${v.type==='visit'?'📍 Visit':'📞 Call'}</span></div>
-        ${v.nextVisitDate?`<div><div style="font-size:12px;color:var(--muted)">Follow-up</div><div class="mono" style="font-size:13px;margin-top:3px">${fmtDate(v.nextVisitDate)}</div></div>`:''}
-      </div></div>
-    ${allTopics.length?`<div class="dtl-sec"><div class="dtl-lbl">Topics</div><div class="tags">${allTopics.map(t=>`<span class="tag">${t}</span>`).join('')}</div></div>`:''}
-    ${v.notes?`<div class="dtl-sec"><div class="dtl-lbl">Notes</div><div class="dtl-box" style="white-space:pre-wrap">${v.notes}</div></div>`:''}
-    ${acts.length?`<div class="dtl-sec"><div class="dtl-lbl">Action Items</div>
-      <div class="card">${acts.map(a=>{
-        const od=a.dueDate&&a.status==='open'&&a.dueDate<today;
-        return `<div class="ai-row">
-          <button class="astat ${a.status==='closed'?'done':''}" onclick="toggleAction('${a.id}',event)"></button>
-          <div class="ainfo"><div class="adesc ${a.status==='closed'?'done':''}">${a.description}</div>
-            ${a.dueDate?`<div class="ameta ${od?'overdue':''}">Due ${fmtDate(a.dueDate)}</div>`:''}
-          </div></div>`;
-      }).join('')}</div></div>`:''}
-    <div style="padding:15px;padding-top:8px">
-      <button class="btn btn-primary" onclick="copyWA()">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="18" height="18"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.375"/></svg>
-        Copy for WhatsApp
-      </button>
-    </div>`;
-}
-
-// ============================================================
-// OEM DIRECTORY
-// ============================================================
-function renderDir(search=''){
-  let oems=[...db.oems].sort((a,b)=>a.name.localeCompare(b.name));
-  if(search) oems=oems.filter(o=>
-    o.name?.toLowerCase().includes(search.toLowerCase())||
-    o.code?.toLowerCase().includes(search.toLowerCase())||
-    (o.locations||[]).some(l=>l.city?.toLowerCase().includes(search.toLowerCase()))
-  );
-  const list=document.getElementById('oem-list');
-  if(!oems.length){
-    list.innerHTML=`<div class="empty"><div class="ei">🏢</div><h3>${search?'No results':'No OEMs yet'}</h3><p>${search?'Try different search':'Tap + to add your first OEM'}</p></div>`;
-    return;
-  }
-  list.innerHTML=oems.map(o=>{
-    const init=o.name.split(' ').map(w=>w[0]||'').join('').toUpperCase().slice(0,2);
-    const vc=db.visits.filter(v=>v.oemId===o.id).length;
-    const cities=(o.locations||[]).map(l=>l.city).filter(Boolean).join(', ');
-    return `<div class="oitem" onclick="showOEMDetail('${o.id}')">
-      <div class="oavatar">${init}</div>
-      <div class="oinfo">
-        <div class="oname">${o.name}</div>
-        <div class="ometa">${o.code||''}${cities?' · '+cities:''} · ${vc} visit${vc!==1?'s':''}</div>
-        <div class="obadges">
-          <span class="badge ${o.oemType==='Dealer'?'bdlr':'boem'}">${o.oemType||'OEM'}</span>
-          <span class="badge ${o.segment==='Medical'?'bmed':'bind'}">${o.segment||'Industrial'}</span>
-        </div>
-      </div>
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="16" height="16" style="color:var(--muted);flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
-    </div>`;
-  }).join('');
-}
-
-// ============================================================
-// OEM DETAIL VIEW
-// ============================================================
-function showOEMDetail(id){
-  curOEMId=id;
-  const o=db.oems.find(x=>x.id===id);
-  if(!o) return;
-  document.getElementById('oem-detail-title').textContent=o.name;
-  document.getElementById('edit-oem-btn').onclick=()=>openOEMForm(id);
-  const vc=db.visits.filter(v=>v.oemId===id).length;
-  const locs=(o.locations||[]);
-  const contacts=(o.contacts||[]);
-  const subcats=(o.subcategories||[]);
-  document.getElementById('oem-detail-content').innerHTML=`
-    <div class="dtl-sec">
-      <div style="display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap">
-        <span class="badge ${o.oemType==='Dealer'?'bdlr':'boem'}" style="font-size:12px;padding:4px 12px">${o.oemType||'OEM'}</span>
-        <span class="badge ${o.segment==='Medical'?'bmed':'bind'}" style="font-size:12px;padding:4px 12px">${o.segment||'Industrial'}</span>
-      </div>
-      <div class="dtl-box">
-        <div style="display:flex;justify-content:space-between;align-items:center">
-          <span class="mono" style="font-size:13px;color:var(--muted)">${o.code||''}</span>
-          <span style="font-family:'DM Mono';font-size:12px;color:var(--muted)">${vc} visit${vc!==1?'s':''}</span>
-        </div>
-      </div>
-    </div>
-    ${subcats.length?`<div class="dtl-sec"><div class="dtl-lbl">Subcategories</div><div class="tags">${subcats.map(s=>`<span class="tag">${s}</span>`).join('')}</div></div>`:''}
-    ${o.oemType==='Dealer'&&o.dealerOEMs?`<div class="dtl-sec"><div class="dtl-lbl">OEM Brands Dealt In</div><div class="dtl-box" style="font-size:14px">${o.dealerOEMs}</div></div>`:''}
-    ${locs.length?`<div class="dtl-sec"><div class="dtl-lbl">Locations</div>
-      ${locs.map(l=>`<div class="dtl-box" style="margin-bottom:8px;font-size:14px">
-        📍 <strong>${l.city}</strong>${l.address?'<br><span style="color:var(--muted);font-size:12px">'+l.address+'</span>':''}
-      </div>`).join('')}</div>`:''}
-    ${contacts.length?`<div class="dtl-sec"><div class="dtl-lbl">Contacts</div>
-      ${contacts.map(c=>`<div class="ccard">
-        <div class="ccard-top"><div class="ccard-name">${c.name}</div><a href="tel:${c.phone}" style="color:var(--amber);font-family:'DM Mono';font-size:12px">${c.phone}</a></div>
-        ${c.position?`<div style="font-size:12px;font-weight:600;color:var(--soft);margin-top:3px">🏷 ${c.position}</div>`:''}
-        ${c.location?`<div class="ccard-loc">📍 ${c.location}</div>`:''}
-        ${c.note?`<div class="ccard-note">${c.note}</div>`:''}
-      </div>`).join('')}</div>`:''}
-    ${o.notes?`<div class="dtl-sec"><div class="dtl-lbl">Notes</div><div class="dtl-box" style="white-space:pre-wrap;font-size:14px;line-height:1.6">${o.notes}</div></div>`:''}
-  `;
-  navigate('oem-detail');
-}
-
-// ============================================================
-// OEM FORM
-// ============================================================
-const SUBCATS={
-  Industrial:['Machine Tools','Plastics','Packaging','Laser','Bending','Pharma','Solar','Wood Working'],
-  Medical:['Imaging','Ophthalmology','Dermatology','Cosmetology','Laser Hair Removal','Lab Testing','Anaesthetic','Refurb Machines']
-};
-let customSubcats=[];
-
-function setOEMType(t){
-  oemType=t;
-  document.getElementById('of-type-oem').classList.toggle('active',t==='OEM');
-  document.getElementById('of-type-dlr').classList.toggle('active',t==='Dealer');
-  document.getElementById('of-dealer-oems-wrap').style.display=t==='Dealer'?'block':'none';
-}
-function setOEMSeg(s){
-  oemSeg=s;
-  document.getElementById('of-seg-med').classList.toggle('active',s==='Medical');
-  document.getElementById('of-seg-ind').classList.toggle('active',s==='Industrial');
-  renderSubcats([]);
-}
-
-function renderSubcats(selected=[]){
-  const all=[...SUBCATS[oemSeg],...customSubcats];
-  document.getElementById('of-subcats').innerHTML=all.map(v=>{
-    const sel=selected.includes(v);
-    return `<div class="subcat-chip ${sel?'selected':''}" data-val="${v}" onclick="this.classList.toggle('selected')">${v}</div>`;
-  }).join('');
-}
-
-function addCustomSubcat(){
-  const inp=document.getElementById('of-subcat-custom');
-  const val=inp.value.trim();
-  if(!val) return;
-  customSubcats.push(val);
-  const selected=[...document.querySelectorAll('.subcat-chip.selected')].map(el=>el.dataset.val);
-  renderSubcats([...selected,val]);
-  inp.value='';
-}
-
-function openOEMForm(id){
-  editOEM=id?db.oems.find(o=>o.id===id):null;
-  customSubcats=[];
-  document.getElementById('oem-form-title').textContent=editOEM?'Edit OEM':'Add OEM';
-  document.getElementById('of-name').value=editOEM?.name||'';
-  document.getElementById('of-code').value=editOEM?.code||'';
-  document.getElementById('of-notes').value=editOEM?.notes||'';
-  document.getElementById('of-dealer-oems').value=editOEM?.dealerOEMs||'';
-  document.getElementById('of-subcat-custom').value='';
-  oemType=editOEM?.oemType||'OEM'; setOEMType(oemType);
-  oemSeg=editOEM?.segment||'Medical'; setOEMSeg(oemSeg);
-  // Restore custom subcats not in default list
-  const savedSubs=editOEM?.subcategories||[];
-  const defaults=SUBCATS[oemSeg];
-  savedSubs.filter(s=>!defaults.includes(s)).forEach(s=>customSubcats.push(s));
-  renderSubcats(savedSubs);
-  // Locations
-  document.getElementById('of-locs').innerHTML='';
-  (editOEM?.locations||[]).forEach(l=>addLocRow(l));
-  // Contacts
-  document.getElementById('of-contacts').innerHTML='';
-  (editOEM?.contacts||[]).forEach(c=>addContactRow(c));
-  document.getElementById('del-oem-btn').style.display=editOEM?'block':'none';
-  navigate('oem-form');
-}
-
-function addLocRow(loc={}){
-  const c=document.createElement('div'); c.className='dyn-item';
-  c.innerHTML=`
-    <div class="dyn-lbl">Branch Location</div>
-    <div class="fg"><input type="text" class="finput loc-city" placeholder="City *" value="${loc.city||''}"></div>
-    <div class="fg" style="margin-bottom:0"><input type="text" class="finput loc-addr" placeholder="Address (optional)" value="${loc.address||''}"></div>
-    <button class="rm-btn" onclick="this.closest('.dyn-item').remove()">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="13" height="13"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
-    </button>`;
-  document.getElementById('of-locs').appendChild(c);
-}
-
-function addContactRow(ct={}){
-  const c=document.createElement('div'); c.className='dyn-item';
-  c.innerHTML=`
-    <div class="dyn-lbl">Contact Person</div>
-    <div class="frow fg">
-      <div class="fg"><input type="text" class="finput ct-name" placeholder="Name *" value="${ct.name||''}"></div>
-      <div class="fg"><input type="tel" class="finput ct-phone mono" placeholder="Number" value="${ct.phone||''}"></div>
-    </div>
-    <div class="fg"><input type="text" class="finput ct-position" placeholder="Position (e.g. Sales Manager)" value="${ct.position||''}"></div>
-    <div class="fg"><input type="text" class="finput ct-loc" placeholder="Location (e.g. Bengaluru)" value="${ct.location||''}"></div>
-    <div class="fg" style="margin-bottom:0"><input type="text" class="finput ct-note" placeholder="Note (e.g. handles VMC)" value="${ct.note||''}"></div>
-    <button class="rm-btn" onclick="this.closest('.dyn-item').remove()">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="13" height="13"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
-    </button>`;
-  document.getElementById('of-contacts').appendChild(c);
-}
-
-async function saveOEM(){
-  const name=document.getElementById('of-name').value.trim();
-  const code=document.getElementById('of-code').value.trim();
-  if(!name){showToast('OEM name is required');return;}
-  // Collect locations
-  const locs=[...document.querySelectorAll('.loc-city')].map((el,i)=>({
-    city:el.value.trim(),
-    address:document.querySelectorAll('.loc-addr')[i]?.value.trim()||''
-  })).filter(l=>l.city);
-  // Collect contacts
-  const contacts=[...document.querySelectorAll('.ct-name')].map((el,i)=>({
-    name:el.value.trim(),
-    phone:document.querySelectorAll('.ct-phone')[i]?.value.trim()||'',
-    position:document.querySelectorAll('.ct-position')[i]?.value.trim()||'',
-    location:document.querySelectorAll('.ct-loc')[i]?.value.trim()||'',
-    note:document.querySelectorAll('.ct-note')[i]?.value.trim()||''
-  })).filter(c=>c.name);
-  // Collect subcategories
-  const subcats=[...document.querySelectorAll('.subcat-chip.selected')].map(el=>el.dataset.val);
-  // Dealer OEM brands
-  const dealerOEMs=document.getElementById('of-dealer-oems').value.trim();
-  const data={
-    name,code,oemType,segment:oemSeg,subcategories:subcats,
-    dealerOEMs:oemType==='Dealer'?dealerOEMs:'',
-    locations:locs,contacts,
-    notes:document.getElementById('of-notes').value.trim()
-  };
-  if(editOEM){ Object.assign(db.oems.find(o=>o.id===editOEM.id),data); }
-  else { db.oems.push({id:'oem_'+Date.now(),...data}); }
-  showToast('Saving...');
-  await saveAndSync();
-  showToast('OEM saved ✓');
-  navigate('directory');
-}
-
-async function deleteOEM(){
-  if(!confirm(`Delete ${editOEM.name}? All visit history will also be removed.`)) return;
-  const vids=db.visits.filter(v=>v.oemId===editOEM.id).map(v=>v.id);
-  db.oems=db.oems.filter(o=>o.id!==editOEM.id);
-  db.visits=db.visits.filter(v=>v.oemId!==editOEM.id);
-  db.actions=db.actions.filter(a=>!vids.includes(a.visitId));
-  await saveAndSync(); showToast('OEM deleted'); navigate('directory');
-}
-
-// ============================================================
-// ACTION ITEMS
-// ============================================================
-function setFilter(f){
-  actFilter=f;
-  document.getElementById('btn-filter-open').style.cssText=`background:${f==='open'?'var(--amber)':'rgba(255,255,255,.1)'};color:${f==='open'?'var(--navy)':'#fff'}`;
-  document.getElementById('btn-filter-all').style.cssText=`background:${f==='all'?'var(--amber)':'rgba(255,255,255,.1)'};color:${f==='all'?'var(--navy)':'#fff'}`;
-  renderActions();
-}
-
-function renderActions(){
-  const today=todayStr();
-  let items=actFilter==='open'?db.actions.filter(a=>a.status==='open'):[...db.actions];
-  items.sort((a,b)=>{
-    if(a.status!==b.status) return a.status==='open'?-1:1;
-    return (a.dueDate||'9')<(b.dueDate||'9')?-1:1;
-  });
-  const el=document.getElementById('actions-list');
-  if(!items.length){
-    el.innerHTML=`<div class="empty"><div class="ei">✅</div><h3>All clear!</h3><p>No ${actFilter==='open'?'open ':''}action items</p></div>`;
-    return;
-  }
-  el.innerHTML=items.map(a=>{
-    const oem=oemForAction(a);
-    const visit=db.visits.find(v=>v.id===a.visitId);
-    const od=a.dueDate&&a.status==='open'&&a.dueDate<today;
-    return `<div class="card" style="margin-bottom:9px">
-      <div class="ai-row" style="border:none;padding:0">
-        <button class="astat ${a.status==='closed'?'done':''}" onclick="toggleAction('${a.id}',event)"></button>
-        <div class="ainfo">
-          <div class="adesc ${a.status==='closed'?'done':''}">${a.description}</div>
-          <div class="ameta">${oem?.name||''}${visit?' · '+fmtDate(visit.date):''}${a.dueDate?' · <span class="'+(od?'overdue':'')+'">Due '+fmtDate(a.dueDate)+'</span>':''}</div>
-        </div></div></div>`;
-  }).join('');
-}
-
-async function toggleAction(id,event){
-  event.stopPropagation();
-  const a=db.actions.find(x=>x.id===id); if(!a) return;
-  a.status=a.status==='open'?'closed':'open';
-  await saveAndSync();
-  const active=document.querySelector('.screen.active')?.id;
-  if(active==='screen-home') renderHome();
-  else if(active==='screen-actions') renderActions();
-  else if(active==='screen-new-visit'){const oid=document.getElementById('v-oem').value;if(oid)onOEMSelect();}
-  else if(active==='screen-visit-detail') showDetail(curVisitId);
-}
-
-function oemForAction(action){
-  const v=db.visits.find(x=>x.id===action.visitId);
-  return v?db.oems.find(o=>o.id===v.oemId):null;
-}
-
-// ============================================================
-// VOICE
-// ============================================================
-function toggleVoice(){
-  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  if(!SR){showToast('Voice not available in this browser');return;}
-  if(listening){recognition.stop();return;}
-  recognition=new SR();
-  recognition.lang='en-IN'; recognition.continuous=true; recognition.interimResults=false;
-  recognition.onstart=()=>{listening=true;document.getElementById('mic-btn').classList.add('on');};
-  recognition.onresult=e=>{
-    const t=Array.from(e.results).map(r=>r[0].transcript).join(' ');
-    const ta=document.getElementById('v-notes');
-    ta.value=(ta.value?ta.value+' ':'')+t;
-  };
-  recognition.onend=()=>{listening=false;document.getElementById('mic-btn').classList.remove('on');};
-  recognition.onerror=()=>{listening=false;document.getElementById('mic-btn').classList.remove('on');};
-  recognition.start();
-}
-
-// ============================================================
-// WHATSAPP COPY
-// ============================================================
-function copyWA(){
-  const v=db.visits.find(x=>x.id===curVisitId); if(!v) return;
-  const oem=db.oems.find(o=>o.id===v.oemId);
-  const acts=db.actions.filter(a=>a.visitId===v.id);
-  const topics=[...(v.topics||[]),...(v.customTopics||[])];
-  let txt=`${v.type==='visit'?'📍':'📞'} *${v.type==='visit'?'Visit':'Call'} Report — ${fmtDate(v.date)}*\n`;
-  txt+=`*OEM:* ${oem?.name||'N/A'}, ${(oem?.locations||[]).map(l=>l.city).join(', ')||''} (${oem?.code||''})\n`;
-  txt+=`*Type:* ${oem?.oemType||'OEM'} · ${oem?.segment||''}\n`;
-  if(topics.length) txt+=`\n✅ *Topics Discussed:*\n${topics.map(t=>`• ${t}`).join('\n')}\n`;
-  if(v.notes) txt+=`\n📝 *Notes:*\n${v.notes}\n`;
-  if(acts.length) txt+=`\n📌 *Action Items:*\n${acts.map(a=>`• ${a.description}${a.dueDate?' — Due: '+fmtDate(a.dueDate):''}${a.status==='closed'?' ✓':''}`).join('\n')}\n`;
-  if(v.nextVisitDate) txt+=`\n🔁 *Next ${v.type==='visit'?'Visit':'Follow-up'}:* ${fmtDate(v.nextVisitDate)}`;
-  navigator.clipboard.writeText(txt).then(()=>showToast('Copied for WhatsApp ✓')).catch(()=>{
-    const ta=document.createElement('textarea');
-    ta.value=txt;ta.style.cssText='position:fixed;opacity:0';
-    document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);
-    showToast('Copied for WhatsApp ✓');
-  });
-}
-
-// ============================================================
-// EXCEL EXPORT
-// ============================================================
-function exportExcel(){
-  if(!db.visits.length){showToast('No visits to export');return;}
-  const rows=db.visits.map(v=>{
-    const oem=db.oems.find(o=>o.id===v.oemId);
-    const acts=db.actions.filter(a=>a.visitId===v.id);
-    const cities=(oem?.locations||[]).map(l=>l.city).join(', ');
-    return{
-      'Date':v.date,'Type':v.type==='visit'?'Visit':'Call',
-      'OEM Name':oem?.name||'','Code':oem?.code||'','Cities':cities,
-      'OEM Type':oem?.oemType||'','Segment':oem?.segment||'','Brand':oem?.brand||'',
-      'Topics':[...(v.topics||[]),...(v.customTopics||[])].join(', '),
-      'Notes':v.notes||'',
-      'Action Items':acts.map(a=>a.description+(a.dueDate?' (Due:'+a.dueDate+')':'')+(a.status==='closed'?' ✓':'')).join(' | '),
-      'Next Visit':v.nextVisitDate||''
+async function saveToGithub() {
+  const s = getSettings();
+  if (!s.token) return;
+  const filePath = s.filePath || 'leads.json';
+  setSyncDot('syncing');
+  try {
+    // Always get the latest SHA before writing to avoid stale SHA conflicts
+    const latestSHA = await getLatestSHA();
+    const content = btoa(unescape(encodeURIComponent(JSON.stringify(leads, null, 2))));
+    const body = {
+      message: `Update leads – ${new Date().toLocaleString('en-IN')}`,
+      content,
+      ...(latestSHA ? { sha: latestSHA } : {})
     };
-  });
-  const ws=XLSX.utils.json_to_sheet(rows);
-  ws['!cols']=Object.keys(rows[0]).map(k=>({wch:Math.max(k.length,...rows.map(r=>String(r[k]||'').length).slice(0,50))+2}));
-  const wb=XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb,ws,'Visits');
-  XLSX.writeFile(wb,`OEM_Visits_${todayStr()}.xlsx`);
-  showToast('Excel exported ✓');
+    const res = await ghRequest('PUT', `/repos/${s.owner}/${s.repo}/contents/${filePath}`, body);
+    ghFileSHA = res.content.sha;
+    setSyncDot('ok');
+    toast('Saved to GitHub ✓', 'success');
+  } catch(e) {
+    setSyncDot('err');
+    toast('GitHub save failed: ' + e.message, 'error');
+  }
 }
 
-// ============================================================
-// IMPORT / TEMPLATE  (Excel + CSV)
-// ============================================================
-function downloadXLSXTemplate(){
-  // Sheet 1 — OEMs
-  const oemCols=['Name','Code','OEM_Type','Segment','Subcategories','Dealer_OEM_Brands','City1','Address1','City2','Address2','City3','Address3','Notes'];
-  const oemSample={
-    Name:'GPY Machine Tools',Code:'OEM-001',OEM_Type:'Dealer',Segment:'Industrial',
-    Subcategories:'Machine Tools, Laser',Dealer_OEM_Brands:'Haitian, DMG Mori',
-    City1:'Bengaluru',Address1:'100 MG Road',City2:'Chennai',Address2:'50 Anna Salai',City3:'',Address3:'',
-    Notes:'Closed subvention deal at 10% and 0.5% PF'
-  };
-  const wsOEM=XLSX.utils.json_to_sheet([oemSample],{header:oemCols});
-  wsOEM['!cols']=oemCols.map(c=>({wch:Math.max(c.length,20)}));
-
-  // Sheet 2 — Contacts
-  const ctCols=['OEM_Name','Name','Phone','Position','Location','Note'];
-  const ctSamples=[
-    {OEM_Name:'GPY Machine Tools',Name:'Ramesh Kumar',Phone:'9876543210',Position:'Sales Manager',Location:'Bengaluru',Note:'Handles VMC'},
-    {OEM_Name:'GPY Machine Tools',Name:'Priya S',Phone:'9123456780',Position:'Service Head',Location:'Chennai',Note:''},
-    {OEM_Name:'GPY Machine Tools',Name:'Ajay Mehta',Phone:'9988776655',Position:'Director',Location:'Mumbai',Note:'Key decision maker'},
-  ];
-  const wsCT=XLSX.utils.json_to_sheet(ctSamples,{header:ctCols});
-  wsCT['!cols']=ctCols.map(c=>({wch:Math.max(c.length,20)}));
-
-  const wb=XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb,wsOEM,'OEMs');
-  XLSX.utils.book_append_sheet(wb,wsCT,'Contacts');
-  XLSX.writeFile(wb,'OEM_Import_Template.xlsx');
-  showToast('Template downloaded ✓');
+function saveLocal(data) {
+  const json = JSON.stringify(data);
+  try { localStorage.setItem(STORAGE_KEY, json); } catch(e) { console.warn('localStorage write failed:', e); }
+  try { sessionStorage.setItem(STORAGE_KEY, json); } catch(e) {}
 }
 
-async function importFile(input){
-  const file=input.files[0]; if(!file) return;
-  const isXLS=file.name.match(/\.(xlsx|xls)$/i);
-  let oemRows=[], ctRows=[];
+function loadLocal() {
+  try {
+    const ls = localStorage.getItem(STORAGE_KEY);
+    if (ls) return JSON.parse(ls);
+  } catch(e) { console.warn('localStorage read failed:', e); }
+  try {
+    const ss = sessionStorage.getItem(STORAGE_KEY);
+    if (ss) return JSON.parse(ss);
+  } catch(e) {}
+  return [];
+}
 
-  if(isXLS){
-    const buf=await file.arrayBuffer();
-    const wb=XLSX.read(buf,{type:'array'});
-    // Sheet 1 — OEMs
-    const wsOEM=wb.Sheets[wb.SheetNames[0]];
-    oemRows=XLSX.utils.sheet_to_json(wsOEM,{defval:''});
-    // Sheet 2 — Contacts (optional)
-    if(wb.SheetNames[1]){
-      const wsCT=wb.Sheets[wb.SheetNames[1]];
-      ctRows=XLSX.utils.sheet_to_json(wsCT,{defval:''});
+function setSyncDot(state) {
+  const el = document.getElementById('syncDot');
+  el.className = `sync-dot ${state}`;
+  el.title = state === 'ok' ? 'Synced' : state === 'err' ? 'Sync error' : 'Syncing...';
+}
+
+// ─────────────────────────────────────────
+// LOAD
+// ─────────────────────────────────────────
+function mergeLeads(localArr, remoteArr) {
+  // Combine both arrays; newer updatedAt wins per ID; leads only on one side are kept
+  const map = {};
+  remoteArr.forEach(l => { if (l.id) map[l.id] = l; });
+  localArr.forEach(l => {
+    if (!l.id) return;
+    if (!map[l.id]) { map[l.id] = l; }
+    else {
+      const rDate = new Date(map[l.id].updatedAt || 0);
+      const lDate = new Date(l.updatedAt || 0);
+      if (lDate >= rDate) map[l.id] = l;
     }
+  });
+  return Object.values(map).sort((a,b) => new Date(b.updatedAt||0) - new Date(a.updatedAt||0));
+}
+
+async function initApp() {
+  // Always show local data immediately — never flash zero
+  const localLeads = loadLocal();
+  leads = localLeads;
+  render();
+
+  const s = getSettings();
+  if (!s.token) return;
+
+  // Always silently pull from GitHub on every open and merge
+  setSyncDot('syncing');
+  const filePath = s.filePath || 'leads.json';
+  try {
+    const data = await ghRequest('GET', `/repos/${s.owner}/${s.repo}/contents/${filePath}`);
+    ghFileSHA = data.sha;
+    const raw = data.content ? data.content.replace(/\n/g,'') : '';
+    let remoteLeads = [];
+    if (raw) {
+      try { remoteLeads = JSON.parse(atob(raw)) || []; } catch(e) { remoteLeads = []; }
+    }
+    const merged = mergeLeads(localLeads, remoteLeads);
+    // Only re-render if data actually changed
+    const changed = merged.length !== localLeads.length ||
+      merged.some((l,i) => !localLeads[i] || l.id !== localLeads[i].id || l.updatedAt !== localLeads[i].updatedAt);
+    leads = merged;
+    saveLocal(leads);
+    setSyncDot('ok');
+    if (changed) {
+      document.getElementById('mainContent').innerHTML = '';
+      render();
+    }
+    // Push local-only leads to GitHub
+    if (localLeads.some(l => !remoteLeads.find(r => r.id === l.id))) {
+      await saveToGithub();
+    }
+    setTimeout(runDailyBackup, 3000);
+  } catch(e) {
+    if (e.message.includes('404')) { ghFileSHA = null; setSyncDot('ok'); return; }
+    setSyncDot('err');
+    // Don't toast on load failure — just show local data silently
+    console.warn('GitHub load failed:', e.message);
+  }
+}
+
+// ─────────────────────────────────────────
+// FILTERS
+// ─────────────────────────────────────────
+let filterOEM = '', filterStatus = '', filterStage = '', filterSegment = '', filterMonth = '', filterLocation = [], searchQ = '';
+
+function filteredLeads() {
+  const t = today();
+  return leads.filter(l => {
+    if (currentTab === 'followup') {
+      if (!l.followup) return false;
+      return l.followup <= t;
+    }
+    if (currentTab === 'active') return l.status === 'Active';
+    if (currentTab === 'won') return l.status === 'Won';
+    if (currentTab === 'lost') return l.status === 'Lost';
+    return true;
+  }).filter(l => {
+    if (filterOEM && l.oem !== filterOEM) return false;
+    if (filterStatus && l.status !== filterStatus) return false;
+    if (filterStage && l.stage !== filterStage) return false;
+    if (filterSegment && l.segment !== filterSegment) return false;
+    if (filterMonth && (l.leadDate||'').slice(0,7) !== filterMonth) return false;
+    if (filterLocation.length && !filterLocation.includes(l.city)) return false;
+    if (searchQ) {
+      const words = searchQ.toLowerCase().trim().split(/\s+/);
+      const haystack = [l.company, l.customer, l.phone, l.phone2, l.oem, l.source, l.city, l.machine, l.segment, l.status, l.stage]
+        .map(v => (v||'').toLowerCase()).join(' ');
+      return words.every(w => haystack.includes(w));
+    }
+    return true;
+  });
+}
+
+// ─────────────────────────────────────────
+// RENDER
+// ─────────────────────────────────────────
+function render() {
+  const container = document.getElementById('mainContent');
+  if (currentTab === 'settings') { renderSettings(container); return; }
+
+  const t = today();
+  const oemsUniq = [...new Set(leads.map(l=>l.oem).filter(Boolean))].sort();
+  const citiesUniq = [...new Set(leads.map(l=>l.city).filter(Boolean))].sort();
+  const monthsUniq = [...new Set(leads.map(l=>(l.leadDate||'').slice(0,7)).filter(Boolean))].sort().reverse();
+  const monthNames = {1:'Jan',2:'Feb',3:'Mar',4:'Apr',5:'May',6:'Jun',7:'Jul',8:'Aug',9:'Sep',10:'Oct',11:'Nov',12:'Dec'};
+  function fmtMonth(ym) { if (!ym) return ''; const [y,m] = ym.split('-'); return `${monthNames[parseInt(m)]} ${y}`; }
+
+  const overdueCount = leads.filter(l=>l.followup && l.followup < t && l.status === 'Active').length;
+  const wonCount = leads.filter(l=>l.status==='Won').length;
+
+  // Only rebuild shell if it doesn't exist yet (prevents search input from being destroyed)
+  if (!document.getElementById('leadsListContainer')) {
+    container.innerHTML = `
+    <div class="stats">
+      <div class="stat"><div class="stat-val" id="stat-total">0</div><div class="stat-label" id="stat-total-label">Total</div></div>
+      <div class="stat"><div class="stat-val" id="stat-active">0</div><div class="stat-label">Active</div></div>
+      <div class="stat"><div class="stat-val" style="color:var(--red)" id="stat-overdue">0</div><div class="stat-label">Overdue</div></div>
+      <div class="stat"><div class="stat-val" style="color:var(--green)" id="stat-won">0</div><div class="stat-label">Won</div></div>
+    </div>
+    <div class="filters">
+      <input id="searchInput" class="search-box" type="text" placeholder="🔍  Search name, company, OEM..." value="${searchQ}" oninput="searchQ=this.value;renderLeadsList()"/>
+      <select class="filter-select" id="sel-oem" onchange="filterOEM=this.value;renderLeadsList()">
+        <option value="">All OEMs</option>
+        ${oemsUniq.map(o=>`<option value="${o}" ${filterOEM===o?'selected':''}>${o}</option>`).join('')}
+      </select>
+      <select class="filter-select" onchange="filterStatus=this.value;renderLeadsList()">
+        <option value="">All Status</option>
+        <option value="Active" ${filterStatus==='Active'?'selected':''}>Active</option>
+        <option value="On Hold" ${filterStatus==='On Hold'?'selected':''}>On Hold</option>
+        <option value="Won" ${filterStatus==='Won'?'selected':''}>Won</option>
+        <option value="Lost" ${filterStatus==='Lost'?'selected':''}>Lost</option>
+      </select>
+      <div class="multi-select-wrap" id="locationDropWrap">
+        <button class="filter-select multi-select-btn" onclick="toggleLocationDrop(event)" id="locationDropBtn">
+          <span id="locationDropLabel">All Locations</span> ▾
+        </button>
+        <div class="multi-select-list" id="locationDropList">
+          ${citiesUniq.map(c=>`
+          <label class="multi-select-item">
+            <input type="checkbox" value="${c}" ${filterLocation.includes(c)?'checked':''} onchange="toggleLocationFilter(this)"/>
+            ${c}
+          </label>`).join('')}
+        </div>
+      </div>
+      <select class="filter-select" onchange="filterSegment=this.value;renderLeadsList()">
+        <option value="">All Segments</option>
+        <option value="Medical" ${filterSegment==='Medical'?'selected':''}>🏥 Medical</option>
+        <option value="Industrial" ${filterSegment==='Industrial'?'selected':''}>🏭 Industrial</option>
+      </select>
+      <select class="filter-select" onchange="filterMonth=this.value;renderLeadsList()">
+        <option value="">All Months</option>
+        ${monthsUniq.map(m=>`<option value="${m}" ${filterMonth===m?'selected':''}>📅 ${fmtMonth(m)}</option>`).join('')}
+      </select>
+    </div>
+    <div style="display:flex;justify-content:flex-end;margin-bottom:10px;">
+      <button class="btn btn-ghost btn-sm" onclick="copyFilteredWA()" style="gap:6px;">📱 Copy WA Summary</button>
+    </div>
+    <div id="leadsListContainer" class="leads-list"></div>`;
   } else {
-    // CSV — single sheet, OEMs only
-    const text=await file.text();
-    const lines=text.split('\n').filter(l=>l.trim());
-    const headers=lines[0].split(',').map(h=>h.replace(/"/g,'').trim());
-    oemRows=lines.slice(1).map(l=>{
-      const vals=[...l.matchAll(/"([^"]*)"|([^,]*)/g)].map(m=>(m[1]??m[2]??'').trim());
-      const obj={}; headers.forEach((h,i)=>{obj[h]=vals[i]||'';}); return obj;
-    });
+    // Shell exists — renderLeadsList will update stats
+  }
+  renderLeadsList();
+}
+
+function renderLeadsList() {
+  const container = document.getElementById('leadsListContainer');
+  if (!container) { render(); return; }
+  const t = today();
+  const fl = filteredLeads();
+
+  // Update stats to reflect current filtered view
+  const isFiltered = filterOEM || filterStatus || filterSegment || filterMonth || filterLocation.length || searchQ || currentTab !== 'all';
+  const statsBase = isFiltered ? fl : leads;
+  const el = id => document.getElementById(id);
+  if (el('stat-total')) {
+    el('stat-total').textContent = statsBase.length;
+    el('stat-total-label').textContent = isFiltered ? 'Filtered' : 'Total';
+  }
+  if (el('stat-active')) el('stat-active').textContent = statsBase.filter(l=>l.status==='Active').length;
+  if (el('stat-overdue')) el('stat-overdue').textContent = statsBase.filter(l=>l.followup && l.followup < t && l.status==='Active').length;
+  if (el('stat-won')) el('stat-won').textContent = statsBase.filter(l=>l.status==='Won').length;
+  const priorityOrder = {High:0,Medium:1,Low:2,'':3};
+  fl.sort((a,b) => {
+    const aOv = a.followup && a.followup < t ? -1 : 0;
+    const bOv = b.followup && b.followup < t ? -1 : 0;
+    if (aOv !== bOv) return aOv - bOv;
+    return (priorityOrder[a.priority]||3) - (priorityOrder[b.priority]||3);
+  });
+
+  if (fl.length === 0) {
+    container.innerHTML = `<div class="empty"><div class="empty-icon">📭</div><h3>No leads here</h3><p>Add your first lead or adjust filters</p></div>`;
+    return;
   }
 
-  oemRows=oemRows.filter(r=>String(r['Name']||'').trim());
-
-  // Build contact map keyed by OEM Name
-  const ctMap={};
-  ctRows.forEach(r=>{
-    const key=String(r['OEM_Name']||'').trim();
-    if(!key) return;
-    if(!ctMap[key]) ctMap[key]=[];
-    const nm=String(r['Name']||'').trim();
-    if(nm) ctMap[key].push({
-      name:nm,
-      phone:String(r['Phone']||'').trim(),
-      position:String(r['Position']||'').trim(),
-      location:String(r['Location']||'').trim(),
-      note:String(r['Note']||'').trim()
-    });
-  });
-
-  let added=0, skipped=0, errors=[];
-  oemRows.forEach(r=>{
-    const name=String(r['Name']||'').trim();
-    const code=String(r['Code']||'').trim();
-    if(!name){errors.push('Row missing Name — skipped');return;}
-    // Skip duplicate by name
-    if(db.oems.find(o=>o.name.toLowerCase()===name.toLowerCase())){skipped++;return;}
-    // Locations
-    const locs=[];
-    ['1','2','3'].forEach(n=>{const c=String(r[`City${n}`]||'').trim();if(c)locs.push({city:c,address:String(r[`Address${n}`]||'').trim()});});
-    // Subcategories
-    const subcats=String(r['Subcategories']||'').split(',').map(s=>s.trim()).filter(Boolean);
-    // Contacts from Contacts sheet
-    const contacts=ctMap[name]||[];
-    db.oems.push({
-      id:'oem_'+Date.now()+'_'+Math.random().toString(36).slice(2,5),
-      name, code,
-      oemType:String(r['OEM_Type']||'OEM').trim(),
-      segment:String(r['Segment']||'Industrial').trim(),
-      subcategories:subcats,
-      dealerOEMs:String(r['Dealer_OEM_Brands']||'').trim(),
-      locations:locs, contacts,
-      notes:String(r['Notes']||'').trim()
-    });
-    added++;
-  });
-
-  const errHtml=errors.length?`<div style="font-size:12px;color:var(--red);margin-top:6px">${errors.join('<br>')}</div>`:'';
-  document.getElementById('csv-preview').innerHTML=`
-    <div class="card" style="background:#d1fae5;border:1.5px solid var(--green)">
-      <div style="font-size:14px;font-weight:700;color:#065f46">✓ ${added} added · ${skipped} skipped (duplicate name)</div>
-      ${errHtml}
+  container.innerHTML = fl.map(l => {
+    const isOverdue = l.followup && l.followup < t && l.status === 'Active';
+    const isToday = l.followup === t;
+    const cardClass = isOverdue ? 'overdue' : isToday ? 'due-today' : '';
+    let followupLabel = 'No follow-up set', fuClass = 'none';
+    if (l.followup) {
+      if (isOverdue) { followupLabel = `⚠ Overdue (${fmtDate(l.followup)})`; fuClass = 'overdue'; }
+      else if (isToday) { followupLabel = `🔔 Follow-up today`; fuClass = 'due-today'; }
+      else { followupLabel = `📅 ${fmtDate(l.followup)}`; fuClass = 'upcoming'; }
+    }
+    const age = l.leadDate ? daysBetween(l.leadDate, t) : null;
+    const statusClass = l.status==='Active'?'status-active':l.status==='Lost'?'status-lost':l.status==='Won'?'status-won':'status-hold';
+    const priorityClass = l.priority==='High'?'tag-priority-high':l.priority==='Low'?'tag-priority-low':'tag-priority-medium';
+    return `
+    <div class="lead-card ${cardClass}" onclick="openDetail('${l.id}')">
+      <div class="lead-card-header">
+        <div>
+          <div class="lead-company">${l.company||'—'}</div>
+          <div class="lead-customer">${l.customer||''}${l.city?` · ${l.city}`:''}</div>
+        </div>
+        <span class="status-badge ${statusClass}">${l.status||'Active'}</span>
+      </div>
+      <div class="lead-tags">
+        ${l.stage?`<span class="tag tag-stage">${l.stage}</span>`:''}
+        ${l.segment?`<span class="tag" style="background:#1a1e3a;color:#a0aaff">${l.segment}</span>`:''}
+        ${l.priority?`<span class="tag ${priorityClass}">${l.priority}</span>`:''}
+        ${l.oem?`<span class="tag tag-oem">${l.oem}</span>`:''}
+        ${l.amount?`<span class="tag tag-amount">${fmtAmt(l.amount)}</span>`:''}
+        ${l.subvention && l.subvention !== 'None' ? `<span class="tag" style="background:#1a2a20;color:var(--green)">${l.subvention}</span>` : ''}
+        ${l.machine?`<span class="tag tag-oem">${l.machine}</span>`:''}
+      </div>
+      <div class="lead-footer">
+        <span class="lead-followup ${fuClass}">${followupLabel}</span>
+        <span class="lead-age">${age!==null?`${age}d old`:''}</span>
+      </div>
     </div>`;
-  showToast('Importing...');
-  await saveAndSync();
-  showToast(`${added} OEMs imported ✓`);
-  input.value='';
+  }).join('');
 }
 
-// ============================================================
-// REMINDERS
-// ============================================================
-function scheduleReminder(action){
-  if(!('Notification' in window)||!action.dueDate) return;
-  if(Notification.permission==='default') Notification.requestPermission();
-  if(Notification.permission==='granted'){
-    const due=new Date(action.dueDate+'T09:00:00').getTime();
-    const delay=due-Date.now();
-    if(delay>0) setTimeout(()=>{try{new Notification('OEM Tracker — Action Due',{body:action.description,tag:action.id});}catch(e){}},delay);
+function renderSettings(container) {
+  const s = getSettings();
+  container.innerHTML = `
+  <div class="settings-panel">
+    <h3>🔗 GitHub Sync Setup</h3>
+    <div class="form-grid">
+      <div class="form-group form-full">
+        <label>Personal Access Token</label>
+        <input type="password" id="s_token" value="${s.token||''}" placeholder="ghp_xxxxxxxxxxxx"/>
+      </div>
+      <div class="form-group">
+        <label>GitHub Username</label>
+        <input type="text" id="s_owner" value="${s.owner||''}" placeholder="your-username"/>
+      </div>
+      <div class="form-group">
+        <label>Repository Name</label>
+        <input type="text" id="s_repo" value="${s.repo||''}" placeholder="your-repo-name"/>
+      </div>
+      <div class="form-group form-full">
+        <label>File Path in Repo</label>
+        <input type="text" id="s_filePath" value="${s.filePath||'leads.json'}" placeholder="leads.json"/>
+      </div>
+    </div>
+    <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
+      <button class="btn btn-primary" onclick="saveGHSettings()">Save &amp; Sync</button>
+      <button class="btn btn-ghost" onclick="manualSync()">↻ Pull from GitHub</button>
+      <button class="btn btn-ghost" style="color:var(--orange);border-color:var(--orange)" onclick="mergeAndPush()">⬆ Merge &amp; Push Local</button>
+    </div>
+    <div class="settings-note" style="margin-top:8px;">
+      <strong style="color:var(--text)">↻ Pull</strong> — loads GitHub data into this device.<br/>
+      <strong style="color:var(--orange)">⬆ Merge &amp; Push</strong> — combines this device's leads with GitHub, keeps the newer version of each lead, and pushes the result. Use this when you've added leads on your phone and want them on your laptop too.
+    </div>
+    <div class="settings-note">
+      🔐 Your token is saved only in your browser (localStorage). It never leaves your device. <br/>
+      Generate a token at <a href="https://github.com/settings/tokens" target="_blank">github.com/settings/tokens</a> with <strong>repo</strong> scope. <br/>
+      The app will read and write <strong>${s.filePath||'leads.json'}</strong> in <strong>${s.owner||'your-username'}/${s.repo||'your-repo'}</strong>.
+    </div>
+  </div>
+
+  <div class="settings-panel" style="margin-top:12px;">
+    <h3>📥 Import Leads from CSV</h3>
+    <p style="color:var(--muted);font-size:12px;line-height:1.6;margin-bottom:12px;">
+      Download the template, fill it in Excel or Google Sheets, and import it back. Duplicate leads (matched by phone number) are flagged before saving.
+    </p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <button class="btn btn-primary btn-sm" onclick="downloadTemplate()">⬇️ Download Template</button>
+      <button class="btn btn-ghost btn-sm" onclick="document.getElementById('csvFileInput').click()">📂 Import CSV File</button>
+    </div>
+    <div class="settings-note" style="margin-top:10px;">
+      ✅ <strong>Valid values for dropdowns:</strong><br/>
+      <strong>Priority:</strong> High, Medium, Low &nbsp;|&nbsp;
+      <strong>Stage:</strong> New, Contacted, Docs Collected, Credit Review, Sanctioned, Disbursed, Closed Lost<br/>
+      <strong>Status:</strong> Active, On Hold, Won, Lost &nbsp;|&nbsp;
+      <strong>Subvention:</strong> Yes, No<br/>
+      <strong>Dates:</strong> YYYY-MM-DD format (e.g. 2026-04-06) &nbsp;|&nbsp;
+      <strong>Amount:</strong> Numbers only, no ₹ or commas
+    </div>
+  </div>
+
+  <div class="settings-panel" style="margin-top:12px;">
+    <h3>📤 Export All Leads</h3>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <button class="btn btn-ghost btn-sm" onclick="exportAllWA()">📱 WhatsApp Summary</button>
+      <button class="btn btn-ghost btn-sm" onclick="exportAllEmail()">📧 Email Table</button>
+      <button class="btn btn-ghost btn-sm" onclick="exportCSV()">📊 Download CSV</button>
+    </div>
+  </div>
+
+  <div class="settings-panel" style="margin-top:12px;border-color:var(--orange)">
+    <h3 style="color:var(--orange)">🔒 Backups</h3>
+    <p style="color:var(--muted);font-size:12px;line-height:1.6;margin-bottom:12px;">
+      A backup is saved to <code style="color:var(--accent)">backups/leads_YYYY-MM-DD.json</code> in your GitHub repo every time you open the app. You can also push one manually anytime.<br/><br/>
+      <strong style="color:var(--orange)">Note:</strong> Backups only happen when the app is open — there is no background process.
+    </p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <button class="btn btn-primary btn-sm" onclick="pushBackupNow(false)">⬆ Push Backup Now</button>
+      <button class="btn btn-ghost btn-sm" style="color:var(--orange);border-color:var(--orange)" onclick="openBackupManager()">📦 View &amp; Restore Backups</button>
+    </div>
+  </div>`;
+}
+
+// ─────────────────────────────────────────
+// TABS
+// ─────────────────────────────────────────
+function toggleLocationDrop(e) {
+  e.stopPropagation();
+  document.getElementById('locationDropList').classList.toggle('open');
+}
+function toggleLocationFilter(cb) {
+  const city = cb.value;
+  if (cb.checked) {
+    if (!filterLocation.includes(city)) filterLocation.push(city);
+  } else {
+    filterLocation = filterLocation.filter(c => c !== city);
+  }
+  // Update button label
+  const label = document.getElementById('locationDropLabel');
+  if (label) label.textContent = filterLocation.length ? filterLocation.join(', ') : 'All Locations';
+  renderLeadsList();
+}
+// Close location dropdown when clicking outside
+document.addEventListener('click', function(e) {
+  const list = document.getElementById('locationDropList');
+  const wrap = document.getElementById('locationDropWrap');
+  if (list && wrap && !wrap.contains(e.target)) list.classList.remove('open');
+});
+
+function setTab(tab, el) {
+  currentTab = tab;
+  filterLocation = [];
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('mainContent').innerHTML = '';
+  render();
+}
+
+// ─────────────────────────────────────────
+// SETTINGS ACTIONS
+// ─────────────────────────────────────────
+function saveGHSettings() {
+  const s = {
+    token: document.getElementById('s_token').value.trim(),
+    owner: document.getElementById('s_owner').value.trim(),
+    repo: document.getElementById('s_repo').value.trim(),
+    filePath: document.getElementById('s_filePath').value.trim() || 'leads.json',
+  };
+  saveSettings(s);
+  toast('Settings saved!', 'success');
+  loadFromGithub().then(ok => { if (ok) render(); });
+}
+
+async function manualSync() {
+  toast('Syncing...', '');
+  const s = getSettings();
+  if (!s.token) { toast('Set up GitHub first', 'error'); return; }
+  setSyncDot('syncing');
+  const filePath = s.filePath || 'leads.json';
+  try {
+    const data = await ghRequest('GET', `/repos/${s.owner}/${s.repo}/contents/${filePath}`);
+    ghFileSHA = data.sha;
+    const raw = data.content ? data.content.replace(/\n/g,'') : '';
+    let remoteLeads = [];
+    if (raw) { try { remoteLeads = JSON.parse(atob(raw)) || []; } catch(e) { remoteLeads = []; } }
+    const localLeads = loadLocal();
+    leads = mergeLeads(localLeads, remoteLeads);
+    saveLocal(leads);
+    setSyncDot('ok');
+    // Force full rebuild so stats and list always repopulate
+    document.getElementById('mainContent').innerHTML = '';
+    // Switch to All Leads tab so user sees the results
+    currentTab = 'all';
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab')[0].classList.add('active');
+    render();
+    toast(`Synced ✓ — ${leads.length} leads loaded`, 'success');
+  } catch(e) {
+    setSyncDot('err');
+    toast('Pull failed: ' + e.message, 'error');
   }
 }
 
-// ============================================================
-// UTILS
-// ============================================================
-function todayStr(){return new Date().toISOString().split('T')[0];}
-function fmtDate(d){if(!d)return'—';return new Date(d+'T00:00:00').toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});}
-function fmtTime(d){return d.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});}
-function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
+async function mergeAndPush() {
+  setSyncDot('syncing');
+  const s = getSettings();
+  if (!s.token) { toast('Set up GitHub first', 'error'); return; }
+  toast('Merging...', '');
+  const filePath = s.filePath || 'leads.json';
+  let remoteLeads = [];
+  try {
+    const data = await ghRequest('GET', `/repos/${s.owner}/${s.repo}/contents/${filePath}`);
+    ghFileSHA = data.sha;
+    const raw = data.content ? data.content.replace(/\n/g,'') : '';
+    if (raw) { try { remoteLeads = JSON.parse(atob(raw)) || []; } catch(e) { remoteLeads = []; } }
+  } catch(e) {
+    if (!e.message.includes('404')) {
+      setSyncDot('err'); toast('Merge failed: ' + e.message, 'error'); return;
+    }
+  }
+  leads = mergeLeads(leads, remoteLeads);
+  saveLocal(leads);
+  render();
+  await saveToGithub();
+  toast(`Merged ✓ — ${leads.length} total leads synced`, 'success');
+}
 
-// ============================================================
-// INIT
-// ============================================================
-loadLocal();
-renderHome();
-if('Notification' in window&&Notification.permission==='default') Notification.requestPermission();
-loadFromGitHub();
+function openSettings() {
+  currentTab = 'settings';
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab')[5].classList.add('active');
+  render();
+}
+
+// ─────────────────────────────────────────
+// ADD / EDIT FORM
+// ─────────────────────────────────────────
+const FIELDS = ['company','customer','phone','phone2','email','city','segment','address','source','oem','sourceType','machine','amount','subvention','priority','stage','status','leadDate','followup','lastContact','reason','notes'];
+
+function openAddLead() {
+  editingId = null;
+  document.getElementById('formTitle').textContent = 'New Lead';
+  FIELDS.forEach(f => {
+    const el = document.getElementById('f_'+f);
+    if (!el) return;
+    if (f === 'leadDate') el.value = today();
+    else if (f === 'priority') el.value = 'Medium';
+    else if (f === 'stage') el.value = 'New';
+    else if (f === 'status') el.value = 'Active';
+    else el.value = '';
+  });
+  document.getElementById('formOverlay').classList.add('open');
+  pushModalState();
+}
+
+function openEdit(id) {
+  const l = leads.find(x => x.id === id);
+  if (!l) return;
+  editingId = id;
+  document.getElementById('formTitle').textContent = 'Edit Lead';
+  FIELDS.forEach(f => {
+    const el = document.getElementById('f_'+f);
+    if (!el) return;
+    el.value = l[f] || '';
+  });
+  document.getElementById('detailOverlay').classList.remove('open');
+  document.getElementById('formOverlay').classList.add('open');
+  pushModalState();
+}
+
+function closeForm() { document.getElementById('formOverlay').classList.remove('open'); }
+function closeFormModal(e) { if (e.target === document.getElementById('formOverlay')) closeForm(); }
+
+async function saveLead() {
+  const company = document.getElementById('f_company').value.trim();
+  const customer = document.getElementById('f_customer').value.trim();
+  if (!company && !customer) { toast('Company or Customer name required', 'error'); return; }
+
+  const lead = {};
+  FIELDS.forEach(f => {
+    const el = document.getElementById('f_'+f);
+    lead[f] = el ? el.value.trim() : '';
+  });
+  // Auto-set status to Lost when stage is Closed Lost
+  if (lead.stage === 'Closed Lost') lead.status = 'Lost';
+  lead.id = editingId || uid();
+  lead.updatedAt = new Date().toISOString();
+
+  if (editingId) {
+    const idx = leads.findIndex(x => x.id === editingId);
+    leads[idx] = lead;
+  } else {
+    leads.unshift(lead);
+  }
+
+  saveLocal(leads);
+  closeForm();
+  render();
+  await saveToGithub();
+}
+
+// ─────────────────────────────────────────
+// DETAIL VIEW
+// ─────────────────────────────────────────
+function openDetail(id) {
+  const l = leads.find(x => x.id === id);
+  if (!l) return;
+  const t = today();
+  const isOverdue = l.followup && l.followup < t;
+  const statusClass = l.status==='Active'?'status-active':l.status==='Lost'?'status-lost':l.status==='Won'?'status-won':'status-hold';
+
+  document.getElementById('detailContent').innerHTML = `
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+    <button onclick="document.getElementById('detailOverlay').classList.remove('open')" style="background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer;padding:0;line-height:1;">←</button>
+    <div style="flex:1">
+      <div style="font-family:'DM Serif Display',serif;font-size:20px;color:var(--accent)">${l.company||'—'}</div>
+      <div style="color:var(--muted);font-size:13px;margin-top:2px">${l.customer||''}${l.city?` · ${l.city}`:''}</div>
+    </div>
+    <span class="status-badge ${statusClass}">${l.status||'Active'}</span>
+  </div>
+
+  <div class="detail-section">
+    <h4>Customer</h4>
+    <div class="detail-grid">
+      <div class="detail-item"><label>Phone</label><span>${l.phone||'—'}</span></div>
+      <div class="detail-item"><label>Alt Phone</label><span>${l.phone2||'—'}</span></div>
+      <div class="detail-item"><label>Email</label><span style="word-break:break-all">${l.email||'—'}</span></div>
+      <div class="detail-item"><label>City</label><span>${l.city||'—'}</span></div>
+      <div class="detail-item"><label>Segment</label><span>${l.segment||'—'}</span></div>
+    </div>
+    ${l.address ? `<div style="margin-top:8px"><label style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px">Address</label><div style="font-size:13px;color:var(--muted);margin-top:3px;line-height:1.5">${l.address}</div></div>` : ''}
+  </div>
+
+  <div class="detail-section">
+    <h4>Lead Source</h4>
+    <div class="detail-grid">
+      <div class="detail-item"><label>Received From</label><span>${l.source||'—'}</span></div>
+      <div class="detail-item"><label>OEM</label><span>${l.oem||'—'}</span></div>
+      <div class="detail-item"><label>Source Type</label><span>${l.sourceType||'—'}</span></div>
+    </div>
+  </div>
+
+  <div class="detail-section">
+    <h4>Deal</h4>
+    <div class="detail-grid">
+      <div class="detail-item"><label>Machine</label><span>${l.machine||'—'}</span></div>
+      <div class="detail-item"><label>Loan Amount</label><span>${fmtAmt(l.amount)}</span></div>
+      <div class="detail-item"><label>Scheme</label><span>${l.subvention||'None'}</span></div>
+      <div class="detail-item"><label>Priority</label><span>${l.priority||'—'}</span></div>
+    </div>
+  </div>
+
+  <div class="detail-section">
+    <h4>Pipeline</h4>
+    <div class="detail-grid">
+      <div class="detail-item"><label>Stage</label><span>${l.stage||'—'}</span></div>
+      <div class="detail-item"><label>Lead Date</label><span>${fmtDate(l.leadDate)}</span></div>
+      <div class="detail-item"><label>Next Follow-up</label><span style="color:${isOverdue?'var(--red)':'inherit'}">${fmtDate(l.followup)}${isOverdue?' ⚠':''}</span></div>
+      <div class="detail-item"><label>Last Contacted</label><span>${fmtDate(l.lastContact)}</span></div>
+    </div>
+  </div>
+
+  ${l.reason ? `<div class="detail-section"><h4>Reason</h4><div style="color:var(--text);font-size:14px">${l.reason}</div></div>` : ''}
+  ${l.notes ? `<div class="detail-section"><h4>Notes</h4><div style="color:var(--muted);font-size:13px;line-height:1.6">${l.notes}</div></div>` : ''}
+
+  <div class="detail-actions">
+    ${l.phone ? `<a href="tel:${l.phone}" class="btn btn-ghost btn-sm">📞 Call</a>` : ''}
+    ${l.phone ? `<a href="https://wa.me/91${l.phone.replace(/\D/g,'')}" target="_blank" class="btn btn-ghost btn-sm">💬 WhatsApp</a>` : ''}
+    ${l.email ? `<a href="mailto:${l.email}" class="btn btn-ghost btn-sm">✉️ Email</a>` : ''}
+    <button class="btn btn-ghost btn-sm" onclick="shareWA('${l.id}')">📤 Copy WA</button>
+    <button class="btn btn-ghost btn-sm" onclick="shareEmail('${l.id}')">📧 Copy Email</button>
+    <button class="btn btn-primary btn-sm" onclick="openEdit('${l.id}')">✏️ Edit</button>
+    <button class="btn btn-ghost btn-sm" style="color:var(--red);border-color:var(--red)" onclick="deleteLead('${l.id}')">🗑 Delete</button>
+  </div>`;
+
+  document.getElementById('detailOverlay').classList.add('open');
+  pushModalState();
+} { if (e.target === document.getElementById('detailOverlay')) document.getElementById('detailOverlay').classList.remove('open'); }
+
+async function deleteLead(id) {
+  if (!confirm('Delete this lead?')) return;
+  leads = leads.filter(l => l.id !== id);
+  saveLocal(leads);
+  document.getElementById('detailOverlay').classList.remove('open');
+  render();
+  await saveToGithub();
+}
+
+// ─────────────────────────────────────────
+// SHARE
+// ─────────────────────────────────────────
+function waText(l) {
+  const lines = [
+    `*Lead Summary – ${l.company || l.customer}*`,
+    ``,
+    `*Customer:* ${l.customer||'—'}`,
+    `*Company:* ${l.company||'—'}`,
+    `*Phone:* ${l.phone||'—'}${l.phone2?' / '+l.phone2:''}`,
+    `*Email:* ${l.email||'—'}`,
+    `*City:* ${l.city||'—'}`,
+    ``,
+    `*OEM:* ${l.oem||'—'}`,
+    `*Machine:* ${l.machine||'—'}`,
+    `*Loan Amount:* ${fmtAmt(l.amount)}`,
+    `*Subvention:* ${l.subvention||'—'}`,
+    `*Lead From:* ${l.source||'—'} (${l.sourceType||'—'})`,
+    ``,
+    `*Stage:* ${l.stage||'—'}`,
+    `*Status:* ${l.status||'—'}`,
+    `*Priority:* ${l.priority||'—'}`,
+    `*Lead Date:* ${fmtDate(l.leadDate)}`,
+    `*Next Follow-up:* ${fmtDate(l.followup)}`,
+    l.reason ? `*Reason:* ${l.reason}` : null,
+    l.notes ? `*Notes:* ${l.notes}` : null,
+  ].filter(Boolean).join('\n');
+  return lines;
+}
+
+function emailTable(l) {
+  const rows = [
+    ['Company', l.company], ['Customer', l.customer], ['Phone', l.phone],
+    ['Alt Phone', l.phone2], ['Email', l.email], ['City', l.city],
+    ['OEM', l.oem], ['Machine', l.machine], ['Loan Amount', fmtAmt(l.amount)],
+    ['Subvention', l.subvention], ['Lead From', l.source], ['Source Type', l.sourceType],
+    ['Stage', l.stage], ['Status', l.status], ['Priority', l.priority],
+    ['Lead Date', fmtDate(l.leadDate)], ['Next Follow-up', fmtDate(l.followup)],
+    ['Last Contacted', fmtDate(l.lastContact)], ['Reason', l.reason], ['Notes', l.notes],
+  ].filter(([,v]) => v);
+  return `<table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse;font-family:Arial,sans-serif;font-size:13px;">
+<thead><tr style="background:#f5c842;"><th colspan="2">Lead – ${l.company||l.customer}</th></tr></thead>
+<tbody>${rows.map(([k,v])=>`<tr><td style="background:#f5f5f5;font-weight:bold;min-width:130px">${k}</td><td>${v}</td></tr>`).join('')}</tbody>
+</table>`;
+}
+
+function shareWA(id) {
+  const l = leads.find(x => x.id === id);
+  if (!l) return;
+  const text = waText(l);
+  copyText(text);
+  toast('Copied for WhatsApp ✓', 'success');
+  document.getElementById('detailOverlay').classList.remove('open');
+}
+
+function shareEmail(id) {
+  const l = leads.find(x => x.id === id);
+  if (!l) return;
+  const html = emailTable(l);
+  // Open in new tab for email copy
+  const w = window.open('', '_blank');
+  w.document.write(`<!DOCTYPE html><html><head><title>Lead – ${l.company||l.customer}</title></head><body style="padding:20px;font-family:Arial">${html}<br/><p style="color:#999;font-size:11px">Select the table above and copy, then paste into your email.</p></body></html>`);
+  w.document.close();
+}
+
+function copyText(txt) {
+  if (navigator.clipboard) { navigator.clipboard.writeText(txt); }
+  else {
+    const el = document.createElement('textarea');
+    el.value = txt; document.body.appendChild(el);
+    el.select(); document.execCommand('copy'); document.body.removeChild(el);
+  }
+}
+
+// EXPORT ALL
+function copyFilteredWA() {
+  const fl = filteredLeads();
+  if (!fl.length) { toast('No leads to copy', 'error'); return; }
+
+  // Build a label describing the current filter
+  const parts = [];
+  if (filterOEM) parts.push(filterOEM);
+  if (filterSegment) parts.push(filterSegment);
+  if (filterStatus) parts.push(filterStatus);
+  if (filterLocation.length) parts.push(filterLocation.join(', '));
+  if (filterMonth) {
+    const monthNames = {1:'Jan',2:'Feb',3:'Mar',4:'Apr',5:'May',6:'Jun',7:'Jul',8:'Aug',9:'Sep',10:'Oct',11:'Nov',12:'Dec'};
+    const [y,m] = filterMonth.split('-');
+    parts.push(`${monthNames[parseInt(m)]} ${y}`);
+  }
+  if (searchQ) parts.push(`"${searchQ}"`);
+  if (currentTab !== 'all') parts.push(currentTab.charAt(0).toUpperCase() + currentTab.slice(1));
+  const label = parts.length ? parts.join(' · ') : 'All Leads';
+
+  const t = today();
+  let text = `*Lead Summary – ${label}*\n`;
+  text += `_${new Date().toLocaleDateString('en-IN', {day:'numeric',month:'short',year:'numeric'})}_\n`;
+  text += `_Total: ${fl.length} leads_\n\n`;
+
+  fl.forEach((l, i) => {
+    const isOverdue = l.followup && l.followup < t;
+    const fuLine = l.followup
+      ? (isOverdue ? `⚠ Overdue (${fmtDate(l.followup)})` : `📅 ${fmtDate(l.followup)}`)
+      : 'No follow-up';
+    text += `*${i+1}. ${l.company || l.customer || '—'}*\n`;
+    if (l.customer && l.company) text += `   👤 ${l.customer}\n`;
+    if (l.phone) text += `   📞 ${l.phone}\n`;
+    if (l.oem) text += `   🏭 ${l.oem}${l.machine ? ' – ' + l.machine : ''}\n`;
+    if (l.amount && parseInt(l.amount) > 0) text += `   💰 ${fmtAmt(l.amount)}\n`;
+    text += `   📊 ${l.stage||'—'} · ${l.status||'—'}\n`;
+    text += `   ${fuLine}\n`;
+    if (l.reason) text += `   📝 ${l.reason}\n`;
+    text += '\n';
+  });
+
+  copyText(text);
+  toast(`Copied ${fl.length} leads for WhatsApp ✓`, 'success');
+}
+
+function exportAllWA() {
+  const fl = leads.filter(l=>l.status==='Active');
+  let text = `*Active Leads Summary – ${new Date().toLocaleDateString('en-IN')}*\n\n`;
+  fl.forEach((l,i) => {
+    text += `${i+1}. *${l.company||l.customer}* – ${l.machine||'—'} – ${fmtAmt(l.amount)} – ${l.stage||'—'} – FU: ${fmtDate(l.followup)}\n`;
+  });
+  copyText(text);
+  toast('Active leads summary copied!', 'success');
+}
+
+function exportAllEmail() {
+  const rows = leads.map(l => [l.company, l.customer, l.phone, l.oem, l.machine, fmtAmt(l.amount), l.stage, l.status, l.priority, fmtDate(l.followup)]);
+  const headers = ['Company','Customer','Phone','OEM','Machine','Amount','Stage','Status','Priority','Next Follow-up'];
+  let html = `<table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse;font-family:Arial,sans-serif;font-size:12px;">
+<thead><tr style="background:#f5c842;">${headers.map(h=>`<th>${h}</th>`).join('')}</tr></thead>
+<tbody>${rows.map((r,i)=>`<tr style="background:${i%2?'#f9f9f9':'#fff'}">${r.map(v=>`<td>${v||'—'}</td>`).join('')}</tr>`).join('')}</tbody>
+</table>`;
+  const w = window.open('', '_blank');
+  w.document.write(`<!DOCTYPE html><html><head><title>All Leads</title></head><body style="padding:20px">${html}</body></html>`);
+  w.document.close();
+}
+
+function exportCSV() {
+  const headers = ['Company','Customer','Phone','Alt Phone','Email','City','Segment','Address','OEM','Machine','Amount','Subvention','Lead From','Source Type','Stage','Status','Priority','Lead Date','Next Follow-up','Last Contacted','Reason','Notes'];
+  const keys = ['company','customer','phone','phone2','email','city','segment','address','oem','machine','amount','subvention','source','sourceType','stage','status','priority','leadDate','followup','lastContact','reason','notes'];
+  const rows = [headers, ...leads.map(l => keys.map(k => `"${(l[k]||'').replace(/"/g,'""')}"` ))];
+  const csv = rows.map(r=>r.join(',')).join('\n');
+  const a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,\uFEFF' + encodeURIComponent(csv);
+  a.download = `leads_${today()}.csv`;
+  a.click();
+}
+
+function closeShareOverlay() { document.getElementById('shareOverlay').classList.remove('open'); }
+function closeShareModal(e) { if (e.target === document.getElementById('shareOverlay')) closeShareOverlay(); }
+
+// ─────────────────────────────────────────
+// IMPORT
+// ─────────────────────────────────────────
+
+const CSV_HEADERS = ['Company','Customer Name','Phone','Alt Phone','Email','City','Segment','Address','Lead Received From','Source Type','OEM Name','Machine Requirement','Loan Amount','Subvention','Priority','Stage','Status','Lead Date','Next Follow-up','Last Contacted','Reason','Notes'];
+const CSV_KEYS    = ['company','customer','phone','phone2','email','city','segment','address','source','sourceType','oem','machine','amount','subvention','priority','stage','status','leadDate','followup','lastContact','reason','notes'];
+
+const TEMPLATE_SAMPLE = [
+  'ABC Industries','Rajesh Kumar','9876543210','9876500000','rajesh@abc.com','Bengaluru','Industrial','Plot 12, KIADB Peenya Industrial Area, Bengaluru 560058','Arun – XCMG Dealer','OEM Referral','XCMG','20T Excavator','5500000','Yes','High','Contacted','Active','2026-04-01','2026-04-10','2026-04-05','Interested, needs to check finance','Referred by Suresh'
+];
+
+function downloadTemplate() {
+  const header = CSV_HEADERS.join(',');
+  const sample = TEMPLATE_SAMPLE.map(v => `"${v}"`).join(',');
+  const instructions = [
+    '# INSTRUCTIONS (delete this row before importing)',
+    '# Priority: High / Medium / Low',
+    '# Stage: New / Contacted / Docs Collected / Credit Review / Sanctioned / Disbursed / Closed Lost',
+    '# Status: Active / On Hold / Won / Lost',
+    '# Subvention: Yes / No',
+    '# Dates: YYYY-MM-DD format (e.g. 2026-04-06)',
+    '# Loan Amount: Numbers only (e.g. 5500000)',
+  ].join('\n# ,,,,,,,,,,,,,,,,,,,\n');
+
+  const csv = `${header}\n${sample}\n# ,,,,,,,,,,,,,,,,,,,\n${instructions}`;
+  const a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,\uFEFF' + encodeURIComponent(csv);
+  a.download = 'leads_import_template.csv';
+  a.click();
+  toast('Template downloaded!', 'success');
+}
+
+function parseCSV(text) {
+  // Remove BOM
+  text = text.replace(/^\uFEFF/, '');
+  const lines = text.split(/\r?\n/).filter(l => l.trim() && !l.trim().startsWith('#'));
+  if (lines.length < 2) return { headers: [], rows: [] };
+
+  function parseLine(line) {
+    const result = [];
+    let cur = '', inQ = false;
+    for (let i = 0; i < line.length; i++) {
+      const ch = line[i];
+      if (ch === '"') {
+        if (inQ && line[i+1] === '"') { cur += '"'; i++; }
+        else inQ = !inQ;
+      } else if (ch === ',' && !inQ) {
+        result.push(cur.trim()); cur = '';
+      } else cur += ch;
+    }
+    result.push(cur.trim());
+    return result;
+  }
+
+  const headers = parseLine(lines[0]);
+  const rows = lines.slice(1).map(l => parseLine(l));
+  return { headers, rows };
+}
+
+function handleFileSelect(input) {
+  const file = input.files[0];
+  if (!file) return;
+  input.value = '';
+  const reader = new FileReader();
+  reader.onload = e => {
+    let text = e.target.result;
+    // Clean up common garbled characters from Windows encoding mismatch
+    text = text
+      .replace(/Ã¢ÂÂ/g, '–').replace(/Ã¢ÂÂ/g, '—')
+      .replace(/â€"/g, '–').replace(/â€"/g, '—')
+      .replace(/â€˜/g, "'").replace(/â€™/g, "'")
+      .replace(/â€œ/g, '"').replace(/â€/g, '"')
+      .replace(/Â·/g, '·').replace(/Ãƒ/g, 'A')
+      .replace(/[^\x00-\x7F\u00C0-\u024F\u0900-\u097F]/g, ' ') // strip other non-printable junk
+      .replace(/  +/g, ' '); // collapse double spaces
+    processImportFile(text, file.name);
+  };
+  // Try without forced encoding first — browser will auto-detect
+  reader.readAsText(file);
+}
+
+let pendingImport = [];
+
+function processImportFile(text, filename) {
+  const { headers, rows } = parseCSV(text);
+  if (!headers.length) { toast('Could not read CSV file', 'error'); return; }
+
+  // Map CSV headers to field keys (case-insensitive, flexible)
+  const normalize = s => s.toLowerCase().replace(/[^a-z0-9]/g, '');
+  const normHeaders = CSV_HEADERS.map(normalize);
+  const colMap = headers.map(h => {
+    const idx = normHeaders.indexOf(normalize(h));
+    return idx >= 0 ? CSV_KEYS[idx] : null;
+  });
+
+  const existingPhones = new Set(leads.map(l => (l.phone||'').replace(/\D/g,'')).filter(Boolean));
+
+  const parsed = rows.map((row, i) => {
+    const lead = {};
+    colMap.forEach((key, ci) => { if (key) lead[key] = (row[ci] || '').trim(); });
+
+    // Normalise date fields: accept DD/MM/YYYY → YYYY-MM-DD
+    ['leadDate','followup','lastContact'].forEach(k => {
+      if (lead[k] && /^\d{2}\/\d{2}\/\d{4}$/.test(lead[k])) {
+        const [d,m,y] = lead[k].split('/');
+        lead[k] = `${y}-${m}-${d}`;
+      }
+    });
+
+    const cleanPhone = (lead.phone||'').replace(/\D/g,'');
+    const isDup = cleanPhone && existingPhones.has(cleanPhone);
+    const hasMin = lead.company || lead.customer || lead.phone;
+    return { lead, isDup, hasMin, row: i+2 }; // row+2 for 1-indexed + header
+  });
+
+  pendingImport = parsed;
+  renderImportPreview(filename, parsed);
+  document.getElementById('importOverlay').classList.add('open');
+}
+
+function renderImportPreview(filename, parsed) {
+  const ok  = parsed.filter(r => r.hasMin && !r.isDup);
+  const dup = parsed.filter(r => r.hasMin && r.isDup);
+  const err = parsed.filter(r => !r.hasMin);
+
+  const previewRows = parsed.slice(0,50).map(r => {
+    const cls = !r.hasMin ? 'import-row-err' : r.isDup ? 'import-row-dup' : 'import-row-ok';
+    const flag = !r.hasMin ? '❌' : r.isDup ? '⚠️' : '✅';
+    const l = r.lead;
+    return `<tr class="${cls}">
+      <td>${flag}</td>
+      <td>${l.company||'—'}</td>
+      <td>${l.customer||'—'}</td>
+      <td>${l.phone||'—'}</td>
+      <td>${l.oem||'—'}</td>
+      <td>${l.machine||'—'}</td>
+      <td>${l.stage||'—'}</td>
+      <td>${l.status||'—'}</td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('importBody').innerHTML = `
+    <p style="color:var(--muted);font-size:12px;margin-bottom:10px;">File: <strong style="color:var(--text)">${filename}</strong> · ${parsed.length} rows found</p>
+    <div class="import-legend">
+      <span class="ok-dot">${ok.length} new leads to import</span>
+      <span class="dup-dot">${dup.length} duplicates (phone match)</span>
+      <span class="err-dot">${err.length} rows skipped (no name/phone)</span>
+    </div>
+    <div class="import-scroll" style="margin-top:12px;">
+      <table class="import-preview-table">
+        <thead><tr><th></th><th>Company</th><th>Customer</th><th>Phone</th><th>OEM</th><th>Machine</th><th>Stage</th><th>Status</th></tr></thead>
+        <tbody>${previewRows}</tbody>
+      </table>
+    </div>
+    ${parsed.length > 50 ? `<p style="color:var(--muted);font-size:11px;margin-top:6px;">Showing first 50 rows of ${parsed.length}</p>` : ''}
+    <div style="display:flex;gap:8px;margin-top:16px;flex-wrap:wrap;">
+      <button class="btn btn-ghost" style="flex:1" onclick="closeImportModal()">Cancel</button>
+      ${dup.length > 0 ? `<button class="btn btn-ghost" style="flex:1;color:var(--orange);border-color:var(--orange)" onclick="confirmImport(true)">Import All incl. Duplicates (${ok.length+dup.length})</button>` : ''}
+      ${ok.length > 0 ? `<button class="btn btn-primary" style="flex:1" onclick="confirmImport(false)">✅ Import ${ok.length} New Leads</button>` : '<p style="color:var(--muted);font-size:12px;width:100%;text-align:center">No new leads to import.</p>'}
+    </div>`;
+}
+
+async function confirmImport(includeDups) {
+  const toImport = includeDups
+    ? pendingImport.filter(r => r.hasMin)
+    : pendingImport.filter(r => r.hasMin && !r.isDup);
+
+  const newLeads = toImport.map(r => ({
+    ...r.lead,
+    id: uid(),
+    updatedAt: new Date().toISOString(),
+    priority: r.lead.priority || 'Medium',
+    stage: r.lead.stage || 'New',
+    status: r.lead.status || 'Active',
+    leadDate: r.lead.leadDate || today(),
+  }));
+
+  leads = [...newLeads, ...leads];
+  saveLocal(leads);
+  document.getElementById('importOverlay').classList.remove('open');
+  render();
+  toast(`Imported ${newLeads.length} leads ✓`, 'success');
+  await saveToGithub();
+}
+
+function closeImportModal(e) {
+  if (!e || e.target === document.getElementById('importOverlay')) {
+    document.getElementById('importOverlay').classList.remove('open');
+  }
+}
+
+// ─────────────────────────────────────────
+// AUTO BACKUP
+// ─────────────────────────────────────────
+async function runDailyBackup() {
+  // Just calls the manual backup silently — runs on every app open
+  await pushBackupNow(true);
+}
+
+async function pushBackupNow(silent = false) {
+  const s = getSettings();
+  if (!s.token) { if (!silent) toast('Set up GitHub first', 'error'); return; }
+  if (!leads.length) { if (!silent) toast('No leads to backup', 'error'); return; }
+
+  const todayStr = today();
+  const filePath = `backups/leads_${todayStr}.json`;
+  if (!silent) toast('Backing up...', '');
+  try {
+    // Check if today's backup already exists to get its SHA (for overwrite)
+    let existingSHA = null;
+    try {
+      const existing = await ghRequest('GET', `/repos/${s.owner}/${s.repo}/contents/${filePath}`);
+      existingSHA = existing.sha;
+    } catch(e) { /* file doesn't exist yet, that's fine */ }
+
+    const content = btoa(unescape(encodeURIComponent(JSON.stringify(leads, null, 2))));
+    await ghRequest('PUT', `/repos/${s.owner}/${s.repo}/contents/${filePath}`, {
+      message: `Backup – ${todayStr} (${leads.length} leads)`,
+      content,
+      ...(existingSHA ? { sha: existingSHA } : {})
+    });
+    localStorage.setItem(LAST_BACKUP_KEY, todayStr);
+    if (!silent) toast(`Backup saved ✓ — ${leads.length} leads`, 'success');
+    else console.log('Auto backup saved:', filePath);
+  } catch(e) {
+    if (!silent) toast('Backup failed: ' + e.message, 'error');
+    else console.warn('Auto backup failed:', e.message);
+  }
+}
+
+async function listBackups() {
+  const s = getSettings();
+  if (!s.token) return [];
+  try {
+    const data = await ghRequest('GET', `/repos/${s.owner}/${s.repo}/contents/backups`);
+    return data
+      .filter(f => f.name.startsWith('leads_') && f.name.endsWith('.json'))
+      .sort((a,b) => b.name.localeCompare(a.name)) // newest first
+      .slice(0, 30); // max 30 backups shown
+  } catch(e) { return []; }
+}
+
+async function restoreFromBackup(downloadUrl, filename) {
+  if (!confirm(`Restore from ${filename}?\n\nThis will REPLACE your current leads with the backup. Your current data will be saved as today's backup first.`)) return;
+
+  // Save current state as today's backup before overwriting
+  await runDailyBackup();
+
+  try {
+    const res = await fetch(downloadUrl);
+    const restored = await res.json();
+    if (!Array.isArray(restored)) { toast('Invalid backup file', 'error'); return; }
+    leads = restored;
+    saveLocal(leads);
+    render();
+    await saveToGithub();
+    toast(`Restored ${leads.length} leads from ${filename} ✓`, 'success');
+    document.getElementById('importOverlay').classList.remove('open');
+  } catch(e) {
+    toast('Restore failed: ' + e.message, 'error');
+  }
+}
+
+async function openBackupManager() {
+  document.getElementById('importBody').innerHTML = `<p style="color:var(--muted);font-size:13px">Loading backups...</p>`;
+  document.getElementById('importOverlay').classList.add('open');
+  pushModalState();
+
+  const backups = await listBackups();
+  if (!backups.length) {
+    document.getElementById('importBody').innerHTML = `
+      <p style="color:var(--muted);font-size:13px;text-align:center;padding:24px 0">No backups found yet.<br/>The first backup will be created automatically tonight when you open the app.</p>
+      <button class="btn btn-ghost" style="width:100%;margin-top:8px" onclick="document.getElementById('importOverlay').classList.remove('open')">Close</button>`;
+    return;
+  }
+
+  const rows = backups.map(f => {
+    const dateStr = f.name.replace('leads_','').replace('.json','');
+    const [y,m,d] = dateStr.split('-');
+    const monthNames = ['','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const label = `${d} ${monthNames[parseInt(m)]} ${y}`;
+    const sizekb = (f.size / 1024).toFixed(1);
+    return `<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);">
+      <div>
+        <div style="font-size:14px;color:var(--text);font-weight:500">📦 ${label}</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:2px">${sizekb} KB · ${f.name}</div>
+      </div>
+      <button class="btn btn-ghost btn-sm" onclick="restoreFromBackup('${f.download_url}','${f.name}')">↩ Restore</button>
+    </div>`;
+  }).join('');
+
+  document.getElementById('importBody').innerHTML = `
+    <p style="color:var(--muted);font-size:12px;margin-bottom:12px">Backups are taken automatically once a day. Tap Restore to roll back to any date.</p>
+    <div style="max-height:320px;overflow-y:auto">${rows}</div>
+    <button class="btn btn-ghost" style="width:100%;margin-top:14px" onclick="document.getElementById('importOverlay').classList.remove('open')">Close</button>`;
+}
+
+// ─────────────────────────────────────────
+// BACK BUTTON (History API — prevents swipe-back closing app)
+// ─────────────────────────────────────────
+function pushModalState() {
+  history.pushState({ modal: true }, '');
+}
+
+window.addEventListener('popstate', function(e) {
+  // If any modal is open, close it instead of navigating away
+  if (document.getElementById('formOverlay').classList.contains('open')) {
+    closeForm(); return;
+  }
+  if (document.getElementById('detailOverlay').classList.contains('open')) {
+    document.getElementById('detailOverlay').classList.remove('open'); return;
+  }
+  if (document.getElementById('importOverlay').classList.contains('open')) {
+    document.getElementById('importOverlay').classList.remove('open'); return;
+  }
+  if (document.getElementById('shareOverlay').classList.contains('open')) {
+    document.getElementById('shareOverlay').classList.remove('open'); return;
+  }
+});
+
+// ─────────────────────────────────────────
+// START
+// ─────────────────────────────────────────
+initApp();
 </script>
 </body>
 </html>
