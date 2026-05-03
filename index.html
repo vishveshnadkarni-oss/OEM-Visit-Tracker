@@ -487,7 +487,60 @@ function setOEMSeg(s){oemSeg=s;document.getElementById('of-seg-med').classList.t
 function renderSubcats(sel=[]){const all=[...SUBCATS[oemSeg],...customSubcats];document.getElementById('of-subcats').innerHTML=all.map(v=>`<div class="subcat-chip ${sel.includes(v)?'selected':''}" data-val="${v}" onclick="this.classList.toggle('selected')">${v}</div>`).join('');}
 function addCustomSubcat(){const inp=document.getElementById('of-subcat-custom');const val=inp.value.trim();if(!val)return;customSubcats.push(val);const sel=[...document.querySelectorAll('.subcat-chip.selected')].map(el=>el.dataset.val);renderSubcats([...sel,val]);inp.value='';}
 function openOEMForm(id){editOEM=id?db.oems.find(o=>o.id===id):null;customSubcats=[];document.getElementById('oem-form-title').textContent=editOEM?'Edit OEM':'Add OEM';document.getElementById('of-name').value=editOEM?.name||'';document.getElementById('of-code').value=editOEM?.code||'';document.getElementById('of-notes').value=editOEM?.notes||'';document.getElementById('of-dealer-oems').value=editOEM?.dealerOEMs||'';document.getElementById('of-subcat-custom').value='';oemType=editOEM?.oemType||'OEM';setOEMType(oemType);oemSeg=editOEM?.segment||'Medical';setOEMSeg(oemSeg);const saved=editOEM?.subcategories||[];saved.filter(s=>!SUBCATS[oemSeg].includes(s)).forEach(s=>customSubcats.push(s));renderSubcats(saved);document.getElementById('of-locs').innerHTML='';(editOEM?.locations||[]).forEach(l=>addLocRow(l));document.getElementById('of-contacts').innerHTML='';(editOEM?.contacts||[]).forEach(c=>addContactRow(c));document.getElementById('del-oem-btn').style.display=editOEM?'block':'none';navigate('oem-form');}
-function addLocRow(loc={}){const c=document.createElement('div');c.className='dyn-item';c.innerHTML=`<div class="dyn-lbl">Branch</div><div class="fg"><input type="text" class="finput loc-city" placeholder="City *" value="${loc.city||''}"></div><div class="fg" style="margin-bottom:0"><input type="text" class="finput loc-addr" placeholder="Address (optional)" value="${loc.address||''}"></div><button class="rm-btn" onclick="this.closest('.dyn-item').remove()"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="13" height="13"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></button>`;document.getElementById('of-locs').appendChild(c);}
+function addLocRow(loc={}){
+  const id='loc_'+Date.now()+'_'+Math.random().toString(36).slice(2,5);
+  const c=document.createElement('div');c.className='dyn-item';
+  c.innerHTML=`<div class="dyn-lbl">Branch</div>
+    <div class="fg"><input type="text" class="finput loc-city" placeholder="City *" value="${loc.city||''}"></div>
+    <div class="fg" style="margin-bottom:0;display:flex;gap:8px;align-items:flex-start">
+      <input type="text" class="finput loc-addr" placeholder="Address (or tap 📍 to capture)" value="${loc.address||''}" style="flex:1">
+      <button onclick="captureGeo('${id}')" id="geo-btn-${id}" style="width:44px;height:44px;flex-shrink:0;background:var(--surface);border:1.5px solid var(--border);border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px" title="Use current location">📍</button>
+    </div>
+    <div id="geo-status-${id}" style="font-size:11px;color:var(--muted);margin-top:5px;display:none"></div>
+    <button class="rm-btn" onclick="this.closest('.dyn-item').remove()"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="13" height="13"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></button>`;
+  // Store id on element so we can find the addr input
+  c.dataset.geoId=id;
+  document.getElementById('of-locs').appendChild(c);
+  if(loc.lat&&loc.lng) c.dataset.latLng=`${loc.lat},${loc.lng}`;
+}
+
+async function captureGeo(id){
+  if(!navigator.geolocation){showToast('Geolocation not supported');return;}
+  const btn=document.getElementById('geo-btn-'+id);
+  const status=document.getElementById('geo-status-'+id);
+  btn.textContent='⏳'; btn.disabled=true;
+  status.style.display='block'; status.textContent='Getting location...';
+  navigator.geolocation.getCurrentPosition(async pos=>{
+    const {latitude:lat,longitude:lng}=pos.coords;
+    status.textContent='Reverse geocoding...';
+    try{
+      const res=await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`,{headers:{'Accept-Language':'en'}});
+      const data=await res.json();
+      const addr=data.display_name||`${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+      // Fill the address input in same dyn-item
+      const item=btn.closest('.dyn-item');
+      item.querySelector('.loc-addr').value=addr;
+      // Auto-fill city if empty
+      const cityInp=item.querySelector('.loc-city');
+      if(!cityInp.value){
+        const city=data.address?.city||data.address?.town||data.address?.village||data.address?.county||'';
+        cityInp.value=city;
+      }
+      // Store coords for future reference
+      item.dataset.latLng=`${lat},${lng}`;
+      status.textContent=`📍 ${lat.toFixed(4)}, ${lng.toFixed(4)}`;
+      btn.textContent='✅';
+      setTimeout(()=>{btn.textContent='📍';btn.disabled=false;},2000);
+    }catch(e){
+      status.textContent='Geocoding failed — fill manually';
+      btn.textContent='📍'; btn.disabled=false;
+    }
+  },err=>{
+    const msg={1:'Permission denied',2:'Location unavailable',3:'Timed out'};
+    status.textContent=msg[err.code]||'Location error';
+    btn.textContent='📍'; btn.disabled=false;
+  },{enableHighAccuracy:true,timeout:10000});
+}
 function addContactRow(ct={}){const c=document.createElement('div');c.className='dyn-item';c.innerHTML=`<div class="dyn-lbl">Contact</div><div class="frow fg"><div class="fg"><input type="text" class="finput ct-name" placeholder="Name *" value="${ct.name||''}"></div><div class="fg"><input type="tel" class="finput ct-phone mono" placeholder="Phone" value="${ct.phone||''}"></div></div><div class="frow fg"><div class="fg"><input type="text" class="finput ct-position" placeholder="Position" value="${ct.position||''}"></div><div class="fg"><input type="text" class="finput ct-loc" placeholder="Location" value="${ct.location||''}"></div></div><div class="fg" style="margin-bottom:0"><input type="text" class="finput ct-note" placeholder="Note (e.g. handles VMC)" value="${ct.note||''}"></div><button class="rm-btn" onclick="this.closest('.dyn-item').remove()"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="13" height="13"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></button>`;document.getElementById('of-contacts').appendChild(c);}
 async function saveOEM(){const name=document.getElementById('of-name').value.trim();if(!name){showToast('Name is required');return;}const locs=[...document.querySelectorAll('.loc-city')].map((el,i)=>({city:el.value.trim(),address:document.querySelectorAll('.loc-addr')[i]?.value.trim()||''})).filter(l=>l.city);const contacts=[...document.querySelectorAll('.ct-name')].map((el,i)=>({name:el.value.trim(),phone:document.querySelectorAll('.ct-phone')[i]?.value.trim()||'',position:document.querySelectorAll('.ct-position')[i]?.value.trim()||'',location:document.querySelectorAll('.ct-loc')[i]?.value.trim()||'',note:document.querySelectorAll('.ct-note')[i]?.value.trim()||''})).filter(c=>c.name);const subcats=[...document.querySelectorAll('.subcat-chip.selected')].map(el=>el.dataset.val);const data={name,code:document.getElementById('of-code').value.trim(),oemType,segment:oemSeg,subcategories:subcats,dealerOEMs:oemType==='Dealer'?document.getElementById('of-dealer-oems').value.trim():'',locations:locs,contacts,notes:document.getElementById('of-notes').value.trim()};if(editOEM){Object.assign(db.oems.find(o=>o.id===editOEM.id),data);}else{db.oems.push({id:'oem_'+Date.now(),...data});}showToast('Saving...');await saveAndSync();showToast('OEM saved ✓');navigate('directory');}
 async function deleteOEM(){if(!confirm(`Delete ${editOEM.name}?`))return;const vids=db.visits.filter(v=>v.oemId===editOEM.id).map(v=>v.id);db.oems=db.oems.filter(o=>o.id!==editOEM.id);db.visits=db.visits.filter(v=>v.oemId!==editOEM.id);db.actions=db.actions.filter(a=>!vids.includes(a.visitId));await saveAndSync();showToast('Deleted');navigate('directory');}
