@@ -6,6 +6,8 @@
 <title>OEM Visit Tracker</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
 :root{
@@ -363,6 +365,29 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);max-w
   </div>
 </div>
 
+<!-- MAP PICKER MODAL -->
+<div id="map-modal" style="display:none;position:fixed;inset:0;z-index:500;background:var(--bg);flex-direction:column">
+  <div style="background:var(--bg2);border-bottom:1px solid var(--border);padding:12px 16px;display:flex;align-items:center;gap:10px;flex-shrink:0">
+    <button onclick="closeMapModal()" style="background:none;border:none;color:var(--soft);font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:5px">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>Cancel
+    </button>
+    <div style="flex:1;font-size:15px;font-weight:700;color:var(--text)">Pick Location</div>
+    <button onclick="confirmMapPin()" style="background:var(--amber);border:none;color:#0d1117;font-size:13px;font-weight:700;padding:8px 16px;border-radius:8px;cursor:pointer" id="map-confirm-btn" disabled>Confirm</button>
+  </div>
+  <div style="padding:10px 16px;background:var(--bg2);border-bottom:1px solid var(--border);flex-shrink:0">
+    <div style="position:relative">
+      <input type="text" id="map-search" placeholder="Search for a place..." class="finput" style="padding-right:44px;font-size:14px" oninput="onMapSearch(this.value)">
+      <button onclick="doMapSearch()" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--amber)">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="18" height="18"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 15.803a7.5 7.5 0 0010.607 10.607z"/></svg>
+      </button>
+    </div>
+    <div id="map-search-results" style="background:var(--surface);border:1px solid var(--border);border-radius:10px;margin-top:6px;display:none;max-height:150px;overflow-y:auto"></div>
+  </div>
+  <div style="font-size:11px;color:var(--muted);text-align:center;padding:6px;background:var(--bg2);flex-shrink:0">Tap anywhere on the map to drop a pin</div>
+  <div id="map-container" style="flex:1;min-height:0"></div>
+  <div id="map-pin-info" style="background:var(--bg2);border-top:1px solid var(--border);padding:10px 16px;font-size:13px;color:var(--soft);flex-shrink:0;display:none"></div>
+</div>
+
 <!-- REPORTS -->
 <div id="screen-reports" class="screen">
   <div class="hdr">
@@ -481,68 +506,118 @@ async function saveVisit(){const oemId=document.getElementById('v-oem').value;co
 function showDetail(visitId){curVisitId=visitId;navigate('visit-detail');const v=db.visits.find(x=>x.id===visitId);const oem=db.oems.find(o=>o.id===v?.oemId);const acts=db.actions.filter(a=>a.visitId===visitId);const allTopics=[...(v.topics||[]),...(v.customTopics||[])];const today=todayStr();document.getElementById('detail-content').innerHTML=`<div class="dtl-sec"><div class="dtl-lbl">OEM</div><div class="dtl-box"><div style="font-size:16px;font-weight:700">${oem?.name||'Unknown'}</div><div class="mono" style="font-size:12px;color:var(--soft);margin-top:4px">${oem?.code||''}${v.visitLocation?' · 📍'+v.visitLocation:''}</div>${v.personMet?`<div style="font-size:13px;font-weight:600;color:var(--amber);margin-top:6px">👤 ${v.personMet}</div>`:''}</div></div><div class="dtl-sec"><div class="dtl-lbl">Details</div><div class="dtl-box" style="display:flex;gap:16px;flex-wrap:wrap"><div><div style="font-size:11px;color:var(--muted)">Date</div><div class="mono" style="font-size:13px;margin-top:3px">${fmtDate(v.date)}</div></div><div><div style="font-size:11px;color:var(--muted)">Type</div><span class="badge ${v.type==='visit'?'bv':'bc'}" style="display:inline-block;margin-top:4px">${v.type==='visit'?'📍 Visit':'📞 Call'}</span></div>${v.nextVisitDate?`<div><div style="font-size:11px;color:var(--muted)">Follow-up</div><div class="mono" style="font-size:13px;margin-top:3px">${fmtDate(v.nextVisitDate)}</div></div>`:''}</div></div>${allTopics.length?`<div class="dtl-sec"><div class="dtl-lbl">Topics</div><div class="tags">${allTopics.map(t=>`<span class="tag">${t}</span>`).join('')}</div></div>`:''}${v.notes?`<div class="dtl-sec"><div class="dtl-lbl">Notes</div><div class="dtl-box" style="white-space:pre-wrap">${v.notes}</div></div>`:''}${acts.length?`<div class="dtl-sec"><div class="dtl-lbl">Action Items</div><div class="card">${acts.map(a=>{const od=a.dueDate&&a.status==='open'&&a.dueDate<today;return`<div class="ai-row"><button class="astat ${a.status==='closed'?'done':''}" onclick="toggleAction('${a.id}',event)"></button><div class="ainfo"><div class="adesc ${a.status==='closed'?'done':''}">${a.description}</div>${a.dueDate?`<div class="ameta ${od?'overdue':''}">Due ${fmtDate(a.dueDate)}</div>`:''}</div></div>`;}).join('')}</div></div>`:''}`;}
 async function deleteVisit(){if(!confirm('Delete this report?'))return;db.actions=db.actions.filter(a=>a.visitId!==curVisitId);db.visits=db.visits.filter(v=>v.id!==curVisitId);showToast('Deleting...');await saveAndSync();showToast('Deleted');navigate('home');}
 function renderDir(search=''){let oems=[...db.oems].sort((a,b)=>a.name.localeCompare(b.name));if(search)oems=oems.filter(o=>o.name?.toLowerCase().includes(search.toLowerCase())||o.code?.toLowerCase().includes(search.toLowerCase())||(o.locations||[]).some(l=>l.city?.toLowerCase().includes(search.toLowerCase())));const list=document.getElementById('oem-list');if(!oems.length){list.innerHTML=`<div class="empty"><div class="ei">🏢</div><h3>${search?'No results':'No OEMs yet'}</h3><p>${search?'Try a different search':'Tap + to add your first OEM'}</p></div>`;return;}list.innerHTML=oems.map(o=>{const init=o.name.split(' ').map(w=>w[0]||'').join('').toUpperCase().slice(0,2);const vc=db.visits.filter(v=>v.oemId===o.id).length;const cities=(o.locations||[]).map(l=>l.city).filter(Boolean).join(', ');return`<div class="oitem" onclick="showOEMDetail('${o.id}')"><div class="oavatar">${init}</div><div class="oinfo"><div class="oname">${o.name}</div><div class="ometa">${o.code||''}${cities?' · '+cities:''} · ${vc} visit${vc!==1?'s':''}</div><div class="obadges"><span class="badge ${o.oemType==='Dealer'?'bdlr':'boem'}">${o.oemType||'OEM'}</span><span class="badge ${o.segment==='Medical'?'bmed':'bind'}">${o.segment||''}</span></div></div><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="15" height="15" style="color:var(--muted);flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg></div>`;}).join('');}
-function showOEMDetail(id){const o=db.oems.find(x=>x.id===id);if(!o)return;document.getElementById('oem-detail-title').textContent=o.name;document.getElementById('edit-oem-btn').onclick=()=>openOEMForm(id);const vc=db.visits.filter(v=>v.oemId===id).length;document.getElementById('oem-detail-content').innerHTML=`<div class="dtl-sec"><div style="display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap"><span class="badge ${o.oemType==='Dealer'?'bdlr':'boem'}" style="padding:4px 12px">${o.oemType||'OEM'}</span><span class="badge ${o.segment==='Medical'?'bmed':'bind'}" style="padding:4px 12px">${o.segment||''}</span></div><div class="dtl-box"><div style="display:flex;justify-content:space-between"><span class="mono" style="font-size:13px;color:var(--soft)">${o.code||'No code'}</span><span class="mono" style="font-size:12px;color:var(--muted)">${vc} visit${vc!==1?'s':''}</span></div></div></div>${(o.subcategories||[]).length?`<div class="dtl-sec"><div class="dtl-lbl">Subcategories</div><div class="tags">${o.subcategories.map(s=>`<span class="tag">${s}</span>`).join('')}</div></div>`:''}${o.oemType==='Dealer'&&o.dealerOEMs?`<div class="dtl-sec"><div class="dtl-lbl">Brands Dealt In</div><div class="dtl-box" style="font-size:14px">${o.dealerOEMs}</div></div>`:''}${(o.locations||[]).length?`<div class="dtl-sec"><div class="dtl-lbl">Locations</div>${o.locations.map(l=>`<div class="dtl-box" style="margin-bottom:8px;font-size:14px">📍 <strong>${l.city}</strong>${l.address?`<br><span style="font-size:12px;color:var(--soft)">${l.address}</span>`:''}</div>`).join('')}</div>`:''}${(o.contacts||[]).length?`<div class="dtl-sec"><div class="dtl-lbl">Contacts</div>${o.contacts.map(c=>`<div class="ccard"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px"><div><div class="ccard-name">${c.name}</div>${c.position?`<div class="ccard-pos">${c.position}</div>`:''}</div>${c.phone?`<a href="tel:${c.phone}" style="color:var(--amber);font-family:'DM Mono';font-size:12px;white-space:nowrap;text-decoration:none">${c.phone}</a>`:''}</div>${c.location?`<div class="ccard-loc">📍 ${c.location}</div>`:''}${c.note?`<div class="ccard-note">${c.note}</div>`:''}</div>`).join('')}</div>`:''}${o.notes?`<div class="dtl-sec"><div class="dtl-lbl">Notes</div><div class="dtl-box" style="white-space:pre-wrap;font-size:14px;line-height:1.6">${o.notes}</div></div>`:''}`;navigate('oem-detail');}
+function showOEMDetail(id){const o=db.oems.find(x=>x.id===id);if(!o)return;document.getElementById('oem-detail-title').textContent=o.name;document.getElementById('edit-oem-btn').onclick=()=>openOEMForm(id);const vc=db.visits.filter(v=>v.oemId===id).length;document.getElementById('oem-detail-content').innerHTML=`<div class="dtl-sec"><div style="display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap"><span class="badge ${o.oemType==='Dealer'?'bdlr':'boem'}" style="padding:4px 12px">${o.oemType||'OEM'}</span><span class="badge ${o.segment==='Medical'?'bmed':'bind'}" style="padding:4px 12px">${o.segment||''}</span></div><div class="dtl-box"><div style="display:flex;justify-content:space-between"><span class="mono" style="font-size:13px;color:var(--soft)">${o.code||'No code'}</span><span class="mono" style="font-size:12px;color:var(--muted)">${vc} visit${vc!==1?'s':''}</span></div></div></div>${(o.subcategories||[]).length?`<div class="dtl-sec"><div class="dtl-lbl">Subcategories</div><div class="tags">${o.subcategories.map(s=>`<span class="tag">${s}</span>`).join('')}</div></div>`:''}${o.oemType==='Dealer'&&o.dealerOEMs?`<div class="dtl-sec"><div class="dtl-lbl">Brands Dealt In</div><div class="dtl-box" style="font-size:14px">${o.dealerOEMs}</div></div>`:''}${(o.locations||[]).length?`<div class="dtl-sec"><div class="dtl-lbl">Locations</div>${o.locations.map(l=>`<div class="dtl-box" style="margin-bottom:8px;font-size:14px;${l.lat&&l.lng?'cursor:pointer':''}" onclick="if(l.lat&&l.lng)openGoogleMaps(l.lat,l.lng)"><div style="display:flex;justify-content:space-between;align-items:center"><div>📍 <strong>${l.city}</strong>${l.address?`<br><span style="font-size:12px;color:var(--soft)">${l.address}</span>`:''}</div>${l.lat&&l.lng?'<span style="font-size:11px;color:var(--amber);font-weight:700;margin-left:8px">Navigate →</span>':''}</div></div>>${l.address}</span>`:''}</div>`).join('')}</div>`:''}${(o.contacts||[]).length?`<div class="dtl-sec"><div class="dtl-lbl">Contacts</div>${o.contacts.map(c=>`<div class="ccard"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px"><div><div class="ccard-name">${c.name}</div>${c.position?`<div class="ccard-pos">${c.position}</div>`:''}</div>${c.phone?`<a href="tel:${c.phone}" style="color:var(--amber);font-family:'DM Mono';font-size:12px;white-space:nowrap;text-decoration:none">${c.phone}</a>`:''}</div>${c.location?`<div class="ccard-loc">📍 ${c.location}</div>`:''}${c.note?`<div class="ccard-note">${c.note}</div>`:''}</div>`).join('')}</div>`:''}${o.notes?`<div class="dtl-sec"><div class="dtl-lbl">Notes</div><div class="dtl-box" style="white-space:pre-wrap;font-size:14px;line-height:1.6">${o.notes}</div></div>`:''}`;navigate('oem-detail');}
 function setOEMType(t){oemType=t;document.getElementById('of-type-oem').classList.toggle('active',t==='OEM');document.getElementById('of-type-dlr').classList.toggle('active',t==='Dealer');document.getElementById('of-dealer-oems-wrap').style.display=t==='Dealer'?'block':'none';}
 function setOEMSeg(s){oemSeg=s;document.getElementById('of-seg-med').classList.toggle('active',s==='Medical');document.getElementById('of-seg-ind').classList.toggle('active',s==='Industrial');renderSubcats([]);}
 function renderSubcats(sel=[]){const all=[...SUBCATS[oemSeg],...customSubcats];document.getElementById('of-subcats').innerHTML=all.map(v=>`<div class="subcat-chip ${sel.includes(v)?'selected':''}" data-val="${v}" onclick="this.classList.toggle('selected')">${v}</div>`).join('');}
 function addCustomSubcat(){const inp=document.getElementById('of-subcat-custom');const val=inp.value.trim();if(!val)return;customSubcats.push(val);const sel=[...document.querySelectorAll('.subcat-chip.selected')].map(el=>el.dataset.val);renderSubcats([...sel,val]);inp.value='';}
 function openOEMForm(id){editOEM=id?db.oems.find(o=>o.id===id):null;customSubcats=[];document.getElementById('oem-form-title').textContent=editOEM?'Edit OEM':'Add OEM';document.getElementById('of-name').value=editOEM?.name||'';document.getElementById('of-code').value=editOEM?.code||'';document.getElementById('of-notes').value=editOEM?.notes||'';document.getElementById('of-dealer-oems').value=editOEM?.dealerOEMs||'';document.getElementById('of-subcat-custom').value='';oemType=editOEM?.oemType||'OEM';setOEMType(oemType);oemSeg=editOEM?.segment||'Medical';setOEMSeg(oemSeg);const saved=editOEM?.subcategories||[];saved.filter(s=>!SUBCATS[oemSeg].includes(s)).forEach(s=>customSubcats.push(s));renderSubcats(saved);document.getElementById('of-locs').innerHTML='';(editOEM?.locations||[]).forEach(l=>addLocRow(l));document.getElementById('of-contacts').innerHTML='';(editOEM?.contacts||[]).forEach(c=>addContactRow(c));document.getElementById('del-oem-btn').style.display=editOEM?'block':'none';navigate('oem-form');}
+let leafletMap=null,mapMarker=null,mapPinData=null,activeLocItem=null,searchTimer=null;
 function addLocRow(loc={}){
-  const id='loc_'+Date.now()+'_'+Math.random().toString(36).slice(2,5);
+  const hasPin=!!(loc.lat&&loc.lng);
   const c=document.createElement('div');c.className='dyn-item';
   c.innerHTML=`<div class="dyn-lbl">Branch</div>
     <div class="fg"><input type="text" class="finput loc-city" placeholder="City *" value="${loc.city||''}"></div>
-    <div class="fg" style="margin-bottom:0;display:flex;gap:8px;align-items:flex-start">
-      <input type="text" class="finput loc-addr" placeholder="Address (or tap 📍 to capture)" value="${loc.address||''}" style="flex:1">
-      <button onclick="captureGeo('${id}')" id="geo-btn-${id}" style="width:44px;height:44px;flex-shrink:0;background:var(--surface);border:1.5px solid var(--border);border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px" title="Use current location">📍</button>
+    <div class="fg" style="margin-bottom:0">
+      <div style="display:flex;gap:8px;align-items:center">
+        <input type="text" class="finput loc-addr" placeholder="Address" value="${loc.address||''}" style="flex:1;font-size:13px">
+        <button onclick="openMapModal(this.closest('.dyn-item'))" class="loc-map-btn" style="flex-shrink:0;width:44px;height:44px;background:${hasPin?'var(--amber-bg)':'var(--surface)'};border:1.5px solid ${hasPin?'rgba(240,165,0,.4)':'var(--border)'};border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px">📍</button>
+      </div>
+      <div class="loc-coords" style="font-size:10px;margin-top:4px;${hasPin?'font-family:\'DM Mono\',monospace;color:var(--amber);cursor:pointer':'color:var(--muted)'}"${hasPin?` onclick="openGoogleMaps(${loc.lat},${loc.lng})"`:''}>${hasPin?`🗺 ${parseFloat(loc.lat).toFixed(5)}, ${parseFloat(loc.lng).toFixed(5)} · Tap to navigate`:''}</div>
     </div>
-    <div id="geo-status-${id}" style="font-size:11px;color:var(--muted);margin-top:5px;display:none"></div>
+    <input type="hidden" class="loc-lat" value="${loc.lat||''}">
+    <input type="hidden" class="loc-lng" value="${loc.lng||''}">
     <button class="rm-btn" onclick="this.closest('.dyn-item').remove()"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="13" height="13"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></button>`;
-  // Store id on element so we can find the addr input
-  c.dataset.geoId=id;
   document.getElementById('of-locs').appendChild(c);
-  if(loc.lat&&loc.lng) c.dataset.latLng=`${loc.lat},${loc.lng}`;
 }
-
-async function captureGeo(id){
-  if(!navigator.geolocation){showToast('Geolocation not supported');return;}
-  const btn=document.getElementById('geo-btn-'+id);
-  const status=document.getElementById('geo-status-'+id);
-  btn.textContent='⏳'; btn.disabled=true;
-  status.style.display='block'; status.textContent='Getting location...';
-  navigator.geolocation.getCurrentPosition(async pos=>{
-    const {latitude:lat,longitude:lng}=pos.coords;
-    status.textContent='Reverse geocoding...';
-    try{
-      const res=await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`,{headers:{'Accept-Language':'en'}});
-      const data=await res.json();
-      const addr=data.display_name||`${lat.toFixed(5)}, ${lng.toFixed(5)}`;
-      // Fill the address input in same dyn-item
-      const item=btn.closest('.dyn-item');
-      item.querySelector('.loc-addr').value=addr;
-      // Auto-fill city if empty
-      const cityInp=item.querySelector('.loc-city');
-      if(!cityInp.value){
-        const city=data.address?.city||data.address?.town||data.address?.village||data.address?.county||'';
-        cityInp.value=city;
-      }
-      // Store coords for future reference
-      item.dataset.latLng=`${lat},${lng}`;
-      status.textContent=`📍 ${lat.toFixed(4)}, ${lng.toFixed(4)}`;
-      btn.textContent='✅';
-      setTimeout(()=>{btn.textContent='📍';btn.disabled=false;},2000);
-    }catch(e){
-      status.textContent='Geocoding failed — fill manually';
-      btn.textContent='📍'; btn.disabled=false;
-    }
-  },err=>{
-    const msg={1:'Permission denied',2:'Location unavailable',3:'Timed out'};
-    status.textContent=msg[err.code]||'Location error';
-    btn.textContent='📍'; btn.disabled=false;
-  },{enableHighAccuracy:true,timeout:10000});
+function openMapModal(locItem){
+  activeLocItem=locItem;mapPinData=null;
+  document.getElementById('map-modal').style.display='flex';
+  document.getElementById('map-confirm-btn').disabled=true;
+  document.getElementById('map-pin-info').style.display='none';
+  document.getElementById('map-search').value='';
+  document.getElementById('map-search-results').style.display='none';
+  if(!leafletMap){
+    leafletMap=L.map('map-container').setView([20.5937,78.9629],5);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap'}).addTo(leafletMap);
+    leafletMap.on('click',onMapClick);
+  }else{setTimeout(()=>leafletMap.invalidateSize(),100);}
+  const lat=locItem.querySelector('.loc-lat')?.value;
+  const lng=locItem.querySelector('.loc-lng')?.value;
+  if(lat&&lng){
+    const ll=[parseFloat(lat),parseFloat(lng)];
+    leafletMap.setView(ll,16);
+    if(mapMarker)mapMarker.remove();
+    mapMarker=L.marker(ll).addTo(leafletMap);
+    mapPinData={lat:parseFloat(lat),lng:parseFloat(lng),address:locItem.querySelector('.loc-addr')?.value||''};
+    document.getElementById('map-confirm-btn').disabled=false;
+    document.getElementById('map-pin-info').style.display='block';
+    document.getElementById('map-pin-info').textContent=mapPinData.address||`${lat}, ${lng}`;
+  }
 }
+function closeMapModal(){document.getElementById('map-modal').style.display='none';document.getElementById('map-search-results').style.display='none';activeLocItem=null;}
+async function onMapClick(e){
+  const{lat,lng}=e.latlng;
+  if(mapMarker)mapMarker.remove();
+  mapMarker=L.marker([lat,lng]).addTo(leafletMap);
+  document.getElementById('map-pin-info').style.display='block';
+  document.getElementById('map-pin-info').textContent='Fetching address...';
+  document.getElementById('map-confirm-btn').disabled=true;
+  try{
+    const res=await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`,{headers:{'Accept-Language':'en'}});
+    const data=await res.json();
+    const address=data.display_name||`${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+    const city=data.address?.city||data.address?.town||data.address?.village||data.address?.county||'';
+    mapPinData={lat,lng,address,city};
+    document.getElementById('map-pin-info').textContent=address;
+    document.getElementById('map-confirm-btn').disabled=false;
+  }catch{
+    mapPinData={lat,lng,address:`${lat.toFixed(5)}, ${lng.toFixed(5)}`,city:''};
+    document.getElementById('map-pin-info').textContent=`${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+    document.getElementById('map-confirm-btn').disabled=false;
+  }
+}
+function confirmMapPin(){
+  if(!mapPinData||!activeLocItem)return;
+  activeLocItem.querySelector('.loc-addr').value=mapPinData.address;
+  activeLocItem.querySelector('.loc-lat').value=mapPinData.lat;
+  activeLocItem.querySelector('.loc-lng').value=mapPinData.lng;
+  if(!activeLocItem.querySelector('.loc-city').value&&mapPinData.city)
+    activeLocItem.querySelector('.loc-city').value=mapPinData.city;
+  const coordEl=activeLocItem.querySelector('.loc-coords');
+  coordEl.style.cssText="font-family:'DM Mono',monospace;font-size:10px;color:var(--amber);margin-top:4px;cursor:pointer";
+  coordEl.onclick=()=>openGoogleMaps(mapPinData.lat,mapPinData.lng);
+  coordEl.textContent=`🗺 ${mapPinData.lat.toFixed(5)}, ${mapPinData.lng.toFixed(5)} · Tap to navigate`;
+  const btn=activeLocItem.querySelector('.loc-map-btn');
+  btn.style.background='var(--amber-bg)';btn.style.borderColor='rgba(240,165,0,.4)';
+  closeMapModal();
+}
+function onMapSearch(val){clearTimeout(searchTimer);if(val.length<3){document.getElementById('map-search-results').style.display='none';return;}searchTimer=setTimeout(()=>doMapSearch(),600);}
+async function doMapSearch(){
+  const q=document.getElementById('map-search').value.trim();if(!q)return;
+  try{
+    const res=await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q)}&format=json&limit=5`,{headers:{'Accept-Language':'en'}});
+    const results=await res.json();
+    const box=document.getElementById('map-search-results');
+    if(!results.length){box.style.display='block';box.innerHTML=`<div style="padding:12px;font-size:13px;color:var(--muted)">No results</div>`;return;}
+    box.style.display='block';
+    box.innerHTML=results.map(r=>`<div onclick="selectSearchResult(${r.lat},${r.lon},'${r.display_name.replace(/'/g,"\\'")}')" style="padding:10px 14px;border-bottom:1px solid var(--border);cursor:pointer;font-size:13px;color:var(--text)"><div style="font-weight:600">${r.display_name.split(',')[0]}</div><div style="font-size:11px;color:var(--muted)">${r.display_name.split(',').slice(1,3).join(',')}</div></div>`).join('');
+  }catch{document.getElementById('map-search-results').style.display='none';}
+}
+async function selectSearchResult(lat,lng,label){
+  document.getElementById('map-search-results').style.display='none';
+  document.getElementById('map-search').value=label.split(',')[0];
+  leafletMap.setView([parseFloat(lat),parseFloat(lng)],16);
+  if(mapMarker)mapMarker.remove();
+  mapMarker=L.marker([parseFloat(lat),parseFloat(lng)]).addTo(leafletMap);
+  mapPinData={lat:parseFloat(lat),lng:parseFloat(lng),address:label,city:label.split(',')[0]};
+  document.getElementById('map-pin-info').style.display='block';
+  document.getElementById('map-pin-info').textContent=label;
+  document.getElementById('map-confirm-btn').disabled=false;
+}
+function openGoogleMaps(lat,lng){window.open(`https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`,'_blank');}
 function addContactRow(ct={}){const c=document.createElement('div');c.className='dyn-item';c.innerHTML=`<div class="dyn-lbl">Contact</div><div class="frow fg"><div class="fg"><input type="text" class="finput ct-name" placeholder="Name *" value="${ct.name||''}"></div><div class="fg"><input type="tel" class="finput ct-phone mono" placeholder="Phone" value="${ct.phone||''}"></div></div><div class="frow fg"><div class="fg"><input type="text" class="finput ct-position" placeholder="Position" value="${ct.position||''}"></div><div class="fg"><input type="text" class="finput ct-loc" placeholder="Location" value="${ct.location||''}"></div></div><div class="fg" style="margin-bottom:0"><input type="text" class="finput ct-note" placeholder="Note (e.g. handles VMC)" value="${ct.note||''}"></div><button class="rm-btn" onclick="this.closest('.dyn-item').remove()"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="13" height="13"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></button>`;document.getElementById('of-contacts').appendChild(c);}
-async function saveOEM(){const name=document.getElementById('of-name').value.trim();if(!name){showToast('Name is required');return;}const locs=[...document.querySelectorAll('.loc-city')].map((el,i)=>({city:el.value.trim(),address:document.querySelectorAll('.loc-addr')[i]?.value.trim()||''})).filter(l=>l.city);const contacts=[...document.querySelectorAll('.ct-name')].map((el,i)=>({name:el.value.trim(),phone:document.querySelectorAll('.ct-phone')[i]?.value.trim()||'',position:document.querySelectorAll('.ct-position')[i]?.value.trim()||'',location:document.querySelectorAll('.ct-loc')[i]?.value.trim()||'',note:document.querySelectorAll('.ct-note')[i]?.value.trim()||''})).filter(c=>c.name);const subcats=[...document.querySelectorAll('.subcat-chip.selected')].map(el=>el.dataset.val);const data={name,code:document.getElementById('of-code').value.trim(),oemType,segment:oemSeg,subcategories:subcats,dealerOEMs:oemType==='Dealer'?document.getElementById('of-dealer-oems').value.trim():'',locations:locs,contacts,notes:document.getElementById('of-notes').value.trim()};if(editOEM){Object.assign(db.oems.find(o=>o.id===editOEM.id),data);}else{db.oems.push({id:'oem_'+Date.now(),...data});}showToast('Saving...');await saveAndSync();showToast('OEM saved ✓');navigate('directory');}
+async function saveOEM(){const name=document.getElementById('of-name').value.trim();if(!name){showToast('Name is required');return;}const locs=[...document.querySelectorAll('.loc-city')].map((el,i)=>({city:el.value.trim(),address:document.querySelectorAll('.loc-addr')[i]?.value.trim()||'',lat:document.querySelectorAll('.loc-lat')[i]?.value||'',lng:document.querySelectorAll('.loc-lng')[i]?.value||''})).filter(l=>l.city);const contacts=[...document.querySelectorAll('.ct-name')].map((el,i)=>({name:el.value.trim(),phone:document.querySelectorAll('.ct-phone')[i]?.value.trim()||'',position:document.querySelectorAll('.ct-position')[i]?.value.trim()||'',location:document.querySelectorAll('.ct-loc')[i]?.value.trim()||'',note:document.querySelectorAll('.ct-note')[i]?.value.trim()||''})).filter(c=>c.name);const subcats=[...document.querySelectorAll('.subcat-chip.selected')].map(el=>el.dataset.val);const data={name,code:document.getElementById('of-code').value.trim(),oemType,segment:oemSeg,subcategories:subcats,dealerOEMs:oemType==='Dealer'?document.getElementById('of-dealer-oems').value.trim():'',locations:locs,contacts,notes:document.getElementById('of-notes').value.trim()};if(editOEM){Object.assign(db.oems.find(o=>o.id===editOEM.id),data);}else{db.oems.push({id:'oem_'+Date.now(),...data});}showToast('Saving...');await saveAndSync();showToast('OEM saved ✓');navigate('directory');}
 async function deleteOEM(){if(!confirm(`Delete ${editOEM.name}?`))return;const vids=db.visits.filter(v=>v.oemId===editOEM.id).map(v=>v.id);db.oems=db.oems.filter(o=>o.id!==editOEM.id);db.visits=db.visits.filter(v=>v.oemId!==editOEM.id);db.actions=db.actions.filter(a=>!vids.includes(a.visitId));await saveAndSync();showToast('Deleted');navigate('directory');}
 function setFilter(f){actFilter=f;const amb='background:var(--amber-bg);color:var(--amber);border-color:rgba(240,165,0,.3)';const nor='background:var(--surface2);color:var(--soft);border-color:var(--border)';document.getElementById('btn-filter-open').style.cssText=f==='open'?amb:nor;document.getElementById('btn-filter-all').style.cssText=f==='all'?amb:nor;renderActions();}
 function renderActions(){const today=todayStr();let items=actFilter==='open'?db.actions.filter(a=>a.status==='open'):[...db.actions];items.sort((a,b)=>{if(a.status!==b.status)return a.status==='open'?-1:1;return(a.dueDate||'9')<(b.dueDate||'9')?-1:1;});const el=document.getElementById('actions-list');if(!items.length){el.innerHTML=`<div class="empty"><div class="ei">✅</div><h3>All clear!</h3><p>No ${actFilter==='open'?'open ':''}tasks</p></div>`;return;}el.innerHTML=items.map(a=>{const oem=oemForAction(a);const visit=db.visits.find(v=>v.id===a.visitId);const od=a.dueDate&&a.status==='open'&&a.dueDate<today;return`<div class="card" style="margin-bottom:9px"><div class="ai-row" style="border:none;padding:0"><button class="astat ${a.status==='closed'?'done':''}" onclick="toggleAction('${a.id}',event)"></button><div class="ainfo"><div class="adesc ${a.status==='closed'?'done':''}">${a.description}</div><div class="ameta">${oem?.name||''}${visit?' · '+fmtDate(visit.date):''}${a.dueDate?' · <span class="'+(od?'overdue':'')+'">Due '+fmtDate(a.dueDate)+'</span>':''}</div></div><button onclick="deleteAction('${a.id}',event)" style="background:none;border:none;cursor:pointer;color:var(--muted);padding:4px;flex-shrink:0"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"/></svg></button></div></div>`;}).join('');}
