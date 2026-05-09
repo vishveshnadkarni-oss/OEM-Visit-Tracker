@@ -777,9 +777,9 @@ async function saveToken(){
   const st=document.getElementById('token-status');
   st.textContent='Testing connection...';st.style.color='var(--soft)';
   setToken(val);
-  // Test by hitting the GitHub API
   try{
     const r=await fetch(`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}`,{headers:{'Authorization':'Bearer '+val,'Accept':'application/vnd.github+json'}});
+    const data=await r.json();
     if(r.ok){
       st.textContent='✅ Connected successfully!';st.style.color='var(--green)';
       inp.type='password';inp.value='•'.repeat(20);inp.dataset.hasExisting='1';
@@ -787,10 +787,12 @@ async function saveToken(){
       showToast('Token saved ✓ — syncing now...');
       await loadFromGitHub();
     } else {
-      st.textContent='❌ Token invalid or expired — check and try again';st.style.color='var(--red)';
+      const reason=data.message||r.status;
+      st.innerHTML=`❌ GitHub says: <strong>${reason}</strong><br><span style="font-size:11px;color:var(--muted)">Status: ${r.status}</span>`;
+      st.style.color='var(--red)';
       localStorage.removeItem('gh_token');
     }
-  }catch{st.textContent='❌ Connection failed — check internet and try again';st.style.color='var(--red)';}
+  }catch(e){st.textContent=`❌ Network error: ${e.message}`;st.style.color='var(--red)';}
 }
 
 loadLocal();
