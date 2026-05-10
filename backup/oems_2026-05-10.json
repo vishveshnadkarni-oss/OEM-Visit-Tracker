@@ -1553,7 +1553,15 @@
         "address": ""
       }
     ],
-    "contacts": [],
+    "contacts": [
+      {
+        "name": "Ramesh",
+        "phone": "9884044789",
+        "position": "Sales",
+        "location": "Chennai",
+        "note": ""
+      }
+    ],
     "notes": ""
   },
   {
