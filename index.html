@@ -775,24 +775,27 @@ async function saveToken(){
   const val=inp.value.trim();
   if(!val||val.startsWith('•')){showToast('Please enter your new token');return;}
   const st=document.getElementById('token-status');
-  st.textContent='Testing connection...';st.style.color='var(--soft)';
+  st.style.color='var(--soft)';
+  // Show what we're actually sending
+  const preview=val.slice(0,12)+'...'+val.slice(-4);
+  st.innerHTML=`Sending token: <span class="mono" style="color:var(--amber)">${preview}</span> (${val.length} chars)<br>Testing...`;
   setToken(val);
   try{
-    const r=await fetch(`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}`,{headers:{'Authorization':'Bearer '+val,'Accept':'application/vnd.github+json'}});
+    const r=await fetch(`https://api.github.com/user`,{headers:{'Authorization':'Bearer '+val,'Accept':'application/vnd.github+json'}});
     const data=await r.json();
     if(r.ok){
-      st.textContent='✅ Connected successfully!';st.style.color='var(--green)';
+      st.innerHTML=`✅ Connected as <strong>${data.login}</strong>!`;st.style.color='var(--green)';
       inp.type='password';inp.value='•'.repeat(20);inp.dataset.hasExisting='1';
       document.getElementById('tok-vis-btn').textContent='Show';
       showToast('Token saved ✓ — syncing now...');
       await loadFromGitHub();
     } else {
-      const reason=data.message||r.status;
-      st.innerHTML=`❌ GitHub says: <strong>${reason}</strong><br><span style="font-size:11px;color:var(--muted)">Status: ${r.status}</span>`;
+      st.innerHTML=`❌ GitHub says: <strong>${data.message}</strong><br>
+        <span class="mono" style="font-size:11px;color:var(--muted)">Status: ${r.status} · Sent: ${preview} · Length: ${val.length}</span>`;
       st.style.color='var(--red)';
       localStorage.removeItem('gh_token');
     }
-  }catch(e){st.textContent=`❌ Network error: ${e.message}`;st.style.color='var(--red)';}
+  }catch(e){st.innerHTML=`❌ Network error: ${e.message}`;st.style.color='var(--red)';}
 }
 
 loadLocal();
