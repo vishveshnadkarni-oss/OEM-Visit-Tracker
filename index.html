@@ -4,462 +4,432 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>OEM Visit Tracker</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
 :root{
   --bg:#0d1117;--bg2:#161b22;--surface:#1c2230;--surface2:#232b3a;
-  --border:#2a3444;--border2:#3a4558;--text:#e6edf3;--soft:#8b949e;--muted:#4a5568;
+  --border:#2a3444;--text:#e6edf3;--soft:#8b949e;--muted:#4a5568;
   --amber:#f0a500;--amber-d:#c8880a;--amber-bg:rgba(240,165,0,.12);
   --green:#3fb950;--green-bg:rgba(63,185,80,.12);
   --red:#f85149;--red-bg:rgba(248,81,73,.12);
-  --blue:#58a6ff;--shadow:0 4px 16px rgba(0,0,0,.4);--r:14px;--nav:62px;
+  --blue:#58a6ff;--nav:62px;--r:12px;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{height:100%}
-body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);max-width:480px;margin:0 auto;min-height:100vh;font-size:15px}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);max-width:480px;margin:0 auto;min-height:100vh}
 .screen{display:none;min-height:100vh;padding-bottom:calc(var(--nav)+20px)}
 .screen.active{display:block}
-.hdr{background:var(--bg2);border-bottom:1px solid var(--border);padding:14px 16px 10px;position:sticky;top:0;z-index:20}
+
+/* Header */
+.hdr{background:var(--bg2);border-bottom:1px solid var(--border);padding:14px 16px;position:sticky;top:0;z-index:20}
 .hdr-row{display:flex;align-items:center;justify-content:space-between;gap:8px}
-.hdr h1{font-size:16px;font-weight:700;color:var(--text);letter-spacing:-.2px;flex:1}
-.hdr-acts{display:flex;gap:6px;flex-shrink:0}
-.sync-bar{display:flex;align-items:center;gap:6px;padding-top:8px;font-family:'DM Mono',monospace;font-size:11px;color:var(--soft)}
+.hdr h1{font-size:16px;font-weight:700;flex:1}
+.hdr-acts{display:flex;gap:6px}
+.icon-btn{width:36px;height:36px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--soft)}
+.back-btn{background:none;border:none;color:var(--soft);display:flex;align-items:center;gap:5px;font-size:14px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif}
+.sync-pill{display:inline-flex;align-items:center;gap:5px;margin-top:7px;font-family:'DM Mono',monospace;font-size:11px;color:var(--muted)}
 .sync-dot{width:6px;height:6px;border-radius:50%;background:var(--muted);flex-shrink:0}
-.sync-dot.ok{background:var(--green)}.sync-dot.err{background:var(--red)}.sync-dot.busy{background:var(--amber);animation:pulse .8s infinite}
-.icon-btn{width:36px;height:36px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--soft);flex-shrink:0;transition:all .15s}
-.icon-btn:active{background:var(--surface);color:var(--amber)}
-.back-btn{background:none;border:none;color:var(--soft);display:flex;align-items:center;gap:6px;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;cursor:pointer;padding:0;flex-shrink:0}
-.bnav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;height:var(--nav);background:var(--bg2);border-top:1px solid var(--border);display:flex;align-items:center;z-index:100}
-.nitem{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--muted);cursor:pointer;padding:6px 0}
-.nitem.active{color:var(--amber)}
-.nitem svg{width:22px;height:22px}
-.nitem span{font-size:10px;font-weight:600;letter-spacing:.3px}
-.p15{padding:14px 16px}
-.fg{margin-bottom:14px}
-.fg:last-child{margin-bottom:0}
-.flbl{display:block;font-size:11px;font-weight:600;letter-spacing:.6px;color:var(--soft);margin-bottom:7px;text-transform:uppercase}
-.finput,.fsel,.fta{width:100%;padding:12px 14px;background:var(--surface2);border:1.5px solid var(--border);border-radius:10px;font-family:'Inter',sans-serif;font-size:15px;color:var(--text);outline:none;transition:border-color .15s;-webkit-appearance:none;appearance:none}
-.finput::placeholder,.fta::placeholder{color:var(--muted)}
-.finput:focus,.fsel:focus,.fta:focus{border-color:var(--amber)}
-.fta{min-height:90px;resize:none;line-height:1.6}
-.fsel{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238b949e' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:38px}
-.fsel option{background:var(--surface2);color:var(--text)}
+.sync-dot.ok{background:var(--green)}.sync-dot.err{background:var(--red)}.sync-dot.spin{background:var(--amber);animation:blink .8s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* Nav */
+.bnav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;height:var(--nav);background:var(--bg2);border-top:1px solid var(--border);display:flex;z-index:100}
+.ni{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--muted);cursor:pointer}
+.ni.active{color:var(--amber)}
+.ni svg{width:21px;height:21px}
+.ni span{font-size:10px;font-weight:600}
+
+/* Forms */
+.p16{padding:14px 16px}
+.fg{margin-bottom:13px}
+.lbl{display:block;font-size:11px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--soft);margin-bottom:6px}
+input[type=text],input[type=tel],input[type=date],input[type=month],input[type=password],input[type=email],select,textarea{
+  width:100%;padding:11px 13px;background:var(--surface2);border:1.5px solid var(--border);
+  border-radius:10px;font-family:'Inter',sans-serif;font-size:14px;color:var(--text);
+  outline:none;-webkit-appearance:none;appearance:none;transition:border-color .15s
+}
+input:focus,select:focus,textarea:focus{border-color:var(--amber)}
+input::placeholder,textarea::placeholder{color:var(--muted)}
+select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238b949e' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:34px}
+select option{background:var(--surface2)}
+textarea{min-height:85px;resize:none;line-height:1.6}
 .frow{display:flex;gap:10px}
 .frow>.fg{flex:1;margin-bottom:0}
-.divider{height:1px;background:var(--border);margin:16px 0}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 18px;border-radius:10px;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;border:none;cursor:pointer;transition:all .15s;width:100%}
-.btn-primary{background:var(--amber);color:#0d1117}
-.btn-primary:active{background:var(--amber-d);transform:scale(.98)}
-.btn-ghost{background:transparent;color:var(--soft);padding:8px 0;font-size:13px;width:auto}
-.btn-danger{background:var(--red-bg);color:var(--red);border:1px solid rgba(248,81,73,.25)}
+
+/* Buttons */
+.btn{display:flex;align-items:center;justify-content:center;gap:7px;width:100%;padding:13px;border-radius:10px;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;border:none;cursor:pointer;transition:all .15s}
+.btn-amber{background:var(--amber);color:#0d1117}
+.btn-amber:active{background:var(--amber-d)}
+.btn-red{background:var(--red-bg);color:var(--red);border:1px solid rgba(248,81,73,.2)}
 .btn-outline{background:transparent;border:1.5px solid var(--border);color:var(--soft)}
-.fab{position:fixed;bottom:calc(var(--nav)+16px);right:18px;width:52px;height:52px;background:var(--amber);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(240,165,0,.35);cursor:pointer;border:none;z-index:50}
-.fab svg{color:#0d1117}
-.ttog{display:flex;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:3px;gap:3px}
-.ttog-btn{flex:1;padding:9px 8px;border:none;border-radius:8px;background:transparent;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;color:var(--soft);cursor:pointer;transition:all .15s;white-space:nowrap}
-.ttog-btn.active{background:var(--amber);color:#0d1117}
-.vwrap{position:relative}
-.vwrap .fta{padding-right:50px}
-.mic-btn{position:absolute;right:10px;top:10px;width:32px;height:32px;background:var(--surface);border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--soft)}
-.mic-btn.on{background:var(--red);border-color:var(--red);color:#fff;animation:pulse 1s infinite}
-@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(248,81,73,.4)}50%{box-shadow:0 0 0 8px rgba(248,81,73,0)}}
-.topic-tag{display:inline-flex;align-items:center;gap:5px;padding:5px 10px;background:var(--amber-bg);border:1px solid rgba(240,165,0,.3);border-radius:20px;font-size:12px;font-weight:600;color:var(--amber)}
-.topic-tag .rm{cursor:pointer;color:var(--soft);font-size:14px;line-height:1}
+.lnk{background:none;border:none;color:var(--amber);font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;padding:6px 0}
+.fab{position:fixed;bottom:calc(var(--nav)+14px);right:18px;width:52px;height:52px;background:var(--amber);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(240,165,0,.35);border:none;cursor:pointer;z-index:50}
+.save-bar{position:sticky;bottom:var(--nav);background:var(--bg2);border-top:1px solid var(--border);padding:12px 16px;z-index:10}
+
+/* Toggle */
+.tog{display:flex;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:3px;gap:3px}
+.tog-btn{flex:1;padding:9px 6px;border:none;border-radius:8px;background:transparent;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;color:var(--soft);cursor:pointer;transition:all .15s;white-space:nowrap}
+.tog-btn.on{background:var(--amber);color:#0d1117}
+
+/* Cards */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:14px}
+.sec{padding:12px 16px 0}
+.sec-lbl{font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+
+/* Visit card */
+.vcard{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:13px 14px;margin-bottom:9px;cursor:pointer}
+.vcard:active{border-color:var(--amber)}
+.vcard-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:4px}
+.vcard-name{font-size:15px;font-weight:700;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.badge{font-size:11px;font-weight:600;padding:3px 8px;border-radius:20px;flex-shrink:0;white-space:nowrap}
+.bv{background:rgba(88,166,255,.15);color:var(--blue)}
+.bc{background:var(--green-bg);color:var(--green)}
+.boem{background:var(--green-bg);color:var(--green)}
+.bdlr{background:var(--amber-bg);color:var(--amber)}
+.bmed{background:rgba(248,81,73,.15);color:#ff7b72}
+.bind{background:rgba(139,148,158,.1);color:var(--soft)}
+.vmeta{font-family:'DM Mono',monospace;font-size:11px;color:var(--soft);margin-top:2px}
+.vsub{font-size:12px;color:var(--soft);margin-top:4px}
+
+/* OEM list */
+.oitem{display:flex;align-items:center;gap:12px;padding:13px 14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);margin-bottom:9px;cursor:pointer}
+.oitem:active{border-color:var(--amber)}
+.avatar{width:42px;height:42px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--amber);flex-shrink:0;font-family:'DM Mono',monospace}
+.oinfo{flex:1;min-width:0}
+.oname{font-size:15px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ometa{font-family:'DM Mono',monospace;font-size:11px;color:var(--soft);margin-top:2px}
+.obadges{display:flex;gap:4px;margin-top:5px;flex-wrap:wrap}
+
+/* Stats */
+.stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px;padding:12px 16px}
+.scard{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:12px 8px;text-align:center}
+.snum{font-family:'DM Mono',monospace;font-size:22px;font-weight:500;line-height:1}
+.slbl{font-size:10px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);margin-top:4px}
+
+/* Search */
+.swrap{padding:10px 16px 0;position:relative}
+.swrap svg{position:absolute;left:27px;top:21px;width:15px;height:15px;color:var(--muted)}
+.sinput{padding-left:35px!important}
+
+/* Action items */
 .ai-row{display:flex;gap:8px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border)}
 .ai-row:last-child{border-bottom:none}
-.astat{width:22px;height:22px;border-radius:50%;border:2px solid var(--border2);background:transparent;cursor:pointer;flex-shrink:0;margin-top:2px;transition:all .15s}
-.astat.done{background:var(--green);border-color:var(--green)}
-.ainfo{flex:1;min-width:0}
-.adesc{font-size:14px;font-weight:500;line-height:1.4}
+.acheck{width:22px;height:22px;border-radius:50%;border:2px solid var(--border);background:transparent;cursor:pointer;flex-shrink:0;margin-top:1px;transition:all .15s}
+.acheck.done{background:var(--green);border-color:var(--green)}
+.adesc{font-size:14px;font-weight:500;line-height:1.4;flex:1}
 .adesc.done{text-decoration:line-through;color:var(--muted)}
 .ameta{font-family:'DM Mono',monospace;font-size:11px;color:var(--soft);margin-top:3px}
 .overdue{color:var(--red)!important}
-.aiform{display:flex;gap:7px;margin-bottom:8px;align-items:flex-start}
-.aiform .finput{flex:1;padding:11px 12px;font-size:14px}
-.aidate{width:130px;flex-shrink:0;font-size:13px!important}
+.ai-form{display:flex;gap:7px;margin-bottom:8px}
+.ai-form input:first-child{flex:1}
+.ai-form input[type=date]{width:130px;flex-shrink:0;font-size:12px!important;padding:11px 8px!important}
 .rm-btn{width:38px;height:44px;background:var(--red-bg);border:1px solid rgba(248,81,73,.2);border-radius:10px;color:var(--red);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:14px;box-shadow:var(--shadow)}
-.sec{padding:12px 16px 0}
-.sec-lbl{font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
-.vcard{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:13px 14px;box-shadow:var(--shadow);margin-bottom:9px;cursor:pointer;transition:border-color .15s}
-.vcard:active{border-color:var(--amber)}
-.vcard-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;gap:8px}
-.vcard-name{font-size:15px;font-weight:700;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.badge{font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px;white-space:nowrap;flex-shrink:0}
-.bv{background:rgba(88,166,255,.15);color:var(--blue)}.bc{background:var(--green-bg);color:var(--green)}
-.bmed{background:rgba(248,81,73,.15);color:#ff7b72}.bind{background:rgba(139,148,158,.12);color:var(--soft)}
-.boem{background:var(--green-bg);color:var(--green)}.bdlr{background:var(--amber-bg);color:var(--amber)}
-.vcard-meta{font-family:'DM Mono',monospace;font-size:11px;color:var(--soft)}
-.vcard-sub{font-size:12px;color:var(--soft);margin-top:4px;line-height:1.5}
-.oitem{display:flex;align-items:center;gap:12px;padding:13px 14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--shadow);margin-bottom:9px;cursor:pointer;transition:border-color .15s}
-.oitem:active{border-color:var(--amber)}
-.oavatar{width:42px;height:42px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--amber);flex-shrink:0;font-family:'DM Mono',monospace}
-.oinfo{flex:1;min-width:0}
-.oname{font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ometa{font-family:'DM Mono',monospace;font-size:11px;color:var(--soft);margin-top:2px}
-.obadges{display:flex;gap:4px;margin-top:6px;flex-wrap:wrap}
-.stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px;padding:12px 16px}
-.scard{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 10px;text-align:center}
-.snum{font-family:'DM Mono',monospace;font-size:22px;font-weight:500;color:var(--text);line-height:1}
-.slbl{font-size:10px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);margin-top:4px}
-.swrap{padding:10px 16px 0;position:relative}
-.swrap svg{position:absolute;left:28px;top:21px;width:15px;height:15px;color:var(--muted)}
-.sinput{width:100%;padding:11px 14px 11px 36px;background:var(--surface2);border:1.5px solid var(--border);border-radius:10px;font-family:'Inter',sans-serif;font-size:14px;color:var(--text);outline:none}
-.sinput::placeholder{color:var(--muted)}.sinput:focus{border-color:var(--amber)}
-.dtl-sec{padding:10px 16px}
+
+/* Topic tags */
+.t-tag{display:inline-flex;align-items:center;gap:4px;padding:5px 10px;background:var(--amber-bg);border:1px solid rgba(240,165,0,.3);border-radius:20px;font-size:12px;font-weight:600;color:var(--amber)}
+.t-rm{cursor:pointer;color:var(--soft);font-size:15px;line-height:1}
+
+/* Detail */
+.dtl{padding:10px 16px}
 .dtl-lbl{font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);margin-bottom:7px}
 .dtl-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:13px;font-size:14px;line-height:1.6}
 .tags{display:flex;flex-wrap:wrap;gap:6px}
-.tag{padding:4px 10px;background:var(--amber-bg);border:1px solid rgba(240,165,0,.25);border-radius:20px;font-size:12px;font-weight:600;color:var(--amber)}
+.tag{padding:4px 10px;background:var(--amber-bg);border:1px solid rgba(240,165,0,.2);border-radius:20px;font-size:12px;font-weight:600;color:var(--amber)}
+
+/* Contact card */
 .ccard{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:8px}
-.ccard-name{font-size:14px;font-weight:700}
-.ccard-pos{font-size:12px;color:var(--amber);font-weight:600;margin-top:2px}
-.ccard-loc{font-family:'DM Mono',monospace;font-size:11px;color:var(--soft);margin-top:3px}
-.ccard-note{font-size:12px;color:var(--soft);margin-top:4px;font-style:italic}
-.dyn-item{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:8px;position:relative}
+
+/* Dynamic items */
+.dyn{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:8px;position:relative}
 .dyn-lbl{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
-.dyn-item .rm-btn{position:absolute;top:10px;right:10px;width:28px;height:28px}
-.subcat-grid{display:flex;flex-wrap:wrap;gap:7px}
-.subcat-chip{padding:7px 12px;background:var(--surface2);border:1.5px solid var(--border);border-radius:20px;font-size:12px;font-weight:600;color:var(--soft);cursor:pointer;transition:all .15s;user-select:none}
-.subcat-chip.selected{background:var(--amber-bg);border-color:rgba(240,165,0,.4);color:var(--amber)}
+.dyn .rm-btn{position:absolute;top:10px;right:10px;width:28px;height:28px}
+
+/* Subcat chips */
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{padding:7px 11px;background:var(--surface2);border:1.5px solid var(--border);border-radius:20px;font-size:12px;font-weight:600;color:var(--soft);cursor:pointer;user-select:none;transition:all .15s}
+.chip.on{background:var(--amber-bg);border-color:rgba(240,165,0,.4);color:var(--amber)}
+
+/* Banner */
 .banner{margin:10px 16px;padding:12px 14px;background:var(--amber-bg);border:1.5px solid rgba(240,165,0,.3);border-radius:10px}
-.bnr-ttl{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--amber);margin-bottom:8px}
-.bnr-item{display:flex;align-items:center;gap:9px;padding:7px 0;border-bottom:1px solid rgba(240,165,0,.15)}
-.bnr-item:last-child{border-bottom:none;padding-bottom:0}
-.save-bar{position:sticky;bottom:var(--nav);background:var(--bg2);border-top:1px solid var(--border);padding:12px 16px;z-index:10}
-.inline-form{background:var(--surface2);border:1.5px solid var(--border);border-radius:10px;padding:13px;margin-top:10px}
+.bnr-lbl{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--amber);margin-bottom:8px}
+.bnr-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid rgba(240,165,0,.15)}
+.bnr-row:last-child{border-bottom:none;padding-bottom:0}
+
+/* Empty */
 .empty{text-align:center;padding:48px 24px;color:var(--soft)}
 .empty .ei{font-size:36px;margin-bottom:10px}
-.empty h3{font-size:15px;font-weight:700;margin-bottom:5px;color:var(--text)}
+.empty h3{font-size:15px;font-weight:700;color:var(--text);margin-bottom:5px}
 .empty p{font-size:13px;line-height:1.5}
-.toast{position:fixed;bottom:calc(var(--nav)+14px);left:50%;transform:translateX(-50%) translateY(80px);background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:10px 20px;border-radius:50px;font-size:13px;font-weight:600;z-index:9999;transition:transform .25s;white-space:nowrap;pointer-events:none;box-shadow:var(--shadow)}
+
+/* Divider */
+.div{height:1px;background:var(--border);margin:14px 0}
+
+/* Toast */
+.toast{position:fixed;bottom:calc(var(--nav)+14px);left:50%;transform:translateX(-50%) translateY(80px);background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:10px 20px;border-radius:50px;font-size:13px;font-weight:600;z-index:9999;transition:transform .25s;pointer-events:none;white-space:nowrap}
 .toast.show{transform:translateX(-50%) translateY(0)}
+
 .mono{font-family:'DM Mono',monospace}
-.lnk-btn{background:none;border:none;font-size:13px;font-weight:600;color:var(--amber);cursor:pointer;padding:6px 0}
 </style>
 </head>
 <body>
 
 <!-- HOME -->
-<div id="screen-home" class="screen active">
+<div id="s-home" class="screen active">
   <div class="hdr">
     <div class="hdr-row">
       <h1>Visit Tracker</h1>
       <div class="hdr-acts">
-        <button class="icon-btn" onclick="exportExcel()" title="Export Excel">
+        <button class="icon-btn" onclick="exportXL()" title="Export Excel">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="17" height="17"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
         </button>
-        <button class="icon-btn" onclick="pushBackup()" title="Backup to GitHub">
+        <button class="icon-btn" onclick="doBackup()" title="Backup to GitHub">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="17" height="17"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 5.625c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125"/></svg>
         </button>
-        <button class="icon-btn" onclick="manualSync()" title="Sync">
+        <button class="icon-btn" onclick="doSync()" title="Pull from GitHub">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="17" height="17"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"/></svg>
         </button>
-        <button class="icon-btn" onclick="navigate('settings')" title="Settings">
+        <button class="icon-btn" onclick="go('settings')" title="Settings">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="17" height="17"><path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
         </button>
       </div>
     </div>
-    <div class="sync-bar"><div class="sync-dot" id="sync-dot"></div><span id="sync-lbl">Connecting...</span></div>
+    <div class="sync-pill"><div class="sync-dot" id="sdot"></div><span id="slbl">Not connected</span></div>
   </div>
   <div class="stats" id="home-stats"></div>
-  <div style="padding:0 16px 10px">
-    <div class="ttog">
-      <button class="ttog-btn active" id="hv-today" onclick="setHomeView('today')">Today</button>
-      <button class="ttog-btn" id="hv-oem" onclick="setHomeView('oem')">By OEM</button>
-      <button class="ttog-btn" id="hv-location" onclick="setHomeView('location')">By Location</button>
-    </div>
-  </div>
-  <div id="home-today-view">
-    <div class="sec"><div class="sec-lbl">Today</div><div id="today-visits"></div></div>
-    <div class="sec" style="margin-top:12px"><div class="sec-lbl">Pending Tasks</div><div id="pending-home"></div></div>
-  </div>
-  <div id="home-oem-view" style="display:none;padding:0 16px"></div>
-  <div id="home-loc-view" style="display:none;padding:0 16px"></div>
-  <button class="fab" onclick="navigate('new-visit')">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="22" height="22"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+  <div class="sec"><div class="sec-lbl">Today</div><div id="today-list"></div></div>
+  <div class="sec" style="margin-top:12px"><div class="sec-lbl">Open Tasks</div><div id="home-tasks"></div></div>
+  <button class="fab" onclick="go('new-visit')">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="22" height="22" style="color:#0d1117"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
   </button>
 </div>
 
 <!-- NEW VISIT -->
-<div id="screen-new-visit" class="screen">
+<div id="s-new-visit" class="screen">
   <div class="hdr">
     <div class="hdr-row">
-      <button class="back-btn" onclick="navigate('home')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/></svg>Back</button>
+      <button class="back-btn" onclick="go('home')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/></svg>Back</button>
       <h1 style="text-align:center">New Report</h1>
       <div style="width:52px"></div>
     </div>
   </div>
-  <div id="open-banner" style="display:none"></div>
-  <div class="p15" style="padding-bottom:8px">
-    <div class="fg"><label class="flbl">Type</label>
-      <div class="ttog"><button class="ttog-btn active" id="tb-visit" onclick="setType('visit')">📍 Visit</button><button class="ttog-btn" id="tb-call" onclick="setType('call')">📞 Call</button></div>
+  <div id="visit-banner"></div>
+  <div class="p16" style="padding-bottom:8px">
+    <div class="fg"><label class="lbl">Type</label>
+      <div class="tog"><button class="tog-btn on" id="tb-v" onclick="setVType('visit')">📍 Visit</button><button class="tog-btn" id="tb-c" onclick="setVType('call')">📞 Call</button></div>
     </div>
-    <div class="fg"><label class="flbl">Date</label><input type="date" class="finput" id="v-date"></div>
-    <div class="fg"><label class="flbl">OEM / Dealer</label><select class="fsel" id="v-oem" onchange="onOEMSelect()"><option value="">Select...</option></select></div>
-    <div class="fg" id="v-loc-wrap" style="display:none"><label class="flbl">Meeting Location</label><select class="fsel" id="v-loc"><option value="">Select location...</option></select></div>
+    <div class="fg"><label class="lbl">Date</label><input type="date" id="v-date"></div>
+    <div class="fg"><label class="lbl">OEM / Dealer</label><select id="v-oem" onchange="onOEMPick()"><option value="">Select...</option></select></div>
+    <div class="fg" id="v-loc-wrap" style="display:none"><label class="lbl">Meeting Location</label><select id="v-loc"><option value="">Select location...</option></select></div>
     <div class="fg" id="v-person-wrap" style="display:none">
-      <label class="flbl">Person Met</label>
-      <select class="fsel" id="v-person" onchange="onPersonSelect()"><option value="">Select contact...</option></select>
-      <div id="v-new-contact-form" style="display:none" class="inline-form">
+      <label class="lbl">Person Met</label>
+      <select id="v-person" onchange="onPersonPick()"><option value="">Select contact...</option></select>
+      <div id="v-new-ct" style="display:none;margin-top:10px;background:var(--surface2);border:1.5px solid var(--border);border-radius:10px;padding:12px">
         <div style="font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--amber);margin-bottom:10px">New Contact</div>
-        <div class="fg"><input type="text" class="finput" id="vnc-name" placeholder="Name *"></div>
-        <div class="frow fg"><div class="fg"><input type="tel" class="finput mono" id="vnc-phone" placeholder="Phone"></div><div class="fg"><input type="text" class="finput" id="vnc-pos" placeholder="Position"></div></div>
-        <div class="fg" style="margin-bottom:10px"><input type="text" class="finput" id="vnc-cloc" placeholder="Location (e.g. Bengaluru)"></div>
-        <button class="btn btn-primary" style="padding:10px" onclick="saveNewContact()">Add Contact</button>
+        <div class="fg"><input type="text" id="nc-name" placeholder="Name *"></div>
+        <div class="frow fg"><div class="fg"><input type="tel" id="nc-phone" placeholder="Phone"></div><div class="fg"><input type="text" id="nc-pos" placeholder="Position"></div></div>
+        <div class="fg" style="margin-bottom:10px"><input type="text" id="nc-loc" placeholder="Location (e.g. Bengaluru)"></div>
+        <button class="btn btn-amber" style="padding:10px" onclick="addNewContact()">Add Contact</button>
       </div>
     </div>
     <div class="fg">
-      <label class="flbl">Topics Discussed</label>
-      <input type="text" class="finput" placeholder="🔍 Search topics..." oninput="renderTopicDropdown(this.value)" style="font-size:13px;padding:9px 12px;margin-bottom:8px">
-      <select class="fsel" id="topic-sel" onchange="addTopicFromDrop(this)"><option value="">Add a topic...</option></select>
-      <div id="topic-tags" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:9px;min-height:4px"></div>
-      <div class="frow" style="margin-top:9px">
-        <div class="fg"><input type="text" class="finput" id="topic-custom-inp" placeholder="New custom topic..." style="font-size:13px;padding:10px 12px"></div>
-        <button class="lnk-btn" onclick="addCustomTopicNew()">+ Add</button>
+      <label class="lbl">Topics Discussed</label>
+      <input type="text" id="topic-search" placeholder="Search topics..." oninput="renderTopicDrop(this.value)" style="margin-bottom:8px">
+      <select id="topic-sel" onchange="pickTopic(this)"><option value="">Add a topic...</option></select>
+      <div id="topic-tags" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:9px"></div>
+      <div style="display:flex;gap:8px;margin-top:9px">
+        <input type="text" id="topic-custom" placeholder="Custom topic..." style="flex:1;font-size:13px;padding:10px 12px">
+        <button class="lnk" onclick="addCustomTopic()">+ Add</button>
       </div>
     </div>
     <div class="fg">
-      <label class="flbl">Notes</label>
-      <div class="vwrap">
-        <textarea class="fta" id="v-notes" placeholder="Tap mic to speak or type notes..."></textarea>
-        <button class="mic-btn" id="mic-btn" onclick="toggleVoice()"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="15" height="15"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z"/></svg></button>
+      <label class="lbl">Notes</label>
+      <div style="position:relative">
+        <textarea id="v-notes" placeholder="Type notes here..."></textarea>
+        <button id="mic-btn" onclick="toggleMic()" style="position:absolute;right:10px;top:10px;width:32px;height:32px;background:var(--surface);border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--soft)">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="15" height="15"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z"/></svg>
+        </button>
       </div>
     </div>
     <div class="fg">
-      <label class="flbl">Action Items</label>
+      <label class="lbl">Action Items</label>
       <div id="ai-list"></div>
-      <button class="lnk-btn" onclick="addAI()" style="margin-top:4px">+ Add action item</button>
+      <button class="lnk" onclick="addAI()">+ Add action item</button>
     </div>
-    <div class="fg" style="margin-bottom:0"><label class="flbl">Next Visit / Follow-up Date</label><input type="date" class="finput" id="v-next"></div>
+    <div class="fg" style="margin-bottom:0"><label class="lbl">Next Visit / Follow-up Date</label><input type="date" id="v-next"></div>
   </div>
-  <div style="padding:10px 16px;background:var(--bg2);border-top:1px solid var(--border);position:sticky;bottom:var(--nav)">
-    <button class="btn btn-primary" onclick="saveVisit()" style="padding:11px;font-size:13px"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="15" height="15"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Save Report</button>
-  </div>
+  <div class="save-bar"><button class="btn btn-amber" onclick="saveVisit()">Save Report</button></div>
 </div>
 
 <!-- DIRECTORY -->
-<div id="screen-directory" class="screen">
+<div id="s-dir" class="screen">
   <div class="hdr">
     <div class="hdr-row">
       <h1>Directory</h1>
       <div class="hdr-acts">
-        <button class="icon-btn" onclick="navigate('csv-import')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="17" height="17"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg></button>
+        <button class="icon-btn" onclick="go('import')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="17" height="17"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg></button>
         <button class="icon-btn" onclick="openOEMForm(null)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="17" height="17"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg></button>
       </div>
     </div>
   </div>
-  <div class="swrap"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 15.803a7.5 7.5 0 0010.607 10.607z"/></svg><input type="text" class="sinput" placeholder="Search name, code or city..." oninput="renderDir(this.value)"></div>
+  <div class="swrap">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 15.803a7.5 7.5 0 0010.607 10.607z"/></svg>
+    <input type="text" class="sinput" placeholder="Search name, code or city..." oninput="renderDir(this.value)">
+  </div>
   <div style="padding:12px 16px" id="oem-list"></div>
 </div>
 
 <!-- OEM FORM -->
-<div id="screen-oem-form" class="screen">
+<div id="s-oem-form" class="screen">
   <div class="hdr">
     <div class="hdr-row">
-      <button class="back-btn" onclick="navigate('directory')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/></svg>Back</button>
-      <h1 style="text-align:center" id="oem-form-title">Add OEM</h1>
+      <button class="back-btn" onclick="go('dir')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/></svg>Back</button>
+      <h1 id="oem-form-title" style="text-align:center">Add OEM</h1>
       <div style="width:52px"></div>
     </div>
   </div>
-  <div class="p15" style="padding-bottom:8px">
-    <div class="fg"><label class="flbl">Name *</label><input type="text" class="finput" id="of-name" placeholder="e.g. GPY Machine Tools"></div>
-    <div class="fg"><label class="flbl">Code</label><input type="text" class="finput mono" id="of-code" placeholder="Optional"></div>
+  <div class="p16" style="padding-bottom:8px">
+    <div class="fg"><label class="lbl">Name *</label><input type="text" id="of-name" placeholder="e.g. GPY Machine Tools"></div>
+    <div class="fg"><label class="lbl">Code</label><input type="text" id="of-code" placeholder="Optional"></div>
     <div class="frow fg">
-      <div class="fg"><label class="flbl">Type</label>
-        <div class="ttog" style="padding:2px;gap:2px"><button class="ttog-btn active" id="of-type-oem" onclick="setOEMType('OEM')">OEM</button><button class="ttog-btn" id="of-type-dlr" onclick="setOEMType('Dealer')">Dealer</button></div>
+      <div class="fg"><label class="lbl">Type</label>
+        <div class="tog" style="padding:2px;gap:2px"><button class="tog-btn on" id="of-t-oem" onclick="setOT('OEM')">OEM</button><button class="tog-btn" id="of-t-dlr" onclick="setOT('Dealer')">Dealer</button></div>
       </div>
-      <div class="fg"><label class="flbl">Segment</label>
-        <div class="ttog" style="padding:2px;gap:2px"><button class="ttog-btn active" id="of-seg-med" onclick="setOEMSeg('Medical')">Medical</button><button class="ttog-btn" id="of-seg-ind" onclick="setOEMSeg('Industrial')">Industrial</button></div>
+      <div class="fg"><label class="lbl">Segment</label>
+        <div class="tog" style="padding:2px;gap:2px"><button class="tog-btn on" id="of-s-med" onclick="setOS('Medical')">Medical</button><button class="tog-btn" id="of-s-ind" onclick="setOS('Industrial')">Industrial</button></div>
       </div>
     </div>
-    <div class="fg" id="of-dealer-oems-wrap" style="display:none"><label class="flbl">OEM Brands Dealt In</label><input type="text" class="finput" id="of-dealer-oems" placeholder="e.g. Haitian, DMG Mori"></div>
+    <div class="fg" id="of-brands-wrap" style="display:none"><label class="lbl">OEM Brands Dealt In</label><input type="text" id="of-brands" placeholder="e.g. Haitian, DMG Mori"></div>
     <div class="fg">
-      <label class="flbl" id="of-subcats-lbl">Subcategories</label>
-      <div class="subcat-grid" id="of-subcats"></div>
-      <div class="frow" style="margin-top:9px">
-        <div class="fg"><input type="text" class="finput" id="of-subcat-custom" placeholder="Custom subcategory" style="font-size:13px;padding:10px 12px"></div>
-        <button class="lnk-btn" onclick="addCustomSubcat()">+ Add</button>
+      <label class="lbl" id="of-sub-lbl">Subcategories</label>
+      <div class="chips" id="of-chips"></div>
+      <div style="display:flex;gap:8px;margin-top:9px">
+        <input type="text" id="of-chip-inp" placeholder="Custom..." style="flex:1;font-size:13px;padding:9px 12px">
+        <button class="lnk" onclick="addChip()">+ Add</button>
       </div>
     </div>
-    <div class="divider"></div>
+    <div class="div"></div>
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-      <label class="flbl" style="margin:0">Locations</label>
-      <button class="lnk-btn" onclick="addLocRow()">+ Add</button>
+      <label class="lbl" style="margin:0">Locations</label>
+      <button class="lnk" onclick="addLoc()">+ Add</button>
     </div>
     <div id="of-locs"></div>
-    <div class="divider"></div>
+    <div class="div"></div>
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-      <label class="flbl" style="margin:0">Contacts</label>
-      <button class="lnk-btn" onclick="addContactRow()">+ Add</button>
+      <label class="lbl" style="margin:0">Contacts</label>
+      <button class="lnk" onclick="addCt()">+ Add</button>
     </div>
-    <div id="of-contacts"></div>
-    <div class="divider"></div>
-    <div class="fg" style="margin-bottom:0"><label class="flbl">Notes / Remarks</label><textarea class="fta" id="of-notes" placeholder="e.g. Closed subvention deal at 10% and 0.5% PF"></textarea></div>
+    <div id="of-cts"></div>
+    <div class="div"></div>
+    <div class="fg" style="margin-bottom:0"><label class="lbl">Notes</label><textarea id="of-notes" placeholder="e.g. Closed subvention at 10% and 0.5% PF"></textarea></div>
   </div>
   <div class="save-bar">
-    <button class="btn btn-primary" onclick="saveOEM()" style="margin-bottom:10px"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="17" height="17"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Save OEM</button>
-    <button class="btn btn-danger" id="del-oem-btn" style="display:none" onclick="deleteOEM()">Delete OEM</button>
+    <button class="btn btn-amber" onclick="saveOEM()" style="margin-bottom:10px">Save OEM</button>
+    <button class="btn btn-red" id="del-oem-btn" style="display:none" onclick="deleteOEM()">Delete OEM</button>
   </div>
 </div>
 
 <!-- OEM DETAIL -->
-<div id="screen-oem-detail" class="screen">
+<div id="s-oem-detail" class="screen">
   <div class="hdr">
     <div class="hdr-row">
-      <button class="back-btn" onclick="navigate('directory')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/></svg>Back</button>
-      <h1 id="oem-detail-title" style="text-align:center;flex:1"></h1>
-      <button class="icon-btn" id="edit-oem-btn"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="17" height="17"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"/></svg></button>
+      <button class="back-btn" onclick="go('dir')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/></svg>Back</button>
+      <h1 id="oem-dtl-title" style="text-align:center;flex:1"></h1>
+      <button class="icon-btn" id="oem-edit-btn"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="17" height="17"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931z"/></svg></button>
     </div>
   </div>
-  <div id="oem-detail-content"></div>
+  <div id="oem-dtl-content"></div>
 </div>
 
-<!-- ACTIONS -->
-<div id="screen-actions" class="screen">
+<!-- TASKS -->
+<div id="s-tasks" class="screen">
   <div class="hdr">
     <div class="hdr-row">
-      <h1>Action Items</h1>
+      <h1>Tasks</h1>
       <div class="hdr-acts">
-        <button class="icon-btn" id="btn-filter-open" onclick="setFilter('open')" style="background:var(--amber-bg);color:var(--amber);border-color:rgba(240,165,0,.3)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="15" height="15"><circle cx="12" cy="12" r="9"/></svg></button>
-        <button class="icon-btn" id="btn-filter-all" onclick="setFilter('all')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="15" height="15"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM3.75 12h.007v.008H3.75V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-.375 5.25h.007v.008H3.75v-.008zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/></svg></button>
+        <button class="icon-btn" id="f-open-btn" onclick="setFilter('open')" style="background:var(--amber-bg);color:var(--amber);border-color:rgba(240,165,0,.3)">Open</button>
+        <button class="icon-btn" id="f-all-btn" onclick="setFilter('all')" style="font-size:12px;font-weight:600">All</button>
       </div>
     </div>
   </div>
-  <div style="padding:12px 16px" id="actions-list"></div>
+  <div style="padding:12px 16px" id="task-list"></div>
 </div>
 
 <!-- VISIT DETAIL -->
-<div id="screen-visit-detail" class="screen">
+<div id="s-visit-dtl" class="screen">
   <div class="hdr">
     <div class="hdr-row">
-      <button class="back-btn" onclick="navigate('home')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/></svg>Back</button>
+      <button class="back-btn" onclick="go('home')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/></svg>Back</button>
       <h1 style="text-align:center;flex:1">Report</h1>
-      <div style="width:36px"></div>
+      <button class="icon-btn" onclick="copyWA()" title="Copy for WhatsApp"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="17" height="17"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.375"/></svg></button>
     </div>
   </div>
-  <div id="detail-content"></div>
+  <div id="visit-dtl-content"></div>
   <div style="padding:0 16px 16px;display:flex;flex-direction:column;gap:10px">
-    <button class="btn btn-primary" onclick="copyWA()">Copy for WhatsApp</button>
-    <button class="btn btn-danger" onclick="deleteVisit()"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="17" height="17"><path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"/></svg>Delete Report</button>
+    <button class="btn btn-amber" onclick="copyWA()">Copy for WhatsApp</button>
+    <button class="btn btn-red" onclick="deleteVisit()">Delete Report</button>
   </div>
 </div>
 
-<!-- CSV IMPORT -->
-<div id="screen-csv-import" class="screen">
+<!-- IMPORT -->
+<div id="s-import" class="screen">
   <div class="hdr">
     <div class="hdr-row">
-      <button class="back-btn" onclick="navigate('directory')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/></svg>Back</button>
+      <button class="back-btn" onclick="go('dir')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/></svg>Back</button>
       <h1 style="text-align:center;flex:1">Import OEMs</h1>
       <div style="width:36px"></div>
     </div>
   </div>
-  <div class="p15">
+  <div class="p16">
     <div class="card" style="background:var(--amber-bg);border-color:rgba(240,165,0,.3);margin-bottom:16px">
-      <div style="font-size:13px;line-height:1.7"><strong>Step 1</strong> — Download the template<br><strong>Step 2</strong> — Fill Sheet 1 (OEMs) and Sheet 2 (Contacts)<br><strong>Step 3</strong> — Upload here</div>
+      <div style="font-size:13px;line-height:1.7"><strong>Sheet 1</strong> — One row per OEM (name, locations, etc)<br><strong>Sheet 2</strong> — One row per contact, linked by OEM name<br>Existing OEMs will have contacts merged in.</div>
     </div>
-    <button class="btn btn-outline" onclick="downloadXLSXTemplate()" style="margin-bottom:12px"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="17" height="17"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>Download Template (.xlsx)</button>
-    <div class="fg"><label class="flbl">Upload Filled File (.xlsx or .csv)</label><input type="file" accept=".csv,.xlsx,.xls" id="csv-upload" onchange="importFile(this)" style="padding:12px;background:var(--surface2);border:1.5px dashed var(--border);border-radius:10px;width:100%;font-family:'Inter',sans-serif;font-size:13px;color:var(--text)"></div>
-    <div id="csv-preview" style="margin-top:8px"></div>
+    <button class="btn btn-outline" onclick="dlTemplate()" style="margin-bottom:14px">Download Template (.xlsx)</button>
+    <div class="fg"><label class="lbl">Upload File (.xlsx or .csv)</label>
+      <input type="file" accept=".csv,.xlsx,.xls" id="imp-file" onchange="importFile(this)" style="padding:12px;background:var(--surface2);border:1.5px dashed var(--border);border-radius:10px;width:100%;color:var(--text);font-size:13px">
+    </div>
+    <div id="imp-result"></div>
   </div>
 </div>
 
 <!-- SETTINGS -->
-<div id="screen-settings" class="screen">
+<div id="s-settings" class="screen">
   <div class="hdr">
     <div class="hdr-row">
-      <button class="back-btn" onclick="navigate('home')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/></svg>Back</button>
+      <button class="back-btn" onclick="go('home')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/></svg>Back</button>
       <h1 style="text-align:center;flex:1">Settings</h1>
       <div style="width:36px"></div>
     </div>
   </div>
-  <div class="p15">
-    <div class="card" style="background:var(--amber-bg);border-color:rgba(240,165,0,.3);margin-bottom:20px">
-      <div style="font-size:13px;line-height:1.7">Your GitHub token is stored <strong>only on this device</strong> — never in the code or the repo. Each device needs it entered once.</div>
+  <div class="p16">
+    <div class="card" style="background:var(--amber-bg);border-color:rgba(240,165,0,.3);margin-bottom:18px">
+      <div style="font-size:13px;line-height:1.7">Your token is stored <strong>only on this device</strong>. Each device (phone, laptop) needs it entered once. It is never stored in the code.</div>
     </div>
-    <div class="fg">
-      <label class="flbl">GitHub Personal Access Token</label>
+    <div class="fg"><label class="lbl">GitHub Personal Access Token</label>
       <div style="position:relative">
-        <input type="password" class="finput mono" id="settings-token" placeholder="github_pat_..." style="font-size:13px;padding-right:50px">
-        <button onclick="toggleTokenVis()" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--soft);font-size:12px" id="tok-vis-btn">Show</button>
+        <input type="password" id="tok-inp" placeholder="Paste your token here..." style="padding-right:56px">
+        <button onclick="toggleTokVis()" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--soft);font-size:12px;font-weight:600;cursor:pointer" id="tok-vis">Show</button>
       </div>
-      <div style="font-size:11px;color:var(--muted);margin-top:6px">Generate at GitHub → Settings → Developer settings → Fine-grained tokens<br>Repo: OEM-Visit-Tracker · Permission: Contents (Read & Write)</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:6px">
+        GitHub → Settings → Developer settings → Fine-grained tokens<br>
+        Repo: OEM-Visit-Tracker · Permission: Contents → Read & Write
+      </div>
     </div>
-    <button class="btn btn-primary" onclick="saveToken()" style="margin-bottom:12px">Save Token & Test Connection</button>
-    <div id="token-status" style="font-size:13px;text-align:center;min-height:20px"></div>
+    <button class="btn btn-amber" onclick="saveToken()">Save & Test Connection</button>
+    <div id="tok-status" style="font-size:13px;text-align:center;margin-top:12px;min-height:20px;line-height:1.5"></div>
   </div>
 </div>
 
-<!-- MAP PICKER MODAL -->
-<div id="map-modal" style="display:none;position:fixed;inset:0;z-index:500;background:var(--bg);flex-direction:column">
-  <div style="background:var(--bg2);border-bottom:1px solid var(--border);padding:12px 16px;display:flex;align-items:center;gap:10px;flex-shrink:0">
-    <button onclick="closeMapModal()" style="background:none;border:none;color:var(--soft);font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:5px">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>Cancel
-    </button>
-    <div style="flex:1;font-size:15px;font-weight:700;color:var(--text)">Pick Location</div>
-    <button onclick="confirmMapPin()" style="background:var(--amber);border:none;color:#0d1117;font-size:13px;font-weight:700;padding:8px 16px;border-radius:8px;cursor:pointer" id="map-confirm-btn" disabled>Confirm</button>
-  </div>
-  <div style="padding:10px 16px;background:var(--bg2);border-bottom:1px solid var(--border);flex-shrink:0">
-    <div style="position:relative">
-      <input type="text" id="map-search" placeholder="Search for a place..." class="finput" style="padding-right:44px;font-size:14px" oninput="onMapSearch(this.value)">
-      <button onclick="doMapSearch()" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--amber)">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="18" height="18"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 15.803a7.5 7.5 0 0010.607 10.607z"/></svg>
-      </button>
-    </div>
-    <div id="map-search-results" style="background:var(--surface);border:1px solid var(--border);border-radius:10px;margin-top:6px;display:none;max-height:150px;overflow-y:auto"></div>
-  </div>
-  <div style="font-size:11px;color:var(--muted);text-align:center;padding:6px;background:var(--bg2);flex-shrink:0">Tap anywhere on the map to drop a pin</div>
-  <div id="map-container" style="flex:1;min-height:0"></div>
-  <div id="map-pin-info" style="background:var(--bg2);border-top:1px solid var(--border);padding:10px 16px;font-size:13px;color:var(--soft);flex-shrink:0;display:none"></div>
-</div>
-
-<!-- REPORTS -->
-<div id="screen-reports" class="screen">
-  <div class="hdr">
-    <div class="hdr-row">
-      <h1>Reports</h1>
-      <button class="icon-btn" id="rpt-wa-btn" onclick="shareReportWA()" title="Share on WhatsApp" style="display:none">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="17" height="17"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.375"/></svg>
-      </button>
-    </div>
-  </div>
-  <div class="p15">
-    <div class="fg">
-      <label class="flbl">Filter By</label>
-      <div class="ttog" style="margin-bottom:12px">
-        <button class="ttog-btn active" id="rpt-day-btn" onclick="setRptMode('day')">Single Day</button>
-        <button class="ttog-btn" id="rpt-month-btn" onclick="setRptMode('month')">Month</button>
-      </div>
-      <div id="rpt-day-wrap">
-        <input type="date" class="finput" id="rpt-date" onchange="renderReport()">
-      </div>
-      <div id="rpt-month-wrap" style="display:none">
-        <input type="month" class="finput" id="rpt-month" onchange="renderReport()">
-      </div>
-    </div>
-  </div>
-  <div id="rpt-content" style="padding:0 16px"></div>
-</div>
-
-<!-- BOTTOM NAV -->
+<!-- NAV -->
 <nav class="bnav">
-  <div class="nitem active" id="nav-home" onclick="navigate('home')">
+  <div class="ni active" id="n-home" onclick="go('home')">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"/></svg>
     <span>Home</span>
   </div>
-  <div class="nitem" id="nav-directory" onclick="navigate('directory')">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z"/></svg>
+  <div class="ni" id="n-dir" onclick="go('dir')">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21"/></svg>
     <span>OEMs</span>
   </div>
-  <div class="nitem" id="nav-reports" onclick="navigate('reports')">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg>
-    <span>Reports</span>
-  </div>
-  <div class="nitem" id="nav-actions" onclick="navigate('actions')">
+  <div class="ni" id="n-tasks" onclick="go('tasks')">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
     <span>Tasks</span>
   </div>
@@ -467,343 +437,587 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);max-w
 <div class="toast" id="toast"></div>
 
 <script>
-const GH_OWNER='vishveshnadkarni-oss',GH_REPO='OEM-Visit-Tracker',GH_BRANCH='main';
-const GH_FILES={oems:'data/oems.json',visits:'data/visits.json'};
-const GH_HEADS={oems:null,visits:null};
-const GH_API=`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/`;
-function getToken(){return localStorage.getItem('gh_token')||'';}
-function setToken(t){localStorage.setItem('gh_token',t.trim());}
-let db={oems:[],visits:[],actions:[],savedTopics:[]};
-const DEFAULT_TOPICS=['Leasing','Principal Moratorium','Startups','Rate of Interest'];
-const SUBCATS={Industrial:['Machine Tools','Plastics','Packaging','Laser','Bending','Pharma','Solar','Wood Working'],Medical:['Imaging','Ophthalmology','Dermatology','Cosmetology','Laser Hair Removal','Lab Testing','Anaesthetic','Refurb Machines']};
-let selectedTopics=[],visitType='visit',oemType='OEM',oemSeg='Medical',customSubcats=[],editOEM=null,curVisitId=null,actFilter='open',homeViewState='today',rptMode='day',recognition=null,listening=false;
-function loadLocal(){try{const r=localStorage.getItem('oem_v4');if(r){db=JSON.parse(r);if(!db.savedTopics)db.savedTopics=[];}}catch(e){}}
-function saveLocal(){localStorage.setItem('oem_v4',JSON.stringify(db));}
-function allTopics(){return [...new Set([...DEFAULT_TOPICS,...(db.savedTopics||[])])];}
-async function ghGet(p){const tk=getToken();if(!tk)return null;const r=await fetch(GH_API+p+'?ref='+GH_BRANCH,{headers:{'Authorization':'Bearer '+tk,'Accept':'application/vnd.github+json'}});if(r.status===404)return null;if(!r.ok)throw new Error(r.status);return r.json();}
-async function ghPut(p,c,sha,m){const tk=getToken();if(!tk)throw new Error('No token');const b={message:m||'backup',content:btoa(unescape(encodeURIComponent(JSON.stringify(c,null,2)))),branch:GH_BRANCH};if(sha)b.sha=sha;const r=await fetch(GH_API+p,{method:'PUT',headers:{'Authorization':'Bearer '+tk,'Content-Type':'application/json','Accept':'application/vnd.github+json'},body:JSON.stringify(b)});if(!r.ok)throw new Error(r.status);return(await r.json()).content?.sha||null;}
-function setSS(s,m){const d=document.getElementById('sync-dot'),l=document.getElementById('sync-lbl');if(!d||!l)return;d.className='sync-dot '+(s==='ok'?'ok':s==='err'?'err':'busy');l.textContent=m;}
-async function loadFromGitHub(){setSS('busy','Fetching...');try{const[of,vf]=await Promise.all([ghGet(GH_FILES.oems),ghGet(GH_FILES.visits)]);if(of){GH_HEADS.oems=of.sha;db.oems=JSON.parse(decodeURIComponent(escape(atob(of.content.replace(/\n/g,'')))));}if(vf){GH_HEADS.visits=vf.sha;const d=JSON.parse(decodeURIComponent(escape(atob(vf.content.replace(/\n/g,'')))));db.visits=d.visits||[];db.actions=d.actions||[];}saveLocal();setSS('ok','Synced · '+fmtTime(new Date()));}catch(e){setSS('err','Offline');console.error(e);}renderHome();}
-async function syncToGitHub(){
-  setSS('busy','Saving...');
-  try{
-    // Always fetch current SHAs first to avoid 422 conflicts
-    const [eo,ev]=await Promise.all([
-      ghGet(GH_FILES.oems).catch(()=>null),
-      ghGet(GH_FILES.visits).catch(()=>null)
-    ]);
-    if(eo)GH_HEADS.oems=eo.sha;
-    if(ev)GH_HEADS.visits=ev.sha;
-    const [s1,s2]=await Promise.all([
-      ghPut(GH_FILES.oems,db.oems,GH_HEADS.oems||null,'Update OEMs'),
-      ghPut(GH_FILES.visits,{visits:db.visits,actions:db.actions},GH_HEADS.visits||null,'Update visits')
-    ]);
-    if(s1)GH_HEADS.oems=s1;
-    if(s2)GH_HEADS.visits=s2;
-    setSS('ok','Synced · '+fmtTime(new Date()));
-  }catch(e){setSS('err','Sync failed — saved locally');console.error(e);}
+// ── CONFIG ──
+const OWNER='vishveshnadkarni-oss', REPO='OEM-Visit-Tracker', BRANCH='main';
+const API=`https://api.github.com/repos/${OWNER}/${REPO}/contents/`;
+const FILES={oems:'data/oems.json', visits:'data/visits.json'};
+const SHAS={oems:null, visits:null};
+const DEF_TOPICS=['Leasing','Principal Moratorium','Startups','Rate of Interest'];
+const SUBCATS={Medical:['Imaging','Ophthalmology','Dermatology','Cosmetology','Laser Hair Removal','Lab Testing','Anaesthetic','Refurb Machines'],Industrial:['Machine Tools','Plastics','Packaging','Laser','Bending','Pharma','Solar','Wood Working']};
+
+// ── STATE ──
+let db={oems:[],visits:[],actions:[],topics:[]};
+let selTopics=[], vType='visit', oType='OEM', oSeg='Medical', custChips=[], editOEM=null, curVid=null, taskFilter='open', listening=false, recog=null;
+
+// ── LOCAL STORAGE ──
+function load(){try{const r=localStorage.getItem('oem_v5');if(r){db=JSON.parse(r);if(!db.topics)db.topics=[];}}catch(e){}}
+function save(){localStorage.setItem('oem_v5',JSON.stringify(db));}
+function getToken(){return localStorage.getItem('oem_tok')||'';}
+function setToken(t){localStorage.setItem('oem_tok',t.trim());}
+function allTopics(){return [...new Set([...DEF_TOPICS,...(db.topics||[])])];}
+
+// ── GITHUB API ──
+async function ghGet(path){
+  const tk=getToken(); if(!tk) return null;
+  const r=await fetch(API+path+'?ref='+BRANCH,{headers:{'Authorization':'Bearer '+tk,'Accept':'application/vnd.github+json'}});
+  if(r.status===404) return null;
+  if(!r.ok) throw new Error('GET '+r.status);
+  return r.json();
 }
-async function saveAndSync(){saveLocal();await syncToGitHub();}
-async function pushBackup(){
+async function ghPut(path, data, sha, msg){
+  const tk=getToken(); if(!tk) throw new Error('No token');
+  const body={message:msg, content:btoa(unescape(encodeURIComponent(JSON.stringify(data,null,2)))), branch:BRANCH};
+  if(sha) body.sha=sha;
+  const r=await fetch(API+path,{method:'PUT',headers:{'Authorization':'Bearer '+tk,'Content-Type':'application/json','Accept':'application/vnd.github+json'},body:JSON.stringify(body)});
+  if(!r.ok) throw new Error('PUT '+r.status+' '+(await r.text()).slice(0,100));
+  const j=await r.json(); return j.content?.sha||null;
+}
+
+// ── SYNC ──
+function setSS(state,msg){
+  const d=document.getElementById('sdot'), l=document.getElementById('slbl');
+  if(!d||!l) return;
+  d.className='sync-dot '+(state==='ok'?'ok':state==='err'?'err':state==='busy'?'spin':'');
+  l.textContent=msg;
+}
+
+async function doSync(){
+  if(!getToken()){toast('No token — go to Settings');return;}
+  setSS('busy','Fetching...');
+  try{
+    const [of,vf]=await Promise.all([ghGet(FILES.oems),ghGet(FILES.visits)]);
+    if(of){SHAS.oems=of.sha; db.oems=JSON.parse(decodeURIComponent(escape(atob(of.content.replace(/\n/g,'')))));}
+    if(vf){SHAS.visits=vf.sha; const d=JSON.parse(decodeURIComponent(escape(atob(vf.content.replace(/\n/g,''))))); db.visits=d.visits||[]; db.actions=d.actions||[]; db.topics=d.topics||[];}
+    save(); setSS('ok','Synced '+fmtTime(new Date())); renderHome(); toast('Synced ✓');
+  }catch(e){setSS('err','Sync failed'); toast('Sync failed: '+e.message);}
+}
+
+async function ghWrite(){
+  // Always fetch SHAs fresh before writing
+  try{
+    const [of,vf]=await Promise.all([ghGet(FILES.oems).catch(()=>null), ghGet(FILES.visits).catch(()=>null)]);
+    if(of) SHAS.oems=of.sha;
+    if(vf) SHAS.visits=vf.sha;
+    const [s1,s2]=await Promise.all([
+      ghPut(FILES.oems, db.oems, SHAS.oems||null, 'Update OEMs'),
+      ghPut(FILES.visits, {visits:db.visits,actions:db.actions,topics:db.topics}, SHAS.visits||null, 'Update visits')
+    ]);
+    if(s1) SHAS.oems=s1;
+    if(s2) SHAS.visits=s2;
+    setSS('ok','Synced '+fmtTime(new Date()));
+  }catch(e){setSS('err','Sync failed'); throw e;}
+}
+
+async function saveSync(){
+  save();
+  if(!getToken()) return;
+  setSS('busy','Saving...');
+  try{ await ghWrite(); }
+  catch(e){ toast('Saved locally. GitHub sync failed.'); }
+}
+
+async function doBackup(){
+  if(!getToken()){toast('No token — go to Settings');return;}
   setSS('busy','Backing up...');
   try{
     const stamp=todayStr();
-    const [eo,ev]=await Promise.all([
-      ghGet(`backup/oems_${stamp}.json`).catch(()=>null),
-      ghGet(`backup/visits_${stamp}.json`).catch(()=>null)
-    ]);
+    const [eo,ev]=await Promise.all([ghGet('backup/oems_'+stamp+'.json').catch(()=>null), ghGet('backup/visits_'+stamp+'.json').catch(()=>null)]);
     await Promise.all([
-      ghPut(`backup/oems_${stamp}.json`,db.oems,eo?.sha||null,`Backup OEMs ${stamp}`),
-      ghPut(`backup/visits_${stamp}.json`,{visits:db.visits,actions:db.actions},ev?.sha||null,`Backup visits ${stamp}`)
+      ghPut('backup/oems_'+stamp+'.json', db.oems, eo?.sha||null, 'Backup OEMs '+stamp),
+      ghPut('backup/visits_'+stamp+'.json', {visits:db.visits,actions:db.actions}, ev?.sha||null, 'Backup visits '+stamp)
     ]);
-    setSS('ok','Backup saved · '+fmtTime(new Date()));
-    showToast('Backup saved ✓');
-  }catch(e){
-    setSS('err','Backup failed');
-    showToast('Backup failed — check connection');
-    console.error(e);
-  }
+    setSS('ok','Backup done '+fmtTime(new Date())); toast('Backup saved ✓');
+  }catch(e){setSS('err','Backup failed'); toast('Backup failed: '+e.message);}
 }
-async function manualSync(){await loadFromGitHub();}
-const SCREENS={'home':'screen-home','new-visit':'screen-new-visit','directory':'screen-directory','oem-form':'screen-oem-form','oem-detail':'screen-oem-detail','actions':'screen-actions','visit-detail':'screen-visit-detail','csv-import':'screen-csv-import','reports':'screen-reports','settings':'screen-settings'};
-const NAV_MAP={'home':'nav-home','new-visit':'nav-home','visit-detail':'nav-home','directory':'nav-directory','oem-form':'nav-directory','oem-detail':'nav-directory','csv-import':'nav-directory','actions':'nav-actions','reports':'nav-reports','settings':'nav-home'};
-function navigate(s){Object.values(SCREENS).forEach(id=>document.getElementById(id)?.classList.remove('active'));document.querySelectorAll('.nitem').forEach(n=>n.classList.remove('active'));document.getElementById(SCREENS[s])?.classList.add('active');const nid=NAV_MAP[s];if(nid)document.getElementById(nid)?.classList.add('active');window.scrollTo(0,0);if(s==='home')renderHome();if(s==='new-visit')initNewVisit();if(s==='directory')renderDir();if(s==='actions')renderActions();if(s==='reports')initReports();if(s==='settings')initSettings();}
-function setHomeView(v){homeViewState=v;['today','oem','location'].forEach(x=>{document.getElementById('hv-'+x)?.classList.toggle('active',x===v);const el=document.getElementById('home-'+x+'-view');if(el)el.style.display=x===v?'block':'none';});if(v==='oem')renderOEMView();if(v==='location')renderLocView();}
-function renderHome(){const today=todayStr();const todayV=db.visits.filter(v=>v.date===today);const openA=db.actions.filter(a=>a.status==='open');const od=openA.filter(a=>a.dueDate&&a.dueDate<today).length;document.getElementById('home-stats').innerHTML=`<div class="scard"><div class="snum">${todayV.length}</div><div class="slbl">Today</div></div><div class="scard"><div class="snum">${db.visits.length}</div><div class="slbl">Total</div></div><div class="scard"><div class="snum" style="color:${od>0?'var(--red)':'var(--text)'}">${openA.length}</div><div class="slbl">Open Tasks</div></div>`;
-const tv=document.getElementById('today-visits');
-if(!todayV.length){tv.innerHTML=`<div class="empty"><div class="ei">📋</div><h3>No reports today</h3><p>Tap + to log a visit or call</p></div>`;}
-else{tv.innerHTML=todayV.map(v=>{const oem=db.oems.find(o=>o.id===v.oemId);const topics=[...(v.topics||[]),...(v.customTopics||[])];return`<div class="vcard" onclick="showDetail('${v.id}')"><div class="vcard-top"><div class="vcard-name">${oem?.name||'Unknown'}</div><span class="badge ${v.type==='visit'?'bv':'bc'}">${v.type==='visit'?'📍 Visit':'📞 Call'}</span></div><div class="vcard-meta">${oem?.code||''}${v.visitLocation?' · 📍'+v.visitLocation:''}</div>${v.personMet?`<div class="vcard-sub">👤 ${v.personMet}</div>`:''} ${topics.length?`<div class="vcard-sub">${topics.join(' · ')}</div>`:''}</div>`;}).join('');}
-const ph=document.getElementById('pending-home');const up=[...openA].sort((a,b)=>(a.dueDate||'9')<(b.dueDate||'9')?-1:1).slice(0,5);
-if(!up.length){ph.innerHTML=`<p style="font-size:13px;color:var(--muted);padding:4px 0">No pending tasks 🎉</p>`;}
-else{ph.innerHTML=`<div class="card">${up.map(a=>{const oem=oemForAction(a);const odd=a.dueDate&&a.dueDate<today;return`<div class="ai-row"><button class="astat ${a.status==='closed'?'done':''}" onclick="toggleAction('${a.id}',event)"></button><div class="ainfo"><div class="adesc ${a.status==='closed'?'done':''}">${a.description}</div><div class="ameta">${oem?.name||''}${a.dueDate?' · <span class="'+(odd?'overdue':'')+'">Due '+fmtDate(a.dueDate)+'</span>':''}</div></div></div>`;}).join('')}</div>`;}
-if(homeViewState==='oem')renderOEMView();if(homeViewState==='location')renderLocView();}
-function renderOEMView(){const el=document.getElementById('home-oem-view');if(!db.visits.length){el.innerHTML=`<div class="empty"><div class="ei">📊</div><h3>No visits yet</h3></div>`;return;}const map={};db.visits.forEach(v=>{if(!map[v.oemId])map[v.oemId]={visits:[],topics:{}};map[v.oemId].visits.push(v);[...(v.topics||[]),...(v.customTopics||[])].forEach(t=>{map[v.oemId].topics[t]=(map[v.oemId].topics[t]||0)+1;});});const sorted=Object.entries(map).sort((a,b)=>b[1].visits.length-a[1].visits.length);el.innerHTML=sorted.map(([oemId,data])=>{const oem=db.oems.find(o=>o.id===oemId);const name=oem?.name||'Unknown';const lastV=[...data.visits].sort((a,b)=>b.date.localeCompare(a.date))[0];const topTopics=Object.entries(data.topics).sort((a,b)=>b[1]-a[1]).slice(0,3);const openTasks=db.actions.filter(a=>data.visits.some(v=>v.id===a.visitId)&&a.status==='open').length;const init=name.split(' ').map(w=>w[0]||'').join('').toUpperCase().slice(0,2);return`<div class="card" style="margin-bottom:10px"><div style="display:flex;align-items:center;gap:10px;margin-bottom:10px"><div class="oavatar" style="width:38px;height:38px;font-size:12px">${init}</div><div style="flex:1;min-width:0"><div style="font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${name}</div><div class="mono" style="font-size:11px;color:var(--soft)">${data.visits.length} visit${data.visits.length!==1?'s':''} · Last: ${fmtDate(lastV.date)}</div></div>${openTasks?`<span style="background:var(--red-bg);color:var(--red);font-size:11px;font-weight:600;padding:3px 8px;border-radius:20px;flex-shrink:0">${openTasks} open</span>`:''}</div>${topTopics.length?`<div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px">${topTopics.map(([t,c])=>`<span class="tag" style="font-size:11px">${t} <span style="opacity:.6">${c}×</span></span>`).join('')}</div>`:''}<div style="border-top:1px solid var(--border);padding-top:10px;display:flex;gap:7px;overflow-x:auto">${data.visits.slice().sort((a,b)=>b.date.localeCompare(a.date)).slice(0,3).map(v=>`<div onclick="showDetail('${v.id}')" style="flex-shrink:0;min-width:130px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:9px 10px;cursor:pointer"><div class="mono" style="font-size:10px;color:var(--muted)">${fmtDate(v.date)}</div><div style="font-size:11px;font-weight:600;margin-top:3px">${v.personMet||'—'}</div>${[...(v.topics||[]),...(v.customTopics||[])].slice(0,2).length?`<div style="font-size:10px;color:var(--soft);margin-top:3px;line-height:1.4">${[...(v.topics||[]),...(v.customTopics||[])].slice(0,2).join(', ')}</div>`:''}</div>`).join('')}</div></div>`;}).join('');}
-function renderLocView(){const el=document.getElementById('home-loc-view');if(!db.visits.length){el.innerHTML=`<div class="empty"><div class="ei">📍</div><h3>No visits yet</h3></div>`;return;}const cityMap={};db.visits.forEach(v=>{const city=v.visitLocation||'Unknown';if(!cityMap[city])cityMap[city]={visits:[],oems:new Set()};cityMap[city].visits.push(v);const oem=db.oems.find(o=>o.id===v.oemId);if(oem)cityMap[city].oems.add(oem.name);});const sorted=Object.entries(cityMap).sort((a,b)=>b[1].visits.length-a[1].visits.length);el.innerHTML=sorted.map(([city,data])=>{const lastV=[...data.visits].sort((a,b)=>b.date.localeCompare(a.date))[0];const tc={};data.visits.forEach(v=>[...(v.topics||[]),...(v.customTopics||[])].forEach(t=>tc[t]=(tc[t]||0)+1));const topT=Object.entries(tc).sort((a,b)=>b[1]-a[1]).slice(0,3);const oemList=[...data.oems].slice(0,3).join(', ')+(data.oems.size>3?` +${data.oems.size-3} more`:'');return`<div class="card" style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:7px"><div><div style="font-size:15px;font-weight:700">📍 ${city}</div><div class="mono" style="font-size:11px;color:var(--soft);margin-top:2px">${data.visits.length} visit${data.visits.length!==1?'s':''} · ${data.oems.size} OEM${data.oems.size!==1?'s':''}</div></div><div class="mono" style="font-size:10px;color:var(--muted);text-align:right">${fmtDate(lastV.date)}</div></div><div style="font-size:12px;color:var(--soft);margin-bottom:8px">${oemList}</div>${topT.length?`<div style="display:flex;flex-wrap:wrap;gap:5px">${topT.map(([t,c])=>`<span class="tag" style="font-size:11px">${t} <span style="opacity:.6">${c}×</span></span>`).join('')}</div>`:''}</div>`;}).join('');}
-function initNewVisit(){visitType='visit';selectedTopics=[];document.getElementById('tb-visit').classList.add('active');document.getElementById('tb-call').classList.remove('active');document.getElementById('v-date').value=todayStr();['v-notes','v-next'].forEach(id=>document.getElementById(id).value='');document.getElementById('v-oem').value='';document.getElementById('open-banner').style.display='none';document.getElementById('ai-list').innerHTML='';document.getElementById('v-person-wrap').style.display='none';document.getElementById('v-loc-wrap').style.display='none';document.getElementById('v-new-contact-form').style.display='none';document.getElementById('topic-tags').innerHTML='';document.getElementById('topic-custom-inp').value='';const sel=document.getElementById('v-oem');sel.innerHTML='<option value="">Select...</option>'+[...db.oems].sort((a,b)=>a.name.localeCompare(b.name)).map(o=>`<option value="${o.id}">${o.name}${o.code?' ('+o.code+')':''}</option>`).join('');renderTopicDropdown();}
-function setType(t){visitType=t;document.getElementById('tb-visit').classList.toggle('active',t==='visit');document.getElementById('tb-call').classList.toggle('active',t==='call');}
-function renderTopicDropdown(search=''){const all=allTopics().filter(t=>!selectedTopics.includes(t)&&(!search||t.toLowerCase().includes(search.toLowerCase())));const sel=document.getElementById('topic-sel');sel.innerHTML='<option value="">Add a topic...</option>'+all.map(t=>`<option value="${t}">${t}</option>`).join('');}
-function addTopicFromDrop(sel){const v=sel.value;if(!v)return;if(!selectedTopics.includes(v)){selectedTopics.push(v);renderTopicTags();renderTopicDropdown();}sel.value='';}
-function addCustomTopicNew(){const inp=document.getElementById('topic-custom-inp');const v=inp.value.trim();if(!v)return;if(!selectedTopics.includes(v))selectedTopics.push(v);if(!allTopics().includes(v)){if(!db.savedTopics)db.savedTopics=[];db.savedTopics.push(v);saveLocal();}renderTopicTags();renderTopicDropdown();inp.value='';}
-function removeTopic(t){selectedTopics=selectedTopics.filter(x=>x!==t);renderTopicTags();renderTopicDropdown();}
-function renderTopicTags(){document.getElementById('topic-tags').innerHTML=selectedTopics.map(t=>`<span class="topic-tag">${t}<span class="rm" onclick="removeTopic('${t}')">×</span></span>`).join('');}
-function onOEMSelect(){const oemId=document.getElementById('v-oem').value;const banner=document.getElementById('open-banner');const pWrap=document.getElementById('v-person-wrap');const lWrap=document.getElementById('v-loc-wrap');if(!oemId){banner.style.display='none';pWrap.style.display='none';lWrap.style.display='none';return;}const oem=db.oems.find(o=>o.id===oemId);const locs=(oem?.locations||[]).filter(l=>l.city);if(locs.length){const ls=document.getElementById('v-loc');ls.innerHTML='<option value="">Select location...</option>'+locs.map(l=>`<option value="${l.city}">${l.city}</option>`).join('');lWrap.style.display='block';}else{lWrap.style.display='none';}const contacts=oem?.contacts||[];const ps=document.getElementById('v-person');ps.innerHTML='<option value="">Select contact...</option>'+contacts.map(c=>`<option value="${c.name}">${c.name}${c.position?' — '+c.position:''}${c.location?' ('+c.location+')':''}</option>`).join('')+'<option value="__new__">+ Add new contact...</option>';pWrap.style.display='block';document.getElementById('v-new-contact-form').style.display='none';const today=todayStr();const vids=db.visits.filter(v=>v.oemId===oemId).map(v=>v.id);const open=db.actions.filter(a=>vids.includes(a.visitId)&&a.status==='open');if(!open.length){banner.style.display='none';return;}banner.style.display='block';banner.innerHTML=`<div class="banner"><div class="bnr-ttl">⚠️ ${open.length} open item${open.length>1?'s':''} from previous visits</div>${open.map(a=>{const od=a.dueDate&&a.dueDate<today;return`<div class="bnr-item"><button class="astat ${a.status==='closed'?'done':''}" style="margin-top:0" onclick="toggleAction('${a.id}',event)"></button><div class="ainfo"><div class="adesc" style="font-size:13px">${a.description}</div>${a.dueDate?`<div class="ameta ${od?'overdue':''}">${od?'Overdue · ':''}Due ${fmtDate(a.dueDate)}</div>`:''}</div></div>`;}).join('')}</div>`;}
-function onPersonSelect(){const v=document.getElementById('v-person').value;document.getElementById('v-new-contact-form').style.display=v==='__new__'?'block':'none';if(v==='__new__')['vnc-name','vnc-phone','vnc-pos','vnc-cloc'].forEach(id=>document.getElementById(id).value='');}
-async function saveNewContact(){const name=document.getElementById('vnc-name').value.trim();if(!name){showToast('Name required');return;}const oemId=document.getElementById('v-oem').value;const oem=db.oems.find(o=>o.id===oemId);if(!oem)return;if(!oem.contacts)oem.contacts=[];oem.contacts.push({name,phone:document.getElementById('vnc-phone').value.trim(),position:document.getElementById('vnc-pos').value.trim(),location:document.getElementById('vnc-cloc').value.trim(),note:''});await saveAndSync();const ps=document.getElementById('v-person');ps.innerHTML='<option value="">Select contact...</option>'+oem.contacts.map(c=>`<option value="${c.name}">${c.name}${c.position?' — '+c.position:''}${c.location?' ('+c.location+')':''}</option>`).join('')+'<option value="__new__">+ Add new contact...</option>';ps.value=name;document.getElementById('v-new-contact-form').style.display='none';showToast('Contact added ✓');}
-function addAI(){const list=document.getElementById('ai-list');const d=document.createElement('div');d.className='aiform';d.innerHTML=`<input type="text" class="finput" placeholder="Action item" style="flex:1;padding:11px 12px;font-size:14px"><input type="date" class="finput aidate"><button class="rm-btn" onclick="this.parentElement.remove()"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="14" height="14"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></button>`;list.appendChild(d);d.querySelector('input').focus();}
-async function saveVisit(){const oemId=document.getElementById('v-oem').value;const date=document.getElementById('v-date').value;if(!oemId){showToast('Please select an OEM');return;}if(!date){showToast('Please select a date');return;}const pv=document.getElementById('v-person').value;const personMet=(pv&&pv!=='__new__')?pv:'';const visitLocation=document.getElementById('v-loc').value||'';const topics=selectedTopics.filter(t=>DEFAULT_TOPICS.includes(t));const customTopics=selectedTopics.filter(t=>!DEFAULT_TOPICS.includes(t));const notes=document.getElementById('v-notes').value.trim();const nextDate=document.getElementById('v-next').value;const visitId='v_'+Date.now();db.visits.push({id:visitId,oemId,date,type:visitType,personMet,visitLocation,topics,customTopics,notes,nextVisitDate:nextDate||null,createdAt:new Date().toISOString()});document.querySelectorAll('#ai-list .aiform').forEach(row=>{const inputs=row.querySelectorAll('input');const desc=inputs[0].value.trim();const due=inputs[1].value;if(desc){const a={id:'a_'+Date.now()+'_'+Math.random().toString(36).slice(2,6),visitId,description:desc,dueDate:due||null,status:'open'};db.actions.push(a);scheduleReminder(a);}});selectedTopics=[];showToast('Saving...');await saveAndSync();showToast('Report saved ✓');navigate('home');}
-function showDetail(visitId){curVisitId=visitId;navigate('visit-detail');const v=db.visits.find(x=>x.id===visitId);const oem=db.oems.find(o=>o.id===v?.oemId);const acts=db.actions.filter(a=>a.visitId===visitId);const allTopics=[...(v.topics||[]),...(v.customTopics||[])];const today=todayStr();document.getElementById('detail-content').innerHTML=`<div class="dtl-sec"><div class="dtl-lbl">OEM</div><div class="dtl-box"><div style="font-size:16px;font-weight:700">${oem?.name||'Unknown'}</div><div class="mono" style="font-size:12px;color:var(--soft);margin-top:4px">${oem?.code||''}${v.visitLocation?' · 📍'+v.visitLocation:''}</div>${v.personMet?`<div style="font-size:13px;font-weight:600;color:var(--amber);margin-top:6px">👤 ${v.personMet}</div>`:''}</div></div><div class="dtl-sec"><div class="dtl-lbl">Details</div><div class="dtl-box" style="display:flex;gap:16px;flex-wrap:wrap"><div><div style="font-size:11px;color:var(--muted)">Date</div><div class="mono" style="font-size:13px;margin-top:3px">${fmtDate(v.date)}</div></div><div><div style="font-size:11px;color:var(--muted)">Type</div><span class="badge ${v.type==='visit'?'bv':'bc'}" style="display:inline-block;margin-top:4px">${v.type==='visit'?'📍 Visit':'📞 Call'}</span></div>${v.nextVisitDate?`<div><div style="font-size:11px;color:var(--muted)">Follow-up</div><div class="mono" style="font-size:13px;margin-top:3px">${fmtDate(v.nextVisitDate)}</div></div>`:''}</div></div>${allTopics.length?`<div class="dtl-sec"><div class="dtl-lbl">Topics</div><div class="tags">${allTopics.map(t=>`<span class="tag">${t}</span>`).join('')}</div></div>`:''}${v.notes?`<div class="dtl-sec"><div class="dtl-lbl">Notes</div><div class="dtl-box" style="white-space:pre-wrap">${v.notes}</div></div>`:''}${acts.length?`<div class="dtl-sec"><div class="dtl-lbl">Action Items</div><div class="card">${acts.map(a=>{const od=a.dueDate&&a.status==='open'&&a.dueDate<today;return`<div class="ai-row"><button class="astat ${a.status==='closed'?'done':''}" onclick="toggleAction('${a.id}',event)"></button><div class="ainfo"><div class="adesc ${a.status==='closed'?'done':''}">${a.description}</div>${a.dueDate?`<div class="ameta ${od?'overdue':''}">Due ${fmtDate(a.dueDate)}</div>`:''}</div></div>`;}).join('')}</div></div>`:''}`;}
-async function deleteVisit(){if(!confirm('Delete this report?'))return;db.actions=db.actions.filter(a=>a.visitId!==curVisitId);db.visits=db.visits.filter(v=>v.id!==curVisitId);showToast('Deleting...');await saveAndSync();showToast('Deleted');navigate('home');}
-function renderDir(search=''){let oems=[...db.oems].sort((a,b)=>a.name.localeCompare(b.name));if(search)oems=oems.filter(o=>o.name?.toLowerCase().includes(search.toLowerCase())||o.code?.toLowerCase().includes(search.toLowerCase())||(o.locations||[]).some(l=>l.city?.toLowerCase().includes(search.toLowerCase())));const list=document.getElementById('oem-list');if(!oems.length){list.innerHTML=`<div class="empty"><div class="ei">🏢</div><h3>${search?'No results':'No OEMs yet'}</h3><p>${search?'Try a different search':'Tap + to add your first OEM'}</p></div>`;return;}list.innerHTML=oems.map(o=>{const init=o.name.split(' ').map(w=>w[0]||'').join('').toUpperCase().slice(0,2);const vc=db.visits.filter(v=>v.oemId===o.id).length;const cities=(o.locations||[]).map(l=>l.city).filter(Boolean).join(', ');return`<div class="oitem" onclick="showOEMDetail('${o.id}')"><div class="oavatar">${init}</div><div class="oinfo"><div class="oname">${o.name}</div><div class="ometa">${o.code||''}${cities?' · '+cities:''} · ${vc} visit${vc!==1?'s':''}</div><div class="obadges"><span class="badge ${o.oemType==='Dealer'?'bdlr':'boem'}">${o.oemType||'OEM'}</span><span class="badge ${o.segment==='Medical'?'bmed':'bind'}">${o.segment||''}</span></div></div><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="15" height="15" style="color:var(--muted);flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg></div>`;}).join('');}
-function showOEMDetail(id){const o=db.oems.find(x=>x.id===id);if(!o)return;document.getElementById('oem-detail-title').textContent=o.name;document.getElementById('edit-oem-btn').onclick=()=>openOEMForm(id);const vc=db.visits.filter(v=>v.oemId===id).length;document.getElementById('oem-detail-content').innerHTML=`<div class="dtl-sec"><div style="display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap"><span class="badge ${o.oemType==='Dealer'?'bdlr':'boem'}" style="padding:4px 12px">${o.oemType||'OEM'}</span><span class="badge ${o.segment==='Medical'?'bmed':'bind'}" style="padding:4px 12px">${o.segment||''}</span></div><div class="dtl-box"><div style="display:flex;justify-content:space-between"><span class="mono" style="font-size:13px;color:var(--soft)">${o.code||'No code'}</span><span class="mono" style="font-size:12px;color:var(--muted)">${vc} visit${vc!==1?'s':''}</span></div></div></div>${(o.subcategories||[]).length?`<div class="dtl-sec"><div class="dtl-lbl">Subcategories</div><div class="tags">${o.subcategories.map(s=>`<span class="tag">${s}</span>`).join('')}</div></div>`:''}${o.oemType==='Dealer'&&o.dealerOEMs?`<div class="dtl-sec"><div class="dtl-lbl">Brands Dealt In</div><div class="dtl-box" style="font-size:14px">${o.dealerOEMs}</div></div>`:''}${(o.locations||[]).length?`<div class="dtl-sec"><div class="dtl-lbl">Locations</div>${o.locations.map(l=>`<div class="dtl-box" style="margin-bottom:8px;font-size:14px;${l.lat&&l.lng?'cursor:pointer':''}" onclick="if(l.lat&&l.lng)openGoogleMaps(l.lat,l.lng)"><div style="display:flex;justify-content:space-between;align-items:center"><div>📍 <strong>${l.city}</strong>${l.address?`<br><span style="font-size:12px;color:var(--soft)">${l.address}</span>`:''}</div>${l.lat&&l.lng?'<span style="font-size:11px;color:var(--amber);font-weight:700;margin-left:8px">Navigate →</span>':''}</div>}</div>`).join('')}</div>`:''}${(o.contacts||[]).length?`<div class="dtl-sec"><div class="dtl-lbl">Contacts</div>${o.contacts.map(c=>`<div class="ccard"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px"><div><div class="ccard-name">${c.name}</div>${c.position?`<div class="ccard-pos">${c.position}</div>`:''}</div>${c.phone?`<a href="tel:${c.phone}" style="color:var(--amber);font-family:'DM Mono';font-size:12px;white-space:nowrap;text-decoration:none">${c.phone}</a>`:''}</div>${c.location?`<div class="ccard-loc">📍 ${c.location}</div>`:''}${c.note?`<div class="ccard-note">${c.note}</div>`:''}</div>`).join('')}</div>`:''}${o.notes?`<div class="dtl-sec"><div class="dtl-lbl">Notes</div><div class="dtl-box" style="white-space:pre-wrap;font-size:14px;line-height:1.6">${o.notes}</div></div>`:''}`;navigate('oem-detail');}
-function setOEMType(t){oemType=t;document.getElementById('of-type-oem').classList.toggle('active',t==='OEM');document.getElementById('of-type-dlr').classList.toggle('active',t==='Dealer');document.getElementById('of-dealer-oems-wrap').style.display=t==='Dealer'?'block':'none';}
-function setOEMSeg(s){oemSeg=s;document.getElementById('of-seg-med').classList.toggle('active',s==='Medical');document.getElementById('of-seg-ind').classList.toggle('active',s==='Industrial');renderSubcats([]);}
-function renderSubcats(sel=[]){const all=[...SUBCATS[oemSeg],...customSubcats];document.getElementById('of-subcats').innerHTML=all.map(v=>`<div class="subcat-chip ${sel.includes(v)?'selected':''}" data-val="${v}" onclick="this.classList.toggle('selected')">${v}</div>`).join('');}
-function addCustomSubcat(){const inp=document.getElementById('of-subcat-custom');const val=inp.value.trim();if(!val)return;customSubcats.push(val);const sel=[...document.querySelectorAll('.subcat-chip.selected')].map(el=>el.dataset.val);renderSubcats([...sel,val]);inp.value='';}
-function openOEMForm(id){editOEM=id?db.oems.find(o=>o.id===id):null;customSubcats=[];document.getElementById('oem-form-title').textContent=editOEM?'Edit OEM':'Add OEM';document.getElementById('of-name').value=editOEM?.name||'';document.getElementById('of-code').value=editOEM?.code||'';document.getElementById('of-notes').value=editOEM?.notes||'';document.getElementById('of-dealer-oems').value=editOEM?.dealerOEMs||'';document.getElementById('of-subcat-custom').value='';oemType=editOEM?.oemType||'OEM';setOEMType(oemType);oemSeg=editOEM?.segment||'Medical';setOEMSeg(oemSeg);const saved=editOEM?.subcategories||[];saved.filter(s=>!SUBCATS[oemSeg].includes(s)).forEach(s=>customSubcats.push(s));renderSubcats(saved);document.getElementById('of-locs').innerHTML='';(editOEM?.locations||[]).forEach(l=>addLocRow(l));document.getElementById('of-contacts').innerHTML='';(editOEM?.contacts||[]).forEach(c=>addContactRow(c));document.getElementById('del-oem-btn').style.display=editOEM?'block':'none';navigate('oem-form');}
-let leafletMap=null,mapMarker=null,mapPinData=null,activeLocItem=null,searchTimer=null;
-function addLocRow(loc={}){
-  const hasPin=!!(loc.lat&&loc.lng);
-  const c=document.createElement('div');c.className='dyn-item';
-  c.innerHTML=`<div class="dyn-lbl">Branch</div>
-    <div class="fg"><input type="text" class="finput loc-city" placeholder="City *" value="${loc.city||''}"></div>
-    <div class="fg" style="margin-bottom:0">
-      <div style="display:flex;gap:8px;align-items:center">
-        <input type="text" class="finput loc-addr" placeholder="Address" value="${loc.address||''}" style="flex:1;font-size:13px">
-        <button onclick="openMapModal(this.closest('.dyn-item'))" class="loc-map-btn" style="flex-shrink:0;width:44px;height:44px;background:${hasPin?'var(--amber-bg)':'var(--surface)'};border:1.5px solid ${hasPin?'rgba(240,165,0,.4)':'var(--border)'};border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px">📍</button>
+
+// ── NAVIGATION ──
+const SCREENS={
+  'home':'s-home','new-visit':'s-new-visit','dir':'s-dir','oem-form':'s-oem-form',
+  'oem-detail':'s-oem-detail','tasks':'s-tasks','visit-dtl':'s-visit-dtl',
+  'import':'s-import','settings':'s-settings'
+};
+const NAVMAP={
+  'home':'n-home','new-visit':'n-home','visit-dtl':'n-home',
+  'dir':'n-dir','oem-form':'n-dir','oem-detail':'n-dir','import':'n-dir',
+  'tasks':'n-tasks','settings':'n-home'
+};
+function go(screen){
+  Object.values(SCREENS).forEach(id=>document.getElementById(id)?.classList.remove('active'));
+  document.querySelectorAll('.ni').forEach(n=>n.classList.remove('active'));
+  document.getElementById(SCREENS[screen])?.classList.add('active');
+  const nid=NAVMAP[screen]; if(nid) document.getElementById(nid)?.classList.add('active');
+  window.scrollTo(0,0);
+  if(screen==='home') renderHome();
+  if(screen==='new-visit') initVisit();
+  if(screen==='dir') renderDir();
+  if(screen==='tasks') renderTasks();
+  if(screen==='settings') initSettings();
+}
+
+// ── HOME ──
+function renderHome(){
+  const today=todayStr();
+  const todayV=db.visits.filter(v=>v.date===today);
+  const openA=db.actions.filter(a=>a.status==='open');
+  const over=openA.filter(a=>a.dueDate&&a.dueDate<today).length;
+  document.getElementById('home-stats').innerHTML=`
+    <div class="scard"><div class="snum">${todayV.length}</div><div class="slbl">Today</div></div>
+    <div class="scard"><div class="snum">${db.visits.length}</div><div class="slbl">Total</div></div>
+    <div class="scard"><div class="snum" style="color:${over>0?'var(--red)':'var(--text)'}">${openA.length}</div><div class="slbl">Open Tasks</div></div>`;
+  const tl=document.getElementById('today-list');
+  if(!todayV.length){tl.innerHTML=`<div class="empty"><div class="ei">📋</div><h3>No reports today</h3><p>Tap + to log a visit or call</p></div>`;}
+  else{tl.innerHTML=todayV.map(v=>{
+    const o=db.oems.find(x=>x.id===v.oemId);
+    const topics=[...(v.topics||[]),...(v.customTopics||[])];
+    return`<div class="vcard" onclick="showVisit('${v.id}')">
+      <div class="vcard-top"><div class="vcard-name">${o?.name||'Unknown'}</div><span class="badge ${v.type==='visit'?'bv':'bc'}">${v.type==='visit'?'📍 Visit':'📞 Call'}</span></div>
+      <div class="vmeta">${o?.code||''}${v.visitLoc?' · 📍'+v.visitLoc:''}</div>
+      ${v.personMet?`<div class="vsub">👤 ${v.personMet}</div>`:''}
+      ${topics.length?`<div class="vsub">${topics.join(' · ')}</div>`:''}
+    </div>`;
+  }).join('');}
+  const ht=document.getElementById('home-tasks');
+  const up=[...openA].sort((a,b)=>(a.dueDate||'9')<(b.dueDate||'9')?-1:1).slice(0,5);
+  if(!up.length){ht.innerHTML=`<p style="font-size:13px;color:var(--muted);padding:4px 0">All clear 🎉</p>`;}
+  else{ht.innerHTML=`<div class="card">${up.map(a=>{
+    const o=oem4action(a); const od=a.dueDate&&a.dueDate<today;
+    return`<div class="ai-row">
+      <button class="acheck ${a.status==='closed'?'done':''}" onclick="toggleTask('${a.id}',event)"></button>
+      <div style="flex:1"><div class="adesc ${a.status==='closed'?'done':''}">${a.description}</div>
+      <div class="ameta">${o?.name||''}${a.dueDate?' · <span class="'+(od?'overdue':'')+'">Due '+fmtDate(a.dueDate)+'</span>':''}</div></div>
+    </div>`;
+  }).join('')}</div>`;}
+}
+
+// ── NEW VISIT ──
+function initVisit(){
+  vType='visit'; selTopics=[];
+  document.getElementById('tb-v').classList.add('on');
+  document.getElementById('tb-c').classList.remove('on');
+  document.getElementById('v-date').value=todayStr();
+  document.getElementById('v-notes').value='';
+  document.getElementById('v-next').value='';
+  document.getElementById('v-oem').value='';
+  document.getElementById('visit-banner').innerHTML='';
+  document.getElementById('ai-list').innerHTML='';
+  document.getElementById('v-loc-wrap').style.display='none';
+  document.getElementById('v-person-wrap').style.display='none';
+  document.getElementById('v-new-ct').style.display='none';
+  document.getElementById('topic-tags').innerHTML='';
+  document.getElementById('topic-search').value='';
+  document.getElementById('topic-custom').value='';
+  const sel=document.getElementById('v-oem');
+  sel.innerHTML='<option value="">Select...</option>'+[...db.oems].sort((a,b)=>a.name.localeCompare(b.name)).map(o=>`<option value="${o.id}">${o.name}${o.code?' ('+o.code+')':''}</option>`).join('');
+  renderTopicDrop();
+}
+function setVType(t){vType=t;document.getElementById('tb-v').classList.toggle('on',t==='visit');document.getElementById('tb-c').classList.toggle('on',t==='call');}
+function renderTopicDrop(search=''){
+  const all=allTopics().filter(t=>!selTopics.includes(t)&&(!search||t.toLowerCase().includes(search.toLowerCase())));
+  document.getElementById('topic-sel').innerHTML='<option value="">Add a topic...</option>'+all.map(t=>`<option value="${t}">${t}</option>`).join('');
+}
+function pickTopic(sel){const v=sel.value;if(!v)return;if(!selTopics.includes(v)){selTopics.push(v);renderTopicTags();renderTopicDrop();}sel.value='';}
+function addCustomTopic(){const inp=document.getElementById('topic-custom');const v=inp.value.trim();if(!v)return;if(!selTopics.includes(v))selTopics.push(v);if(!allTopics().includes(v)){db.topics.push(v);save();}renderTopicTags();renderTopicDrop();inp.value='';}
+function removeTopic(t){selTopics=selTopics.filter(x=>x!==t);renderTopicTags();renderTopicDrop();}
+function renderTopicTags(){document.getElementById('topic-tags').innerHTML=selTopics.map(t=>`<span class="t-tag">${t}<span class="t-rm" onclick="removeTopic('${t}')">×</span></span>`).join('');}
+function onOEMPick(){
+  const oid=document.getElementById('v-oem').value;
+  document.getElementById('visit-banner').innerHTML='';
+  document.getElementById('v-loc-wrap').style.display='none';
+  document.getElementById('v-person-wrap').style.display='none';
+  if(!oid) return;
+  const o=db.oems.find(x=>x.id===oid);
+  // Locations
+  const locs=(o?.locations||[]).filter(l=>l.city);
+  if(locs.length){
+    document.getElementById('v-loc').innerHTML='<option value="">Select location...</option>'+locs.map(l=>`<option value="${l.city}">${l.city}</option>`).join('');
+    document.getElementById('v-loc-wrap').style.display='block';
+  }
+  // Contacts
+  const cts=o?.contacts||[];
+  document.getElementById('v-person').innerHTML='<option value="">Select contact...</option>'+cts.map(c=>`<option value="${c.name}">${c.name}${c.position?' — '+c.position:''}${c.location?' ('+c.location+')':''}</option>`).join('')+'<option value="__new__">+ Add new contact...</option>';
+  document.getElementById('v-person-wrap').style.display='block';
+  document.getElementById('v-new-ct').style.display='none';
+  // Open tasks banner
+  const today=todayStr();
+  const vids=db.visits.filter(v=>v.oemId===oid).map(v=>v.id);
+  const open=db.actions.filter(a=>vids.includes(a.visitId)&&a.status==='open');
+  if(!open.length) return;
+  document.getElementById('visit-banner').innerHTML=`<div class="banner">
+    <div class="bnr-lbl">⚠️ ${open.length} open task${open.length>1?'s':''} from previous visits</div>
+    ${open.map(a=>{const od=a.dueDate&&a.dueDate<today;return`<div class="bnr-row">
+      <button class="acheck ${a.status==='closed'?'done':''}" onclick="toggleTask('${a.id}',event)" style="margin-top:0;flex-shrink:0"></button>
+      <div><div style="font-size:13px;font-weight:500">${a.description}</div>${a.dueDate?`<div class="ameta ${od?'overdue':''}">${od?'Overdue · ':''}Due ${fmtDate(a.dueDate)}</div>`:''}</div>
+    </div>`;}).join('')}</div>`;
+}
+function onPersonPick(){
+  const v=document.getElementById('v-person').value;
+  document.getElementById('v-new-ct').style.display=v==='__new__'?'block':'none';
+  if(v==='__new__')['nc-name','nc-phone','nc-pos','nc-loc'].forEach(id=>document.getElementById(id).value='');
+}
+async function addNewContact(){
+  const name=document.getElementById('nc-name').value.trim();
+  if(!name){toast('Name required');return;}
+  const oid=document.getElementById('v-oem').value;
+  const o=db.oems.find(x=>x.id===oid); if(!o) return;
+  if(!o.contacts) o.contacts=[];
+  o.contacts.push({name,phone:document.getElementById('nc-phone').value.trim(),position:document.getElementById('nc-pos').value.trim(),location:document.getElementById('nc-loc').value.trim(),note:''});
+  await saveSync();
+  const ps=document.getElementById('v-person');
+  ps.innerHTML='<option value="">Select contact...</option>'+o.contacts.map(c=>`<option value="${c.name}">${c.name}${c.position?' — '+c.position:''}${c.location?' ('+c.location+')':''}</option>`).join('')+'<option value="__new__">+ Add new contact...</option>';
+  ps.value=name;
+  document.getElementById('v-new-ct').style.display='none';
+  toast('Contact added ✓');
+}
+function addAI(){
+  const d=document.createElement('div');d.className='ai-form';
+  d.innerHTML=`<input type="text" placeholder="Action item" style="flex:1;padding:11px 12px;font-size:14px"><input type="date" style="width:130px;flex-shrink:0;font-size:12px;padding:11px 8px"><button class="rm-btn" onclick="this.parentElement.remove()"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="13" height="13"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></button>`;
+  document.getElementById('ai-list').appendChild(d);d.querySelector('input').focus();
+}
+async function saveVisit(){
+  const oid=document.getElementById('v-oem').value;
+  const date=document.getElementById('v-date').value;
+  if(!oid){toast('Please select an OEM');return;}
+  if(!date){toast('Please select a date');return;}
+  const pv=document.getElementById('v-person').value;
+  const vid='v_'+Date.now();
+  const v={id:vid,oemId:oid,date,type:vType,personMet:(pv&&pv!=='__new__')?pv:'',visitLoc:document.getElementById('v-loc').value||'',topics:selTopics.filter(t=>DEF_TOPICS.includes(t)),customTopics:selTopics.filter(t=>!DEF_TOPICS.includes(t)),notes:document.getElementById('v-notes').value.trim(),nextVisitDate:document.getElementById('v-next').value||null,createdAt:new Date().toISOString()};
+  db.visits.push(v);
+  document.querySelectorAll('#ai-list .ai-form').forEach(row=>{
+    const ins=row.querySelectorAll('input');
+    const desc=ins[0].value.trim();const due=ins[1].value;
+    if(desc) db.actions.push({id:'a_'+Date.now()+'_'+Math.random().toString(36).slice(2,5),visitId:vid,description:desc,dueDate:due||null,status:'open'});
+  });
+  selTopics=[];
+  toast('Saving...');
+  await saveSync();
+  toast('Report saved ✓');
+  go('home');
+}
+
+// ── VISIT DETAIL ──
+function showVisit(vid){
+  curVid=vid; go('visit-dtl');
+  const v=db.visits.find(x=>x.id===vid);
+  const o=db.oems.find(x=>x.id===v?.oemId);
+  const acts=db.actions.filter(a=>a.visitId===vid);
+  const topics=[...(v.topics||[]),...(v.customTopics||[])];
+  const today=todayStr();
+  document.getElementById('visit-dtl-content').innerHTML=`
+    <div class="dtl"><div class="dtl-lbl">OEM</div>
+      <div class="dtl-box"><div style="font-size:16px;font-weight:700">${o?.name||'Unknown'}</div>
+        <div class="mono" style="font-size:12px;color:var(--soft);margin-top:4px">${o?.code||''}${v.visitLoc?' · 📍'+v.visitLoc:''}</div>
+        ${v.personMet?`<div style="font-size:13px;font-weight:600;color:var(--amber);margin-top:5px">👤 ${v.personMet}</div>`:''}
+      </div></div>
+    <div class="dtl"><div class="dtl-lbl">Details</div>
+      <div class="dtl-box" style="display:flex;gap:16px;flex-wrap:wrap">
+        <div><div style="font-size:11px;color:var(--muted)">Date</div><div class="mono" style="font-size:13px;margin-top:2px">${fmtDate(v.date)}</div></div>
+        <div><div style="font-size:11px;color:var(--muted)">Type</div><span class="badge ${v.type==='visit'?'bv':'bc'}" style="display:inline-block;margin-top:4px">${v.type==='visit'?'📍 Visit':'📞 Call'}</span></div>
+        ${v.nextVisitDate?`<div><div style="font-size:11px;color:var(--muted)">Follow-up</div><div class="mono" style="font-size:13px;margin-top:2px">${fmtDate(v.nextVisitDate)}</div></div>`:''}
+      </div></div>
+    ${topics.length?`<div class="dtl"><div class="dtl-lbl">Topics</div><div class="tags">${topics.map(t=>`<span class="tag">${t}</span>`).join('')}</div></div>`:''}
+    ${v.notes?`<div class="dtl"><div class="dtl-lbl">Notes</div><div class="dtl-box" style="white-space:pre-wrap">${v.notes}</div></div>`:''}
+    ${acts.length?`<div class="dtl"><div class="dtl-lbl">Action Items</div><div class="card">${acts.map(a=>{
+      const od=a.dueDate&&a.status==='open'&&a.dueDate<today;
+      return`<div class="ai-row">
+        <button class="acheck ${a.status==='closed'?'done':''}" onclick="toggleTask('${a.id}',event)"></button>
+        <div style="flex:1"><div class="adesc ${a.status==='closed'?'done':''}">${a.description}</div>${a.dueDate?`<div class="ameta ${od?'overdue':''}">Due ${fmtDate(a.dueDate)}</div>`:''}</div>
+      </div>`;
+    }).join('')}</div></div>`:''}`;}
+async function deleteVisit(){
+  if(!confirm('Delete this report and its action items?')) return;
+  db.actions=db.actions.filter(a=>a.visitId!==curVid);
+  db.visits=db.visits.filter(v=>v.id!==curVid);
+  await saveSync(); toast('Deleted'); go('home');
+}
+
+// ── DIRECTORY ──
+function renderDir(search=''){
+  let oems=[...db.oems].sort((a,b)=>a.name.localeCompare(b.name));
+  if(search) oems=oems.filter(o=>o.name?.toLowerCase().includes(search.toLowerCase())||o.code?.toLowerCase().includes(search.toLowerCase())||(o.locations||[]).some(l=>l.city?.toLowerCase().includes(search.toLowerCase())));
+  const el=document.getElementById('oem-list');
+  if(!oems.length){el.innerHTML=`<div class="empty"><div class="ei">🏢</div><h3>${search?'No results':'No OEMs yet'}</h3><p>${search?'Try a different search':'Tap + to add your first OEM'}</p></div>`;return;}
+  el.innerHTML=oems.map(o=>{
+    const init=o.name.split(' ').map(w=>w[0]||'').join('').toUpperCase().slice(0,2);
+    const vc=db.visits.filter(v=>v.oemId===o.id).length;
+    const cities=(o.locations||[]).map(l=>l.city).filter(Boolean).join(', ');
+    return`<div class="oitem" onclick="showOEM('${o.id}')">
+      <div class="avatar">${init}</div>
+      <div class="oinfo"><div class="oname">${o.name}</div>
+        <div class="ometa">${o.code||''}${cities?' · '+cities:''} · ${vc} visit${vc!==1?'s':''}</div>
+        <div class="obadges"><span class="badge ${o.oemType==='Dealer'?'bdlr':'boem'}">${o.oemType||'OEM'}</span><span class="badge ${o.segment==='Medical'?'bmed':'bind'}">${o.segment||''}</span></div>
       </div>
-      <div class="loc-coords" style="font-size:10px;margin-top:4px;${hasPin?'font-family:\'DM Mono\',monospace;color:var(--amber);cursor:pointer':'color:var(--muted)'}"${hasPin?` onclick="openGoogleMaps(${loc.lat},${loc.lng})"`:''}>${hasPin?`🗺 ${parseFloat(loc.lat).toFixed(5)}, ${parseFloat(loc.lng).toFixed(5)} · Tap to navigate`:''}</div>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="14" height="14" style="color:var(--muted);flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
+    </div>`;
+  }).join('');}
+
+// ── OEM DETAIL ──
+function showOEM(id){
+  const o=db.oems.find(x=>x.id===id); if(!o) return;
+  document.getElementById('oem-dtl-title').textContent=o.name;
+  document.getElementById('oem-edit-btn').onclick=()=>openOEMForm(id);
+  const vc=db.visits.filter(v=>v.oemId===id).length;
+  document.getElementById('oem-dtl-content').innerHTML=`
+    <div class="dtl">
+      <div style="display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap">
+        <span class="badge ${o.oemType==='Dealer'?'bdlr':'boem'}" style="padding:4px 12px">${o.oemType||'OEM'}</span>
+        <span class="badge ${o.segment==='Medical'?'bmed':'bind'}" style="padding:4px 12px">${o.segment||''}</span>
+      </div>
+      <div class="dtl-box"><div style="display:flex;justify-content:space-between">
+        <span class="mono" style="font-size:13px;color:var(--soft)">${o.code||'No code'}</span>
+        <span class="mono" style="font-size:12px;color:var(--muted)">${vc} visit${vc!==1?'s':''}</span>
+      </div></div>
     </div>
-    <input type="hidden" class="loc-lat" value="${loc.lat||''}">
-    <input type="hidden" class="loc-lng" value="${loc.lng||''}">
-    <button class="rm-btn" onclick="this.closest('.dyn-item').remove()"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="13" height="13"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></button>`;
+    ${(o.subcategories||[]).length?`<div class="dtl"><div class="dtl-lbl">Subcategories</div><div class="tags">${o.subcategories.map(s=>`<span class="tag">${s}</span>`).join('')}</div></div>`:''}
+    ${o.oemType==='Dealer'&&o.dealerBrands?`<div class="dtl"><div class="dtl-lbl">Brands Dealt In</div><div class="dtl-box" style="font-size:14px">${o.dealerBrands}</div></div>`:''}
+    ${(o.locations||[]).length?`<div class="dtl"><div class="dtl-lbl">Locations</div>${o.locations.map(l=>`<div class="dtl-box" style="margin-bottom:8px;font-size:14px">${l.lat&&l.lng?`<a href="https://www.google.com/maps/dir/?api=1&destination=${l.lat},${l.lng}" target="_blank" style="text-decoration:none;color:inherit">📍 <strong>${l.city}</strong>${l.address?`<br><span style="font-size:12px;color:var(--soft)">${l.address}</span>`:''}<span style="font-size:11px;color:var(--amber);font-weight:700;display:block;margin-top:4px">Navigate →</span></a>`:(`📍 <strong>${l.city}</strong>${l.address?`<br><span style="font-size:12px;color:var(--soft)">${l.address}</span>`:''}`)}</div>`).join('')}</div>`:''}
+    ${(o.contacts||[]).length?`<div class="dtl"><div class="dtl-lbl">Contacts</div>${o.contacts.map(c=>`<div class="ccard"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px"><div><div style="font-size:14px;font-weight:700">${c.name}</div>${c.position?`<div style="font-size:12px;color:var(--amber);font-weight:600;margin-top:2px">${c.position}</div>`:''}</div>${c.phone?`<a href="tel:${c.phone}" style="font-family:'DM Mono',monospace;font-size:12px;color:var(--amber);white-space:nowrap;text-decoration:none">${c.phone}</a>`:''}</div>${c.location?`<div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--soft);margin-top:4px">📍 ${c.location}</div>`:''}${c.note?`<div style="font-size:12px;color:var(--soft);margin-top:4px;font-style:italic">${c.note}</div>`:''}</div>`).join('')}</div>`:''}
+    ${o.notes?`<div class="dtl"><div class="dtl-lbl">Notes</div><div class="dtl-box" style="white-space:pre-wrap;font-size:14px;line-height:1.6">${o.notes}</div></div>`:''}`;
+  go('oem-detail');
+}
+
+// ── OEM FORM ──
+function setOT(t){oType=t;document.getElementById('of-t-oem').classList.toggle('on',t==='OEM');document.getElementById('of-t-dlr').classList.toggle('on',t==='Dealer');document.getElementById('of-brands-wrap').style.display=t==='Dealer'?'block':'none';}
+function setOS(s){oSeg=s;document.getElementById('of-s-med').classList.toggle('on',s==='Medical');document.getElementById('of-s-ind').classList.toggle('on',s==='Industrial');renderChips([]);}
+function renderChips(sel=[]){
+  const all=[...SUBCATS[oSeg],...custChips];
+  document.getElementById('of-chips').innerHTML=all.map(v=>`<div class="chip ${sel.includes(v)?'on':''}" data-val="${v}" onclick="this.classList.toggle('on')">${v}</div>`).join('');}
+function addChip(){const inp=document.getElementById('of-chip-inp');const v=inp.value.trim();if(!v)return;custChips.push(v);const sel=[...document.querySelectorAll('.chip.on')].map(c=>c.dataset.val);renderChips([...sel,v]);inp.value='';}
+function addLoc(loc={}){
+  const c=document.createElement('div');c.className='dyn';
+  c.innerHTML=`<div class="dyn-lbl">Location</div>
+    <div class="fg"><input type="text" class="loc-city" placeholder="City *" value="${loc.city||''}"></div>
+    <div class="fg" style="margin-bottom:0"><input type="text" class="loc-addr" placeholder="Address" value="${loc.address||''}"></div>
+    <input type="hidden" class="loc-lat" value="${loc.lat||''}"><input type="hidden" class="loc-lng" value="${loc.lng||''}">
+    <button class="rm-btn" onclick="this.closest('.dyn').remove()"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="13" height="13"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></button>`;
   document.getElementById('of-locs').appendChild(c);
 }
-function openMapModal(locItem){
-  activeLocItem=locItem;mapPinData=null;
-  document.getElementById('map-modal').style.display='flex';
-  document.getElementById('map-confirm-btn').disabled=true;
-  document.getElementById('map-pin-info').style.display='none';
-  document.getElementById('map-search').value='';
-  document.getElementById('map-search-results').style.display='none';
-  if(!leafletMap){
-    leafletMap=L.map('map-container').setView([20.5937,78.9629],5);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap'}).addTo(leafletMap);
-    leafletMap.on('click',onMapClick);
-  }else{setTimeout(()=>leafletMap.invalidateSize(),100);}
-  const lat=locItem.querySelector('.loc-lat')?.value;
-  const lng=locItem.querySelector('.loc-lng')?.value;
-  if(lat&&lng){
-    const ll=[parseFloat(lat),parseFloat(lng)];
-    leafletMap.setView(ll,16);
-    if(mapMarker)mapMarker.remove();
-    mapMarker=L.marker(ll).addTo(leafletMap);
-    mapPinData={lat:parseFloat(lat),lng:parseFloat(lng),address:locItem.querySelector('.loc-addr')?.value||''};
-    document.getElementById('map-confirm-btn').disabled=false;
-    document.getElementById('map-pin-info').style.display='block';
-    document.getElementById('map-pin-info').textContent=mapPinData.address||`${lat}, ${lng}`;
-  }
+function addCt(ct={}){
+  const c=document.createElement('div');c.className='dyn';
+  c.innerHTML=`<div class="dyn-lbl">Contact</div>
+    <div class="frow fg"><div class="fg"><input type="text" class="ct-name" placeholder="Name *" value="${ct.name||''}"></div><div class="fg"><input type="tel" class="ct-phone" placeholder="Phone" value="${ct.phone||''}"></div></div>
+    <div class="frow fg"><div class="fg"><input type="text" class="ct-pos" placeholder="Position" value="${ct.position||''}"></div><div class="fg"><input type="text" class="ct-loc" placeholder="Location" value="${ct.location||''}"></div></div>
+    <div class="fg" style="margin-bottom:0"><input type="text" class="ct-note" placeholder="Note (e.g. handles VMC)" value="${ct.note||''}"></div>
+    <button class="rm-btn" onclick="this.closest('.dyn').remove()"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="13" height="13"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></button>`;
+  document.getElementById('of-cts').appendChild(c);
 }
-function closeMapModal(){document.getElementById('map-modal').style.display='none';document.getElementById('map-search-results').style.display='none';activeLocItem=null;}
-async function onMapClick(e){
-  const{lat,lng}=e.latlng;
-  if(mapMarker)mapMarker.remove();
-  mapMarker=L.marker([lat,lng]).addTo(leafletMap);
-  document.getElementById('map-pin-info').style.display='block';
-  document.getElementById('map-pin-info').textContent='Fetching address...';
-  document.getElementById('map-confirm-btn').disabled=true;
-  try{
-    const res=await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`,{headers:{'Accept-Language':'en'}});
-    const data=await res.json();
-    const address=data.display_name||`${lat.toFixed(5)}, ${lng.toFixed(5)}`;
-    const city=data.address?.city||data.address?.town||data.address?.village||data.address?.county||'';
-    mapPinData={lat,lng,address,city};
-    document.getElementById('map-pin-info').textContent=address;
-    document.getElementById('map-confirm-btn').disabled=false;
-  }catch{
-    mapPinData={lat,lng,address:`${lat.toFixed(5)}, ${lng.toFixed(5)}`,city:''};
-    document.getElementById('map-pin-info').textContent=`${lat.toFixed(5)}, ${lng.toFixed(5)}`;
-    document.getElementById('map-confirm-btn').disabled=false;
-  }
+function openOEMForm(id){
+  editOEM=id?db.oems.find(o=>o.id===id):null;
+  custChips=[];
+  document.getElementById('oem-form-title').textContent=editOEM?'Edit OEM':'Add OEM';
+  document.getElementById('of-name').value=editOEM?.name||'';
+  document.getElementById('of-code').value=editOEM?.code||'';
+  document.getElementById('of-notes').value=editOEM?.notes||'';
+  document.getElementById('of-brands').value=editOEM?.dealerBrands||'';
+  document.getElementById('of-chip-inp').value='';
+  oType=editOEM?.oemType||'OEM'; setOT(oType);
+  oSeg=editOEM?.segment||'Medical'; setOS(oSeg);
+  const saved=editOEM?.subcategories||[];
+  saved.filter(s=>!SUBCATS[oSeg].includes(s)).forEach(s=>custChips.push(s));
+  renderChips(saved);
+  document.getElementById('of-locs').innerHTML='';(editOEM?.locations||[]).forEach(l=>addLoc(l));
+  document.getElementById('of-cts').innerHTML='';(editOEM?.contacts||[]).forEach(c=>addCt(c));
+  document.getElementById('del-oem-btn').style.display=editOEM?'block':'none';
+  go('oem-form');
 }
-function confirmMapPin(){
-  if(!mapPinData||!activeLocItem)return;
-  activeLocItem.querySelector('.loc-addr').value=mapPinData.address;
-  activeLocItem.querySelector('.loc-lat').value=mapPinData.lat;
-  activeLocItem.querySelector('.loc-lng').value=mapPinData.lng;
-  if(!activeLocItem.querySelector('.loc-city').value&&mapPinData.city)
-    activeLocItem.querySelector('.loc-city').value=mapPinData.city;
-  const coordEl=activeLocItem.querySelector('.loc-coords');
-  coordEl.style.cssText="font-family:'DM Mono',monospace;font-size:10px;color:var(--amber);margin-top:4px;cursor:pointer";
-  coordEl.onclick=()=>openGoogleMaps(mapPinData.lat,mapPinData.lng);
-  coordEl.textContent=`🗺 ${mapPinData.lat.toFixed(5)}, ${mapPinData.lng.toFixed(5)} · Tap to navigate`;
-  const btn=activeLocItem.querySelector('.loc-map-btn');
-  btn.style.background='var(--amber-bg)';btn.style.borderColor='rgba(240,165,0,.4)';
-  closeMapModal();
+async function saveOEM(){
+  const name=document.getElementById('of-name').value.trim();
+  if(!name){toast('Name is required');return;}
+  const locs=[...document.querySelectorAll('.loc-city')].map((el,i)=>({city:el.value.trim(),address:document.querySelectorAll('.loc-addr')[i]?.value.trim()||'',lat:document.querySelectorAll('.loc-lat')[i]?.value||'',lng:document.querySelectorAll('.loc-lng')[i]?.value||''})).filter(l=>l.city);
+  const cts=[...document.querySelectorAll('.ct-name')].map((el,i)=>({name:el.value.trim(),phone:document.querySelectorAll('.ct-phone')[i]?.value.trim()||'',position:document.querySelectorAll('.ct-pos')[i]?.value.trim()||'',location:document.querySelectorAll('.ct-loc')[i]?.value.trim()||'',note:document.querySelectorAll('.ct-note')[i]?.value.trim()||''})).filter(c=>c.name);
+  const subs=[...document.querySelectorAll('.chip.on')].map(c=>c.dataset.val);
+  const data={name,code:document.getElementById('of-code').value.trim(),oemType:oType,segment:oSeg,subcategories:subs,dealerBrands:oType==='Dealer'?document.getElementById('of-brands').value.trim():'',locations:locs,contacts:cts,notes:document.getElementById('of-notes').value.trim()};
+  if(editOEM){Object.assign(db.oems.find(o=>o.id===editOEM.id),data);}
+  else{db.oems.push({id:'oem_'+Date.now(),...data});}
+  toast('Saving...'); await saveSync(); toast('OEM saved ✓'); go('dir');
 }
-function onMapSearch(val){clearTimeout(searchTimer);if(val.length<3){document.getElementById('map-search-results').style.display='none';return;}searchTimer=setTimeout(()=>doMapSearch(),600);}
-async function doMapSearch(){
-  const q=document.getElementById('map-search').value.trim();if(!q)return;
-  try{
-    const res=await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q)}&format=json&limit=5`,{headers:{'Accept-Language':'en'}});
-    const results=await res.json();
-    const box=document.getElementById('map-search-results');
-    if(!results.length){box.style.display='block';box.innerHTML=`<div style="padding:12px;font-size:13px;color:var(--muted)">No results</div>`;return;}
-    box.style.display='block';
-    box.innerHTML=results.map(r=>`<div onclick="selectSearchResult(${r.lat},${r.lon},'${r.display_name.replace(/'/g,"\\'")}')" style="padding:10px 14px;border-bottom:1px solid var(--border);cursor:pointer;font-size:13px;color:var(--text)"><div style="font-weight:600">${r.display_name.split(',')[0]}</div><div style="font-size:11px;color:var(--muted)">${r.display_name.split(',').slice(1,3).join(',')}</div></div>`).join('');
-  }catch{document.getElementById('map-search-results').style.display='none';}
+async function deleteOEM(){
+  if(!confirm('Delete '+editOEM.name+'?')) return;
+  const vids=db.visits.filter(v=>v.oemId===editOEM.id).map(v=>v.id);
+  db.oems=db.oems.filter(o=>o.id!==editOEM.id);
+  db.visits=db.visits.filter(v=>v.oemId!==editOEM.id);
+  db.actions=db.actions.filter(a=>!vids.includes(a.visitId));
+  await saveSync(); toast('Deleted'); go('dir');
 }
-async function selectSearchResult(lat,lng,label){
-  document.getElementById('map-search-results').style.display='none';
-  document.getElementById('map-search').value=label.split(',')[0];
-  leafletMap.setView([parseFloat(lat),parseFloat(lng)],16);
-  if(mapMarker)mapMarker.remove();
-  mapMarker=L.marker([parseFloat(lat),parseFloat(lng)]).addTo(leafletMap);
-  mapPinData={lat:parseFloat(lat),lng:parseFloat(lng),address:label,city:label.split(',')[0]};
-  document.getElementById('map-pin-info').style.display='block';
-  document.getElementById('map-pin-info').textContent=label;
-  document.getElementById('map-confirm-btn').disabled=false;
+
+// ── TASKS ──
+function setFilter(f){
+  taskFilter=f;
+  const amb='background:var(--amber-bg);color:var(--amber);border-color:rgba(240,165,0,.3)';
+  const def='background:var(--surface2);color:var(--soft);border-color:var(--border)';
+  document.getElementById('f-open-btn').style.cssText=f==='open'?amb:def;
+  document.getElementById('f-all-btn').style.cssText=f==='all'?amb:def;
+  renderTasks();
 }
-function openGoogleMaps(lat,lng){window.open(`https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`,'_blank');}
-function addContactRow(ct={}){const c=document.createElement('div');c.className='dyn-item';c.innerHTML=`<div class="dyn-lbl">Contact</div><div class="frow fg"><div class="fg"><input type="text" class="finput ct-name" placeholder="Name *" value="${ct.name||''}"></div><div class="fg"><input type="tel" class="finput ct-phone mono" placeholder="Phone" value="${ct.phone||''}"></div></div><div class="frow fg"><div class="fg"><input type="text" class="finput ct-position" placeholder="Position" value="${ct.position||''}"></div><div class="fg"><input type="text" class="finput ct-loc" placeholder="Location" value="${ct.location||''}"></div></div><div class="fg" style="margin-bottom:0"><input type="text" class="finput ct-note" placeholder="Note (e.g. handles VMC)" value="${ct.note||''}"></div><button class="rm-btn" onclick="this.closest('.dyn-item').remove()"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="13" height="13"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></button>`;document.getElementById('of-contacts').appendChild(c);}
-async function saveOEM(){const name=document.getElementById('of-name').value.trim();if(!name){showToast('Name is required');return;}const locs=[...document.querySelectorAll('.loc-city')].map((el,i)=>({city:el.value.trim(),address:document.querySelectorAll('.loc-addr')[i]?.value.trim()||'',lat:document.querySelectorAll('.loc-lat')[i]?.value||'',lng:document.querySelectorAll('.loc-lng')[i]?.value||''})).filter(l=>l.city);const contacts=[...document.querySelectorAll('.ct-name')].map((el,i)=>({name:el.value.trim(),phone:document.querySelectorAll('.ct-phone')[i]?.value.trim()||'',position:document.querySelectorAll('.ct-position')[i]?.value.trim()||'',location:document.querySelectorAll('.ct-loc')[i]?.value.trim()||'',note:document.querySelectorAll('.ct-note')[i]?.value.trim()||''})).filter(c=>c.name);const subcats=[...document.querySelectorAll('.subcat-chip.selected')].map(el=>el.dataset.val);const data={name,code:document.getElementById('of-code').value.trim(),oemType,segment:oemSeg,subcategories:subcats,dealerOEMs:oemType==='Dealer'?document.getElementById('of-dealer-oems').value.trim():'',locations:locs,contacts,notes:document.getElementById('of-notes').value.trim()};if(editOEM){Object.assign(db.oems.find(o=>o.id===editOEM.id),data);}else{db.oems.push({id:'oem_'+Date.now(),...data});}showToast('Saving...');await saveAndSync();showToast('OEM saved ✓');navigate('directory');}
-async function deleteOEM(){if(!confirm(`Delete ${editOEM.name}?`))return;const vids=db.visits.filter(v=>v.oemId===editOEM.id).map(v=>v.id);db.oems=db.oems.filter(o=>o.id!==editOEM.id);db.visits=db.visits.filter(v=>v.oemId!==editOEM.id);db.actions=db.actions.filter(a=>!vids.includes(a.visitId));await saveAndSync();showToast('Deleted');navigate('directory');}
-function setFilter(f){actFilter=f;const amb='background:var(--amber-bg);color:var(--amber);border-color:rgba(240,165,0,.3)';const nor='background:var(--surface2);color:var(--soft);border-color:var(--border)';document.getElementById('btn-filter-open').style.cssText=f==='open'?amb:nor;document.getElementById('btn-filter-all').style.cssText=f==='all'?amb:nor;renderActions();}
-function renderActions(){const today=todayStr();let items=actFilter==='open'?db.actions.filter(a=>a.status==='open'):[...db.actions];items.sort((a,b)=>{if(a.status!==b.status)return a.status==='open'?-1:1;return(a.dueDate||'9')<(b.dueDate||'9')?-1:1;});const el=document.getElementById('actions-list');if(!items.length){el.innerHTML=`<div class="empty"><div class="ei">✅</div><h3>All clear!</h3><p>No ${actFilter==='open'?'open ':''}tasks</p></div>`;return;}el.innerHTML=items.map(a=>{const oem=oemForAction(a);const visit=db.visits.find(v=>v.id===a.visitId);const od=a.dueDate&&a.status==='open'&&a.dueDate<today;return`<div class="card" style="margin-bottom:9px"><div class="ai-row" style="border:none;padding:0"><button class="astat ${a.status==='closed'?'done':''}" onclick="toggleAction('${a.id}',event)"></button><div class="ainfo"><div class="adesc ${a.status==='closed'?'done':''}">${a.description}</div><div class="ameta">${oem?.name||''}${visit?' · '+fmtDate(visit.date):''}${a.dueDate?' · <span class="'+(od?'overdue':'')+'">Due '+fmtDate(a.dueDate)+'</span>':''}</div></div><button onclick="deleteAction('${a.id}',event)" style="background:none;border:none;cursor:pointer;color:var(--muted);padding:4px;flex-shrink:0"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"/></svg></button></div></div>`;}).join('');}
-async function deleteAction(id,event){event.stopPropagation();if(!confirm('Delete this task?'))return;db.actions=db.actions.filter(a=>a.id!==id);await saveAndSync();renderActions();}
-async function toggleAction(id,event){event.stopPropagation();const a=db.actions.find(x=>x.id===id);if(!a)return;a.status=a.status==='open'?'closed':'open';await saveAndSync();const active=document.querySelector('.screen.active')?.id;if(active==='screen-home')renderHome();else if(active==='screen-actions')renderActions();else if(active==='screen-new-visit'){const oid=document.getElementById('v-oem').value;if(oid)onOEMSelect();}else if(active==='screen-visit-detail')showDetail(curVisitId);}
-function oemForAction(a){const v=db.visits.find(x=>x.id===a.visitId);return v?db.oems.find(o=>o.id===v.oemId):null;}
-function copyWA(){const v=db.visits.find(x=>x.id===curVisitId);if(!v)return;const oem=db.oems.find(o=>o.id===v.oemId);const acts=db.actions.filter(a=>a.visitId===v.id);const topics=[...(v.topics||[]),...(v.customTopics||[])];let txt=`${v.type==='visit'?'📍':'📞'} *${v.type==='visit'?'Visit':'Call'} Report — ${fmtDate(v.date)}*\n`;txt+=`*OEM:* ${oem?.name||'N/A'} (${oem?.code||''}) · ${oem?.oemType||''} · ${oem?.segment||''}\n`;if(v.visitLocation)txt+=`*Location:* ${v.visitLocation}\n`;if(v.personMet)txt+=`*Person Met:* ${v.personMet}\n`;if(topics.length)txt+=`\n✅ *Topics:*\n${topics.map(t=>`• ${t}`).join('\n')}\n`;if(v.notes)txt+=`\n📝 *Notes:*\n${v.notes}\n`;if(acts.length)txt+=`\n📌 *Action Items:*\n${acts.map(a=>`• ${a.description}${a.dueDate?' — Due: '+fmtDate(a.dueDate):''}${a.status==='closed'?' ✓':''}`).join('\n')}\n`;if(v.nextVisitDate)txt+=`\n🔁 *Next ${v.type==='visit'?'Visit':'Follow-up'}:* ${fmtDate(v.nextVisitDate)}`;navigator.clipboard.writeText(txt).then(()=>showToast('Copied ✓')).catch(()=>{const ta=document.createElement('textarea');ta.value=txt;ta.style.cssText='position:fixed;opacity:0';document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);showToast('Copied ✓');});}
-function exportExcel(){if(!db.visits.length){showToast('No visits to export');return;}const rows=db.visits.map(v=>{const oem=db.oems.find(o=>o.id===v.oemId);const acts=db.actions.filter(a=>a.visitId===v.id);return{'Date':v.date,'Type':v.type==='visit'?'Visit':'Call','OEM':oem?.name||'','Code':oem?.code||'','Location':v.visitLocation||'','OEM Type':oem?.oemType||'','Segment':oem?.segment||'','Person Met':v.personMet||'','Topics':[...(v.topics||[]),...(v.customTopics||[])].join(', '),'Notes':v.notes||'','Action Items':acts.map(a=>a.description+(a.dueDate?' (Due:'+a.dueDate+')':'')+(a.status==='closed'?' ✓':'')).join(' | '),'Next Visit':v.nextVisitDate||''};});const ws=XLSX.utils.json_to_sheet(rows);ws['!cols']=Object.keys(rows[0]).map(k=>({wch:Math.max(k.length,...rows.map(r=>String(r[k]||'').length).slice(0,50))+2}));const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Visits');XLSX.writeFile(wb,`OEM_Visits_${todayStr()}.xlsx`);showToast('Excel exported ✓');}
-function downloadXLSXTemplate(){const oemCols=['Name','Code','OEM_Type','Segment','Subcategories','Dealer_OEM_Brands','City1','Address1','City2','Address2','City3','Address3','Notes'];const oemSample={Name:'GPY Machine Tools',Code:'OEM-001',OEM_Type:'Dealer',Segment:'Industrial',Subcategories:'Machine Tools, Laser',Dealer_OEM_Brands:'Haitian, DMG Mori',City1:'Bengaluru',Address1:'100 MG Road',City2:'Chennai',Address2:'50 Anna Salai',City3:'',Address3:'',Notes:'Closed subvention deal at 10% and 0.5% PF'};const wsOEM=XLSX.utils.json_to_sheet([oemSample],{header:oemCols});wsOEM['!cols']=oemCols.map(c=>({wch:Math.max(c.length,20)}));const ctCols=['OEM_Name','Name','Phone','Position','Location','Note'];const ctSamples=[{OEM_Name:'GPY Machine Tools',Name:'Ramesh Kumar',Phone:'9876543210',Position:'Sales Manager',Location:'Bengaluru',Note:'Handles VMC'},{OEM_Name:'GPY Machine Tools',Name:'Priya S',Phone:'9123456780',Position:'Service Head',Location:'Chennai',Note:''}];const wsCT=XLSX.utils.json_to_sheet(ctSamples,{header:ctCols});wsCT['!cols']=ctCols.map(c=>({wch:Math.max(c.length,20)}));const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,wsOEM,'OEMs');XLSX.utils.book_append_sheet(wb,wsCT,'Contacts');XLSX.writeFile(wb,'OEM_Import_Template.xlsx');showToast('Template downloaded ✓');}
-async function importFile(input){const file=input.files[0];if(!file)return;const isXLS=file.name.match(/\.(xlsx|xls)$/i);let oemRows=[],ctRows=[];if(isXLS){const buf=await file.arrayBuffer();const wb=XLSX.read(buf,{type:'array'});oemRows=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{defval:''});if(wb.SheetNames[1])ctRows=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[1]],{defval:''});}else{const text=await file.text();const lines=text.split('\n').filter(l=>l.trim());const headers=lines[0].split(',').map(h=>h.replace(/"/g,'').trim());oemRows=lines.slice(1).map(l=>{const vals=[...l.matchAll(/"([^"]*)"|([^,]*)/g)].map(m=>(m[1]??m[2]??'').trim());const obj={};headers.forEach((h,i)=>{obj[h]=vals[i]||'';});return obj;});}oemRows=oemRows.filter(r=>String(r['Name']||'').trim());const ctMap={};ctRows.forEach(r=>{const key=String(r['OEM_Name']||'').trim();if(!key)return;if(!ctMap[key])ctMap[key]=[];const nm=String(r['Name']||'').trim();if(nm)ctMap[key].push({name:nm,phone:String(r['Phone']||'').trim(),position:String(r['Position']||'').trim(),location:String(r['Location']||'').trim(),note:String(r['Note']||'').trim()});});let added=0,skipped=0,merged=0;oemRows.forEach(r=>{const name=String(r['Name']||'').trim();if(!name)return;const existing=db.oems.find(o=>o.name.toLowerCase()===name.toLowerCase());if(existing){const newCts=ctMap[name]||[];if(newCts.length){if(!existing.contacts)existing.contacts=[];newCts.forEach(nc=>{if(!existing.contacts.find(c=>c.name.toLowerCase()===nc.name.toLowerCase()))existing.contacts.push(nc);});merged++;}skipped++;return;}const locs=[];['1','2','3'].forEach(n=>{const c=String(r[`City${n}`]||'').trim();if(c)locs.push({city:c,address:String(r[`Address${n}`]||'').trim()});});const subcats=String(r['Subcategories']||'').split(',').map(s=>s.trim()).filter(Boolean);db.oems.push({id:'oem_'+Date.now()+'_'+Math.random().toString(36).slice(2,5),name,code:String(r['Code']||'').trim(),oemType:String(r['OEM_Type']||'OEM').trim(),segment:String(r['Segment']||'Industrial').trim(),subcategories:subcats,dealerOEMs:String(r['Dealer_OEM_Brands']||'').trim(),locations:locs,contacts:ctMap[name]||[],notes:String(r['Notes']||'').trim()});added++;});document.getElementById('csv-preview').innerHTML=`<div class="card" style="background:var(--green-bg);border-color:rgba(63,185,80,.3)"><div style="font-size:14px;font-weight:600;color:var(--green)">✓ ${added} added · ${skipped} skipped · ${merged} updated with contacts</div></div>`;showToast('Importing...');await saveAndSync();showToast(`${added} OEMs imported ✓`);input.value='';}
-function toggleVoice(){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){showToast('Voice not available');return;}if(listening){recognition.stop();return;}recognition=new SR();recognition.lang='en-IN';recognition.continuous=true;recognition.interimResults=false;recognition.onstart=()=>{listening=true;document.getElementById('mic-btn').classList.add('on');};recognition.onresult=e=>{const t=Array.from(e.results).map(r=>r[0].transcript).join(' ');const ta=document.getElementById('v-notes');ta.value=(ta.value?ta.value+' ':'')+t;};recognition.onend=()=>{listening=false;document.getElementById('mic-btn').classList.remove('on');};recognition.onerror=()=>{listening=false;document.getElementById('mic-btn').classList.remove('on');};recognition.start();}
-function scheduleReminder(a){if(!('Notification'in window)||!a.dueDate)return;if(Notification.permission==='default')Notification.requestPermission();if(Notification.permission==='granted'){const delay=new Date(a.dueDate+'T09:00:00').getTime()-Date.now();if(delay>0)setTimeout(()=>{try{new Notification('OEM Tracker',{body:a.description,tag:a.id});}catch(e){}},delay);}}
-function todayStr(){return new Date().toISOString().split('T')[0];}
-function fmtDate(d){if(!d)return'—';return new Date(d+'T00:00:00').toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});}
-function fmtTime(d){return d.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});}
-function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
-// ── REPORTS ──
-let rptWAText='';
-function initReports(){
-  rptMode='day';
-  document.getElementById('rpt-day-btn').classList.add('active');
-  document.getElementById('rpt-month-btn').classList.remove('active');
-  document.getElementById('rpt-day-wrap').style.display='block';
-  document.getElementById('rpt-month-wrap').style.display='none';
-  document.getElementById('rpt-date').value=todayStr();
-  document.getElementById('rpt-wa-btn').style.display='none';
-  document.getElementById('rpt-content').innerHTML='';
-  renderReport();
+function renderTasks(){
+  const today=todayStr();
+  let items=taskFilter==='open'?db.actions.filter(a=>a.status==='open'):[...db.actions];
+  items.sort((a,b)=>{if(a.status!==b.status)return a.status==='open'?-1:1;return(a.dueDate||'9')<(b.dueDate||'9')?-1:1;});
+  const el=document.getElementById('task-list');
+  if(!items.length){el.innerHTML=`<div class="empty"><div class="ei">✅</div><h3>All clear!</h3><p>No ${taskFilter==='open'?'open ':''}tasks</p></div>`;return;}
+  el.innerHTML=items.map(a=>{
+    const o=oem4action(a); const v=db.visits.find(x=>x.id===a.visitId);
+    const od=a.dueDate&&a.status==='open'&&a.dueDate<today;
+    return`<div class="card" style="margin-bottom:9px">
+      <div class="ai-row" style="border:none;padding:0">
+        <button class="acheck ${a.status==='closed'?'done':''}" onclick="toggleTask('${a.id}',event)"></button>
+        <div style="flex:1"><div class="adesc ${a.status==='closed'?'done':''}">${a.description}</div>
+          <div class="ameta">${o?.name||''}${v?' · '+fmtDate(v.date):''}${a.dueDate?' · <span class="'+(od?'overdue':'')+'">Due '+fmtDate(a.dueDate)+'</span>':''}</div>
+        </div>
+        <button onclick="delTask('${a.id}',event)" style="background:none;border:none;cursor:pointer;color:var(--muted);padding:4px;flex-shrink:0">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="15" height="15"><path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"/></svg>
+        </button>
+      </div></div>`;
+  }).join('');}
+async function toggleTask(id,event){
+  event.stopPropagation();
+  const a=db.actions.find(x=>x.id===id); if(!a) return;
+  a.status=a.status==='open'?'closed':'open';
+  await saveSync();
+  const active=document.querySelector('.screen.active')?.id;
+  if(active==='s-home') renderHome();
+  else if(active==='s-tasks') renderTasks();
+  else if(active==='s-new-visit'){const oid=document.getElementById('v-oem').value;if(oid)onOEMPick();}
+  else if(active==='s-visit-dtl') showVisit(curVid);
 }
-function setRptMode(m){
-  rptMode=m;
-  document.getElementById('rpt-day-btn').classList.toggle('active',m==='day');
-  document.getElementById('rpt-month-btn').classList.toggle('active',m==='month');
-  document.getElementById('rpt-day-wrap').style.display=m==='day'?'block':'none';
-  document.getElementById('rpt-month-wrap').style.display=m==='month'?'block':'none';
-  renderReport();
+async function delTask(id,event){
+  event.stopPropagation();
+  if(!confirm('Delete this task?')) return;
+  db.actions=db.actions.filter(a=>a.id!==id);
+  await saveSync(); renderTasks();
 }
-function renderReport(){
-  const el=document.getElementById('rpt-content');
-  let visits=[];
-  let label='';
-  if(rptMode==='day'){
-    const d=document.getElementById('rpt-date').value; if(!d)return;
-    visits=db.visits.filter(v=>v.date===d);
-    label=fmtDate(d);
-  } else {
-    const m=document.getElementById('rpt-month').value; if(!m)return;
-    visits=db.visits.filter(v=>v.date.startsWith(m));
-    const [yr,mo]=m.split('-');
-    label=new Date(yr,parseInt(mo)-1,1).toLocaleDateString('en-IN',{month:'long',year:'numeric'});
-  }
-  document.getElementById('rpt-wa-btn').style.display=visits.length?'block':'none';
-  if(!visits.length){el.innerHTML=`<div class="empty"><div class="ei">📭</div><h3>No visits found</h3><p>No reports for ${label}</p></div>`;rptWAText='';return;}
-  // Build summary text (also used for WA)
-  let txt=`📊 *Visit Summary — ${label}*\n`;
-  txt+=`Total: ${visits.length} report${visits.length!==1?'s':''}\n\n`;
-  visits.sort((a,b)=>a.date.localeCompare(b.date)).forEach(v=>{
-    const oem=db.oems.find(o=>o.id===v.oemId);
-    const topics=[...(v.topics||[]),...(v.customTopics||[])];
-    const acts=db.actions.filter(a=>a.visitId===v.id);
-    txt+=`${v.type==='visit'?'📍':'📞'} *${oem?.name||'Unknown'}*`;
-    if(rptMode==='month') txt+=` — ${fmtDate(v.date)}`;
-    txt+='\n';
-    if(v.visitLocation) txt+=`  📍 ${v.visitLocation}\n`;
-    if(v.personMet) txt+=`  👤 ${v.personMet}\n`;
-    if(topics.length) txt+=`  Topics: ${topics.join(', ')}\n`;
-    if(v.notes) txt+=`  Notes: ${v.notes}\n`;
-    if(acts.length) txt+=`  Tasks: ${acts.map(a=>a.description+(a.status==='closed'?' ✓':'')).join(' | ')}\n`;
-    txt+='\n';
+function oem4action(a){const v=db.visits.find(x=>x.id===a.visitId);return v?db.oems.find(o=>o.id===v.oemId):null;}
+
+// ── WHATSAPP ──
+function copyWA(){
+  const v=db.visits.find(x=>x.id===curVid); if(!v) return;
+  const o=db.oems.find(x=>x.id===v.oemId);
+  const acts=db.actions.filter(a=>a.visitId===v.id);
+  const topics=[...(v.topics||[]),...(v.customTopics||[])];
+  let txt=`${v.type==='visit'?'📍':'📞'} *${v.type==='visit'?'Visit':'Call'} Report — ${fmtDate(v.date)}*\n`;
+  txt+=`*OEM:* ${o?.name||'N/A'}${o?.code?' ('+o.code+')':''} · ${o?.oemType||''} · ${o?.segment||''}\n`;
+  if(v.visitLoc) txt+=`*Location:* ${v.visitLoc}\n`;
+  if(v.personMet) txt+=`*Person Met:* ${v.personMet}\n`;
+  if(topics.length) txt+=`\n✅ *Topics:*\n${topics.map(t=>`• ${t}`).join('\n')}\n`;
+  if(v.notes) txt+=`\n📝 *Notes:*\n${v.notes}\n`;
+  if(acts.length) txt+=`\n📌 *Tasks:*\n${acts.map(a=>`• ${a.description}${a.dueDate?' — Due: '+fmtDate(a.dueDate):''}${a.status==='closed'?' ✓':''}`).join('\n')}\n`;
+  if(v.nextVisitDate) txt+=`\n🔁 *Next ${v.type==='visit'?'Visit':'Follow-up'}:* ${fmtDate(v.nextVisitDate)}`;
+  navigator.clipboard.writeText(txt).then(()=>toast('Copied for WhatsApp ✓')).catch(()=>{
+    const ta=document.createElement('textarea');ta.value=txt;ta.style.cssText='position:fixed;opacity:0';document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);toast('Copied ✓');
   });
-  rptWAText=txt.trim();
-  el.innerHTML=visits.map(v=>{
-    const oem=db.oems.find(o=>o.id===v.oemId);
-    const topics=[...(v.topics||[]),...(v.customTopics||[])];
-    const acts=db.actions.filter(a=>a.visitId===v.id);
-    return `<div class="vcard" onclick="showDetail('${v.id}')" style="margin-bottom:9px">
-      <div class="vcard-top"><div class="vcard-name">${oem?.name||'Unknown'}</div><span class="badge ${v.type==='visit'?'bv':'bc'}">${v.type==='visit'?'📍':'📞'} ${rptMode==='month'?fmtDate(v.date):v.type==='visit'?'Visit':'Call'}</span></div>
-      ${v.visitLocation||v.personMet?`<div class="vcard-meta">${v.visitLocation?'📍'+v.visitLocation:''}${v.personMet?' · 👤'+v.personMet:''}</div>`:''}
-      ${topics.length?`<div class="vcard-sub">${topics.join(' · ')}</div>`:''}
-      ${acts.length?`<div class="vcard-sub" style="color:${acts.some(a=>a.status==='open')?'var(--amber)':'var(--muted)'}">📌 ${acts.length} task${acts.length!==1?'s':''} · ${acts.filter(a=>a.status==='open').length} open</div>`:''}
-    </div>`;
-  }).join('');
 }
-function shareReportWA(){
-  if(!rptWAText){showToast('Nothing to share');return;}
-  navigator.clipboard.writeText(rptWAText).then(()=>showToast('Summary copied for WhatsApp ✓')).catch(()=>{
-    const ta=document.createElement('textarea');ta.value=rptWAText;ta.style.cssText='position:fixed;opacity:0';document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);showToast('Summary copied ✓');
+
+// ── EXCEL EXPORT ──
+function exportXL(){
+  if(!db.visits.length){toast('No visits to export');return;}
+  const rows=db.visits.map(v=>{
+    const o=db.oems.find(x=>x.id===v.oemId);
+    const acts=db.actions.filter(a=>a.visitId===v.id);
+    return{'Date':v.date,'Type':v.type==='visit'?'Visit':'Call','OEM':o?.name||'','Code':o?.code||'','Location':v.visitLoc||'','OEM Type':o?.oemType||'','Segment':o?.segment||'','Person Met':v.personMet||'','Topics':[...(v.topics||[]),...(v.customTopics||[])].join(', '),'Notes':v.notes||'','Action Items':acts.map(a=>a.description+(a.dueDate?' (Due:'+a.dueDate+')':'')+(a.status==='closed'?' ✓':'')).join(' | '),'Next Visit':v.nextVisitDate||''};
   });
+  const ws=XLSX.utils.json_to_sheet(rows);
+  ws['!cols']=Object.keys(rows[0]).map(k=>({wch:Math.max(k.length,...rows.map(r=>String(r[k]||'').length))+2}));
+  const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Visits');
+  XLSX.writeFile(wb,'OEM_Visits_'+todayStr()+'.xlsx');toast('Exported ✓');
+}
+
+// ── IMPORT ──
+function dlTemplate(){
+  const oc=['Name','Code','OEM_Type','Segment','Subcategories','Dealer_Brands','City1','Address1','City2','Address2','City3','Address3','Notes'];
+  const os={Name:'GPY Machine Tools',Code:'OEM-001',OEM_Type:'Dealer',Segment:'Industrial',Subcategories:'Machine Tools, Laser',Dealer_Brands:'Haitian, DMG Mori',City1:'Bengaluru',Address1:'100 MG Road',City2:'Chennai',Address2:'50 Anna Salai',City3:'',Address3:'',Notes:'Closed subvention at 10%'};
+  const wo=XLSX.utils.json_to_sheet([os],{header:oc});wo['!cols']=oc.map(c=>({wch:Math.max(c.length,20)}));
+  const cc=['OEM_Name','Name','Phone','Position','Location','Note'];
+  const cs=[{OEM_Name:'GPY Machine Tools',Name:'Ramesh Kumar',Phone:'9876543210',Position:'Sales Manager',Location:'Bengaluru',Note:'Handles VMC'},{OEM_Name:'GPY Machine Tools',Name:'Priya S',Phone:'9123456780',Position:'Service Head',Location:'Chennai',Note:''}];
+  const wc=XLSX.utils.json_to_sheet(cs,{header:cc});wc['!cols']=cc.map(c=>({wch:Math.max(c.length,20)}));
+  const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,wo,'OEMs');XLSX.utils.book_append_sheet(wb,wc,'Contacts');
+  XLSX.writeFile(wb,'OEM_Import_Template.xlsx');toast('Template downloaded ✓');
+}
+async function importFile(inp){
+  const file=inp.files[0]; if(!file) return;
+  const isXL=file.name.match(/\.(xlsx|xls)$/i);
+  let orows=[],crows=[];
+  if(isXL){const buf=await file.arrayBuffer();const wb=XLSX.read(buf,{type:'array'});orows=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{defval:''});if(wb.SheetNames[1])crows=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[1]],{defval:''});}
+  else{const txt=await file.text();const lines=txt.split('\n').filter(l=>l.trim());const hdrs=lines[0].split(',').map(h=>h.replace(/"/g,'').trim());orows=lines.slice(1).map(l=>{const vals=[...l.matchAll(/"([^"]*)"|([^,]*)/g)].map(m=>(m[1]??m[2]??'').trim());const o={};hdrs.forEach((h,i)=>{o[h]=vals[i]||'';});return o;});}
+  orows=orows.filter(r=>String(r['Name']||'').trim());
+  const ctMap={};
+  crows.forEach(r=>{const key=String(r['OEM_Name']||'').trim();if(!key)return;if(!ctMap[key])ctMap[key]=[];const nm=String(r['Name']||'').trim();if(nm)ctMap[key].push({name:nm,phone:String(r['Phone']||'').trim(),position:String(r['Position']||'').trim(),location:String(r['Location']||'').trim(),note:String(r['Note']||'').trim()});});
+  let added=0,skipped=0,merged=0;
+  orows.forEach(r=>{
+    const name=String(r['Name']||'').trim(); if(!name) return;
+    const existing=db.oems.find(o=>o.name.toLowerCase()===name.toLowerCase());
+    if(existing){
+      const newCts=ctMap[name]||[];
+      if(newCts.length){if(!existing.contacts)existing.contacts=[];newCts.forEach(nc=>{if(!existing.contacts.find(c=>c.name.toLowerCase()===nc.name.toLowerCase()))existing.contacts.push(nc);});merged++;}
+      skipped++;return;
+    }
+    const locs=[];['1','2','3'].forEach(n=>{const c=String(r['City'+n]||'').trim();if(c)locs.push({city:c,address:String(r['Address'+n]||'').trim()});});
+    const subs=String(r['Subcategories']||'').split(',').map(s=>s.trim()).filter(Boolean);
+    db.oems.push({id:'oem_'+Date.now()+'_'+Math.random().toString(36).slice(2,5),name,code:String(r['Code']||'').trim(),oemType:String(r['OEM_Type']||'OEM').trim(),segment:String(r['Segment']||'Industrial').trim(),subcategories:subs,dealerBrands:String(r['Dealer_Brands']||'').trim(),locations:locs,contacts:ctMap[name]||[],notes:String(r['Notes']||'').trim()});
+    added++;
+  });
+  document.getElementById('imp-result').innerHTML=`<div class="card" style="background:var(--green-bg);border:1px solid rgba(63,185,80,.3);margin-top:10px"><div style="font-size:14px;font-weight:600;color:var(--green)">✓ ${added} added · ${skipped} skipped · ${merged} updated with contacts</div></div>`;
+  toast('Importing...'); await saveSync(); toast(added+' OEMs imported ✓'); inp.value='';
+}
+
+// ── VOICE ──
+function toggleMic(){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){toast('Voice not supported in this browser');return;}
+  if(listening){recog.stop();return;}
+  recog=new SR();recog.lang='en-IN';recog.continuous=true;recog.interimResults=false;
+  recog.onstart=()=>{listening=true;document.getElementById('mic-btn').style.background='var(--red)';document.getElementById('mic-btn').style.color='#fff';};
+  recog.onresult=e=>{const t=Array.from(e.results).map(r=>r[0].transcript).join(' ');const ta=document.getElementById('v-notes');ta.value=(ta.value?ta.value+' ':'')+t;};
+  recog.onend=()=>{listening=false;document.getElementById('mic-btn').style.background='var(--surface)';document.getElementById('mic-btn').style.color='var(--soft)';};
+  recog.onerror=()=>{listening=false;document.getElementById('mic-btn').style.background='var(--surface)';document.getElementById('mic-btn').style.color='var(--soft)';};
+  recog.start();
 }
 
 // ── SETTINGS ──
 function initSettings(){
   const tok=getToken();
-  const inp=document.getElementById('settings-token');
-  inp.value=tok?'•'.repeat(20):'';
-  inp.dataset.hasExisting=tok?'1':'0';
-  document.getElementById('token-status').textContent=tok?'✅ Token saved on this device':'No token saved yet';
+  document.getElementById('tok-inp').value=tok?'•'.repeat(20):'';
+  document.getElementById('tok-inp').dataset.filled=tok?'1':'0';
+  document.getElementById('tok-status').textContent=tok?'✅ Token saved on this device':'No token saved yet';
+  document.getElementById('tok-status').style.color=tok?'var(--green)':'var(--muted)';
 }
-function toggleTokenVis(){
-  const inp=document.getElementById('settings-token');
-  const btn=document.getElementById('tok-vis-btn');
-  if(inp.type==='password'){inp.type='text';btn.textContent='Hide';if(inp.dataset.hasExisting==='1')inp.value=getToken();}
+function toggleTokVis(){
+  const inp=document.getElementById('tok-inp');
+  const btn=document.getElementById('tok-vis');
+  if(inp.type==='password'){inp.type='text';btn.textContent='Hide';if(inp.dataset.filled==='1')inp.value=getToken();}
   else{inp.type='password';btn.textContent='Show';}
 }
 async function saveToken(){
-  const inp=document.getElementById('settings-token');
+  const inp=document.getElementById('tok-inp');
   const val=inp.value.trim();
-  if(!val||val.startsWith('•')){showToast('Please enter your new token');return;}
-  const st=document.getElementById('token-status');
-  st.style.color='var(--soft)';
-  // Show what we're actually sending
-  const preview=val.slice(0,12)+'...'+val.slice(-4);
-  st.innerHTML=`Sending token: <span class="mono" style="color:var(--amber)">${preview}</span> (${val.length} chars)<br>Testing...`;
+  if(!val||val.startsWith('•')){toast('Paste your new token first');return;}
+  const st=document.getElementById('tok-status');
+  st.textContent='Testing...';st.style.color='var(--soft)';
   setToken(val);
   try{
-    const r=await fetch(`https://api.github.com/user`,{headers:{'Authorization':'Bearer '+val,'Accept':'application/vnd.github+json'}});
-    const data=await r.json();
+    const r=await fetch('https://api.github.com/user',{headers:{'Authorization':'Bearer '+val,'Accept':'application/vnd.github+json'}});
+    const d=await r.json();
     if(r.ok){
-      st.innerHTML=`✅ Connected as <strong>${data.login}</strong>!`;st.style.color='var(--green)';
-      inp.type='password';inp.value='•'.repeat(20);inp.dataset.hasExisting='1';
-      document.getElementById('tok-vis-btn').textContent='Show';
-      showToast('Token saved ✓ — syncing now...');
-      await loadFromGitHub();
+      st.innerHTML='✅ Connected as <strong>'+d.login+'</strong>';st.style.color='var(--green)';
+      inp.type='password';inp.value='•'.repeat(20);inp.dataset.filled='1';
+      document.getElementById('tok-vis').textContent='Show';
+      toast('Token saved ✓ — syncing...');
+      await doSync();
     } else {
-      st.innerHTML=`❌ GitHub says: <strong>${data.message}</strong><br>
-        <span class="mono" style="font-size:11px;color:var(--muted)">Status: ${r.status} · Sent: ${preview} · Length: ${val.length}</span>`;
-      st.style.color='var(--red)';
-      localStorage.removeItem('gh_token');
+      st.innerHTML='❌ '+d.message+' ('+r.status+')';st.style.color='var(--red)';
+      localStorage.removeItem('oem_tok');
     }
-  }catch(e){st.innerHTML=`❌ Network error: ${e.message}`;st.style.color='var(--red)';}
+  }catch(e){st.textContent='❌ Network error: '+e.message;st.style.color='var(--red)';}
 }
 
-loadLocal();
-// Show settings screen if no token saved yet
-if(!getToken()){navigate('settings');}else{renderHome();}
-if('Notification'in window&&Notification.permission==='default')Notification.requestPermission();
-setTimeout(()=>{const l=document.getElementById('sync-lbl');if(l&&l.textContent==='Connecting...')l.textContent='';},8000);
-if(getToken())loadFromGitHub();
+// ── UTILS ──
+function todayStr(){return new Date().toISOString().split('T')[0];}
+function fmtDate(d){if(!d)return'—';return new Date(d+'T00:00:00').toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});}
+function fmtTime(d){return d.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
+
+// ── INIT ──
+load();
+if(!getToken()){go('settings');}
+else{renderHome();doSync();}
 </script>
 </body>
 </html>
