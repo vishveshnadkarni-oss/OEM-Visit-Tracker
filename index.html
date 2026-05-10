@@ -522,17 +522,13 @@ async function doSync(){
 }
 
 async function ghWrite(){
-  // Always fetch SHAs fresh before writing
+  setSS('busy','Saving...');
   try{
-    const [of,vf]=await Promise.all([ghGet(FILES.oems).catch(()=>null), ghGet(FILES.visits).catch(()=>null)]);
-    if(of) SHAS.oems=of.sha;
-    if(vf) SHAS.visits=vf.sha;
-    const [s1,s2]=await Promise.all([
-      ghPut(FILES.oems, db.oems, SHAS.oems||null, 'Update OEMs'),
-      ghPut(FILES.visits, {visits:db.visits,actions:db.actions,topics:db.topics}, SHAS.visits||null, 'Update visits')
-    ]);
-    if(s1) SHAS.oems=s1;
-    if(s2) SHAS.visits=s2;
+    // Sequential: get SHA then write, one file at a time to avoid races
+    const of=await ghGet(FILES.oems).catch(()=>null);
+    const s1=await ghPut(FILES.oems, db.oems, of?.sha||null, 'Update OEMs');
+    const vf=await ghGet(FILES.visits).catch(()=>null);
+    const s2=await ghPut(FILES.visits, {visits:db.visits,actions:db.actions,topics:db.topics}, vf?.sha||null, 'Update visits');
     setSS('ok','Synced '+fmtTime(new Date()));
   }catch(e){setSS('err','Sync failed'); throw e;}
 }
@@ -550,23 +546,16 @@ async function doBackup(){
   setSS('busy','Backing up...');
   try{
     const stamp=todayStr();
-    // First test write access with a small test
-    const [eo,ev]=await Promise.all([
-      ghGet('backup/oems_'+stamp+'.json').catch(()=>null),
-      ghGet('backup/visits_'+stamp+'.json').catch(()=>null)
-    ]);
-    const [s1,s2]=await Promise.all([
-      ghPut('backup/oems_'+stamp+'.json', db.oems, eo?.sha||null, 'Backup OEMs '+stamp),
-      ghPut('backup/visits_'+stamp+'.json', {visits:db.visits,actions:db.actions}, ev?.sha||null, 'Backup visits '+stamp)
-    ]);
-    if(s1) setSS('ok','Backup done '+fmtTime(new Date()));
+    // Sequential SHA fetch then write — avoids 409 race conditions
+    const of=await ghGet('backup/oems_'+stamp+'.json').catch(()=>null);
+    await ghPut('backup/oems_'+stamp+'.json', db.oems, of?.sha||null, 'Backup OEMs '+stamp);
+    const vf=await ghGet('backup/visits_'+stamp+'.json').catch(()=>null);
+    await ghPut('backup/visits_'+stamp+'.json', {visits:db.visits,actions:db.actions}, vf?.sha||null, 'Backup visits '+stamp);
+    setSS('ok','Backup done '+fmtTime(new Date()));
     toast('Backup saved ✓');
   }catch(e){
     setSS('err','Backup failed');
-    const msg=e.message||'Unknown error';
-    toast('Backup failed: '+msg);
-    // Show alert with full error for debugging
-    alert('Backup error:\n'+msg+'\n\nCheck that your token has Contents: Read & Write permission on the OEM-Visit-Tracker repo.');
+    toast('Backup failed: '+e.message);
   }
 }
 
