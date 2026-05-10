@@ -1,0 +1,31 @@
+[
+  {
+    "id": "oem_1777887925250",
+    "name": "Mazak",
+    "code": "",
+    "oemType": "OEM",
+    "segment": "Industrial",
+    "subcategories": [
+      "Machine Tools"
+    ],
+    "dealerOEMs": "",
+    "locations": [
+      {
+        "city": "Bengaluru",
+        "address": "",
+        "lat": "",
+        "lng": ""
+      }
+    ],
+    "contacts": [
+      {
+        "name": "Giridhar",
+        "phone": "9900154338",
+        "position": "RSM",
+        "location": "Bengaluru",
+        "note": ""
+      }
+    ],
+    "notes": ""
+  }
+]
