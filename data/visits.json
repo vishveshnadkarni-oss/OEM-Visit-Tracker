@@ -1,5 +1,31 @@
 {
-  "visits": [],
-  "actions": [],
-  "topics": []
+  "visits": [
+    {
+      "id": "v_1778410597347",
+      "oemId": "oem_1778408453736_2w5",
+      "date": "2026-05-04",
+      "type": "call",
+      "personMet": "Giridhar",
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Appointment"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-10T10:56:37.348Z"
+    }
+  ],
+  "actions": [
+    {
+      "id": "a_1778410597348_b1m",
+      "visitId": "v_1778410597347",
+      "description": "Take appointment for a meeting",
+      "dueDate": "2026-05-11",
+      "status": "open"
+    }
+  ],
+  "topics": [
+    "Appointment"
+  ]
 }
