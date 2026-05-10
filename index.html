@@ -419,6 +419,31 @@ textarea{min-height:85px;resize:none;line-height:1.6}
   </div>
 </div>
 
+<!-- REPORTS -->
+<div id="s-reports" class="screen">
+  <div class="hdr">
+    <div class="hdr-row">
+      <h1>Reports</h1>
+      <button class="icon-btn" id="rpt-share-btn" onclick="shareRptWA()" style="display:none" title="Copy for WhatsApp">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="17" height="17"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.375"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="p16">
+    <div class="fg">
+      <div class="tog" style="margin-bottom:12px">
+        <button class="tog-btn on" id="rpt-day-btn" onclick="setRptMode('day')">Day</button>
+        <button class="tog-btn" id="rpt-mon-btn" onclick="setRptMode('month')">Month</button>
+        <button class="tog-btn" id="rpt-oem-btn" onclick="setRptMode('oem')">By OEM</button>
+        <button class="tog-btn" id="rpt-per-btn" onclick="setRptMode('person')">By Person</button>
+      </div>
+      <div id="rpt-day-wrap"><input type="date" id="rpt-date" onchange="renderRpt()"></div>
+      <div id="rpt-mon-wrap" style="display:none"><input type="month" id="rpt-month" onchange="renderRpt()"></div>
+    </div>
+  </div>
+  <div id="rpt-content" style="padding:0 16px"></div>
+</div>
+
 <!-- NAV -->
 <nav class="bnav">
   <div class="ni active" id="n-home" onclick="go('home')">
@@ -428,6 +453,10 @@ textarea{min-height:85px;resize:none;line-height:1.6}
   <div class="ni" id="n-dir" onclick="go('dir')">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21"/></svg>
     <span>OEMs</span>
+  </div>
+  <div class="ni" id="n-reports" onclick="go('reports')">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg>
+    <span>Reports</span>
   </div>
   <div class="ni" id="n-tasks" onclick="go('tasks')">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
@@ -521,25 +550,36 @@ async function doBackup(){
   setSS('busy','Backing up...');
   try{
     const stamp=todayStr();
-    const [eo,ev]=await Promise.all([ghGet('backup/oems_'+stamp+'.json').catch(()=>null), ghGet('backup/visits_'+stamp+'.json').catch(()=>null)]);
-    await Promise.all([
+    // First test write access with a small test
+    const [eo,ev]=await Promise.all([
+      ghGet('backup/oems_'+stamp+'.json').catch(()=>null),
+      ghGet('backup/visits_'+stamp+'.json').catch(()=>null)
+    ]);
+    const [s1,s2]=await Promise.all([
       ghPut('backup/oems_'+stamp+'.json', db.oems, eo?.sha||null, 'Backup OEMs '+stamp),
       ghPut('backup/visits_'+stamp+'.json', {visits:db.visits,actions:db.actions}, ev?.sha||null, 'Backup visits '+stamp)
     ]);
-    setSS('ok','Backup done '+fmtTime(new Date())); toast('Backup saved ✓');
-  }catch(e){setSS('err','Backup failed'); toast('Backup failed: '+e.message);}
+    if(s1) setSS('ok','Backup done '+fmtTime(new Date()));
+    toast('Backup saved ✓');
+  }catch(e){
+    setSS('err','Backup failed');
+    const msg=e.message||'Unknown error';
+    toast('Backup failed: '+msg);
+    // Show alert with full error for debugging
+    alert('Backup error:\n'+msg+'\n\nCheck that your token has Contents: Read & Write permission on the OEM-Visit-Tracker repo.');
+  }
 }
 
 // ── NAVIGATION ──
 const SCREENS={
   'home':'s-home','new-visit':'s-new-visit','dir':'s-dir','oem-form':'s-oem-form',
   'oem-detail':'s-oem-detail','tasks':'s-tasks','visit-dtl':'s-visit-dtl',
-  'import':'s-import','settings':'s-settings'
+  'import':'s-import','settings':'s-settings','reports':'s-reports'
 };
 const NAVMAP={
   'home':'n-home','new-visit':'n-home','visit-dtl':'n-home',
   'dir':'n-dir','oem-form':'n-dir','oem-detail':'n-dir','import':'n-dir',
-  'tasks':'n-tasks','settings':'n-home'
+  'tasks':'n-tasks','settings':'n-home','reports':'n-reports'
 };
 function go(screen){
   Object.values(SCREENS).forEach(id=>document.getElementById(id)?.classList.remove('active'));
@@ -552,6 +592,7 @@ function go(screen){
   if(screen==='dir') renderDir();
   if(screen==='tasks') renderTasks();
   if(screen==='settings') initSettings();
+  if(screen==='reports') initRpt();
 }
 
 // ── HOME ──
@@ -1008,7 +1049,130 @@ async function saveToken(){
   }catch(e){st.textContent='❌ Network error: '+e.message;st.style.color='var(--red)';}
 }
 
-// ── UTILS ──
+// ── REPORTS ──
+let rptMode='day', rptWA='';
+function initRpt(){
+  rptMode='day';
+  ['day','mon','oem','per'].forEach(x=>document.getElementById('rpt-'+x+'-btn').classList.remove('on'));
+  document.getElementById('rpt-day-btn').classList.add('on');
+  document.getElementById('rpt-day-wrap').style.display='block';
+  document.getElementById('rpt-mon-wrap').style.display='none';
+  document.getElementById('rpt-date').value=todayStr();
+  document.getElementById('rpt-share-btn').style.display='none';
+  document.getElementById('rpt-content').innerHTML='';
+  renderRpt();
+}
+function setRptMode(m){
+  rptMode=m;
+  ['day','mon','oem','per'].forEach(x=>document.getElementById('rpt-'+x+'-btn').classList.remove('on'));
+  document.getElementById('rpt-'+({'day':'day','month':'mon','oem':'oem','person':'per'}[m]||m)+'-btn').classList.add('on');
+  document.getElementById('rpt-day-wrap').style.display=m==='day'?'block':'none';
+  document.getElementById('rpt-mon-wrap').style.display=m==='month'?'block':'none';
+  renderRpt();
+}
+function renderRpt(){
+  const el=document.getElementById('rpt-content');
+  const today=todayStr();
+  let visits=[], label='';
+
+  if(rptMode==='day'){
+    const d=document.getElementById('rpt-date').value; if(!d) return;
+    visits=db.visits.filter(v=>v.date===d); label=fmtDate(d);
+  } else if(rptMode==='month'){
+    const m=document.getElementById('rpt-month').value; if(!m) return;
+    visits=db.visits.filter(v=>v.date.startsWith(m));
+    const [yr,mo]=m.split('-');
+    label=new Date(yr,parseInt(mo)-1,1).toLocaleDateString('en-IN',{month:'long',year:'numeric'});
+  } else if(rptMode==='oem'){
+    visits=[...db.visits].sort((a,b)=>b.date.localeCompare(a.date));
+    label='All Visits by OEM';
+  } else if(rptMode==='person'){
+    visits=[...db.visits].filter(v=>v.personMet).sort((a,b)=>b.date.localeCompare(a.date));
+    label='All Visits by Person';
+  }
+
+  document.getElementById('rpt-share-btn').style.display=visits.length?'flex':'none';
+
+  if(!visits.length){el.innerHTML=`<div class="empty"><div class="ei">📭</div><h3>No visits found</h3><p>${label}</p></div>`;rptWA='';return;}
+
+  // Stats row
+  const calls=visits.filter(v=>v.type==='call').length;
+  const vists=visits.filter(v=>v.type==='visit').length;
+  const oemSet=new Set(visits.map(v=>v.oemId));
+  const personSet=new Set(visits.filter(v=>v.personMet).map(v=>v.personMet));
+
+  let html=`<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-bottom:14px">
+    <div class="scard"><div class="snum">${visits.length}</div><div class="slbl">Total</div></div>
+    <div class="scard"><div class="snum">${vists}</div><div class="slbl">Visits</div></div>
+    <div class="scard"><div class="snum">${calls}</div><div class="slbl">Calls</div></div>
+    <div class="scard"><div class="snum">${oemSet.size}</div><div class="slbl">OEMs</div></div>
+  </div>`;
+
+  // Group by OEM or Person if those modes
+  if(rptMode==='oem'){
+    const map={};
+    visits.forEach(v=>{if(!map[v.oemId])map[v.oemId]=[];map[v.oemId].push(v);});
+    Object.entries(map).sort((a,b)=>b[1].length-a[1].length).forEach(([oid,vs])=>{
+      const o=db.oems.find(x=>x.id===oid);
+      html+=`<div class="card" style="margin-bottom:10px">
+        <div style="font-size:15px;font-weight:700;margin-bottom:6px">${o?.name||'Unknown'} <span style="font-size:12px;color:var(--muted);font-weight:400">${vs.length} visit${vs.length!==1?'s':''}</span></div>
+        ${vs.map(v=>`<div class="vcard" style="margin-bottom:6px;padding:10px 12px" onclick="showVisit('${v.id}')">
+          <div class="vcard-top"><div class="vcard-name" style="font-size:13px">${fmtDate(v.date)}</div><span class="badge ${v.type==='visit'?'bv':'bc'}" style="font-size:10px">${v.type==='visit'?'📍':'📞'}</span></div>
+          ${v.personMet?`<div class="vsub">👤 ${v.personMet}</div>`:''}
+          ${[...(v.topics||[]),...(v.customTopics||[])].length?`<div class="vsub">${[...(v.topics||[]),...(v.customTopics||[])].join(' · ')}</div>`:''}
+        </div>`).join('')}
+      </div>`;
+    });
+  } else if(rptMode==='person'){
+    const map={};
+    visits.forEach(v=>{const p=v.personMet||'Unknown';if(!map[p])map[p]=[];map[p].push(v);});
+    Object.entries(map).sort((a,b)=>b[1].length-a[1].length).forEach(([person,vs])=>{
+      html+=`<div class="card" style="margin-bottom:10px">
+        <div style="font-size:15px;font-weight:700;margin-bottom:6px">👤 ${person} <span style="font-size:12px;color:var(--muted);font-weight:400">${vs.length} visit${vs.length!==1?'s':''}</span></div>
+        ${vs.map(v=>{const o=db.oems.find(x=>x.id===v.oemId);return`<div class="vcard" style="margin-bottom:6px;padding:10px 12px" onclick="showVisit('${v.id}')">
+          <div class="vcard-top"><div class="vcard-name" style="font-size:13px">${o?.name||'Unknown'}</div><span class="badge ${v.type==='visit'?'bv':'bc'}" style="font-size:10px">${fmtDate(v.date)}</span></div>
+          ${[...(v.topics||[]),...(v.customTopics||[])].length?`<div class="vsub">${[...(v.topics||[]),...(v.customTopics||[])].join(' · ')}</div>`:''}
+        </div>`;}).join('')}
+      </div>`;
+    });
+  } else {
+    // Day / Month — list view
+    visits.sort((a,b)=>a.date.localeCompare(b.date)).forEach(v=>{
+      const o=db.oems.find(x=>x.id===v.oemId);
+      const topics=[...(v.topics||[]),...(v.customTopics||[])];
+      const acts=db.actions.filter(a=>a.visitId===v.id);
+      html+=`<div class="vcard" onclick="showVisit('${v.id}')" style="margin-bottom:9px">
+        <div class="vcard-top"><div class="vcard-name">${o?.name||'Unknown'}</div><span class="badge ${v.type==='visit'?'bv':'bc'}">${rptMode==='month'?fmtDate(v.date):v.type==='visit'?'📍 Visit':'📞 Call'}</span></div>
+        ${v.visitLoc||v.personMet?`<div class="vmeta">${v.visitLoc?'📍'+v.visitLoc:''}${v.personMet?' · 👤'+v.personMet:''}</div>`:''}
+        ${topics.length?`<div class="vsub">${topics.join(' · ')}</div>`:''}
+        ${acts.length?`<div class="vsub" style="color:${acts.some(a=>a.status==='open')?'var(--amber)':'var(--muted)'}">📌 ${acts.length} task${acts.length!==1?'s':''} · ${acts.filter(a=>a.status==='open').length} open</div>`:''}
+      </div>`;
+    });
+  }
+  el.innerHTML=html;
+
+  // Build WA text
+  rptWA=`📊 *Visit Summary — ${label}*\nTotal: ${visits.length} · Visits: ${vists} · Calls: ${calls}\n\n`;
+  visits.forEach(v=>{
+    const o=db.oems.find(x=>x.id===v.oemId);
+    const topics=[...(v.topics||[]),...(v.customTopics||[])];
+    rptWA+=`${v.type==='visit'?'📍':'📞'} *${o?.name||'Unknown'}*`;
+    if(rptMode!=='day') rptWA+=` — ${fmtDate(v.date)}`;
+    rptWA+='\n';
+    if(v.visitLoc) rptWA+=`  📍 ${v.visitLoc}\n`;
+    if(v.personMet) rptWA+=`  👤 ${v.personMet}\n`;
+    if(topics.length) rptWA+=`  Topics: ${topics.join(', ')}\n`;
+    if(v.notes) rptWA+=`  Notes: ${v.notes}\n`;
+    rptWA+='\n';
+  });
+  rptWA=rptWA.trim();
+}
+function shareRptWA(){
+  if(!rptWA){toast('Nothing to share');return;}
+  navigator.clipboard.writeText(rptWA).then(()=>toast('Summary copied ✓')).catch(()=>{
+    const ta=document.createElement('textarea');ta.value=rptWA;ta.style.cssText='position:fixed;opacity:0';document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);toast('Copied ✓');
+  });
+}
 function todayStr(){return new Date().toISOString().split('T')[0];}
 function fmtDate(d){if(!d)return'—';return new Date(d+'T00:00:00').toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});}
 function fmtTime(d){return d.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});}
