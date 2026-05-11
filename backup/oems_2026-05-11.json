@@ -198,15 +198,21 @@
     "locations": [
       {
         "city": "Bengaluru",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       },
       {
         "city": "Chennai",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       },
       {
         "city": "Coimbatore",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       }
     ],
     "contacts": [
@@ -285,7 +291,7 @@
         "phone": "9342133606",
         "position": "Sales RSM",
         "location": "Bengaluru",
-        "note": ""
+        "note": "Heads VMC in BFW"
       },
       {
         "name": "Vivek",
@@ -843,6 +849,13 @@
         "position": "Sales",
         "location": "Coimbatore",
         "note": ""
+      },
+      {
+        "name": "Ajay",
+        "phone": "9538145612",
+        "position": "RSM",
+        "location": "Bengaluru",
+        "note": ""
       }
     ],
     "notes": ""
@@ -954,15 +967,21 @@
     "locations": [
       {
         "city": "Bengaluru",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       },
       {
         "city": "Chennai",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       },
       {
         "city": "Coimbatore",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       }
     ],
     "contacts": [
@@ -985,6 +1004,13 @@
         "phone": "7211102822",
         "position": "Sales Head",
         "location": "Coimbatore",
+        "note": ""
+      },
+      {
+        "name": "Basavaraju",
+        "phone": "7211103307",
+        "position": "Sales",
+        "location": "Bengaluru",
         "note": ""
       }
     ],
