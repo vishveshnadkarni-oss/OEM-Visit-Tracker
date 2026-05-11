@@ -139,6 +139,30 @@
       "notes": "Asked for a 10 min session on a Saturday preferably 16 May.. He will share a case on wednesday.",
       "nextVisitDate": null,
       "createdAt": "2026-05-11T16:36:36.426Z"
+    },
+    {
+      "id": "v_1778517489044",
+      "oemId": "oem_1778408453736_xci",
+      "date": "2026-05-09",
+      "type": "visit",
+      "personMet": "Nadeem",
+      "peopleMet": [
+        "Nadeem"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [
+        "Leasing",
+        "Principal Moratorium",
+        "Rate of Interest"
+      ],
+      "customTopics": [
+        "Case update",
+        "Appointment",
+        "Hybrid Flexi"
+      ],
+      "notes": "He was very casual and said he will share any leads if he has any",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-11T16:38:09.044Z"
     }
   ],
   "actions": [
@@ -161,6 +185,7 @@
     "Appointment",
     "Customer update",
     "Case update",
-    "Team meeting"
+    "Team meeting",
+    "Hybrid Flexi"
   ]
 }
