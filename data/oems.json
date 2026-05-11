@@ -198,15 +198,21 @@
     "locations": [
       {
         "city": "Bengaluru",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       },
       {
         "city": "Chennai",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       },
       {
         "city": "Coimbatore",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       }
     ],
     "contacts": [
@@ -285,7 +291,7 @@
         "phone": "9342133606",
         "position": "Sales RSM",
         "location": "Bengaluru",
-        "note": ""
+        "note": "Heads VMC in BFW"
       },
       {
         "name": "Vivek",
