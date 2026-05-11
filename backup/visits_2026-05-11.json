@@ -1,0 +1,60 @@
+{
+  "visits": [
+    {
+      "id": "v_1778410597347",
+      "oemId": "oem_1778408453736_2w5",
+      "date": "2026-05-04",
+      "type": "call",
+      "personMet": "Giridhar",
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Appointment"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-10T10:56:37.348Z"
+    },
+    {
+      "id": "v_1778410782507",
+      "oemId": "oem_1778408453736_lkn",
+      "date": "2026-05-04",
+      "type": "call",
+      "personMet": "Ramesh",
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Case update"
+      ],
+      "notes": "Spoke about Ramana Raju case from Chennai",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-10T10:59:42.507Z"
+    },
+    {
+      "id": "v_1778488849608",
+      "oemId": "oem_1778408453736_5wv",
+      "date": "2026-05-09",
+      "type": "visit",
+      "personMet": "Shrikant, Mukesh Kumar",
+      "peopleMet": [
+        "Shrikant",
+        "Mukesh Kumar"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "Received 2 contacts. Has asked to meet on 11 may.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-11T08:40:49.608Z"
+    }
+  ],
+  "actions": [
+    {
+      "id": "a_1778410597348_b1m",
+      "visitId": "v_1778410597347",
+      "description": "Take appointment for a meeting",
+      "dueDate": "2026-05-11",
+      "status": "open"
+    }
+  ]
+}
