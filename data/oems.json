@@ -1525,14 +1525,26 @@
     "locations": [
       {
         "city": "Bengaluru",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       },
       {
         "city": "Chennai",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       }
     ],
-    "contacts": [],
+    "contacts": [
+      {
+        "name": "Kiran",
+        "phone": "8904400630",
+        "position": "Sales",
+        "location": "Bengaluru",
+        "note": ""
+      }
+    ],
     "notes": "9% ROI & 0.5% PF for all dealers for subvention4"
   },
   {
