@@ -438,24 +438,22 @@ textarea{min-height:85px;resize:none;line-height:1.6}
     </div>
   </div>
   <div class="p16">
-    <div class="fg">
-      <div class="tog" style="margin-bottom:10px">
-        <button class="tog-btn on" id="rpt-day-btn" onclick="setRptMode('day')">Day</button>
-        <button class="tog-btn" id="rpt-mon-btn" onclick="setRptMode('month')">Month</button>
-        <button class="tog-btn" id="rpt-oem-btn" onclick="setRptMode('oem')">By OEM</button>
-        <button class="tog-btn" id="rpt-per-btn" onclick="setRptMode('person')">By Person</button>
-      </div>
-      <!-- Visit/Call filter — shown in OEM mode -->
-      <div id="rpt-type-filter" style="display:none;margin-bottom:10px">
-        <div class="tog" style="padding:2px;gap:2px">
-          <button class="tog-btn on" id="rft-all" onclick="setRptTypeFilter('all')">All</button>
-          <button class="tog-btn" id="rft-visit" onclick="setRptTypeFilter('visit')">📍 Visits only</button>
-          <button class="tog-btn" id="rft-call" onclick="setRptTypeFilter('call')">📞 Calls only</button>
-        </div>
-      </div>
-      <div id="rpt-day-wrap"><input type="date" id="rpt-date" onchange="renderRpt()"></div>
-      <div id="rpt-mon-wrap" style="display:none"><input type="month" id="rpt-month" onchange="renderRpt()"></div>
+    <!-- Mode selector -->
+    <div class="tog" style="margin-bottom:10px">
+      <button class="tog-btn on" id="rpt-day-btn" onclick="setRptMode('day')">Day</button>
+      <button class="tog-btn" id="rpt-mon-btn" onclick="setRptMode('month')">Month</button>
+      <button class="tog-btn" id="rpt-oem-btn" onclick="setRptMode('oem')">By OEM</button>
+      <button class="tog-btn" id="rpt-per-btn" onclick="setRptMode('person')">By Person</button>
     </div>
+    <!-- Visit / Call filter — always visible -->
+    <div class="tog" style="margin-bottom:10px;padding:2px;gap:2px">
+      <button class="tog-btn on" id="rft-all" onclick="setRptTypeFilter('all')">All</button>
+      <button class="tog-btn" id="rft-visit" onclick="setRptTypeFilter('visit')">📍 Visits</button>
+      <button class="tog-btn" id="rft-call" onclick="setRptTypeFilter('call')">📞 Calls</button>
+    </div>
+    <!-- Date pickers -->
+    <div id="rpt-day-wrap"><input type="date" id="rpt-date" onchange="renderRpt()"></div>
+    <div id="rpt-mon-wrap" style="display:none"><input type="month" id="rpt-month" onchange="renderRpt()"></div>
   </div>
   <div id="rpt-content" style="padding:0 16px"></div>
 </div>
@@ -1072,6 +1070,174 @@ async function saveToken(){
 
 // ── REPORTS ──
 let rptMode='day', rptTypeFilter='all', rptWA='';
+function initRpt(){
+  rptMode='day'; rptTypeFilter='all';
+  ['day','mon','oem','per'].forEach(x=>document.getElementById('rpt-'+x+'-btn').classList.remove('on'));
+  document.getElementById('rpt-day-btn').classList.add('on');
+  document.getElementById('rpt-day-wrap').style.display='block';
+  document.getElementById('rpt-mon-wrap').style.display='none';
+  ['all','visit','call'].forEach(x=>document.getElementById('rft-'+x).classList.remove('on'));
+  document.getElementById('rft-all').classList.add('on');
+  document.getElementById('rpt-share-btn').style.display='none';
+  document.getElementById('rpt-email-btn').style.display='none';
+  document.getElementById('rpt-date').value=todayStr();
+  document.getElementById('rpt-content').innerHTML='';
+  renderRpt();
+}
+function setRptMode(m){
+  rptMode=m;
+  ['day','mon','oem','per'].forEach(x=>document.getElementById('rpt-'+x+'-btn').classList.remove('on'));
+  const btnMap={day:'day',month:'mon',oem:'oem',person:'per'};
+  document.getElementById('rpt-'+(btnMap[m]||m)+'-btn').classList.add('on');
+  document.getElementById('rpt-day-wrap').style.display=m==='day'?'block':'none';
+  document.getElementById('rpt-mon-wrap').style.display=m==='month'?'block':'none';
+  renderRpt();
+}
+function setRptTypeFilter(f){
+  rptTypeFilter=f;
+  ['all','visit','call'].forEach(x=>document.getElementById('rft-'+x).classList.remove('on'));
+  document.getElementById('rft-'+f).classList.add('on');
+  renderRpt();
+}
+function renderRpt(){
+  const el=document.getElementById('rpt-content');
+  let visits=[], label='';
+
+  if(rptMode==='day'){
+    const d=document.getElementById('rpt-date').value; if(!d) return;
+    visits=db.visits.filter(v=>v.date===d); label=fmtDate(d);
+  } else if(rptMode==='month'){
+    const m=document.getElementById('rpt-month').value; if(!m) return;
+    visits=db.visits.filter(v=>v.date.startsWith(m));
+    const [yr,mo]=m.split('-');
+    label=new Date(yr,parseInt(mo)-1,1).toLocaleDateString('en-IN',{month:'long',year:'numeric'});
+  } else if(rptMode==='oem'){
+    visits=[...db.visits].sort((a,b)=>b.date.localeCompare(a.date));
+    label='By OEM';
+  } else if(rptMode==='person'){
+    visits=[...db.visits].filter(v=>v.personMet).sort((a,b)=>b.date.localeCompare(a.date));
+    label='By Person';
+  }
+
+  // Apply visit/call filter to ALL modes
+  if(rptTypeFilter!=='all') visits=visits.filter(v=>v.type===rptTypeFilter);
+  const filterLabel=rptTypeFilter==='visit'?' — Visits only':rptTypeFilter==='call'?' — Calls only':'';
+
+  const show=visits.length>0;
+  document.getElementById('rpt-share-btn').style.display=show?'flex':'none';
+  document.getElementById('rpt-email-btn').style.display=show?'flex':'none';
+
+  if(!visits.length){
+    el.innerHTML=`<div class="empty"><div class="ei">📭</div><h3>No results</h3><p>${label}${filterLabel}</p></div>`;
+    rptWA=''; return;
+  }
+
+  const calls=visits.filter(v=>v.type==='call').length;
+  const vists=visits.filter(v=>v.type==='visit').length;
+  const oemSet=new Set(visits.map(v=>v.oemId));
+  const personSet=new Set(visits.filter(v=>v.personMet).map(v=>v.personMet));
+
+  let html=`<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-bottom:14px">
+    <div class="scard"><div class="snum">${visits.length}</div><div class="slbl">Total</div></div>
+    <div class="scard"><div class="snum">${vists}</div><div class="slbl">Visits</div></div>
+    <div class="scard"><div class="snum">${calls}</div><div class="slbl">Calls</div></div>
+    <div class="scard"><div class="snum">${rptMode==='person'?personSet.size:oemSet.size}</div><div class="slbl">${rptMode==='person'?'People':'OEMs'}</div></div>
+  </div>`;
+
+  if(rptMode==='oem'){
+    const map={};
+    visits.forEach(v=>{if(!map[v.oemId])map[v.oemId]=[];map[v.oemId].push(v);});
+    Object.entries(map).sort((a,b)=>b[1].length-a[1].length).forEach(([oid,vs])=>{
+      const o=db.oems.find(x=>x.id===oid);
+      const vc=vs.filter(v=>v.type==='visit').length;
+      const cc=vs.filter(v=>v.type==='call').length;
+      html+=`<div class="card" style="margin-bottom:10px">
+        <div style="font-size:15px;font-weight:700;margin-bottom:3px">${o?.name||'Unknown'}</div>
+        <div style="font-size:12px;color:var(--soft);margin-bottom:8px">📍 ${vc} visit${vc!==1?'s':''} &nbsp;·&nbsp; 📞 ${cc} call${cc!==1?'s':''}</div>
+        ${vs.map(v=>`<div class="vcard" style="margin-bottom:6px;padding:10px 12px" onclick="showVisit('${v.id}')">
+          <div class="vcard-top"><div class="vcard-name" style="font-size:13px">${fmtDate(v.date)}</div><span class="badge ${v.type==='visit'?'bv':'bc'}" style="font-size:10px">${v.type==='visit'?'📍 Visit':'📞 Call'}</span></div>
+          ${v.personMet?`<div class="vsub">👤 ${v.personMet}</div>`:''}
+          ${[...(v.topics||[]),...(v.customTopics||[])].length?`<div class="vsub">${[...(v.topics||[]),...(v.customTopics||[])].join(' · ')}</div>`:''}
+        </div>`).join('')}
+      </div>`;
+    });
+  } else if(rptMode==='person'){
+    const map={};
+    visits.forEach(v=>{const p=v.personMet||'Unknown';if(!map[p])map[p]=[];map[p].push(v);});
+    Object.entries(map).sort((a,b)=>b[1].length-a[1].length).forEach(([person,vs])=>{
+      html+=`<div class="card" style="margin-bottom:10px">
+        <div style="font-size:15px;font-weight:700;margin-bottom:6px">👤 ${person} <span style="font-size:12px;color:var(--muted);font-weight:400">${vs.length} interaction${vs.length!==1?'s':''}</span></div>
+        ${vs.map(v=>{const o=db.oems.find(x=>x.id===v.oemId);return`<div class="vcard" style="margin-bottom:6px;padding:10px 12px" onclick="showVisit('${v.id}')">
+          <div class="vcard-top"><div class="vcard-name" style="font-size:13px">${o?.name||'Unknown'}</div><span class="badge ${v.type==='visit'?'bv':'bc'}" style="font-size:10px">${fmtDate(v.date)}</span></div>
+          ${[...(v.topics||[]),...(v.customTopics||[])].length?`<div class="vsub">${[...(v.topics||[]),...(v.customTopics||[])].join(' · ')}</div>`:''}
+        </div>`;}).join('')}
+      </div>`;
+    });
+  } else {
+    visits.sort((a,b)=>a.date.localeCompare(b.date)).forEach(v=>{
+      const o=db.oems.find(x=>x.id===v.oemId);
+      const topics=[...(v.topics||[]),...(v.customTopics||[])];
+      const acts=db.actions.filter(a=>a.visitId===v.id);
+      html+=`<div class="vcard" onclick="showVisit('${v.id}')" style="margin-bottom:9px">
+        <div class="vcard-top"><div class="vcard-name">${o?.name||'Unknown'}</div><span class="badge ${v.type==='visit'?'bv':'bc'}">${rptMode==='month'?fmtDate(v.date):v.type==='visit'?'📍 Visit':'📞 Call'}</span></div>
+        ${v.visitLoc||v.personMet?`<div class="vmeta">${v.visitLoc?'📍'+v.visitLoc:''}${v.personMet?' · 👤'+v.personMet:''}</div>`:''}
+        ${topics.length?`<div class="vsub">${topics.join(' · ')}</div>`:''}
+        ${acts.length?`<div class="vsub" style="color:${acts.some(a=>a.status==='open')?'var(--amber)':'var(--muted)'}">📌 ${acts.length} task${acts.length!==1?'s':''} · ${acts.filter(a=>a.status==='open').length} open</div>`:''}
+      </div>`;
+    });
+  }
+  el.innerHTML=html;
+
+  // Build shareable text
+  rptWA=`📊 *${label}${filterLabel}*\nTotal: ${visits.length} · Visits: ${vists} · Calls: ${calls}\n\n`;
+  if(rptMode==='oem'){
+    const map={};
+    visits.forEach(v=>{if(!map[v.oemId])map[v.oemId]=[];map[v.oemId].push(v);});
+    Object.entries(map).sort((a,b)=>b[1].length-a[1].length).forEach(([oid,vs])=>{
+      const o=db.oems.find(x=>x.id===oid);
+      const vc=vs.filter(v=>v.type==='visit').length;
+      const cc=vs.filter(v=>v.type==='call').length;
+      rptWA+=`*${o?.name||'Unknown'}* — 📍 ${vc} visit${vc!==1?'s':''} · 📞 ${cc} call${cc!==1?'s':''}\n`;
+      vs.forEach(v=>{
+        rptWA+=`  ${v.type==='visit'?'📍':'📞'} ${fmtDate(v.date)}`;
+        if(v.personMet) rptWA+=` · 👤 ${v.personMet}`;
+        if([...(v.topics||[]),...(v.customTopics||[])].length) rptWA+=` · ${[...(v.topics||[]),...(v.customTopics||[])].join(', ')}`;
+        rptWA+='\n';
+      });
+      rptWA+='\n';
+    });
+  } else if(rptMode==='person'){
+    const map={};
+    visits.forEach(v=>{const p=v.personMet||'Unknown';if(!map[p])map[p]=[];map[p].push(v);});
+    Object.entries(map).sort((a,b)=>b[1].length-a[1].length).forEach(([person,vs])=>{
+      rptWA+=`👤 *${person}* (${vs.length} interaction${vs.length!==1?'s':''})\n`;
+      vs.forEach(v=>{const o=db.oems.find(x=>x.id===v.oemId);rptWA+=`  ${v.type==='visit'?'📍':'📞'} ${o?.name||'Unknown'} · ${fmtDate(v.date)}\n`;});
+      rptWA+='\n';
+    });
+  } else {
+    visits.forEach(v=>{
+      const o=db.oems.find(x=>x.id===v.oemId);
+      const topics=[...(v.topics||[]),...(v.customTopics||[])];
+      rptWA+=`${v.type==='visit'?'📍':'📞'} *${o?.name||'Unknown'}*${rptMode!=='day'?' — '+fmtDate(v.date):''}\n`;
+      if(v.visitLoc) rptWA+=`  📍 ${v.visitLoc}\n`;
+      if(v.personMet) rptWA+=`  👤 ${v.personMet}\n`;
+      if(topics.length) rptWA+=`  Topics: ${topics.join(', ')}\n`;
+      if(v.notes) rptWA+=`  Notes: ${v.notes}\n`;
+      rptWA+='\n';
+    });
+  }
+  rptWA=rptWA.trim();
+}
+function shareRptWA(){
+  if(!rptWA){toast('Nothing to share');return;}
+  navigator.clipboard.writeText(rptWA).then(()=>toast('Copied for WhatsApp ✓')).catch(()=>{
+    const ta=document.createElement('textarea');ta.value=rptWA;ta.style.cssText='position:fixed;opacity:0';document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);toast('Copied ✓');
+  });
+}
+function shareRptEmail(){
+  if(!rptWA){toast('Nothing to share');return;}
+  window.open('mailto:?subject='+encodeURIComponent('OEM Visit Report')+'&body='+encodeURIComponent(rptWA),'_blank');
+}
 function initRpt(){
   rptMode='day'; rptTypeFilter='all';
   ['day','mon','oem','per'].forEach(x=>document.getElementById('rpt-'+x+'-btn').classList.remove('on'));
