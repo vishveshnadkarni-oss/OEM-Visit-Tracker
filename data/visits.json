@@ -80,6 +80,23 @@
       "notes": "Received 2 contacts. Has asked to meet on 11 may.",
       "nextVisitDate": null,
       "createdAt": "2026-05-11T08:40:49.608Z"
+    },
+    {
+      "id": "v_1778488935880",
+      "oemId": "oem_1778408453736_441",
+      "date": "2026-05-11",
+      "type": "visit",
+      "personMet": "Chandrashekhar Sajjan, Lakshmisha",
+      "peopleMet": [
+        "Chandrashekhar Sajjan",
+        "Lakshmisha"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-11T08:42:15.880Z"
     }
   ],
   "actions": [
