@@ -221,8 +221,11 @@ textarea{min-height:85px;resize:none;line-height:1.6}
     <div class="fg"><label class="lbl">OEM / Dealer</label><select id="v-oem" onchange="onOEMPick()"><option value="">Select...</option></select></div>
     <div class="fg" id="v-loc-wrap" style="display:none"><label class="lbl">Meeting Location</label><select id="v-loc"><option value="">Select location...</option></select></div>
     <div class="fg" id="v-person-wrap" style="display:none">
-      <label class="lbl">Person Met</label>
-      <select id="v-person" onchange="onPersonPick()"><option value="">Select contact...</option></select>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+        <label class="lbl" style="margin:0">People Met</label>
+        <button class="lnk" onclick="addPersonRow()">+ Add person</button>
+      </div>
+      <div id="v-people-list"></div>
       <div id="v-new-ct" style="display:none;margin-top:10px;background:var(--surface2);border:1.5px solid var(--border);border-radius:10px;padding:12px">
         <div style="font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--amber);margin-bottom:10px">New Contact</div>
         <div class="fg"><input type="text" id="nc-name" placeholder="Name *"></div>
@@ -424,18 +427,31 @@ textarea{min-height:85px;resize:none;line-height:1.6}
   <div class="hdr">
     <div class="hdr-row">
       <h1>Reports</h1>
-      <button class="icon-btn" id="rpt-share-btn" onclick="shareRptWA()" style="display:none" title="Copy for WhatsApp">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="17" height="17"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.375"/></svg>
-      </button>
+      <div class="hdr-acts">
+        <button class="icon-btn" id="rpt-email-btn" onclick="shareRptEmail()" style="display:none" title="Send by Email">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="17" height="17"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
+        </button>
+        <button class="icon-btn" id="rpt-share-btn" onclick="shareRptWA()" style="display:none" title="Copy for WhatsApp">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="17" height="17"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.375"/></svg>
+        </button>
+      </div>
     </div>
   </div>
   <div class="p16">
     <div class="fg">
-      <div class="tog" style="margin-bottom:12px">
+      <div class="tog" style="margin-bottom:10px">
         <button class="tog-btn on" id="rpt-day-btn" onclick="setRptMode('day')">Day</button>
         <button class="tog-btn" id="rpt-mon-btn" onclick="setRptMode('month')">Month</button>
         <button class="tog-btn" id="rpt-oem-btn" onclick="setRptMode('oem')">By OEM</button>
         <button class="tog-btn" id="rpt-per-btn" onclick="setRptMode('person')">By Person</button>
+      </div>
+      <!-- Visit/Call filter — shown in OEM mode -->
+      <div id="rpt-type-filter" style="display:none;margin-bottom:10px">
+        <div class="tog" style="padding:2px;gap:2px">
+          <button class="tog-btn on" id="rft-all" onclick="setRptTypeFilter('all')">All</button>
+          <button class="tog-btn" id="rft-visit" onclick="setRptTypeFilter('visit')">📍 Visits only</button>
+          <button class="tog-btn" id="rft-call" onclick="setRptTypeFilter('call')">📞 Calls only</button>
+        </div>
       </div>
       <div id="rpt-day-wrap"><input type="date" id="rpt-date" onchange="renderRpt()"></div>
       <div id="rpt-mon-wrap" style="display:none"><input type="month" id="rpt-month" onchange="renderRpt()"></div>
@@ -632,6 +648,7 @@ function initVisit(){
   document.getElementById('ai-list').innerHTML='';
   document.getElementById('v-loc-wrap').style.display='none';
   document.getElementById('v-person-wrap').style.display='none';
+  document.getElementById('v-people-list').innerHTML='';
   document.getElementById('v-new-ct').style.display='none';
   document.getElementById('topic-tags').innerHTML='';
   document.getElementById('topic-search').value='';
@@ -654,20 +671,17 @@ function onOEMPick(){
   document.getElementById('visit-banner').innerHTML='';
   document.getElementById('v-loc-wrap').style.display='none';
   document.getElementById('v-person-wrap').style.display='none';
+  document.getElementById('v-people-list').innerHTML='';
+  document.getElementById('v-new-ct').style.display='none';
   if(!oid) return;
   const o=db.oems.find(x=>x.id===oid);
-  // Locations
   const locs=(o?.locations||[]).filter(l=>l.city);
   if(locs.length){
     document.getElementById('v-loc').innerHTML='<option value="">Select location...</option>'+locs.map(l=>`<option value="${l.city}">${l.city}</option>`).join('');
     document.getElementById('v-loc-wrap').style.display='block';
   }
-  // Contacts
-  const cts=o?.contacts||[];
-  document.getElementById('v-person').innerHTML='<option value="">Select contact...</option>'+cts.map(c=>`<option value="${c.name}">${c.name}${c.position?' — '+c.position:''}${c.location?' ('+c.location+')':''}</option>`).join('')+'<option value="__new__">+ Add new contact...</option>';
   document.getElementById('v-person-wrap').style.display='block';
-  document.getElementById('v-new-ct').style.display='none';
-  // Open tasks banner
+  addPersonRow();
   const today=todayStr();
   const vids=db.visits.filter(v=>v.oemId===oid).map(v=>v.id);
   const open=db.actions.filter(a=>vids.includes(a.visitId)&&a.status==='open');
@@ -679,10 +693,26 @@ function onOEMPick(){
       <div><div style="font-size:13px;font-weight:500">${a.description}</div>${a.dueDate?`<div class="ameta ${od?'overdue':''}">${od?'Overdue · ':''}Due ${fmtDate(a.dueDate)}</div>`:''}</div>
     </div>`;}).join('')}</div>`;
 }
-function onPersonPick(){
-  const v=document.getElementById('v-person').value;
-  document.getElementById('v-new-ct').style.display=v==='__new__'?'block':'none';
-  if(v==='__new__')['nc-name','nc-phone','nc-pos','nc-loc'].forEach(id=>document.getElementById(id).value='');
+function addPersonRow(){
+  const oid=document.getElementById('v-oem').value;
+  const o=db.oems.find(x=>x.id===oid);
+  const cts=o?.contacts||[];
+  const list=document.getElementById('v-people-list');
+  const row=document.createElement('div');
+  row.style.cssText='display:flex;gap:7px;margin-bottom:8px;align-items:center';
+  const opts='<option value="">Select contact...</option>'+cts.map(c=>`<option value="${c.name}">${c.name}${c.position?' — '+c.position:''}</option>`).join('')+'<option value="__new__">+ Add new contact...</option>';
+  row.innerHTML=`<select style="flex:1;padding:10px 12px;font-size:13px;background:var(--surface2);border:1.5px solid var(--border);border-radius:10px;color:var(--text);-webkit-appearance:none;appearance:none">${opts}</select>
+    <button onclick="this.closest('div').remove()" style="width:34px;height:40px;background:var(--red-bg);border:1px solid rgba(248,81,73,.2);border-radius:8px;color:var(--red);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="13" height="13"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+    </button>`;
+  row.querySelector('select').onchange=function(){
+    if(this.value==='__new__'){document.getElementById('v-new-ct').style.display='block';['nc-name','nc-phone','nc-pos','nc-loc'].forEach(id=>document.getElementById(id).value='');}
+    else document.getElementById('v-new-ct').style.display='none';
+  };
+  list.appendChild(row);
+}
+function getPeopleMet(){
+  return [...document.querySelectorAll('#v-people-list select')].map(s=>s.value).filter(v=>v&&v!=='__new__');
 }
 async function addNewContact(){
   const name=document.getElementById('nc-name').value.trim();
@@ -692,9 +722,11 @@ async function addNewContact(){
   if(!o.contacts) o.contacts=[];
   o.contacts.push({name,phone:document.getElementById('nc-phone').value.trim(),position:document.getElementById('nc-pos').value.trim(),location:document.getElementById('nc-loc').value.trim(),note:''});
   await saveSync();
-  const ps=document.getElementById('v-person');
-  ps.innerHTML='<option value="">Select contact...</option>'+o.contacts.map(c=>`<option value="${c.name}">${c.name}${c.position?' — '+c.position:''}${c.location?' ('+c.location+')':''}</option>`).join('')+'<option value="__new__">+ Add new contact...</option>';
-  ps.value=name;
+  const opts='<option value="">Select contact...</option>'+o.contacts.map(c=>`<option value="${c.name}">${c.name}${c.position?' — '+c.position:''}</option>`).join('')+'<option value="__new__">+ Add new contact...</option>';
+  document.querySelectorAll('#v-people-list select').forEach(sel=>{const cur=sel.value;sel.innerHTML=opts;sel.value=cur;});
+  // Set the last dropdown to the new contact
+  const sels=document.querySelectorAll('#v-people-list select');
+  if(sels.length) sels[sels.length-1].value=name;
   document.getElementById('v-new-ct').style.display='none';
   toast('Contact added ✓');
 }
@@ -708,9 +740,9 @@ async function saveVisit(){
   const date=document.getElementById('v-date').value;
   if(!oid){toast('Please select an OEM');return;}
   if(!date){toast('Please select a date');return;}
-  const pv=document.getElementById('v-person').value;
+  const peopleMet=getPeopleMet();
   const vid='v_'+Date.now();
-  const v={id:vid,oemId:oid,date,type:vType,personMet:(pv&&pv!=='__new__')?pv:'',visitLoc:document.getElementById('v-loc').value||'',topics:selTopics.filter(t=>DEF_TOPICS.includes(t)),customTopics:selTopics.filter(t=>!DEF_TOPICS.includes(t)),notes:document.getElementById('v-notes').value.trim(),nextVisitDate:document.getElementById('v-next').value||null,createdAt:new Date().toISOString()};
+  const v={id:vid,oemId:oid,date,type:vType,personMet:peopleMet.join(', '),peopleMet,visitLoc:document.getElementById('v-loc').value||'',topics:selTopics.filter(t=>DEF_TOPICS.includes(t)),customTopics:selTopics.filter(t=>!DEF_TOPICS.includes(t)),notes:document.getElementById('v-notes').value.trim(),nextVisitDate:document.getElementById('v-next').value||null,createdAt:new Date().toISOString()};
   db.visits.push(v);
   document.querySelectorAll('#ai-list .ai-form').forEach(row=>{
     const ins=row.querySelectorAll('input');
@@ -1039,7 +1071,152 @@ async function saveToken(){
 }
 
 // ── REPORTS ──
-let rptMode='day', rptWA='';
+let rptMode='day', rptTypeFilter='all', rptWA='';
+function initRpt(){
+  rptMode='day'; rptTypeFilter='all';
+  ['day','mon','oem','per'].forEach(x=>document.getElementById('rpt-'+x+'-btn').classList.remove('on'));
+  document.getElementById('rpt-day-btn').classList.add('on');
+  document.getElementById('rpt-day-wrap').style.display='block';
+  document.getElementById('rpt-mon-wrap').style.display='none';
+  document.getElementById('rpt-type-filter').style.display='none';
+  document.getElementById('rpt-share-btn').style.display='none';
+  document.getElementById('rpt-email-btn').style.display='none';
+  document.getElementById('rpt-date').value=todayStr();
+  document.getElementById('rpt-content').innerHTML='';
+  renderRpt();
+}
+function setRptMode(m){
+  rptMode=m; rptTypeFilter='all';
+  ['day','mon','oem','per'].forEach(x=>document.getElementById('rpt-'+x+'-btn').classList.remove('on'));
+  const btnMap={day:'day',month:'mon',oem:'oem',person:'per'};
+  document.getElementById('rpt-'+(btnMap[m]||m)+'-btn').classList.add('on');
+  document.getElementById('rpt-day-wrap').style.display=m==='day'?'block':'none';
+  document.getElementById('rpt-mon-wrap').style.display=m==='month'?'block':'none';
+  document.getElementById('rpt-type-filter').style.display=m==='oem'?'block':'none';
+  ['all','visit','call'].forEach(x=>document.getElementById('rft-'+x).classList.remove('on'));
+  document.getElementById('rft-all').classList.add('on');
+  renderRpt();
+}
+function setRptTypeFilter(f){
+  rptTypeFilter=f;
+  ['all','visit','call'].forEach(x=>document.getElementById('rft-'+x).classList.remove('on'));
+  document.getElementById('rft-'+f).classList.add('on');
+  renderRpt();
+}
+function renderRpt(){
+  const el=document.getElementById('rpt-content');
+  let visits=[], label='';
+  if(rptMode==='day'){
+    const d=document.getElementById('rpt-date').value; if(!d) return;
+    visits=db.visits.filter(v=>v.date===d); label=fmtDate(d);
+  } else if(rptMode==='month'){
+    const m=document.getElementById('rpt-month').value; if(!m) return;
+    visits=db.visits.filter(v=>v.date.startsWith(m));
+    const [yr,mo]=m.split('-');
+    label=new Date(yr,parseInt(mo)-1,1).toLocaleDateString('en-IN',{month:'long',year:'numeric'});
+  } else if(rptMode==='oem'){
+    visits=[...db.visits];
+    if(rptTypeFilter!=='all') visits=visits.filter(v=>v.type===rptTypeFilter);
+    visits.sort((a,b)=>b.date.localeCompare(a.date));
+    label=rptTypeFilter==='all'?'All Visits & Calls':rptTypeFilter==='visit'?'All Visits':'All Calls';
+  } else if(rptMode==='person'){
+    visits=[...db.visits].filter(v=>v.personMet).sort((a,b)=>b.date.localeCompare(a.date));
+    label='By Person';
+  }
+  const show=visits.length;
+  document.getElementById('rpt-share-btn').style.display=show?'flex':'none';
+  document.getElementById('rpt-email-btn').style.display=show?'flex':'none';
+  if(!visits.length){el.innerHTML=`<div class="empty"><div class="ei">📭</div><h3>No visits found</h3><p>${label}</p></div>`;rptWA='';return;}
+  const calls=visits.filter(v=>v.type==='call').length;
+  const vists=visits.filter(v=>v.type==='visit').length;
+  const oemSet=new Set(visits.map(v=>v.oemId));
+  let html=`<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-bottom:14px">
+    <div class="scard"><div class="snum">${visits.length}</div><div class="slbl">Total</div></div>
+    <div class="scard"><div class="snum">${vists}</div><div class="slbl">Visits</div></div>
+    <div class="scard"><div class="snum">${calls}</div><div class="slbl">Calls</div></div>
+    <div class="scard"><div class="snum">${oemSet.size}</div><div class="slbl">OEMs</div></div>
+  </div>`;
+  if(rptMode==='oem'){
+    const map={};
+    visits.forEach(v=>{if(!map[v.oemId])map[v.oemId]=[];map[v.oemId].push(v);});
+    Object.entries(map).sort((a,b)=>b[1].length-a[1].length).forEach(([oid,vs])=>{
+      const o=db.oems.find(x=>x.id===oid);
+      const vc=vs.filter(v=>v.type==='visit').length;
+      const cc=vs.filter(v=>v.type==='call').length;
+      html+=`<div class="card" style="margin-bottom:10px">
+        <div style="font-size:15px;font-weight:700;margin-bottom:4px">${o?.name||'Unknown'}</div>
+        <div style="font-size:12px;color:var(--soft);margin-bottom:8px">📍 ${vc} visit${vc!==1?'s':''} · 📞 ${cc} call${cc!==1?'s':''}</div>
+        ${vs.map(v=>`<div class="vcard" style="margin-bottom:6px;padding:10px 12px" onclick="showVisit('${v.id}')">
+          <div class="vcard-top"><div class="vcard-name" style="font-size:13px">${fmtDate(v.date)}</div><span class="badge ${v.type==='visit'?'bv':'bc'}" style="font-size:10px">${v.type==='visit'?'📍 Visit':'📞 Call'}</span></div>
+          ${v.personMet?`<div class="vsub">👤 ${v.personMet}</div>`:''}
+          ${[...(v.topics||[]),...(v.customTopics||[])].length?`<div class="vsub">${[...(v.topics||[]),...(v.customTopics||[])].join(' · ')}</div>`:''}
+        </div>`).join('')}
+      </div>`;
+    });
+  } else if(rptMode==='person'){
+    const map={};
+    visits.forEach(v=>{const p=v.personMet||'Unknown';if(!map[p])map[p]=[];map[p].push(v);});
+    Object.entries(map).sort((a,b)=>b[1].length-a[1].length).forEach(([person,vs])=>{
+      html+=`<div class="card" style="margin-bottom:10px">
+        <div style="font-size:15px;font-weight:700;margin-bottom:6px">👤 ${person} <span style="font-size:12px;color:var(--muted);font-weight:400">${vs.length} visit${vs.length!==1?'s':''}</span></div>
+        ${vs.map(v=>{const o=db.oems.find(x=>x.id===v.oemId);return`<div class="vcard" style="margin-bottom:6px;padding:10px 12px" onclick="showVisit('${v.id}')">
+          <div class="vcard-top"><div class="vcard-name" style="font-size:13px">${o?.name||'Unknown'}</div><span class="badge ${v.type==='visit'?'bv':'bc'}" style="font-size:10px">${fmtDate(v.date)}</span></div>
+          ${[...(v.topics||[]),...(v.customTopics||[])].length?`<div class="vsub">${[...(v.topics||[]),...(v.customTopics||[])].join(' · ')}</div>`:''}
+        </div>`;}).join('')}
+      </div>`;
+    });
+  } else {
+    visits.sort((a,b)=>a.date.localeCompare(b.date)).forEach(v=>{
+      const o=db.oems.find(x=>x.id===v.oemId);
+      const topics=[...(v.topics||[]),...(v.customTopics||[])];
+      const acts=db.actions.filter(a=>a.visitId===v.id);
+      html+=`<div class="vcard" onclick="showVisit('${v.id}')" style="margin-bottom:9px">
+        <div class="vcard-top"><div class="vcard-name">${o?.name||'Unknown'}</div><span class="badge ${v.type==='visit'?'bv':'bc'}">${rptMode==='month'?fmtDate(v.date):v.type==='visit'?'📍 Visit':'📞 Call'}</span></div>
+        ${v.visitLoc||v.personMet?`<div class="vmeta">${v.visitLoc?'📍'+v.visitLoc:''}${v.personMet?' · 👤'+v.personMet:''}</div>`:''}
+        ${topics.length?`<div class="vsub">${topics.join(' · ')}</div>`:''}
+        ${acts.length?`<div class="vsub" style="color:${acts.some(a=>a.status==='open')?'var(--amber)':'var(--muted)'}">📌 ${acts.length} task${acts.length!==1?'s':''} · ${acts.filter(a=>a.status==='open').length} open</div>`:''}
+      </div>`;
+    });
+  }
+  el.innerHTML=html;
+  // Build WA/email text
+  rptWA=`📊 *${label}*\nTotal: ${visits.length} · Visits: ${vists} · Calls: ${calls}\n\n`;
+  if(rptMode==='oem'){
+    const map={};
+    visits.forEach(v=>{if(!map[v.oemId])map[v.oemId]=[];map[v.oemId].push(v);});
+    Object.entries(map).sort((a,b)=>b[1].length-a[1].length).forEach(([oid,vs])=>{
+      const o=db.oems.find(x=>x.id===oid);
+      const vc=vs.filter(v=>v.type==='visit').length;
+      const cc=vs.filter(v=>v.type==='call').length;
+      rptWA+=`*${o?.name||'Unknown'}* — 📍 ${vc} visit${vc!==1?'s':''} · 📞 ${cc} call${cc!==1?'s':''}\n`;
+      vs.forEach(v=>{rptWA+=`  ${v.type==='visit'?'📍':'📞'} ${fmtDate(v.date)}${v.personMet?' · 👤'+v.personMet:''}\n`;});
+      rptWA+='\n';
+    });
+  } else {
+    visits.forEach(v=>{
+      const o=db.oems.find(x=>x.id===v.oemId);
+      const topics=[...(v.topics||[]),...(v.customTopics||[])];
+      rptWA+=`${v.type==='visit'?'📍':'📞'} *${o?.name||'Unknown'}*${rptMode!=='day'?' — '+fmtDate(v.date):''}\n`;
+      if(v.visitLoc) rptWA+=`  📍 ${v.visitLoc}\n`;
+      if(v.personMet) rptWA+=`  👤 ${v.personMet}\n`;
+      if(topics.length) rptWA+=`  Topics: ${topics.join(', ')}\n`;
+      rptWA+='\n';
+    });
+  }
+  rptWA=rptWA.trim();
+}
+function shareRptWA(){
+  if(!rptWA){toast('Nothing to share');return;}
+  navigator.clipboard.writeText(rptWA).then(()=>toast('Copied for WhatsApp ✓')).catch(()=>{
+    const ta=document.createElement('textarea');ta.value=rptWA;ta.style.cssText='position:fixed;opacity:0';document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);toast('Copied ✓');
+  });
+}
+function shareRptEmail(){
+  if(!rptWA){toast('Nothing to share');return;}
+  const subject=encodeURIComponent('OEM Visit Report');
+  const body=encodeURIComponent(rptWA);
+  window.open('mailto:?subject='+subject+'&body='+body,'_blank');
+}
 function initRpt(){
   rptMode='day';
   ['day','mon','oem','per'].forEach(x=>document.getElementById('rpt-'+x+'-btn').classList.remove('on'));
