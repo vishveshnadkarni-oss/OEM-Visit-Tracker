@@ -60,6 +60,45 @@
       "notes": "Met a sales engineer at their bangalore office. He mentioned their meetings are there in the mornings at 10am",
       "nextVisitDate": null,
       "createdAt": "2026-05-11T08:49:16.421Z"
+    },
+    {
+      "id": "v_1778498886431",
+      "oemId": "oem_1778408453736_vp9",
+      "date": "2026-05-11",
+      "type": "visit",
+      "personMet": "Ajay",
+      "peopleMet": [
+        "Ajay"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "He asked to connect with Jagadeesh Patil for any queries.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-11T11:28:06.431Z"
+    },
+    {
+      "id": "v_1778498994066",
+      "oemId": "oem_1778408453736_wvh",
+      "date": "2026-05-11",
+      "type": "visit",
+      "personMet": "Basavaraju",
+      "peopleMet": [
+        "Basavaraju"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [
+        "Leasing",
+        "Principal Moratorium",
+        "Startups",
+        "Rate of Interest"
+      ],
+      "customTopics": [
+        "Team meeting"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-11T11:29:54.066Z"
     }
   ],
   "actions": [
@@ -69,11 +108,19 @@
       "description": "Take appointment for a meeting",
       "dueDate": "2026-05-11",
       "status": "open"
+    },
+    {
+      "id": "a_1778498994066_7r5",
+      "visitId": "v_1778498994066",
+      "description": "On Saturday they have thier team meeting in office",
+      "dueDate": "2026-05-16",
+      "status": "open"
     }
   ],
   "topics": [
     "Appointment",
     "Customer update",
-    "Case update"
+    "Case update",
+    "Team meeting"
   ]
 }
