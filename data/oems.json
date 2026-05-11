@@ -1219,15 +1219,21 @@
     "locations": [
       {
         "city": "Bengaluru",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       },
       {
         "city": "Chennai",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       },
       {
         "city": "Coimbatore",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       }
     ],
     "contacts": [
@@ -1236,7 +1242,7 @@
         "phone": "9791306222",
         "position": "Sales Head",
         "location": "Chennai",
-        "note": ""
+        "note": "Takes care of Hyderabad, Bengaluru"
       },
       {
         "name": "Madhubalan",
@@ -1271,7 +1277,7 @@
         "phone": "9597580111",
         "position": "Sales Head",
         "location": "Bengaluru",
-        "note": ""
+        "note": "Head of Bengaluru branch"
       },
       {
         "name": "Arivazhagan",
