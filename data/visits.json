@@ -46,6 +46,20 @@
       "notes": "Received 2 contacts. Has asked to meet on 11 may.",
       "nextVisitDate": null,
       "createdAt": "2026-05-11T08:40:49.608Z"
+    },
+    {
+      "id": "v_1778489356421",
+      "oemId": "oem_1778408453736_wvh",
+      "date": "2026-05-09",
+      "type": "visit",
+      "personMet": "",
+      "peopleMet": [],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "Met a sales engineer at their bangalore office. He mentioned their meetings are there in the mornings at 10am",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-11T08:49:16.421Z"
     }
   ],
   "actions": [
