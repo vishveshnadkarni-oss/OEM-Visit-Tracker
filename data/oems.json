@@ -1277,7 +1277,7 @@
         "phone": "9597580111",
         "position": "Sales Head",
         "location": "Bengaluru",
-        "note": "Head of Bengaluru branch"
+        "note": "GM of Bengaluru branch"
       },
       {
         "name": "Arivazhagan",
@@ -1285,6 +1285,20 @@
         "position": "Sales Head",
         "location": "Coimbatore",
         "note": ""
+      },
+      {
+        "name": "Narendra Babu",
+        "phone": "9663786648",
+        "position": "Product Head",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Rajesh",
+        "phone": "7397037333",
+        "position": "Sales Head",
+        "location": "Coimbatore",
+        "note": "GM of Bangalore and Coimbatore"
       }
     ],
     "notes": ""
