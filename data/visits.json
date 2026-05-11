@@ -118,6 +118,27 @@
       "notes": "- Teams meeting scheduled on 13th and 14th may for South & East and North & west respectively.\n\n- May month is slow.\n- They have been given a target of 10 machines per day and currently they are doing 3.5 machines per day\n- Annual Target is 2500cr. Last year it was 2000 cr\n- From the 300 machines per month, 250 are VMC's which are ideal value and 50 are CNC and others.\n-",
       "nextVisitDate": null,
       "createdAt": "2026-05-11T11:50:47.887Z"
+    },
+    {
+      "id": "v_1778517396426",
+      "oemId": "oem_1778408453736_g2b",
+      "date": "2026-05-09",
+      "type": "visit",
+      "personMet": "Manikanandan, Rajesh, Narendra Babu",
+      "peopleMet": [
+        "Manikanandan",
+        "Rajesh",
+        "Narendra Babu"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Appointment",
+        "Customer update"
+      ],
+      "notes": "Asked for a 10 min session on a Saturday preferably 16 May.. He will share a case on wednesday.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-11T16:36:36.426Z"
     }
   ],
   "actions": [
