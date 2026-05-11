@@ -954,15 +954,21 @@
     "locations": [
       {
         "city": "Bengaluru",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       },
       {
         "city": "Chennai",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       },
       {
         "city": "Coimbatore",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       }
     ],
     "contacts": [
@@ -985,6 +991,13 @@
         "phone": "7211102822",
         "position": "Sales Head",
         "location": "Coimbatore",
+        "note": ""
+      },
+      {
+        "name": "Basavaraju",
+        "phone": "7211103307",
+        "position": "Sales",
+        "location": "Bengaluru",
         "note": ""
       }
     ],
