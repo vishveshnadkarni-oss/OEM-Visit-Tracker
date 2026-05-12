@@ -1611,18 +1611,28 @@
     "oemType": "OEM",
     "segment": "Medical",
     "subcategories": [
-      "Ophthalmology",
-      "Imaging"
+      "Imaging",
+      "Ophthalmology"
     ],
     "dealerBrands": "",
     "locations": [
       {
         "city": "Bengaluru",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       },
       {
         "city": "Chennai",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
+      },
+      {
+        "city": "Patna",
+        "address": "",
+        "lat": "",
+        "lng": ""
       }
     ],
     "contacts": [
@@ -1632,9 +1642,23 @@
         "position": "Sales",
         "location": "Chennai",
         "note": ""
+      },
+      {
+        "name": "Pankaj Sinha",
+        "phone": "9830113991",
+        "position": "Sales",
+        "location": "Patna",
+        "note": ""
+      },
+      {
+        "name": "Phaniraj Upadhyay",
+        "phone": "9379915175",
+        "position": "NSM",
+        "location": "Bengaluru",
+        "note": ""
       }
     ],
-    "notes": ""
+    "notes": "Subvention at 10% Roi and 0.75% PF"
   },
   {
     "id": "oem_1778408453736_mjc",
