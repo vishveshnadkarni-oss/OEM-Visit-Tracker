@@ -140,6 +140,30 @@
       "notes": "He was very casual and said he will share any leads if he has any",
       "nextVisitDate": null,
       "createdAt": "2026-05-11T16:38:09.044Z"
+    },
+    {
+      "id": "v_1778557403347",
+      "oemId": "oem_1778408453736_wvh",
+      "date": "2026-05-11",
+      "type": "visit",
+      "personMet": "Basavaraju",
+      "peopleMet": [
+        "Basavaraju"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [
+        "Principal Moratorium",
+        "Leasing",
+        "Rate of Interest",
+        "Startups"
+      ],
+      "customTopics": [
+        "Hybrid Flexi",
+        "Team meeting"
+      ],
+      "notes": "They do approximately 45 machines in a month",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-12T03:43:23.348Z"
     }
   ],
   "actions": [
@@ -148,6 +172,13 @@
       "visitId": "v_1778410597347",
       "description": "Take appointment for a meeting",
       "dueDate": "2026-05-11",
+      "status": "open"
+    },
+    {
+      "id": "a_1778557403350_wjn",
+      "visitId": "v_1778557403347",
+      "description": "Macpower has their meeting on Saturdays at 11",
+      "dueDate": "2026-05-16",
       "status": "open"
     }
   ],
