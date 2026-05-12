@@ -1820,7 +1820,7 @@
     "notes": "We have agreement. Current scheme running for Xcube machines"
   },
   {
-    "id": "oem_1778576788896",
+    "id": "oem_1778576666200",
     "name": "Yamazen",
     "code": "",
     "oemType": "Dealer",
@@ -1849,13 +1849,6 @@
         "phone": "9980048645",
         "position": "Sales head",
         "location": "Bengaluru",
-        "note": ""
-      },
-      {
-        "name": "Shravan",
-        "phone": "9108340971",
-        "position": "Sales head",
-        "location": "Hyderabad",
         "note": ""
       }
     ],
