@@ -182,6 +182,28 @@
       "notes": "Sone of the clauses that Bajaj has set is not approved by BPL.",
       "nextVisitDate": null,
       "createdAt": "2026-05-12T03:47:36.782Z"
+    },
+    {
+      "id": "v_1778575375436",
+      "oemId": "oem_1778408453736_g2b",
+      "date": "2026-05-12",
+      "type": "customer",
+      "personMet": "Manikanandan",
+      "peopleMet": [
+        "Manikanandan"
+      ],
+      "visitLoc": "",
+      "topics": [
+        "Leasing",
+        "Principal Moratorium"
+      ],
+      "customTopics": [
+        "Customer update",
+        "Hybrid Flexi"
+      ],
+      "notes": "Met Mr. Thulasi Ragavendra.\nS&T customer.\nWants loan of 1.7cr.\nWants to clear quickly within 1 yr",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-12T08:42:55.436Z"
     }
   ],
   "actions": [
