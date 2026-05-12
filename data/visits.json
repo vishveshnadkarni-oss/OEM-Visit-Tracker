@@ -222,6 +222,24 @@
       "notes": "Spoke about the Patna lead Mr. Rakesh, Tirupathi eye hospital",
       "nextVisitDate": null,
       "createdAt": "2026-05-12T09:03:02.144Z"
+    },
+    {
+      "id": "v_1778576890384",
+      "oemId": "oem_1778576666200",
+      "date": "2026-05-12",
+      "type": "call",
+      "personMet": "Jayson Matthew",
+      "peopleMet": [
+        "Jayson Matthew"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Case update"
+      ],
+      "notes": "He asked to reach out to Shravan from Hyderabad regarding closing the deal with the customer",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-12T09:08:10.384Z"
     }
   ],
   "actions": [
