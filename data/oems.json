@@ -1757,5 +1757,42 @@
       }
     ],
     "notes": ""
+  },
+  {
+    "id": "oem_1778557584919",
+    "name": "BPL",
+    "code": "",
+    "oemType": "OEM",
+    "segment": "Medical",
+    "subcategories": [
+      "Imaging",
+      "Anaesthetic"
+    ],
+    "dealerBrands": "",
+    "locations": [
+      {
+        "city": "Bengaluru",
+        "address": "",
+        "lat": "",
+        "lng": ""
+      }
+    ],
+    "contacts": [
+      {
+        "name": "Rajesh Maharana",
+        "phone": "80950 88822",
+        "position": "Commercial head",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Suman Chudhury",
+        "phone": "9830180122",
+        "position": "Sales head",
+        "location": "Bengaluru",
+        "note": "Heads ultrasound"
+      }
+    ],
+    "notes": "We have agreement. Current scheme running for Xcube machines"
   }
 ]
