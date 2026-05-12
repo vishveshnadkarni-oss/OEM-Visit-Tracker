@@ -1818,5 +1818,40 @@
       }
     ],
     "notes": "We have agreement. Current scheme running for Xcube machines"
+  },
+  {
+    "id": "oem_1778576666200",
+    "name": "Yamazen",
+    "code": "",
+    "oemType": "Dealer",
+    "segment": "Industrial",
+    "subcategories": [
+      "Machine Tools"
+    ],
+    "dealerBrands": "",
+    "locations": [
+      {
+        "city": "Bengaluru",
+        "address": "",
+        "lat": "",
+        "lng": ""
+      },
+      {
+        "city": "Hyderabad",
+        "address": "",
+        "lat": "",
+        "lng": ""
+      }
+    ],
+    "contacts": [
+      {
+        "name": "Jayson Matthew",
+        "phone": "9980048645",
+        "position": "Sales head",
+        "location": "Bengaluru",
+        "note": ""
+      }
+    ],
+    "notes": ""
   }
 ]
