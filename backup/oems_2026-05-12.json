@@ -1133,15 +1133,21 @@
     "locations": [
       {
         "city": "Bengaluru",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       },
       {
         "city": "Chennai",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       },
       {
         "city": "Coimbatore",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       }
     ],
     "contacts": [
@@ -1181,7 +1187,7 @@
         "note": ""
       },
       {
-        "name": "Reddies",
+        "name": "Ratheesh",
         "phone": "8939888191",
         "position": "",
         "location": "Chennai",
