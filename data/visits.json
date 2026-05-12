@@ -164,6 +164,24 @@
       "notes": "They do approximately 45 machines in a month",
       "nextVisitDate": null,
       "createdAt": "2026-05-12T03:43:23.348Z"
+    },
+    {
+      "id": "v_1778557656782",
+      "oemId": "oem_1778557584919",
+      "date": "2026-05-08",
+      "type": "call",
+      "personMet": "Rajesh Maharana",
+      "peopleMet": [
+        "Rajesh Maharana"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Contract Renewal"
+      ],
+      "notes": "Sone of the clauses that Bajaj has set is not approved by BPL.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-12T03:47:36.782Z"
     }
   ],
   "actions": [
@@ -187,6 +205,7 @@
     "Customer update",
     "Case update",
     "Team meeting",
-    "Hybrid Flexi"
+    "Hybrid Flexi",
+    "Contract Renewal"
   ]
 }
