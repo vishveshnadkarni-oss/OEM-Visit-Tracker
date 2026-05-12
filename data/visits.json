@@ -224,9 +224,9 @@
       "createdAt": "2026-05-12T09:03:02.144Z"
     },
     {
-      "id": "v_1778576890384",
-      "oemId": "oem_1778576666200",
-      "date": "2026-05-12",
+      "id": "v_1778578428226",
+      "oemId": "oem_1778576788896",
+      "date": "2026-05-08",
       "type": "call",
       "personMet": "Jayson Matthew",
       "peopleMet": [
@@ -237,9 +237,9 @@
       "customTopics": [
         "Case update"
       ],
-      "notes": "He asked to reach out to Shravan from Hyderabad regarding closing the deal with the customer",
+      "notes": "Spoke about 4% ROI for Hyderabad customer. Shravan to take it ahead.",
       "nextVisitDate": null,
-      "createdAt": "2026-05-12T09:08:10.384Z"
+      "createdAt": "2026-05-12T09:33:48.226Z"
     }
   ],
   "actions": [
