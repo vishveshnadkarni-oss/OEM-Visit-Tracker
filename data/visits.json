@@ -204,6 +204,24 @@
       "notes": "Met Mr. Thulasi Ragavendra.\nS&T customer.\nWants loan of 1.7cr.\nWants to clear quickly within 1 yr",
       "nextVisitDate": null,
       "createdAt": "2026-05-12T08:42:55.436Z"
+    },
+    {
+      "id": "v_1778576582144",
+      "oemId": "oem_1778408453736_lkn",
+      "date": "2026-05-08",
+      "type": "visit",
+      "personMet": "Pankaj Sinha",
+      "peopleMet": [
+        "Pankaj Sinha"
+      ],
+      "visitLoc": "Patna",
+      "topics": [],
+      "customTopics": [
+        "Case update"
+      ],
+      "notes": "Spoke about the Patna lead Mr. Rakesh, Tirupathi eye hospital",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-12T09:03:02.144Z"
     }
   ],
   "actions": [
