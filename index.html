@@ -84,6 +84,7 @@ textarea{min-height:85px;resize:none;line-height:1.6}
 .badge{font-size:11px;font-weight:600;padding:3px 8px;border-radius:20px;flex-shrink:0;white-space:nowrap}
 .bv{background:rgba(88,166,255,.15);color:var(--blue)}
 .bc{background:var(--green-bg);color:var(--green)}
+.bcv{background:rgba(139,92,246,.15);color:#a78bfa}
 .boem{background:var(--green-bg);color:var(--green)}
 .bdlr{background:var(--amber-bg);color:var(--amber)}
 .bmed{background:rgba(248,81,73,.15);color:#ff7b72}
@@ -218,7 +219,11 @@ textarea{min-height:85px;resize:none;line-height:1.6}
   <div id="visit-banner"></div>
   <div class="p16" style="padding-bottom:8px">
     <div class="fg"><label class="lbl">Type</label>
-      <div class="tog"><button class="tog-btn on" id="tb-v" onclick="setVType('visit')">📍 Visit</button><button class="tog-btn" id="tb-c" onclick="setVType('call')">📞 Call</button></div>
+      <div class="tog">
+        <button class="tog-btn on" id="tb-v" onclick="setVType('visit')">📍 Visit</button>
+        <button class="tog-btn" id="tb-c" onclick="setVType('call')">📞 Call</button>
+        <button class="tog-btn" id="tb-cv" onclick="setVType('customer')">🏢 Customer Visit</button>
+      </div>
     </div>
     <div class="fg"><label class="lbl">Date</label><input type="date" id="v-date"></div>
     <div class="fg"><label class="lbl">OEM / Dealer</label><select id="v-oem" onchange="onOEMPick()"><option value="">Select...</option></select></div>
@@ -493,7 +498,7 @@ const SUBCATS={Medical:['Imaging','Ophthalmology','Dermatology','Cosmetology','L
 
 // ── STATE ──
 let db={oems:[],visits:[],actions:[],topics:[]};
-let selTopics=[], vType='visit', oType='OEM', oSeg='Medical', custChips=[], editOEM=null, curVid=null, taskFilter='open', listening=false, recog=null;
+let selTopics=[], vType='visit', oType='OEM', oSeg='Medical', custChips=[], editOEM=null, curVid=null, editVid=null, taskFilter='open', listening=false, recog=null;
 
 // ── LOCAL STORAGE ──
 function load(){try{const r=localStorage.getItem('oem_v5');if(r){db=JSON.parse(r);if(!db.topics)db.topics=[];}}catch(e){}}
@@ -617,7 +622,7 @@ function renderHome(){
     const o=db.oems.find(x=>x.id===v.oemId);
     const topics=[...(v.topics||[]),...(v.customTopics||[])];
     return`<div class="vcard" onclick="showVisit('${v.id}')">
-      <div class="vcard-top"><div class="vcard-name">${o?.name||'Unknown'}</div><span class="badge ${v.type==='visit'?'bv':'bc'}">${v.type==='visit'?'📍 Visit':'📞 Call'}</span></div>
+      <div class="vcard-top"><div class="vcard-name">${o?.name||'Unknown'}</div><span class="badge ${v.type==='visit'?'bv':v.type==='customer'?'bcv':'bc'}">${v.type==='visit'?'📍 Visit':v.type==='customer'?'🏢 Customer':'📞 Call'}</span></div>
       <div class="vmeta">${o?.code||''}${v.visitLoc?' · 📍'+v.visitLoc:''}</div>
       ${v.personMet?`<div class="vsub">👤 ${v.personMet}</div>`:''}
       ${topics.length?`<div class="vsub">${topics.join(' · ')}</div>`:''}
@@ -638,9 +643,12 @@ function renderHome(){
 
 // ── NEW VISIT ──
 function initVisit(){
-  vType='visit'; selTopics=[];
+  vType='visit'; selTopics=[]; editVid=null;
   document.getElementById('tb-v').classList.add('on');
   document.getElementById('tb-c').classList.remove('on');
+  document.getElementById('tb-cv').classList.remove('on');
+  document.querySelector('#s-new-visit h1').textContent='New Report';
+  document.querySelector('#s-new-visit .save-bar button').textContent='Save Report';
   document.getElementById('v-date').value=todayStr();
   document.getElementById('v-notes').value='';
   document.getElementById('v-next').value='';
@@ -658,7 +666,7 @@ function initVisit(){
   sel.innerHTML='<option value="">Select...</option>'+[...db.oems].sort((a,b)=>a.name.localeCompare(b.name)).map(o=>`<option value="${o.id}">${o.name}${o.code?' ('+o.code+')':''}</option>`).join('');
   renderTopicDrop();
 }
-function setVType(t){vType=t;document.getElementById('tb-v').classList.toggle('on',t==='visit');document.getElementById('tb-c').classList.toggle('on',t==='call');}
+function setVType(t){vType=t;document.getElementById('tb-v').classList.toggle('on',t==='visit');document.getElementById('tb-c').classList.toggle('on',t==='call');document.getElementById('tb-cv').classList.toggle('on',t==='customer');}
 function renderTopicDrop(search=''){
   const all=allTopics().filter(t=>!selTopics.includes(t)&&(!search||t.toLowerCase().includes(search.toLowerCase())));
   document.getElementById('topic-sel').innerHTML='<option value="">Add a topic...</option>'+all.map(t=>`<option value="${t}">${t}</option>`).join('');
@@ -742,19 +750,32 @@ async function saveVisit(){
   if(!oid){toast('Please select an OEM');return;}
   if(!date){toast('Please select a date');return;}
   const peopleMet=getPeopleMet();
-  const vid='v_'+Date.now();
-  const v={id:vid,oemId:oid,date,type:vType,personMet:peopleMet.join(', '),peopleMet,visitLoc:document.getElementById('v-loc').value||'',topics:selTopics.filter(t=>DEF_TOPICS.includes(t)),customTopics:selTopics.filter(t=>!DEF_TOPICS.includes(t)),notes:document.getElementById('v-notes').value.trim(),nextVisitDate:document.getElementById('v-next').value||null,createdAt:new Date().toISOString()};
-  db.visits.push(v);
-  document.querySelectorAll('#ai-list .ai-form').forEach(row=>{
-    const ins=row.querySelectorAll('input');
-    const desc=ins[0].value.trim();const due=ins[1].value;
-    if(desc) db.actions.push({id:'a_'+Date.now()+'_'+Math.random().toString(36).slice(2,5),visitId:vid,description:desc,dueDate:due||null,status:'open'});
-  });
-  selTopics=[];
-  toast('Saving...');
-  await saveSync();
-  toast('Report saved ✓');
-  go('home');
+  const topics=selTopics.filter(t=>DEF_TOPICS.includes(t));
+  const customTopics=selTopics.filter(t=>!DEF_TOPICS.includes(t));
+  const visitLoc=document.getElementById('v-loc').value||'';
+  const notes=document.getElementById('v-notes').value.trim();
+  const nextDate=document.getElementById('v-next').value||null;
+  if(editVid){
+    const v=db.visits.find(x=>x.id===editVid);
+    if(v){Object.assign(v,{oemId:oid,date,type:vType,personMet:peopleMet.join(', '),peopleMet,visitLoc,topics,customTopics,notes,nextVisitDate:nextDate});}
+    db.actions=db.actions.filter(a=>a.visitId!==editVid);
+    document.querySelectorAll('#ai-list .ai-form').forEach(row=>{
+      const ins=row.querySelectorAll('input');const desc=ins[0].value.trim();const due=ins[1].value;
+      if(desc) db.actions.push({id:'a_'+Date.now()+'_'+Math.random().toString(36).slice(2,5),visitId:editVid,description:desc,dueDate:due||null,status:'open'});
+    });
+    selTopics=[];editVid=null;
+    toast('Updating...');await saveSync();toast('Report updated ✓');go('home');
+  } else {
+    const vid='v_'+Date.now();
+    const v={id:vid,oemId:oid,date,type:vType,personMet:peopleMet.join(', '),peopleMet,visitLoc,topics,customTopics,notes,nextVisitDate:nextDate,createdAt:new Date().toISOString()};
+    db.visits.push(v);
+    document.querySelectorAll('#ai-list .ai-form').forEach(row=>{
+      const ins=row.querySelectorAll('input');const desc=ins[0].value.trim();const due=ins[1].value;
+      if(desc) db.actions.push({id:'a_'+Date.now()+'_'+Math.random().toString(36).slice(2,5),visitId:vid,description:desc,dueDate:due||null,status:'open'});
+    });
+    selTopics=[];
+    toast('Saving...');await saveSync();toast('Report saved ✓');go('home');
+  }
 }
 
 // ── VISIT DETAIL ──
@@ -774,7 +795,7 @@ function showVisit(vid){
     <div class="dtl"><div class="dtl-lbl">Details</div>
       <div class="dtl-box" style="display:flex;gap:16px;flex-wrap:wrap">
         <div><div style="font-size:11px;color:var(--muted)">Date</div><div class="mono" style="font-size:13px;margin-top:2px">${fmtDate(v.date)}</div></div>
-        <div><div style="font-size:11px;color:var(--muted)">Type</div><span class="badge ${v.type==='visit'?'bv':'bc'}" style="display:inline-block;margin-top:4px">${v.type==='visit'?'📍 Visit':'📞 Call'}</span></div>
+        <div><div style="font-size:11px;color:var(--muted)">Type</div><span class="badge ${v.type==='visit'?'bv':v.type==='customer'?'bcv':'bc'}" style="display:inline-block;margin-top:4px">${v.type==='visit'?'📍 Visit':v.type==='customer'?'🏢 Customer':'📞 Call'}</span></div>
         ${v.nextVisitDate?`<div><div style="font-size:11px;color:var(--muted)">Follow-up</div><div class="mono" style="font-size:13px;margin-top:2px">${fmtDate(v.nextVisitDate)}</div></div>`:''}
       </div></div>
     ${topics.length?`<div class="dtl"><div class="dtl-lbl">Topics</div><div class="tags">${topics.map(t=>`<span class="tag">${t}</span>`).join('')}</div></div>`:''}
@@ -956,7 +977,7 @@ function copyWA(){
   const o=db.oems.find(x=>x.id===v.oemId);
   const acts=db.actions.filter(a=>a.visitId===v.id);
   const topics=[...(v.topics||[]),...(v.customTopics||[])];
-  let txt=`${v.type==='visit'?'📍':'📞'} *${v.type==='visit'?'Visit':'Call'} Report — ${fmtDate(v.date)}*\n`;
+  let txt=`${v.type==='visit'?'📍':v.type==='customer'?'🏢':'📞'} *${v.type==='visit'?'Visit':'Call'} Report — ${fmtDate(v.date)}*\n`;
   txt+=`*OEM:* ${o?.name||'N/A'}${o?.code?' ('+o.code+')':''} · ${o?.oemType||''} · ${o?.segment||''}\n`;
   if(v.visitLoc) txt+=`*Location:* ${v.visitLoc}\n`;
   if(v.personMet) txt+=`*Person Met:* ${v.personMet}\n`;
@@ -1120,9 +1141,13 @@ function renderRpt(){
   const filterLabel=rptTypeFilter==='visit'?' — Visits only':rptTypeFilter==='call'?' — Calls only':'';
 
   if(!visits.length){
+    document.getElementById('rpt-share-btn').style.display='none';
+    document.getElementById('rpt-email-btn').style.display='none';
     el.innerHTML=`<div class="empty"><div class="ei">📭</div><h3>No results</h3><p>${label}${filterLabel}</p></div>`;
     rptWA=''; return;
   }
+  document.getElementById('rpt-share-btn').style.display='flex';
+  document.getElementById('rpt-email-btn').style.display='flex';
 
   const calls=visits.filter(v=>v.type==='call').length;
   const vists=visits.filter(v=>v.type==='visit').length;
@@ -1150,7 +1175,7 @@ function renderRpt(){
         ${vs.map(v=>`<div style="display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border)">
           <div onclick="showVisit('${v.id}')" style="flex:1;cursor:pointer">
             <div style="display:flex;align-items:center;gap:8px">
-              <span class="badge ${v.type==='visit'?'bv':'bc'}" style="font-size:10px">${v.type==='visit'?'📍':'📞'}</span>
+              <span class="badge ${v.type==='visit'?'bv':v.type==='customer'?'bcv':'bc'}" style="font-size:10px">${v.type==='visit'?'📍':v.type==='customer'?'🏢':'📞'}</span>
               <span style="font-size:13px;font-weight:600">${fmtDate(v.date)}</span>
             </div>
             ${v.personMet?`<div class="vsub" style="margin-top:3px">👤 ${v.personMet}</div>`:''}
@@ -1176,7 +1201,7 @@ function renderRpt(){
         ${vs.map(v=>{const o=db.oems.find(x=>x.id===v.oemId);return`<div style="display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border)">
           <div onclick="showVisit('${v.id}')" style="flex:1;cursor:pointer">
             <div style="display:flex;align-items:center;gap:8px">
-              <span class="badge ${v.type==='visit'?'bv':'bc'}" style="font-size:10px">${v.type==='visit'?'📍':'📞'}</span>
+              <span class="badge ${v.type==='visit'?'bv':v.type==='customer'?'bcv':'bc'}" style="font-size:10px">${v.type==='visit'?'📍':v.type==='customer'?'🏢':'📞'}</span>
               <span style="font-size:13px;font-weight:600">${o?.name||'Unknown'}</span>
             </div>
             <div class="vmeta" style="margin-top:2px">${fmtDate(v.date)}${v.visitLoc?' · 📍'+v.visitLoc:''}</div>
@@ -1194,7 +1219,7 @@ function renderRpt(){
       const acts=db.actions.filter(a=>a.visitId===v.id);
       html+=`<div style="display:flex;align-items:flex-start;gap:6px;margin-bottom:9px">
         <div class="vcard" onclick="showVisit('${v.id}')" style="flex:1;margin-bottom:0">
-          <div class="vcard-top"><div class="vcard-name">${o?.name||'Unknown'}</div><span class="badge ${v.type==='visit'?'bv':'bc'}">${rptMode==='month'?fmtDate(v.date):v.type==='visit'?'📍 Visit':'📞 Call'}</span></div>
+          <div class="vcard-top"><div class="vcard-name">${o?.name||'Unknown'}</div><span class="badge ${v.type==='visit'?'bv':v.type==='customer'?'bcv':'bc'}">${rptMode==='month'?fmtDate(v.date):v.type==='visit'?'📍 Visit':v.type==='customer'?'🏢 Customer':'📞 Call'}</span></div>
           ${v.visitLoc||v.personMet?`<div class="vmeta">${v.visitLoc?'📍'+v.visitLoc:''}${v.personMet?' · 👤'+v.personMet:''}</div>`:''}
           ${topics.length?`<div class="vsub">${topics.join(' · ')}</div>`:''}
           ${acts.length?`<div class="vsub" style="color:${acts.some(a=>a.status==='open')?'var(--amber)':'var(--muted)'}">📌 ${acts.length} task${acts.length!==1?'s':''} · ${acts.filter(a=>a.status==='open').length} open</div>`:''}
@@ -1206,17 +1231,7 @@ function renderRpt(){
     });
   }
 
-  // Share buttons — always visible at bottom
-  html+=`<div style="display:flex;gap:10px;margin-top:8px;padding-bottom:8px">
-    <button onclick="shareRptWA()" style="flex:1;padding:12px;background:var(--amber);color:#0d1117;border:none;border-radius:10px;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="15" height="15"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.375"/></svg>
-      Copy for WhatsApp
-    </button>
-    <button onclick="shareRptEmail()" style="flex:1;padding:12px;background:var(--surface2);color:var(--text);border:1.5px solid var(--border);border-radius:10px;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="15" height="15"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
-      Send Email
-    </button>
-  </div>`;
+  html+=`<div style="height:12px"></div>`;
   el.innerHTML=html;
 
   // Build shareable text
@@ -1227,7 +1242,7 @@ function renderRpt(){
     Object.entries(map).sort((a,b)=>b[1].length-a[1].length).forEach(([oid,vs])=>{
       const o=db.oems.find(x=>x.id===oid);
       rptWA+=`*${o?.name||'Unknown'}* — 📍 ${vs.filter(v=>v.type==='visit').length} visit${vs.filter(v=>v.type==='visit').length!==1?'s':''} · 📞 ${vs.filter(v=>v.type==='call').length} call${vs.filter(v=>v.type==='call').length!==1?'s':''}\n`;
-      vs.forEach(v=>{rptWA+=`  ${v.type==='visit'?'📍':'📞'} ${fmtDate(v.date)}${v.personMet?' · 👤'+v.personMet:''}\n`;});
+      vs.forEach(v=>{rptWA+=`  ${v.type==='visit'?'📍':v.type==='customer'?'🏢':'📞'} ${fmtDate(v.date)}${v.personMet?' · 👤'+v.personMet:''}\n`;});
       rptWA+='\n';
     });
   } else if(rptMode==='person'){
@@ -1238,14 +1253,14 @@ function renderRpt(){
     });
     Object.entries(map).sort((a,b)=>b[1].length-a[1].length).forEach(([person,vs])=>{
       rptWA+=`👤 *${person}* (${vs.length} interaction${vs.length!==1?'s':''})\n`;
-      vs.forEach(v=>{const o=db.oems.find(x=>x.id===v.oemId);rptWA+=`  ${v.type==='visit'?'📍':'📞'} ${o?.name||'Unknown'} · ${fmtDate(v.date)}\n`;});
+      vs.forEach(v=>{const o=db.oems.find(x=>x.id===v.oemId);rptWA+=`  ${v.type==='visit'?'📍':v.type==='customer'?'🏢':'📞'} ${o?.name||'Unknown'} · ${fmtDate(v.date)}\n`;});
       rptWA+='\n';
     });
   } else {
     visits.forEach(v=>{
       const o=db.oems.find(x=>x.id===v.oemId);
       const topics=[...(v.topics||[]),...(v.customTopics||[])];
-      rptWA+=`${v.type==='visit'?'📍':'📞'} *${o?.name||'Unknown'}*${rptMode!=='day'?' — '+fmtDate(v.date):''}\n`;
+      rptWA+=`${v.type==='visit'?'📍':v.type==='customer'?'🏢':'📞'} *${o?.name||'Unknown'}*${rptMode!=='day'?' — '+fmtDate(v.date):''}\n`;
       if(v.visitLoc) rptWA+=`  📍 ${v.visitLoc}\n`;
       if(v.personMet) rptWA+=`  👤 ${v.personMet}\n`;
       if(topics.length) rptWA+=`  Topics: ${topics.join(', ')}\n`;
@@ -1265,8 +1280,51 @@ function shareRptEmail(){
   window.open('mailto:?subject='+encodeURIComponent('OEM Visit Report')+'&body='+encodeURIComponent(rptWA),'_blank');
 }
 function editVisit(vid){
-  curVid=vid;
-  showVisit(vid);
+  const v=db.visits.find(x=>x.id===vid); if(!v) return;
+  editVid=vid; curVid=vid;
+  // Setup form
+  const sel=document.getElementById('v-oem');
+  sel.innerHTML='<option value="">Select...</option>'+[...db.oems].sort((a,b)=>a.name.localeCompare(b.name)).map(o=>`<option value="${o.id}">${o.name}${o.code?' ('+o.code+')':''}</option>`).join('');
+  sel.value=v.oemId;
+  vType=v.type||'visit';
+  document.getElementById('tb-v').classList.toggle('on',vType==='visit');
+  document.getElementById('tb-c').classList.toggle('on',vType==='call');
+  document.getElementById('tb-cv').classList.toggle('on',vType==='customer');
+  document.getElementById('v-date').value=v.date||'';
+  document.getElementById('v-notes').value=v.notes||'';
+  document.getElementById('v-next').value=v.nextVisitDate||'';
+  document.getElementById('visit-banner').innerHTML='';
+  document.getElementById('v-new-ct').style.display='none';
+  document.getElementById('topic-search').value='';
+  document.getElementById('topic-custom').value='';
+  // Restore topics
+  selTopics=[...(v.topics||[]),...(v.customTopics||[])];
+  renderTopicTags(); renderTopicDrop();
+  // Restore location
+  onOEMPick();
+  setTimeout(()=>{
+    if(v.visitLoc) document.getElementById('v-loc').value=v.visitLoc;
+    // Restore people
+    document.getElementById('v-people-list').innerHTML='';
+    const people=v.peopleMet&&v.peopleMet.length?v.peopleMet:v.personMet?[v.personMet]:[];
+    people.forEach(p=>{addPersonRow();const sels=document.querySelectorAll('#v-people-list select');if(sels.length)sels[sels.length-1].value=p;});
+    if(!people.length) addPersonRow();
+  },50);
+  // Restore action items
+  document.getElementById('ai-list').innerHTML='';
+  const acts=db.actions.filter(a=>a.visitId===vid);
+  acts.forEach(a=>{
+    const d=document.createElement('div');d.className='ai-form';
+    d.innerHTML=`<input type="text" placeholder="Action item" style="flex:1;padding:11px 12px;font-size:14px" value="${a.description||''}"><input type="date" style="width:130px;flex-shrink:0;font-size:12px;padding:11px 8px" value="${a.dueDate||''}"><button onclick="this.parentElement.remove()" style="width:38px;height:44px;background:var(--red-bg);border:1px solid rgba(248,81,73,.2);border-radius:10px;color:var(--red);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="13" height="13"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></button>`;
+    document.getElementById('ai-list').appendChild(d);
+  });
+  document.querySelector('#s-new-visit h1').textContent='Edit Report';
+  document.querySelector('#s-new-visit .save-bar button').textContent='Update Report';
+  document.querySelector('.screen.active')?.classList.remove('active');
+  document.querySelectorAll('.ni').forEach(n=>n.classList.remove('active'));
+  document.getElementById('s-new-visit').classList.add('active');
+  document.getElementById('n-home').classList.add('active');
+  window.scrollTo(0,0);
 }
 
 function todayStr(){return new Date().toISOString().split('T')[0];}
