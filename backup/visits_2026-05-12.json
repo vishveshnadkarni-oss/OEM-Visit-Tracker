@@ -274,6 +274,27 @@
       "notes": "Spoke about the open house and the approval that's required.",
       "nextVisitDate": null,
       "createdAt": "2026-05-12T18:27:31.700Z"
+    },
+    {
+      "id": "v_1778610644452",
+      "oemId": "oem_1778408453736_7b8",
+      "date": "2026-05-07",
+      "type": "visit",
+      "personMet": "Muthuraman, Ratheesh",
+      "peopleMet": [
+        "Muthuraman",
+        "Ratheesh"
+      ],
+      "visitLoc": "Chennai",
+      "topics": [
+        "Rate of Interest"
+      ],
+      "customTopics": [
+        "Team meeting"
+      ],
+      "notes": "He said he has not received update from head office regarding the subvention agreement.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-12T18:30:44.452Z"
     }
   ],
   "actions": [
