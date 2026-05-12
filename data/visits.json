@@ -163,6 +163,24 @@
       "notes": "He was very casual and said he will share any leads if he has any",
       "nextVisitDate": null,
       "createdAt": "2026-05-11T16:38:09.044Z"
+    },
+    {
+      "id": "v_1778557095156",
+      "oemId": "oem_1778408453736_r86",
+      "date": "2026-05-11",
+      "type": "visit",
+      "personMet": "Kiran",
+      "peopleMet": [
+        "Kiran"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Appointment"
+      ],
+      "notes": "Asked for meeting on wednesday",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-12T03:38:15.156Z"
     }
   ],
   "actions": [
@@ -178,6 +196,13 @@
       "visitId": "v_1778498994066",
       "description": "On Saturday they have thier team meeting in office",
       "dueDate": "2026-05-16",
+      "status": "open"
+    },
+    {
+      "id": "a_1778557095156_rz8",
+      "visitId": "v_1778557095156",
+      "description": "Take appointment in morning Meet samsung kiran",
+      "dueDate": "2026-05-13",
       "status": "open"
     }
   ],
