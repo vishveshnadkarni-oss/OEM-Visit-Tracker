@@ -240,6 +240,40 @@
       "notes": "Spoke about 4% ROI for Hyderabad customer. Shravan to take it ahead.",
       "nextVisitDate": null,
       "createdAt": "2026-05-12T09:33:48.226Z"
+    },
+    {
+      "id": "v_1778610397811",
+      "oemId": "oem_1778408453736_xi1",
+      "date": "2026-05-08",
+      "type": "call",
+      "personMet": "Jambunath",
+      "peopleMet": [
+        "Jambunath"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Case update"
+      ],
+      "notes": "Told him about the delay from the customer. He said they are waiting for a review to take place then they will confirm the order",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-12T18:26:37.811Z"
+    },
+    {
+      "id": "v_1778610451700",
+      "oemId": "oem_1778408453736_xci",
+      "date": "2026-05-08",
+      "type": "call",
+      "personMet": "John Edwin",
+      "peopleMet": [
+        "John Edwin"
+      ],
+      "visitLoc": "Chennai",
+      "topics": [],
+      "customTopics": [],
+      "notes": "Spoke about the open house and the approval that's required.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-12T18:27:31.700Z"
     }
   ],
   "actions": [
