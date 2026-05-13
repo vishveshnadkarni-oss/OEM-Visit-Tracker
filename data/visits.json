@@ -384,6 +384,24 @@
       "notes": "",
       "nextVisitDate": null,
       "createdAt": "2026-05-13T09:03:54.856Z"
+    },
+    {
+      "id": "v_1778663362651",
+      "oemId": "oem_1778408453736_xci",
+      "date": "2026-05-13",
+      "type": "call",
+      "personMet": "Praveen Kumar",
+      "peopleMet": [
+        "Praveen Kumar"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Asked for leads"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-13T09:09:22.655Z"
     }
   ],
   "actions": [
@@ -416,6 +434,7 @@
     "Team meeting",
     "Hybrid Flexi",
     "Contract Renewal",
-    "Did not answer phone"
+    "Did not answer phone",
+    "Asked for leads"
   ]
 }
