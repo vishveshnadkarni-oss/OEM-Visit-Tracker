@@ -306,12 +306,48 @@
       ],
       "visitLoc": "Bengaluru",
       "topics": [],
-      "customTopics": [
-        "Did not answer phone"
-      ],
-      "notes": "",
+      "customTopics": [],
+      "notes": "Spoke about a case shared with arun. West case need to be disbursed. And CT case in vizag",
       "nextVisitDate": null,
       "createdAt": "2026-05-13T04:41:58.512Z"
+    },
+    {
+      "id": "v_1778647897206",
+      "oemId": "oem_1778408453736_nyq",
+      "date": "2026-05-13",
+      "type": "call",
+      "personMet": "Shreyas Sontake",
+      "peopleMet": [
+        "Shreyas Sontake"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Appointment"
+      ],
+      "notes": "He is available on friday",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-13T04:51:37.206Z"
+    },
+    {
+      "id": "v_1778651545614",
+      "oemId": "oem_1778408453736_441",
+      "date": "2026-05-13",
+      "type": "call",
+      "personMet": "Kiran",
+      "peopleMet": [
+        "Kiran"
+      ],
+      "visitLoc": "",
+      "topics": [
+        "Leasing"
+      ],
+      "customTopics": [
+        "Team meeting"
+      ],
+      "notes": "Asked to stay connected on whatsapp",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-13T05:52:25.614Z"
     }
   ],
   "actions": [
@@ -327,6 +363,13 @@
       "visitId": "v_1778557403347",
       "description": "Macpower has their meeting on Saturdays at 11",
       "dueDate": "2026-05-16",
+      "status": "open"
+    },
+    {
+      "id": "a_1778647897210_ruz",
+      "visitId": "v_1778647897206",
+      "description": "As for appointment shreyas sontake",
+      "dueDate": "2026-05-15",
       "status": "open"
     }
   ]
