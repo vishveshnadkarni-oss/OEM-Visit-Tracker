@@ -467,6 +467,13 @@
         "position": "Sales",
         "location": "Chennai",
         "note": ""
+      },
+      {
+        "name": "Kiran",
+        "phone": "75748 23720",
+        "position": "Sales head",
+        "location": "Coimbatore",
+        "note": ""
       }
     ],
     "notes": "9.99% ROI"
