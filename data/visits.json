@@ -330,6 +330,26 @@
       "notes": "He is available on friday",
       "nextVisitDate": null,
       "createdAt": "2026-05-13T04:51:37.206Z"
+    },
+    {
+      "id": "v_1778651545614",
+      "oemId": "oem_1778408453736_441",
+      "date": "2026-05-13",
+      "type": "call",
+      "personMet": "Kiran",
+      "peopleMet": [
+        "Kiran"
+      ],
+      "visitLoc": "",
+      "topics": [
+        "Leasing"
+      ],
+      "customTopics": [
+        "Team meeting"
+      ],
+      "notes": "Asked to stay connected on whatsapp",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-13T05:52:25.614Z"
     }
   ],
   "actions": [
