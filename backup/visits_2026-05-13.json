@@ -294,6 +294,24 @@
       "notes": "He said he has not received update from head office regarding the subvention agreement.",
       "nextVisitDate": null,
       "createdAt": "2026-05-12T18:30:44.452Z"
+    },
+    {
+      "id": "v_1778647318512",
+      "oemId": "oem_1778408453736_nyq",
+      "date": "2026-05-13",
+      "type": "call",
+      "personMet": "Vijaykumar Khurdagi",
+      "peopleMet": [
+        "Vijaykumar Khurdagi"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-13T04:41:58.512Z"
     }
   ],
   "actions": [
