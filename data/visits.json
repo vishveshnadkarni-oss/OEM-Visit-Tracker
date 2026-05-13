@@ -338,7 +338,7 @@
       "peopleMet": [
         "Kiran"
       ],
-      "visitLoc": "",
+      "visitLoc": "Bengaluru",
       "topics": [
         "Leasing"
       ],
@@ -426,11 +426,15 @@
       "oemId": "oem_1778408453736_xi1",
       "date": "2026-05-13",
       "type": "call",
-      "personMet": "",
-      "peopleMet": [],
+      "personMet": "Raghu",
+      "peopleMet": [
+        "Raghu"
+      ],
       "visitLoc": "Bengaluru",
       "topics": [],
-      "customTopics": [],
+      "customTopics": [
+        "Asked for leads"
+      ],
       "notes": "",
       "nextVisitDate": null,
       "createdAt": "2026-05-13T09:24:34.275Z"
