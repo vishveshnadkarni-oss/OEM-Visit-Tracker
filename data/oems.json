@@ -986,7 +986,7 @@
     ],
     "contacts": [
       {
-        "name": "Vasan",
+        "name": "Hosanna",
         "phone": "7211103869",
         "position": "Sales Head",
         "location": "Bengaluru",
@@ -1009,6 +1009,13 @@
       {
         "name": "Basavaraju",
         "phone": "7211103307",
+        "position": "Sales",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Santosh TT",
+        "phone": "7069011434",
         "position": "Sales",
         "location": "Bengaluru",
         "note": ""
