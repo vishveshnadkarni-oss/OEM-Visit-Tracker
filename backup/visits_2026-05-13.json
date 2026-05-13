@@ -338,7 +338,7 @@
       "peopleMet": [
         "Kiran"
       ],
-      "visitLoc": "",
+      "visitLoc": "Bengaluru",
       "topics": [
         "Leasing"
       ],
@@ -350,13 +350,13 @@
       "createdAt": "2026-05-13T05:52:25.614Z"
     },
     {
-      "id": "v_1778652277490",
-      "oemId": "oem_1778408453736_lkn",
+      "id": "v_1778654874548",
+      "oemId": "oem_1778408453736_441",
       "date": "2026-05-13",
       "type": "call",
-      "personMet": "Venugopal",
+      "personMet": "Lakshmisha",
       "peopleMet": [
-        "Venugopal"
+        "Lakshmisha"
       ],
       "visitLoc": "Bengaluru",
       "topics": [],
@@ -365,7 +365,61 @@
       ],
       "notes": "",
       "nextVisitDate": null,
-      "createdAt": "2026-05-13T06:04:37.491Z"
+      "createdAt": "2026-05-13T06:47:54.548Z"
+    },
+    {
+      "id": "v_1778663034856",
+      "oemId": "oem_1778408453736_xci",
+      "date": "2026-05-13",
+      "type": "call",
+      "personMet": "R Mahantha",
+      "peopleMet": [
+        "R Mahantha"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-13T09:03:54.856Z"
+    },
+    {
+      "id": "v_1778663362651",
+      "oemId": "oem_1778408453736_xci",
+      "date": "2026-05-13",
+      "type": "call",
+      "personMet": "Praveen Kumar",
+      "peopleMet": [
+        "Praveen Kumar"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Asked for leads"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-13T09:09:22.655Z"
+    },
+    {
+      "id": "v_1778663950123",
+      "oemId": "oem_1778408453736_cc9",
+      "date": "2026-05-13",
+      "type": "call",
+      "personMet": "Narayan JY",
+      "peopleMet": [
+        "Narayan JY"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Asked for leads"
+      ],
+      "notes": "Business is tough cause of dollar rate",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-13T09:19:10.123Z"
     }
   ],
   "actions": [
