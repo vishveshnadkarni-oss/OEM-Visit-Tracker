@@ -467,6 +467,13 @@
         "position": "Sales",
         "location": "Chennai",
         "note": ""
+      },
+      {
+        "name": "Kiran",
+        "phone": "75748 23720",
+        "position": "Sales head",
+        "location": "Coimbatore",
+        "note": ""
       }
     ],
     "notes": "9.99% ROI"
@@ -1682,13 +1689,6 @@
         "phone": "9379915175",
         "position": "NSM",
         "location": "Bengaluru",
-        "note": ""
-      },
-      {
-        "name": "Venugopal",
-        "phone": "9611100705",
-        "position": "Sales head",
-        "location": "",
         "note": ""
       },
       {
