@@ -338,7 +338,7 @@
       "peopleMet": [
         "Kiran"
       ],
-      "visitLoc": "Bengaluru",
+      "visitLoc": "",
       "topics": [
         "Leasing"
       ],
@@ -420,6 +420,24 @@
       "notes": "Business is tough cause of dollar rate",
       "nextVisitDate": null,
       "createdAt": "2026-05-13T09:19:10.123Z"
+    },
+    {
+      "id": "v_1778664274275",
+      "oemId": "oem_1778408453736_xi1",
+      "date": "2026-05-13",
+      "type": "call",
+      "personMet": "Raghu",
+      "peopleMet": [
+        "Raghu"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Asked for leads"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-13T09:24:34.275Z"
     }
   ],
   "actions": [
