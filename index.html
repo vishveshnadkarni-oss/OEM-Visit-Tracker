@@ -492,7 +492,6 @@ textarea{min-height:85px;resize:none;line-height:1.6}
 const OWNER='vishveshnadkarni-oss', REPO='OEM-Visit-Tracker', BRANCH='main';
 const API=`https://api.github.com/repos/${OWNER}/${REPO}/contents/`;
 const FILES={oems:'data/oems.json', visits:'data/visits.json'};
-const SHAS={oems:null, visits:null};
 const DEF_TOPICS=['Leasing','Principal Moratorium','Startups','Rate of Interest'];
 const SUBCATS={Medical:['Imaging','Ophthalmology','Dermatology','Cosmetology','Laser Hair Removal','Lab Testing','Anaesthetic','Refurb Machines'],Industrial:['Machine Tools','Plastics','Packaging','Laser','Bending','Pharma','Solar','Wood Working']};
 
@@ -525,6 +524,10 @@ async function ghPut(path, data, sha, msg){
 }
 
 // ── SYNC ──
+// Write queue — ensures only one GitHub write runs at a time, eliminating 409 races
+let _writeQueue=Promise.resolve();
+function queueWrite(fn){ _writeQueue=_writeQueue.then(fn).catch(()=>{}); return _writeQueue; }
+
 function setSS(state,msg){
   const d=document.getElementById('sdot'), l=document.getElementById('slbl');
   if(!d||!l) return;
@@ -537,48 +540,44 @@ async function doSync(){
   setSS('busy','Fetching...');
   try{
     const [of,vf]=await Promise.all([ghGet(FILES.oems),ghGet(FILES.visits)]);
-    if(of){SHAS.oems=of.sha; db.oems=JSON.parse(decodeURIComponent(escape(atob(of.content.replace(/\n/g,'')))));}
-    if(vf){SHAS.visits=vf.sha; const d=JSON.parse(decodeURIComponent(escape(atob(vf.content.replace(/\n/g,''))))); db.visits=d.visits||[]; db.actions=d.actions||[]; db.topics=d.topics||[];}
+    if(of){db.oems=JSON.parse(decodeURIComponent(escape(atob(of.content.replace(/\n/g,'')))));}
+    if(vf){const d=JSON.parse(decodeURIComponent(escape(atob(vf.content.replace(/\n/g,''))))); db.visits=d.visits||[]; db.actions=d.actions||[]; db.topics=d.topics||[];}
     save(); setSS('ok','Synced '+fmtTime(new Date())); renderHome(); toast('Synced ✓');
-  }catch(e){setSS('err','Sync failed'); toast('Sync failed: '+e.message);}
+  }catch(e){setSS('err','Offline — using local data');}
 }
 
-async function ghWrite(){
+async function _doWrite(){
   setSS('busy','Saving...');
-  try{
-    // Sequential: get SHA then write, one file at a time to avoid races
-    const of=await ghGet(FILES.oems).catch(()=>null);
-    const s1=await ghPut(FILES.oems, db.oems, of?.sha||null, 'Update OEMs');
-    const vf=await ghGet(FILES.visits).catch(()=>null);
-    const s2=await ghPut(FILES.visits, {visits:db.visits,actions:db.actions,topics:db.topics}, vf?.sha||null, 'Update visits');
-    setSS('ok','Synced '+fmtTime(new Date()));
-  }catch(e){setSS('err','Sync failed'); throw e;}
+  // Always fetch fresh SHA immediately before each write
+  const of=await ghGet(FILES.oems).catch(()=>null);
+  await ghPut(FILES.oems, db.oems, of?.sha||null, 'Update OEMs');
+  const vf=await ghGet(FILES.visits).catch(()=>null);
+  await ghPut(FILES.visits, {visits:db.visits,actions:db.actions,topics:db.topics}, vf?.sha||null, 'Update visits');
+  setSS('ok','Synced '+fmtTime(new Date()));
 }
 
 async function saveSync(){
   save();
   if(!getToken()) return;
-  setSS('busy','Saving...');
-  try{ await ghWrite(); }
-  catch(e){ toast('Saved locally. GitHub sync failed.'); }
+  queueWrite(async()=>{
+    try{ await _doWrite(); }
+    catch(e){ setSS('err','Saved locally'); }
+  });
 }
 
 async function doBackup(){
   if(!getToken()){toast('No token — go to Settings');return;}
-  setSS('busy','Backing up...');
-  try{
-    const stamp=todayStr();
-    // Sequential SHA fetch then write — avoids 409 race conditions
-    const of=await ghGet('backup/oems_'+stamp+'.json').catch(()=>null);
-    await ghPut('backup/oems_'+stamp+'.json', db.oems, of?.sha||null, 'Backup OEMs '+stamp);
-    const vf=await ghGet('backup/visits_'+stamp+'.json').catch(()=>null);
-    await ghPut('backup/visits_'+stamp+'.json', {visits:db.visits,actions:db.actions}, vf?.sha||null, 'Backup visits '+stamp);
-    setSS('ok','Backup done '+fmtTime(new Date()));
-    toast('Backup saved ✓');
-  }catch(e){
-    setSS('err','Backup failed');
-    toast('Backup failed: '+e.message);
-  }
+  queueWrite(async()=>{
+    setSS('busy','Backing up...');
+    try{
+      const stamp=todayStr();
+      const of=await ghGet('backup/oems_'+stamp+'.json').catch(()=>null);
+      await ghPut('backup/oems_'+stamp+'.json', db.oems, of?.sha||null, 'Backup OEMs '+stamp);
+      const vf=await ghGet('backup/visits_'+stamp+'.json').catch(()=>null);
+      await ghPut('backup/visits_'+stamp+'.json', {visits:db.visits,actions:db.actions}, vf?.sha||null, 'Backup visits '+stamp);
+      setSS('ok','Backup done '+fmtTime(new Date())); toast('Backup saved ✓');
+    }catch(e){ setSS('err','Backup failed'); toast('Backup failed — retrying...'); }
+  });
 }
 
 // ── NAVIGATION ──
