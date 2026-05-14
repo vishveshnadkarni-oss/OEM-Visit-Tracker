@@ -1,0 +1,1926 @@
+[
+  {
+    "id": "oem_1778408453736_0sy",
+    "name": "Ace",
+    "code": "",
+    "oemType": "OEM",
+    "segment": "Industrial",
+    "subcategories": [
+      "Machine Tools"
+    ],
+    "dealerBrands": "",
+    "locations": [
+      {
+        "city": "Bengaluru",
+        "address": ""
+      },
+      {
+        "city": "Chennai",
+        "address": ""
+      },
+      {
+        "city": "Coimbatore",
+        "address": ""
+      }
+    ],
+    "contacts": [
+      {
+        "name": "Balaji Nayaka",
+        "phone": "9606843670",
+        "position": "Sales Head",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Mugeshwaran",
+        "phone": "9035607230",
+        "position": "Sales Head",
+        "location": "Bengaluru",
+        "note": "Handles 3D machines"
+      },
+      {
+        "name": "Keerthick",
+        "phone": "9843265247",
+        "position": "Sales Head",
+        "location": "Coimbatore",
+        "note": ""
+      },
+      {
+        "name": "Hemalatha",
+        "phone": "9606874068",
+        "position": "Head",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Blesiyas D'Souza",
+        "phone": "9611249038",
+        "position": "Sales",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Subramanyam",
+        "phone": "9972888556",
+        "position": "Sales Head",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Suresh",
+        "phone": "9845995444",
+        "position": "RSM",
+        "location": "Bengaluru",
+        "note": ""
+      }
+    ],
+    "notes": ""
+  },
+  {
+    "id": "oem_1778408453736_vgl",
+    "name": "Amada",
+    "code": "",
+    "oemType": "OEM",
+    "segment": "Industrial",
+    "subcategories": [
+      "Machine Tools"
+    ],
+    "dealerBrands": "",
+    "locations": [
+      {
+        "city": "Bengaluru",
+        "address": ""
+      },
+      {
+        "city": "Chennai",
+        "address": ""
+      },
+      {
+        "city": "Hyderabad",
+        "address": ""
+      }
+    ],
+    "contacts": [
+      {
+        "name": "Fazal",
+        "phone": "7829907442",
+        "position": "Sales Head",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Shamkumar",
+        "phone": "9380176050",
+        "position": "Sales",
+        "location": "Chennai",
+        "note": ""
+      },
+      {
+        "name": "Kishor Elango",
+        "phone": "9343401722",
+        "position": "Sales",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Satya",
+        "phone": "9341003042",
+        "position": "VP",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Satish",
+        "phone": "9347683551",
+        "position": "Sales",
+        "location": "Hyderabad",
+        "note": ""
+      },
+      {
+        "name": "Arun Shrivastava",
+        "phone": "7411734720",
+        "position": "Sales",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Pazgani",
+        "phone": "8939811390",
+        "position": "Sales Head",
+        "location": "Chennai",
+        "note": ""
+      }
+    ],
+    "notes": ""
+  },
+  {
+    "id": "oem_1778408453736_qeu",
+    "name": "Batliboi",
+    "code": "",
+    "oemType": "OEM",
+    "segment": "Industrial",
+    "subcategories": [
+      "Machine Tools",
+      "Textile"
+    ],
+    "dealerBrands": "",
+    "locations": [
+      {
+        "city": "Chennai",
+        "address": ""
+      },
+      {
+        "city": "Coimbatore",
+        "address": ""
+      }
+    ],
+    "contacts": [
+      {
+        "name": "Ram Prasath",
+        "phone": "9962158157",
+        "position": "Sales",
+        "location": "Chennai",
+        "note": ""
+      }
+    ],
+    "notes": ""
+  },
+  {
+    "id": "oem_1778408453736_441",
+    "name": "BFW",
+    "code": "",
+    "oemType": "OEM",
+    "segment": "Industrial",
+    "subcategories": [
+      "Machine Tools"
+    ],
+    "dealerBrands": "",
+    "locations": [
+      {
+        "city": "Bengaluru",
+        "address": "",
+        "lat": "",
+        "lng": ""
+      },
+      {
+        "city": "Chennai",
+        "address": "",
+        "lat": "",
+        "lng": ""
+      },
+      {
+        "city": "Coimbatore",
+        "address": "",
+        "lat": "",
+        "lng": ""
+      }
+    ],
+    "contacts": [
+      {
+        "name": "Lakshmisha",
+        "phone": "9513760003",
+        "position": "Sales",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Ravi",
+        "phone": "9444076600",
+        "position": "RSM",
+        "location": "Chennai",
+        "note": ""
+      },
+      {
+        "name": "Karuppa Chetty",
+        "phone": "8939821057",
+        "position": "Sales",
+        "location": "Chennai",
+        "note": ""
+      },
+      {
+        "name": "Chandrashekhar Sajjan",
+        "phone": "9342510359",
+        "position": "Sales Head",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Jeyaprakash",
+        "phone": "9367789733",
+        "position": "Sales",
+        "location": "Coimbatore",
+        "note": ""
+      },
+      {
+        "name": "Kumaran",
+        "phone": "8939797980",
+        "position": "Sales Head",
+        "location": "Chennai",
+        "note": ""
+      },
+      {
+        "name": "Lakshmi Prasad",
+        "phone": "9347000408",
+        "position": "Sales Head",
+        "location": "Hyderabad",
+        "note": ""
+      },
+      {
+        "name": "Naveen Kumar",
+        "phone": "8754747945",
+        "position": "Sales",
+        "location": "Chennai",
+        "note": ""
+      },
+      {
+        "name": "Saravanan",
+        "phone": "7406186161",
+        "position": "Sales",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Satish Mestha",
+        "phone": "9343030468",
+        "position": "Sales Head",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Srivatsa",
+        "phone": "9342133606",
+        "position": "Sales RSM",
+        "location": "Bengaluru",
+        "note": "Heads VMC in BFW"
+      },
+      {
+        "name": "Vivek",
+        "phone": "9513304626",
+        "position": "Sales",
+        "location": "Coimbatore",
+        "note": ""
+      },
+      {
+        "name": "Sivaraj",
+        "phone": "9344691173",
+        "position": "Sales",
+        "location": "Coimbatore",
+        "note": ""
+      },
+      {
+        "name": "Logesh",
+        "phone": "9008230798",
+        "position": "Sales",
+        "location": "Coimbatore",
+        "note": ""
+      },
+      {
+        "name": "Yashwant",
+        "phone": "9620912341",
+        "position": "Sales",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Chockhlingam",
+        "phone": "7824805326",
+        "position": "Sales",
+        "location": "Chennai",
+        "note": ""
+      },
+      {
+        "name": "Solai Raja",
+        "phone": "8296180533",
+        "position": "Sales",
+        "location": "Chennai",
+        "note": ""
+      },
+      {
+        "name": "Prithish",
+        "phone": "9043222430",
+        "position": "Sales",
+        "location": "Chennai",
+        "note": ""
+      },
+      {
+        "name": "Kiran",
+        "phone": "9379049098",
+        "position": "Sales",
+        "location": "",
+        "note": ""
+      },
+      {
+        "name": "Kiran",
+        "phone": "9379049098",
+        "position": "Sales",
+        "location": "",
+        "note": ""
+      },
+      {
+        "name": "Kanaka",
+        "phone": "9880461229",
+        "position": "Events",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Kanaka",
+        "phone": "9880461229",
+        "position": "Events",
+        "location": "Bengaluru",
+        "note": ""
+      }
+    ],
+    "notes": "9.99% ROI"
+  },
+  {
+    "id": "oem_1778408453736_xci",
+    "name": "Cosmos",
+    "code": "",
+    "oemType": "OEM",
+    "segment": "Industrial",
+    "subcategories": [
+      "Machine Tools"
+    ],
+    "dealerBrands": "",
+    "locations": [
+      {
+        "city": "Bengaluru",
+        "address": ""
+      },
+      {
+        "city": "Chennai",
+        "address": ""
+      },
+      {
+        "city": "Coimbatore",
+        "address": ""
+      }
+    ],
+    "contacts": [
+      {
+        "name": "John Edwin",
+        "phone": "9150096062",
+        "position": "Sales Head",
+        "location": "Chennai",
+        "note": ""
+      },
+      {
+        "name": "R Mahantha",
+        "phone": "9902200026",
+        "position": "Sales Head",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Nadeem",
+        "phone": "9902200025",
+        "position": "RSM",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Milind Navale",
+        "phone": "6358844266",
+        "position": "Sales",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Praveen Kumar",
+        "phone": "7574823714",
+        "position": "Sales",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Arun",
+        "phone": "7485908117",
+        "position": "Sales",
+        "location": "Coimbatore",
+        "note": ""
+      },
+      {
+        "name": "Sendhil",
+        "phone": "9025141433",
+        "position": "Sales",
+        "location": "Coimbatore",
+        "note": ""
+      },
+      {
+        "name": "Sunil Kumar",
+        "phone": "7567080452",
+        "position": "Sales Head",
+        "location": "Hyderabad",
+        "note": ""
+      },
+      {
+        "name": "Shailesh Kodamola",
+        "phone": "7487014100",
+        "position": "Sales",
+        "location": "Coimbatore",
+        "note": ""
+      },
+      {
+        "name": "Navneet Krishna",
+        "phone": "9597456852",
+        "position": "Sales",
+        "location": "Coimbatore",
+        "note": ""
+      },
+      {
+        "name": "Murugappan",
+        "phone": "9094769635",
+        "position": "Sales",
+        "location": "Chennai",
+        "note": ""
+      },
+      {
+        "name": "Suresh",
+        "phone": "9381259000",
+        "position": "Sales",
+        "location": "Chennai",
+        "note": ""
+      },
+      {
+        "name": "Kiran",
+        "phone": "75748 23720",
+        "position": "Sales head",
+        "location": "Coimbatore",
+        "note": ""
+      }
+    ],
+    "notes": "9.99% ROI"
+  },
+  {
+    "id": "oem_1778408453736_nwh",
+    "name": "DMG Mori",
+    "code": "",
+    "oemType": "OEM",
+    "segment": "Industrial",
+    "subcategories": [
+      "Machine Tools",
+      "Laser"
+    ],
+    "dealerBrands": "",
+    "locations": [
+      {
+        "city": "Bengaluru",
+        "address": ""
+      }
+    ],
+    "contacts": [],
+    "notes": ""
+  },
+  {
+    "id": "oem_1778408453736_de4",
+    "name": "Carl Zeiss",
+    "code": "",
+    "oemType": "OEM",
+    "segment": "Medical",
+    "subcategories": [
+      "Ophthalmology",
+      "Imaging"
+    ],
+    "dealerBrands": "",
+    "locations": [
+      {
+        "city": "Bengaluru",
+        "address": ""
+      },
+      {
+        "city": "Chennai",
+        "address": ""
+      },
+      {
+        "city": "Kerala",
+        "address": ""
+      }
+    ],
+    "contacts": [
+      {
+        "name": "Abhinav Dhawan",
+        "phone": "7087000385",
+        "position": "NSM",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Madhu P",
+        "phone": "9446300080",
+        "position": "RSM",
+        "location": "Kerala",
+        "note": ""
+      },
+      {
+        "name": "Madhu Babu",
+        "phone": "9989442443",
+        "position": "RSM",
+        "location": "Hyderabad",
+        "note": ""
+      }
+    ],
+    "notes": "9% ROI & 0.5% PF for subvention"
+  },
+  {
+    "id": "oem_1778408453736_nyq",
+    "name": "Wipro GE",
+    "code": "",
+    "oemType": "OEM",
+    "segment": "Medical",
+    "subcategories": [
+      "Imaging",
+      "MRI",
+      "CT"
+    ],
+    "dealerBrands": "",
+    "locations": [
+      {
+        "city": "Bengaluru",
+        "address": ""
+      },
+      {
+        "city": "Chennai",
+        "address": ""
+      }
+    ],
+    "contacts": [
+      {
+        "name": "Shreyas Sontake",
+        "phone": "7829000083",
+        "position": "Sales",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Raunak Kumar",
+        "phone": "8722635777",
+        "position": "Sales",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Vishal Gudi",
+        "phone": "8105819235",
+        "position": "Sales",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Sreekumar KN",
+        "phone": "9349270752",
+        "position": "Sales",
+        "location": "Kerala",
+        "note": ""
+      },
+      {
+        "name": "Sunil Kumar R",
+        "phone": "9995806500",
+        "position": "Sales",
+        "location": "Kerala",
+        "note": ""
+      },
+      {
+        "name": "Derik",
+        "phone": "9961352640",
+        "position": "Sales",
+        "location": "Coimbatore",
+        "note": ""
+      },
+      {
+        "name": "Vijaykumar Khurdagi",
+        "phone": "9538997866",
+        "position": "RSM",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Taru Khullar",
+        "phone": "8095444300",
+        "position": "NSM",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Yamini",
+        "phone": "9742792199",
+        "position": "Accounts",
+        "location": "Bengaluru",
+        "note": ""
+      }
+    ],
+    "notes": "9% ROI & 0.5% PF for subvention"
+  },
+  {
+    "id": "oem_1778408453736_gd9",
+    "name": "Fanuc",
+    "code": "",
+    "oemType": "OEM",
+    "segment": "Industrial",
+    "subcategories": [
+      "Machine Tools",
+      "Robotics"
+    ],
+    "dealerBrands": "",
+    "locations": [
+      {
+        "city": "Bengaluru",
+        "address": ""
+      },
+      {
+        "city": "Chennai",
+        "address": ""
+      }
+    ],
+    "contacts": [
+      {
+        "name": "Mani Vel",
+        "phone": "6366966478",
+        "position": "Sales",
+        "location": "Bengaluru",
+        "note": "Handles Robotic Machines"
+      },
+      {
+        "name": "Nilesh Gaitonde",
+        "phone": "9972399228",
+        "position": "GM",
+        "location": "Bengaluru",
+        "note": ""
+      }
+    ],
+    "notes": ""
+  },
+  {
+    "id": "oem_1778408453736_cc9",
+    "name": "GPY Machine Tools",
+    "code": "",
+    "oemType": "Dealer",
+    "segment": "Industrial",
+    "subcategories": [
+      "Machine Tools"
+    ],
+    "dealerBrands": "Haitian",
+    "locations": [
+      {
+        "city": "Bengaluru",
+        "address": ""
+      }
+    ],
+    "contacts": [
+      {
+        "name": "Manu Ganesh",
+        "phone": "9902002921",
+        "position": "Director",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Narayan JY",
+        "phone": "8660485528",
+        "position": "Sales",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Anil",
+        "phone": "9980196644",
+        "position": "Sales",
+        "location": "Bengaluru",
+        "note": "Whitefield"
+      },
+      {
+        "name": "Manjunath",
+        "phone": "9480129952",
+        "position": "Sales",
+        "location": "Bengaluru",
+        "note": "Peenya"
+      }
+    ],
+    "notes": ""
+  },
+  {
+    "id": "oem_1778408453736_3zk",
+    "name": "HSG",
+    "code": "",
+    "oemType": "OEM",
+    "segment": "Industrial",
+    "subcategories": [
+      "Laser"
+    ],
+    "dealerBrands": "",
+    "locations": [
+      {
+        "city": "Bengaluru",
+        "address": ""
+      },
+      {
+        "city": "Chennai",
+        "address": ""
+      }
+    ],
+    "contacts": [
+      {
+        "name": "Vineet Thomas",
+        "phone": "9900995998",
+        "position": "Sales Head",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Arunprakash",
+        "phone": "9043656920",
+        "position": "Sales Head",
+        "location": "Chennai",
+        "note": ""
+      },
+      {
+        "name": "Manjunath",
+        "phone": "7899570789",
+        "position": "Sales",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Charan",
+        "phone": "9731557466",
+        "position": "Sales",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Mehendiran",
+        "phone": "8939896784",
+        "position": "RSM",
+        "location": "Chennai",
+        "note": ""
+      }
+    ],
+    "notes": ""
+  },
+  {
+    "id": "oem_1778408453736_vp9",
+    "name": "Jyoti CNC",
+    "code": "",
+    "oemType": "OEM",
+    "segment": "Industrial",
+    "subcategories": [
+      "Machine Tools"
+    ],
+    "dealerBrands": "",
+    "locations": [
+      {
+        "city": "Bengaluru",
+        "address": ""
+      },
+      {
+        "city": "Chennai",
+        "address": ""
+      },
+      {
+        "city": "Coimbatore",
+        "address": ""
+      }
+    ],
+    "contacts": [
+      {
+        "name": "Jagadeesh Patil",
+        "phone": "9739001092",
+        "position": "Sales Head",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Vinoth Kumar",
+        "phone": "8939802840",
+        "position": "Sales Head",
+        "location": "Chennai",
+        "note": ""
+      },
+      {
+        "name": "Rajashekhar",
+        "phone": "9962562780",
+        "position": "Sales",
+        "location": "Chennai",
+        "note": ""
+      },
+      {
+        "name": "Dayanand",
+        "phone": "8884414826",
+        "position": "Sales",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Naveen",
+        "phone": "9739001086",
+        "position": "Sales",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Sandeep",
+        "phone": "9099940835",
+        "position": "Sales",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Sunil",
+        "phone": "7026721270",
+        "position": "Sales",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Jayakumar",
+        "phone": "6353542240",
+        "position": "Sales Head",
+        "location": "Coimbatore",
+        "note": ""
+      },
+      {
+        "name": "Karthickraja",
+        "phone": "9962562652",
+        "position": "Sales",
+        "location": "Coimbatore",
+        "note": ""
+      },
+      {
+        "name": "Ajay",
+        "phone": "9538145612",
+        "position": "RSM",
+        "location": "Bengaluru",
+        "note": ""
+      }
+    ],
+    "notes": ""
+  },
+  {
+    "id": "oem_1778408453736_vcf",
+    "name": "KTM",
+    "code": "",
+    "oemType": "OEM",
+    "segment": "Industrial",
+    "subcategories": [
+      "Machine Tools"
+    ],
+    "dealerBrands": "",
+    "locations": [
+      {
+        "city": "Bengaluru",
+        "address": ""
+      },
+      {
+        "city": "Chennai",
+        "address": ""
+      }
+    ],
+    "contacts": [
+      {
+        "name": "Lokanandhan",
+        "phone": "9514322966",
+        "position": "Sales Head",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Padmanabhan",
+        "phone": "6359603690",
+        "position": "Sales Head",
+        "location": "Chennai",
+        "note": ""
+      }
+    ],
+    "notes": ""
+  },
+  {
+    "id": "oem_1778408453736_nbf",
+    "name": "LMW",
+    "code": "",
+    "oemType": "OEM",
+    "segment": "Industrial",
+    "subcategories": [
+      "Machine Tools"
+    ],
+    "dealerBrands": "",
+    "locations": [
+      {
+        "city": "Bengaluru",
+        "address": ""
+      },
+      {
+        "city": "Chennai",
+        "address": ""
+      },
+      {
+        "city": "Coimbatore",
+        "address": ""
+      }
+    ],
+    "contacts": [
+      {
+        "name": "Deepak",
+        "phone": "7418301166",
+        "position": "Sales",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Hemalatha",
+        "phone": "8925827925",
+        "position": "Sales admin",
+        "location": "Chennai",
+        "note": ""
+      },
+      {
+        "name": "Raju",
+        "phone": "9343797477",
+        "position": "Sales",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Vignesh",
+        "phone": "9543543517",
+        "position": "Sales Head",
+        "location": "Chennai",
+        "note": ""
+      }
+    ],
+    "notes": ""
+  },
+  {
+    "id": "oem_1778408453736_wvh",
+    "name": "Macpower",
+    "code": "",
+    "oemType": "OEM",
+    "segment": "Industrial",
+    "subcategories": [
+      "Machine Tools"
+    ],
+    "dealerBrands": "",
+    "locations": [
+      {
+        "city": "Bengaluru",
+        "address": "",
+        "lat": "",
+        "lng": ""
+      },
+      {
+        "city": "Chennai",
+        "address": "",
+        "lat": "",
+        "lng": ""
+      },
+      {
+        "city": "Coimbatore",
+        "address": "",
+        "lat": "",
+        "lng": ""
+      }
+    ],
+    "contacts": [
+      {
+        "name": "Hosanna",
+        "phone": "7211103869",
+        "position": "Sales Head",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Dinesh",
+        "phone": "7486029857",
+        "position": "Sales Head",
+        "location": "Chennai",
+        "note": ""
+      },
+      {
+        "name": "Vinoth",
+        "phone": "7211102822",
+        "position": "Sales Head",
+        "location": "Coimbatore",
+        "note": ""
+      },
+      {
+        "name": "Basavaraju",
+        "phone": "7211103307",
+        "position": "Sales",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Santosh TT",
+        "phone": "7069011434",
+        "position": "Sales",
+        "location": "Bengaluru",
+        "note": ""
+      }
+    ],
+    "notes": ""
+  },
+  {
+    "id": "oem_1778408453736_73u",
+    "name": "Makino",
+    "code": "",
+    "oemType": "OEM",
+    "segment": "Industrial",
+    "subcategories": [
+      "Machine Tools"
+    ],
+    "dealerBrands": "",
+    "locations": [
+      {
+        "city": "Bengaluru",
+        "address": ""
+      },
+      {
+        "city": "Chennai",
+        "address": ""
+      }
+    ],
+    "contacts": [
+      {
+        "name": "Sandeep",
+        "phone": "9686933996",
+        "position": "Sales",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Hemanth Adiga",
+        "phone": "9845595769",
+        "position": "Sales Head",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Samir",
+        "phone": "9886048765",
+        "position": "VP",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Sunil Kumar",
+        "phone": "8951766478",
+        "position": "Sales",
+        "location": "Bengaluru",
+        "note": ""
+      }
+    ],
+    "notes": ""
+  },
+  {
+    "id": "oem_1778408453736_xi1",
+    "name": "Manav Marketing",
+    "code": "",
+    "oemType": "Dealer",
+    "segment": "Industrial",
+    "subcategories": [
+      "Machine Tools"
+    ],
+    "dealerBrands": "Haas, Mikron, Chmer, Nakamura-Tome, Fladder, Kafo, RPI, Kiwa, Jagdeep, Hexagon, Intech",
+    "locations": [
+      {
+        "city": "Bengaluru",
+        "address": ""
+      },
+      {
+        "city": "Chennai",
+        "address": ""
+      }
+    ],
+    "contacts": [
+      {
+        "name": "Vishwanath",
+        "phone": "6361753657",
+        "position": "Sales",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Jayaprakash",
+        "phone": "9629969914",
+        "position": "Sales Head",
+        "location": "Chennai",
+        "note": ""
+      },
+      {
+        "name": "A Sharankumar",
+        "phone": "9600040861",
+        "position": "Sales",
+        "location": "Chennai",
+        "note": ""
+      },
+      {
+        "name": "Jambunath",
+        "phone": "9945488611",
+        "position": "Director",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Raghu",
+        "phone": "9108697909",
+        "position": "Sales",
+        "location": "",
+        "note": ""
+      }
+    ],
+    "notes": ""
+  },
+  {
+    "id": "oem_1778408453736_7b8",
+    "name": "Milacron",
+    "code": "",
+    "oemType": "OEM",
+    "segment": "Industrial",
+    "subcategories": [
+      "Plastics"
+    ],
+    "dealerBrands": "",
+    "locations": [
+      {
+        "city": "Bengaluru",
+        "address": "",
+        "lat": "",
+        "lng": ""
+      },
+      {
+        "city": "Chennai",
+        "address": "",
+        "lat": "",
+        "lng": ""
+      },
+      {
+        "city": "Coimbatore",
+        "address": "",
+        "lat": "",
+        "lng": ""
+      }
+    ],
+    "contacts": [
+      {
+        "name": "Gurucharan",
+        "phone": "9916872333",
+        "position": "",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Muthuraman",
+        "phone": "8939888198",
+        "position": "",
+        "location": "Chennai",
+        "note": ""
+      },
+      {
+        "name": "Sunesh",
+        "phone": "9072338114",
+        "position": "Sales Head",
+        "location": "Kerala",
+        "note": ""
+      },
+      {
+        "name": "Gopal",
+        "phone": "8939888192",
+        "position": "Sales Head",
+        "location": "Coimbatore",
+        "note": ""
+      },
+      {
+        "name": "Hari Prasad",
+        "phone": "8939888194",
+        "position": "",
+        "location": "Chennai",
+        "note": ""
+      },
+      {
+        "name": "Ratheesh",
+        "phone": "8939888191",
+        "position": "",
+        "location": "Chennai",
+        "note": ""
+      },
+      {
+        "name": "Maheshwaran",
+        "phone": "8939888199",
+        "position": "",
+        "location": "Chennai",
+        "note": ""
+      },
+      {
+        "name": "Muppidhati",
+        "phone": "9916825333",
+        "position": "Sales Head",
+        "location": "Bengaluru",
+        "note": ""
+      }
+    ],
+    "notes": "12 month full subvention"
+  },
+  {
+    "id": "oem_1778408453736_g2b",
+    "name": "S&T",
+    "code": "",
+    "oemType": "OEM",
+    "segment": "Industrial",
+    "subcategories": [
+      "Machine Tools",
+      "Plastics",
+      "Laser"
+    ],
+    "dealerBrands": "",
+    "locations": [
+      {
+        "city": "Bengaluru",
+        "address": "",
+        "lat": "",
+        "lng": ""
+      },
+      {
+        "city": "Chennai",
+        "address": "",
+        "lat": "",
+        "lng": ""
+      },
+      {
+        "city": "Coimbatore",
+        "address": "",
+        "lat": "",
+        "lng": ""
+      }
+    ],
+    "contacts": [
+      {
+        "name": "Manju Pallad",
+        "phone": "9791306222",
+        "position": "Sales Head",
+        "location": "Chennai",
+        "note": "Takes care of Hyderabad, Bengaluru"
+      },
+      {
+        "name": "Madhubalan",
+        "phone": "9597984442",
+        "position": "Sales Head",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Ashok",
+        "phone": "9500837333",
+        "position": "Sales Head",
+        "location": "Coimbatore",
+        "note": ""
+      },
+      {
+        "name": "Deendayalan",
+        "phone": "8220471333",
+        "position": "Sales Head",
+        "location": "Hyderabad",
+        "note": ""
+      },
+      {
+        "name": "Umapathi",
+        "phone": "9000626044",
+        "position": "Sales",
+        "location": "Hyderabad",
+        "note": ""
+      },
+      {
+        "name": "Manikanand",
+        "phone": "9597580111",
+        "position": "Sales Head",
+        "location": "Bengaluru",
+        "note": "GM of Bengaluru branch"
+      },
+      {
+        "name": "Arivazhagan",
+        "phone": "9500980666",
+        "position": "Sales Head",
+        "location": "Coimbatore",
+        "note": ""
+      },
+      {
+        "name": "Narendra Babu",
+        "phone": "9663786648",
+        "position": "Product Head",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Rajesh",
+        "phone": "7397037333",
+        "position": "Sales Head",
+        "location": "Coimbatore",
+        "note": "GM of Bangalore and Coimbatore"
+      },
+      {
+        "name": "Manikanandan",
+        "phone": "959758011",
+        "position": "Sales Head",
+        "location": "Bengaluru",
+        "note": "Head of Bengaluru branch currently"
+      }
+    ],
+    "notes": ""
+  },
+  {
+    "id": "oem_1778408453736_ryl",
+    "name": "Shibaura",
+    "code": "",
+    "oemType": "OEM",
+    "segment": "Industrial",
+    "subcategories": [
+      "Plastics"
+    ],
+    "dealerBrands": "",
+    "locations": [
+      {
+        "city": "Bengaluru",
+        "address": ""
+      },
+      {
+        "city": "Chennai",
+        "address": ""
+      }
+    ],
+    "contacts": [
+      {
+        "name": "Shivaraman",
+        "phone": "9876624541",
+        "position": "Sales Head",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Sudarshan Sadagopan",
+        "phone": "9790982377",
+        "position": "Marketing Head",
+        "location": "Chennai",
+        "note": ""
+      }
+    ],
+    "notes": ""
+  },
+  {
+    "id": "oem_1778408453736_5wv",
+    "name": "Tsugami",
+    "code": "",
+    "oemType": "OEM",
+    "segment": "Industrial",
+    "subcategories": [
+      "Machine Tools"
+    ],
+    "dealerBrands": "",
+    "locations": [
+      {
+        "city": "Bengaluru",
+        "address": ""
+      },
+      {
+        "city": "Chennai",
+        "address": ""
+      }
+    ],
+    "contacts": [
+      {
+        "name": "Shrikant",
+        "phone": "9384800271",
+        "position": "Sales",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Ravi kumar",
+        "phone": "9384001047",
+        "position": "Sales Head",
+        "location": "Chennai",
+        "note": ""
+      },
+      {
+        "name": "Hari Kumar",
+        "phone": "7418881174",
+        "position": "Marketing head",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Bhasker",
+        "phone": "9384805257",
+        "position": "Sales",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Satish",
+        "phone": "9384025252",
+        "position": "Sales",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Suchith",
+        "phone": "8148082683",
+        "position": "Sales",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Abhilasha",
+        "phone": "7845950644",
+        "position": "Sales",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Mukesh Kumar",
+        "phone": "7550221411",
+        "position": "Sales Head",
+        "location": "Bengaluru",
+        "note": ""
+      }
+    ],
+    "notes": ""
+  },
+  {
+    "id": "oem_1778408453736_b9a",
+    "name": "Upanal",
+    "code": "",
+    "oemType": "Dealer",
+    "segment": "Industrial",
+    "subcategories": [
+      "Machine Tools"
+    ],
+    "dealerBrands": "Philips, JFY, Precision engineering Technologies",
+    "locations": [
+      {
+        "city": "Bengaluru",
+        "address": ""
+      },
+      {
+        "city": "Chennai",
+        "address": ""
+      }
+    ],
+    "contacts": [
+      {
+        "name": "Kartik",
+        "phone": "9606045142",
+        "position": "Sales",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Inbasekar",
+        "phone": "9606976188",
+        "position": "Sales Head",
+        "location": "Chennai",
+        "note": ""
+      },
+      {
+        "name": "Ravishankar",
+        "phone": "9036974076",
+        "position": "Sales Head",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Jayant",
+        "phone": "9980166009",
+        "position": "Sales",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Niranjan",
+        "phone": "9606025574",
+        "position": "Sales",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Vinesh",
+        "phone": "9606807263",
+        "position": "Sales",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Chetan",
+        "phone": "9741395666",
+        "position": "Director",
+        "location": "Bengaluru",
+        "note": ""
+      }
+    ],
+    "notes": ""
+  },
+  {
+    "id": "oem_1778408453736_38x",
+    "name": "Windsor",
+    "code": "",
+    "oemType": "OEM",
+    "segment": "Industrial",
+    "subcategories": [
+      "Plastics"
+    ],
+    "dealerBrands": "",
+    "locations": [
+      {
+        "city": "Bengaluru",
+        "address": ""
+      },
+      {
+        "city": "Chennai",
+        "address": ""
+      }
+    ],
+    "contacts": [
+      {
+        "name": "Debasish",
+        "phone": "8217798927",
+        "position": "Sales Head",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Mohan Das",
+        "phone": "9324457292",
+        "position": "Sales",
+        "location": "Bengaluru",
+        "note": "Takes Care of Extrusion"
+      }
+    ],
+    "notes": ""
+  },
+  {
+    "id": "oem_1778408453736_r86",
+    "name": "Samsung",
+    "code": "",
+    "oemType": "OEM",
+    "segment": "Medical",
+    "subcategories": [
+      "Imaging"
+    ],
+    "dealerBrands": "",
+    "locations": [
+      {
+        "city": "Bengaluru",
+        "address": "",
+        "lat": "",
+        "lng": ""
+      },
+      {
+        "city": "Chennai",
+        "address": "",
+        "lat": "",
+        "lng": ""
+      }
+    ],
+    "contacts": [
+      {
+        "name": "Kiran",
+        "phone": "8904400630",
+        "position": "Sales",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Sudipta Biswas",
+        "phone": "9818853431",
+        "position": "NSM",
+        "location": "Mumbai",
+        "note": ""
+      }
+    ],
+    "notes": "9% ROI & 0.5% PF for all dealers for subvention4"
+  },
+  {
+    "id": "oem_1778408453736_nmm",
+    "name": "Mindray",
+    "code": "",
+    "oemType": "OEM",
+    "segment": "Medical",
+    "subcategories": [
+      "Imaging"
+    ],
+    "dealerBrands": "",
+    "locations": [
+      {
+        "city": "Bengaluru",
+        "address": ""
+      },
+      {
+        "city": "Chennai",
+        "address": ""
+      }
+    ],
+    "contacts": [],
+    "notes": ""
+  },
+  {
+    "id": "oem_1778408453736_lkn",
+    "name": "BioMedix",
+    "code": "",
+    "oemType": "OEM",
+    "segment": "Medical",
+    "subcategories": [
+      "Imaging",
+      "Ophthalmology"
+    ],
+    "dealerBrands": "",
+    "locations": [
+      {
+        "city": "Bengaluru",
+        "address": "",
+        "lat": "",
+        "lng": ""
+      },
+      {
+        "city": "Chennai",
+        "address": "",
+        "lat": "",
+        "lng": ""
+      },
+      {
+        "city": "Patna",
+        "address": "",
+        "lat": "",
+        "lng": ""
+      }
+    ],
+    "contacts": [
+      {
+        "name": "Ramesh",
+        "phone": "9884044789",
+        "position": "Sales",
+        "location": "Chennai",
+        "note": ""
+      },
+      {
+        "name": "Pankaj Sinha",
+        "phone": "9830113991",
+        "position": "Sales",
+        "location": "Patna",
+        "note": ""
+      },
+      {
+        "name": "Phaniraj Upadhyay",
+        "phone": "9379915175",
+        "position": "NSM",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Venugopal",
+        "phone": "9611100705",
+        "position": "Sales head",
+        "location": "",
+        "note": ""
+      }
+    ],
+    "notes": "Subvention at 10% Roi and 0.75% PF"
+  },
+  {
+    "id": "oem_1778408453736_mjc",
+    "name": "Trumpf",
+    "code": "",
+    "oemType": "OEM",
+    "segment": "Industrial",
+    "subcategories": [
+      "Laser"
+    ],
+    "dealerBrands": "",
+    "locations": [
+      {
+        "city": "Bengaluru",
+        "address": ""
+      },
+      {
+        "city": "Chennai",
+        "address": ""
+      }
+    ],
+    "contacts": [
+      {
+        "name": "Khalid",
+        "phone": "9168601722",
+        "position": "RSM",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Michael",
+        "phone": "8939659474",
+        "position": "Sales Head",
+        "location": "Chennai",
+        "note": ""
+      }
+    ],
+    "notes": ""
+  },
+  {
+    "id": "oem_1778408453736_11o",
+    "name": "Haitian",
+    "code": "",
+    "oemType": "OEM",
+    "segment": "Industrial",
+    "subcategories": [
+      "Machine Tools",
+      "Plastics"
+    ],
+    "dealerBrands": "",
+    "locations": [
+      {
+        "city": "Bengaluru",
+        "address": ""
+      },
+      {
+        "city": "Chennai",
+        "address": ""
+      },
+      {
+        "city": "Coimbatore",
+        "address": ""
+      }
+    ],
+    "contacts": [],
+    "notes": ""
+  },
+  {
+    "id": "oem_1778408453736_2w5",
+    "name": "Mazak",
+    "code": "",
+    "oemType": "OEM",
+    "segment": "Industrial",
+    "subcategories": [
+      "Machine Tools"
+    ],
+    "dealerBrands": "",
+    "locations": [
+      {
+        "city": "Bengaluru",
+        "address": ""
+      },
+      {
+        "city": "Chennai",
+        "address": ""
+      },
+      {
+        "city": "Coimbatore",
+        "address": ""
+      }
+    ],
+    "contacts": [
+      {
+        "name": "Giridhar",
+        "phone": "9900154338",
+        "position": "Sales Head",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Jagadessh Rao",
+        "phone": "7420056630",
+        "position": "Sales",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "John Jerry",
+        "phone": "9940665727",
+        "position": "Sales Head",
+        "location": "Coimbatore",
+        "note": ""
+      },
+      {
+        "name": "Udayshankar",
+        "phone": "9444273537",
+        "position": "Sales Head",
+        "location": "Chennai",
+        "note": ""
+      }
+    ],
+    "notes": ""
+  },
+  {
+    "id": "oem_1778557584919",
+    "name": "BPL",
+    "code": "",
+    "oemType": "OEM",
+    "segment": "Medical",
+    "subcategories": [
+      "Imaging",
+      "Anaesthetic"
+    ],
+    "dealerBrands": "",
+    "locations": [
+      {
+        "city": "Bengaluru",
+        "address": "",
+        "lat": "",
+        "lng": ""
+      }
+    ],
+    "contacts": [
+      {
+        "name": "Rajesh Maharana",
+        "phone": "80950 88822",
+        "position": "Commercial head",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Suman Chudhury",
+        "phone": "9830180122",
+        "position": "Sales head",
+        "location": "Bengaluru",
+        "note": "Heads ultrasound"
+      }
+    ],
+    "notes": "We have agreement. Current scheme running for Xcube machines"
+  },
+  {
+    "id": "oem_1778576788896",
+    "name": "Yamazen",
+    "code": "",
+    "oemType": "Dealer",
+    "segment": "Industrial",
+    "subcategories": [
+      "Machine Tools"
+    ],
+    "dealerBrands": "",
+    "locations": [
+      {
+        "city": "Bengaluru",
+        "address": "",
+        "lat": "",
+        "lng": ""
+      },
+      {
+        "city": "Hyderabad",
+        "address": "",
+        "lat": "",
+        "lng": ""
+      }
+    ],
+    "contacts": [
+      {
+        "name": "Jayson Matthew",
+        "phone": "9980048645",
+        "position": "Sales head",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Shravan",
+        "phone": "9108340971",
+        "position": "Sales head",
+        "location": "Hyderabad",
+        "note": ""
+      }
+    ],
+    "notes": ""
+  }
+]
