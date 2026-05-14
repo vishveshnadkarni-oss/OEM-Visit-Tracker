@@ -569,6 +569,28 @@
       "notes": "Has asked to meet on 15th May",
       "nextVisitDate": null,
       "createdAt": "2026-05-14T11:53:07.855Z"
+    },
+    {
+      "id": "v_1778782123023",
+      "oemId": "oem_1778782059514",
+      "date": "2026-05-06",
+      "type": "visit",
+      "personMet": "Suresh",
+      "peopleMet": [
+        "Suresh"
+      ],
+      "visitLoc": "Chennai",
+      "topics": [
+        "Principal Moratorium",
+        "Rate of Interest"
+      ],
+      "customTopics": [
+        "Ultrasound Program",
+        "Asked for leads"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-14T18:08:43.023Z"
     }
   ],
   "actions": [
@@ -616,6 +638,7 @@
     "Hybrid Flexi",
     "Contract Renewal",
     "Did not answer phone",
-    "Asked for leads"
+    "Asked for leads",
+    "Ultrasound Program"
   ]
 }
