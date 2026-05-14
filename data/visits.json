@@ -591,6 +591,24 @@
       "notes": "",
       "nextVisitDate": null,
       "createdAt": "2026-05-14T18:08:43.023Z"
+    },
+    {
+      "id": "v_1778782587162",
+      "oemId": "oem_1778408453736_lkn",
+      "date": "2026-05-06",
+      "type": "call",
+      "personMet": "Venugopal",
+      "peopleMet": [
+        "Venugopal"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Case update"
+      ],
+      "notes": "Took update for \n1. Ultrahuman case, shivmoga case, basavaraju case",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-14T18:16:27.162Z"
     }
   ],
   "actions": [
@@ -620,6 +638,13 @@
       "visitId": "v_1778755605163",
       "description": "Meet kanaka ma'am for Deftech event",
       "dueDate": "2026-05-16",
+      "status": "open"
+    },
+    {
+      "id": "a_1778782340849_vfn",
+      "visitId": "v_1778759587855",
+      "description": "Take appointment of Ashwin from siemens",
+      "dueDate": "2026-05-15",
       "status": "open"
     },
     {
