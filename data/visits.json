@@ -472,7 +472,7 @@
       "createdAt": "2026-05-14T10:46:45.163Z"
     },
     {
-      "id": "v_1778755659099",
+      "id": "v_1778755800693",
       "oemId": "oem_1778557584919",
       "date": "2026-05-14",
       "type": "call",
@@ -485,12 +485,12 @@
       "customTopics": [
         "Appointment"
       ],
-      "notes": "He is not available.",
+      "notes": "He doesn't have time for appointments",
       "nextVisitDate": null,
-      "createdAt": "2026-05-14T10:47:39.099Z"
+      "createdAt": "2026-05-14T10:50:00.693Z"
     },
     {
-      "id": "v_1778755750378",
+      "id": "v_1778755854174",
       "oemId": "oem_1778408453736_b9a",
       "date": "2026-05-14",
       "type": "call",
@@ -498,12 +498,12 @@
       "peopleMet": [
         "Chetan"
       ],
-      "visitLoc": "Bengaluru",
+      "visitLoc": "",
       "topics": [],
       "customTopics": [],
-      "notes": "Spoke regarding collaboration for Deftech event. He said he doesn't want to",
+      "notes": "Spoke about collaboration about Deftech. He does not want to go ahead",
       "nextVisitDate": null,
-      "createdAt": "2026-05-14T10:49:10.378Z"
+      "createdAt": "2026-05-14T10:50:54.175Z"
     }
   ],
   "actions": [
