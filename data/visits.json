@@ -454,6 +454,22 @@
       "notes": "He couldn't meet",
       "nextVisitDate": null,
       "createdAt": "2026-05-13T09:28:16.892Z"
+    },
+    {
+      "id": "v_1778755605163",
+      "oemId": "oem_1778408453736_441",
+      "date": "2026-05-14",
+      "type": "call",
+      "personMet": "Kanaka",
+      "peopleMet": [
+        "Kanaka"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "She is coming to Bengaluru in 16th. Meet her",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-14T10:46:45.163Z"
     }
   ],
   "actions": [
@@ -476,6 +492,13 @@
       "visitId": "v_1778647897206",
       "description": "As for appointment shreyas sontake",
       "dueDate": "2026-05-15",
+      "status": "open"
+    },
+    {
+      "id": "a_1778755605164_z05",
+      "visitId": "v_1778755605163",
+      "description": "Meet kanaka ma'am for Deftech event",
+      "dueDate": "2026-05-16",
       "status": "open"
     }
   ],
