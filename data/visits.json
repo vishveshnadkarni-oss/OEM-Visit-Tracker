@@ -470,6 +470,40 @@
       "notes": "She is coming to Bengaluru in 16th. Meet her",
       "nextVisitDate": null,
       "createdAt": "2026-05-14T10:46:45.163Z"
+    },
+    {
+      "id": "v_1778755659099",
+      "oemId": "oem_1778557584919",
+      "date": "2026-05-14",
+      "type": "call",
+      "personMet": "Suman Chudhury",
+      "peopleMet": [
+        "Suman Chudhury"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Appointment"
+      ],
+      "notes": "He is not available.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-14T10:47:39.099Z"
+    },
+    {
+      "id": "v_1778755750378",
+      "oemId": "oem_1778408453736_b9a",
+      "date": "2026-05-14",
+      "type": "call",
+      "personMet": "Chetan",
+      "peopleMet": [
+        "Chetan"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "Spoke regarding collaboration for Deftech event. He said he doesn't want to",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-14T10:49:10.378Z"
     }
   ],
   "actions": [
