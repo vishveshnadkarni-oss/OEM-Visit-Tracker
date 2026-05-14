@@ -527,30 +527,6 @@
       "notes": "Send him a one pager of Hybrid flexi scheme.",
       "nextVisitDate": null,
       "createdAt": "2026-05-14T10:56:59.511Z"
-    },
-    {
-      "id": "v_1778756396144",
-      "oemId": "oem_1778408453736_73u",
-      "date": "2026-05-07",
-      "type": "visit",
-      "personMet": "Periyasamy",
-      "peopleMet": [
-        "Periyasamy"
-      ],
-      "visitLoc": "Chennai",
-      "topics": [
-        "Rate of Interest",
-        "Principal Moratorium",
-        "Startups",
-        "Leasing"
-      ],
-      "customTopics": [
-        "Hybrid Flexi",
-        "Asked for leads"
-      ],
-      "notes": "Send him a one pager of our hybrid flexi scheme",
-      "nextVisitDate": null,
-      "createdAt": "2026-05-14T10:59:56.144Z"
     }
   ],
   "actions": [
