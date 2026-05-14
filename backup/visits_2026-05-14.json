@@ -504,6 +504,29 @@
       "notes": "Spoke about collaboration about Deftech. He does not want to go ahead",
       "nextVisitDate": null,
       "createdAt": "2026-05-14T10:50:54.175Z"
+    },
+    {
+      "id": "v_1778756219511",
+      "oemId": "oem_1778408453736_73u",
+      "date": "2026-05-07",
+      "type": "visit",
+      "personMet": "Periyasamy",
+      "peopleMet": [
+        "Periyasamy"
+      ],
+      "visitLoc": "Chennai",
+      "topics": [
+        "Leasing",
+        "Principal Moratorium",
+        "Rate of Interest",
+        "Startups"
+      ],
+      "customTopics": [
+        "Hybrid Flexi"
+      ],
+      "notes": "Send him a one pager of Hybrid flexi scheme.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-14T10:56:59.511Z"
     }
   ],
   "actions": [
