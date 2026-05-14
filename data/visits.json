@@ -648,6 +648,24 @@
       "notes": "He will be available for a meet in July",
       "nextVisitDate": null,
       "createdAt": "2026-05-14T18:21:49.483Z"
+    },
+    {
+      "id": "v_1778783442975",
+      "oemId": "oem_1778557584919",
+      "date": "2026-05-05",
+      "type": "call",
+      "personMet": "Rajesh Maharana",
+      "peopleMet": [
+        "Rajesh Maharana"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Contract Renewal"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-14T18:30:42.976Z"
     }
   ],
   "actions": [
