@@ -551,6 +551,25 @@
       "notes": "1. He has a open house on 22may. Asked for collaboration.\n2. They have a ground team meeting on 13rth may.\n3. He gets more freedom in Cosmos.\n4. Tieing up for Texpo was discussed.",
       "nextVisitDate": null,
       "createdAt": "2026-05-14T11:09:29.310Z"
+    },
+    {
+      "id": "v_1778758579027",
+      "oemId": "oem_1778408453736_7b8",
+      "date": "2026-05-14",
+      "type": "call",
+      "personMet": "Hari Prasad, Maheshwaran",
+      "peopleMet": [
+        "Hari Prasad",
+        "Maheshwaran"
+      ],
+      "visitLoc": "Chennai",
+      "topics": [],
+      "customTopics": [
+        "Appointment"
+      ],
+      "notes": "Asked for appointment but were busy",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-14T11:36:19.027Z"
     }
   ],
   "actions": [
