@@ -666,6 +666,24 @@
       "notes": "",
       "nextVisitDate": null,
       "createdAt": "2026-05-14T18:30:42.976Z"
+    },
+    {
+      "id": "v_1778783643937",
+      "oemId": "oem_1778408453736_vcf",
+      "date": "2026-05-05",
+      "type": "call",
+      "personMet": "Lokanandhan",
+      "peopleMet": [
+        "Lokanandhan"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Cross marketing"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-14T18:34:03.938Z"
     }
   ],
   "actions": [
@@ -728,6 +746,7 @@
     "Contract Renewal",
     "Did not answer phone",
     "Asked for leads",
-    "Ultrasound Program"
+    "Ultrasound Program",
+    "Cross marketing"
   ]
 }
