@@ -511,72 +511,103 @@ async function ghGet(path){
   const tk=getToken(); if(!tk) return null;
   const r=await fetch(API+path+'?ref='+BRANCH,{headers:{'Authorization':'Bearer '+tk,'Accept':'application/vnd.github+json'}});
   if(r.status===404) return null;
-  if(!r.ok) throw new Error('GET '+r.status);
+  if(!r.ok) throw new Error('GH '+r.status);
   return r.json();
 }
-async function ghPut(path, data, sha, msg){
+async function ghPut(path,data,sha,msg){
   const tk=getToken(); if(!tk) throw new Error('No token');
-  const body={message:msg, content:btoa(unescape(encodeURIComponent(JSON.stringify(data,null,2)))), branch:BRANCH};
+  const body={message:msg,content:btoa(unescape(encodeURIComponent(JSON.stringify(data,null,2)))),branch:BRANCH};
   if(sha) body.sha=sha;
   const r=await fetch(API+path,{method:'PUT',headers:{'Authorization':'Bearer '+tk,'Content-Type':'application/json','Accept':'application/vnd.github+json'},body:JSON.stringify(body)});
-  if(!r.ok) throw new Error('PUT '+r.status+' '+(await r.text()).slice(0,100));
-  const j=await r.json(); return j.content?.sha||null;
+  if(!r.ok){const txt=await r.text(); throw new Error('PUT '+r.status+' '+txt.slice(0,80));}
+  return (await r.json()).content?.sha||null;
+}
+// Write one file safely: always fetch fresh SHA right before writing
+async function ghWriteFile(path,data,msg){
+  const existing=await ghGet(path).catch(()=>null);
+  return ghPut(path,data,existing?.sha||null,msg);
 }
 
 // ── SYNC ──
-// Write queue — ensures only one GitHub write runs at a time, eliminating 409 races
-let _writeQueue=Promise.resolve();
-function queueWrite(fn){ _writeQueue=_writeQueue.then(fn).catch(()=>{}); return _writeQueue; }
+// Serial queue: all GitHub writes run one at a time, never in parallel
+let _q=Promise.resolve();
+function enqueue(fn){_q=_q.then(()=>fn().catch(e=>console.warn('Queue err:',e)));}
 
 function setSS(state,msg){
-  const d=document.getElementById('sdot'), l=document.getElementById('slbl');
-  if(!d||!l) return;
+  const d=document.getElementById('sdot'),l=document.getElementById('slbl');
+  if(!d||!l)return;
   d.className='sync-dot '+(state==='ok'?'ok':state==='err'?'err':state==='busy'?'spin':'');
   l.textContent=msg;
 }
 
-async function doSync(){
+// Pull from GitHub — merges new entries from other devices, never wipes local data
+async function doSync(force=false){
   if(!getToken()){toast('No token — go to Settings');return;}
   setSS('busy','Fetching...');
   try{
     const [of,vf]=await Promise.all([ghGet(FILES.oems),ghGet(FILES.visits)]);
-    if(of){db.oems=JSON.parse(decodeURIComponent(escape(atob(of.content.replace(/\n/g,'')))));}
-    if(vf){const d=JSON.parse(decodeURIComponent(escape(atob(vf.content.replace(/\n/g,''))))); db.visits=d.visits||[]; db.actions=d.actions||[]; db.topics=d.topics||[];}
-    save(); setSS('ok','Synced '+fmtTime(new Date())); renderHome(); toast('Synced ✓');
-  }catch(e){setSS('err','Offline — using local data');}
+    if(of){
+      const ghOems=JSON.parse(decodeURIComponent(escape(atob(of.content.replace(/\n/g,'')))));
+      if(force){db.oems=ghOems;}
+      else{
+        // Merge: bring in OEMs from GitHub not in local
+        const localCodes=new Set(db.oems.map(o=>o.id));
+        ghOems.forEach(o=>{if(!localCodes.has(o.id))db.oems.push(o);});
+      }
+    }
+    if(vf){
+      const d=JSON.parse(decodeURIComponent(escape(atob(vf.content.replace(/\n/g,'')))));
+      const ghV=d.visits||[],ghA=d.actions||[],ghT=d.topics||[];
+      if(force){db.visits=ghV;db.actions=ghA;db.topics=ghT;}
+      else{
+        const lv=new Set(db.visits.map(v=>v.id));
+        ghV.forEach(v=>{if(!lv.has(v.id))db.visits.push(v);});
+        const la=new Set(db.actions.map(a=>a.id));
+        ghA.forEach(a=>{if(!la.has(a.id))db.actions.push(a);});
+        ghT.forEach(t=>{if(!db.topics.includes(t))db.topics.push(t);});
+      }
+    }
+    save();
+    setSS('ok','Synced '+fmtTime(new Date()));
+    renderHome();
+    if(force)toast('Synced ✓');
+  }catch(e){setSS('err','Offline — local data');}
 }
 
-async function _doWrite(){
-  setSS('busy','Saving...');
-  // Always fetch fresh SHA immediately before each write
-  const of=await ghGet(FILES.oems).catch(()=>null);
-  await ghPut(FILES.oems, db.oems, of?.sha||null, 'Update OEMs');
-  const vf=await ghGet(FILES.visits).catch(()=>null);
-  await ghPut(FILES.visits, {visits:db.visits,actions:db.actions,topics:db.topics}, vf?.sha||null, 'Update visits');
-  setSS('ok','Synced '+fmtTime(new Date()));
-}
-
-async function saveSync(){
-  save();
-  if(!getToken()) return;
-  queueWrite(async()=>{
-    try{ await _doWrite(); }
-    catch(e){ setSS('err','Saved locally'); }
+// Push local data to GitHub in background via queue
+function saveSync(){
+  save();        // instant — localStorage always written first
+  renderHome();  // UI updates immediately, never waits for GitHub
+  if(!getToken())return;
+  enqueue(async()=>{
+    setSS('busy','Saving...');
+    try{
+      await ghWriteFile(FILES.oems,db.oems,'Update OEMs');
+      await ghWriteFile(FILES.visits,{visits:db.visits,actions:db.actions,topics:db.topics},'Update visits');
+      setSS('ok','Synced '+fmtTime(new Date()));
+    }catch(e){
+      setSS('err','Saved locally');
+      console.warn('GitHub write failed:',e.message);
+    }
   });
 }
 
-async function doBackup(){
+// Backup to dated files in /backup folder
+function doBackup(){
   if(!getToken()){toast('No token — go to Settings');return;}
-  queueWrite(async()=>{
+  toast('Backup queued...');
+  enqueue(async()=>{
     setSS('busy','Backing up...');
     try{
       const stamp=todayStr();
-      const of=await ghGet('backup/oems_'+stamp+'.json').catch(()=>null);
-      await ghPut('backup/oems_'+stamp+'.json', db.oems, of?.sha||null, 'Backup OEMs '+stamp);
-      const vf=await ghGet('backup/visits_'+stamp+'.json').catch(()=>null);
-      await ghPut('backup/visits_'+stamp+'.json', {visits:db.visits,actions:db.actions}, vf?.sha||null, 'Backup visits '+stamp);
-      setSS('ok','Backup done '+fmtTime(new Date())); toast('Backup saved ✓');
-    }catch(e){ setSS('err','Backup failed'); toast('Backup failed — retrying...'); }
+      await ghWriteFile('backup/oems_'+stamp+'.json',db.oems,'Backup OEMs '+stamp);
+      await ghWriteFile('backup/visits_'+stamp+'.json',{visits:db.visits,actions:db.actions},'Backup visits '+stamp);
+      setSS('ok','Backup done '+fmtTime(new Date()));
+      toast('Backup saved ✓');
+    }catch(e){
+      setSS('err','Backup failed');
+      toast('Backup failed: '+e.message);
+    }
   });
 }
 
@@ -729,7 +760,7 @@ async function addNewContact(){
   const o=db.oems.find(x=>x.id===oid); if(!o) return;
   if(!o.contacts) o.contacts=[];
   o.contacts.push({name,phone:document.getElementById('nc-phone').value.trim(),position:document.getElementById('nc-pos').value.trim(),location:document.getElementById('nc-loc').value.trim(),note:''});
-  await saveSync();
+  saveSync();
   const opts='<option value="">Select contact...</option>'+o.contacts.map(c=>`<option value="${c.name}">${c.name}${c.position?' — '+c.position:''}</option>`).join('')+'<option value="__new__">+ Add new contact...</option>';
   document.querySelectorAll('#v-people-list select').forEach(sel=>{const cur=sel.value;sel.innerHTML=opts;sel.value=cur;});
   // Set the last dropdown to the new contact
@@ -763,7 +794,7 @@ async function saveVisit(){
       if(desc) db.actions.push({id:'a_'+Date.now()+'_'+Math.random().toString(36).slice(2,5),visitId:editVid,description:desc,dueDate:due||null,status:'open'});
     });
     selTopics=[];editVid=null;
-    toast('Updating...');await saveSync();toast('Report updated ✓');go('home');
+    toast('Updating...');saveSync();toast('Report updated ✓');go('home');
   } else {
     const vid='v_'+Date.now();
     const v={id:vid,oemId:oid,date,type:vType,personMet:peopleMet.join(', '),peopleMet,visitLoc,topics,customTopics,notes,nextVisitDate:nextDate,createdAt:new Date().toISOString()};
@@ -773,7 +804,7 @@ async function saveVisit(){
       if(desc) db.actions.push({id:'a_'+Date.now()+'_'+Math.random().toString(36).slice(2,5),visitId:vid,description:desc,dueDate:due||null,status:'open'});
     });
     selTopics=[];
-    toast('Saving...');await saveSync();toast('Report saved ✓');go('home');
+    toast('Saving...');saveSync();toast('Report saved ✓');go('home');
   }
 }
 
@@ -810,7 +841,7 @@ async function deleteVisit(){
   if(!confirm('Delete this report and its action items?')) return;
   db.actions=db.actions.filter(a=>a.visitId!==curVid);
   db.visits=db.visits.filter(v=>v.id!==curVid);
-  await saveSync(); toast('Deleted'); go('home');
+  saveSync(); toast('Deleted'); go('home');
 }
 
 // ── DIRECTORY ──
@@ -911,7 +942,7 @@ async function saveOEM(){
   const data={name,code:document.getElementById('of-code').value.trim(),oemType:oType,segment:oSeg,subcategories:subs,dealerBrands:oType==='Dealer'?document.getElementById('of-brands').value.trim():'',locations:locs,contacts:cts,notes:document.getElementById('of-notes').value.trim()};
   if(editOEM){Object.assign(db.oems.find(o=>o.id===editOEM.id),data);}
   else{db.oems.push({id:'oem_'+Date.now(),...data});}
-  toast('Saving...'); await saveSync(); toast('OEM saved ✓'); go('dir');
+  toast('Saving...'); saveSync(); toast('OEM saved ✓'); go('dir');
 }
 async function deleteOEM(){
   if(!confirm('Delete '+editOEM.name+'?')) return;
@@ -919,7 +950,7 @@ async function deleteOEM(){
   db.oems=db.oems.filter(o=>o.id!==editOEM.id);
   db.visits=db.visits.filter(v=>v.oemId!==editOEM.id);
   db.actions=db.actions.filter(a=>!vids.includes(a.visitId));
-  await saveSync(); toast('Deleted'); go('dir');
+  saveSync(); toast('Deleted'); go('dir');
 }
 
 // ── TASKS ──
@@ -955,7 +986,7 @@ async function toggleTask(id,event){
   event.stopPropagation();
   const a=db.actions.find(x=>x.id===id); if(!a) return;
   a.status=a.status==='open'?'closed':'open';
-  await saveSync();
+  saveSync();
   const active=document.querySelector('.screen.active')?.id;
   if(active==='s-home') renderHome();
   else if(active==='s-tasks') renderTasks();
@@ -966,7 +997,7 @@ async function delTask(id,event){
   event.stopPropagation();
   if(!confirm('Delete this task?')) return;
   db.actions=db.actions.filter(a=>a.id!==id);
-  await saveSync(); renderTasks();
+  saveSync(); renderTasks();
 }
 function oem4action(a){const v=db.visits.find(x=>x.id===a.visitId);return v?db.oems.find(o=>o.id===v.oemId):null;}
 
@@ -1038,7 +1069,7 @@ async function importFile(inp){
     added++;
   });
   document.getElementById('imp-result').innerHTML=`<div class="card" style="background:var(--green-bg);border:1px solid rgba(63,185,80,.3);margin-top:10px"><div style="font-size:14px;font-weight:600;color:var(--green)">✓ ${added} added · ${skipped} skipped · ${merged} updated with contacts</div></div>`;
-  toast('Importing...'); await saveSync(); toast(added+' OEMs imported ✓'); inp.value='';
+  toast('Importing...'); saveSync(); toast(added+' OEMs imported ✓'); inp.value='';
 }
 
 // ── VOICE ──
