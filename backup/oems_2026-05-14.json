@@ -647,6 +647,13 @@
         "position": "Accounts",
         "location": "Bengaluru",
         "note": ""
+      },
+      {
+        "name": "Prasath",
+        "phone": "9100951197",
+        "position": "GM",
+        "location": "Tamil Nadu, Srilanka and Maldives",
+        "note": ""
       }
     ],
     "notes": "9% ROI & 0.5% PF for subvention"
@@ -1996,6 +2003,35 @@
         "phone": "9003073732",
         "position": "Director",
         "location": "Chennai",
+        "note": ""
+      }
+    ],
+    "notes": ""
+  },
+  {
+    "id": "oem_1778782836076",
+    "name": "Anca Machine Tools",
+    "code": "",
+    "oemType": "OEM",
+    "segment": "Industrial",
+    "subcategories": [
+      "Machine Tools"
+    ],
+    "dealerBrands": "",
+    "locations": [
+      {
+        "city": "Bengaluru",
+        "address": "",
+        "lat": "",
+        "lng": ""
+      }
+    ],
+    "contacts": [
+      {
+        "name": "Renjith",
+        "phone": "9741470028",
+        "position": "South head",
+        "location": "Bengaluru",
         "note": ""
       }
     ],
