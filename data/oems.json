@@ -2007,5 +2007,34 @@
       }
     ],
     "notes": ""
+  },
+  {
+    "id": "oem_1778782836076",
+    "name": "Anca Machine Tools",
+    "code": "",
+    "oemType": "OEM",
+    "segment": "Industrial",
+    "subcategories": [
+      "Machine Tools"
+    ],
+    "dealerBrands": "",
+    "locations": [
+      {
+        "city": "Bengaluru",
+        "address": "",
+        "lat": "",
+        "lng": ""
+      }
+    ],
+    "contacts": [
+      {
+        "name": "Renjith",
+        "phone": "9741470028",
+        "position": "South head",
+        "location": "Bengaluru",
+        "note": ""
+      }
+    ],
+    "notes": ""
   }
 ]
