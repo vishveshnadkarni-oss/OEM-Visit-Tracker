@@ -551,6 +551,24 @@
       "notes": "1. He has a open house on 22may. Asked for collaboration.\n2. They have a ground team meeting on 13rth may.\n3. He gets more freedom in Cosmos.\n4. Tieing up for Texpo was discussed.",
       "nextVisitDate": null,
       "createdAt": "2026-05-14T11:09:29.310Z"
+    },
+    {
+      "id": "v_1778759587855",
+      "oemId": "oem_1778758811194",
+      "date": "2026-05-14",
+      "type": "call",
+      "personMet": "Ashwin",
+      "peopleMet": [
+        "Ashwin"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Appointment"
+      ],
+      "notes": "Has asked to meet on 15th May",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-14T11:53:07.855Z"
     }
   ],
   "actions": [
@@ -580,6 +598,13 @@
       "visitId": "v_1778755605163",
       "description": "Meet kanaka ma'am for Deftech event",
       "dueDate": "2026-05-16",
+      "status": "open"
+    },
+    {
+      "id": "a_1778781845868_xy3",
+      "visitId": "v_1778759587855",
+      "description": "Take appointment of Ashwin from siemens",
+      "dueDate": "2026-05-15",
       "status": "open"
     }
   ]
