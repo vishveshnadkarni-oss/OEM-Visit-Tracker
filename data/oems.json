@@ -1929,40 +1929,5 @@
       }
     ],
     "notes": ""
-  },
-  {
-    "id": "oem_1778758811194",
-    "name": "Siemens Healthineers",
-    "code": "",
-    "oemType": "OEM",
-    "segment": "Medical",
-    "subcategories": [
-      "Imaging"
-    ],
-    "dealerBrands": "",
-    "locations": [
-      {
-        "city": "Bengaluru",
-        "address": "",
-        "lat": "",
-        "lng": ""
-      },
-      {
-        "city": "Chennai",
-        "address": "",
-        "lat": "",
-        "lng": ""
-      }
-    ],
-    "contacts": [
-      {
-        "name": "Pradip Sahoo",
-        "phone": "9560900787",
-        "position": "Sales head",
-        "location": "Bengaluru",
-        "note": ""
-      }
-    ],
-    "notes": ""
   }
 ]
