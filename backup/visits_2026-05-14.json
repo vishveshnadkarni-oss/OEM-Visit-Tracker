@@ -591,6 +591,81 @@
       "notes": "",
       "nextVisitDate": null,
       "createdAt": "2026-05-14T18:08:43.023Z"
+    },
+    {
+      "id": "v_1778782587162",
+      "oemId": "oem_1778408453736_lkn",
+      "date": "2026-05-06",
+      "type": "call",
+      "personMet": "Venugopal",
+      "peopleMet": [
+        "Venugopal"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Case update"
+      ],
+      "notes": "Took update for \n1. Ultrahuman case, shivmoga case, basavaraju case",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-14T18:16:27.162Z"
+    },
+    {
+      "id": "v_1778782729404",
+      "oemId": "oem_1778408453736_nyq",
+      "date": "2026-05-06",
+      "type": "visit",
+      "personMet": "Prasath",
+      "peopleMet": [
+        "Prasath"
+      ],
+      "visitLoc": "Chennai",
+      "topics": [
+        "Leasing",
+        "Rate of Interest"
+      ],
+      "customTopics": [
+        "Ultrasound Program"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-14T18:18:49.404Z"
+    },
+    {
+      "id": "v_1778782909483",
+      "oemId": "oem_1778782836076",
+      "date": "2026-05-05",
+      "type": "call",
+      "personMet": "Renjith",
+      "peopleMet": [
+        "Renjith"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Appointment"
+      ],
+      "notes": "He will be available for a meet in July",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-14T18:21:49.483Z"
+    },
+    {
+      "id": "v_1778783442975",
+      "oemId": "oem_1778557584919",
+      "date": "2026-05-06",
+      "type": "call",
+      "personMet": "Rajesh Maharana",
+      "peopleMet": [
+        "Rajesh Maharana"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Contract Renewal"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-14T18:30:42.976Z"
     }
   ],
   "actions": [
@@ -623,10 +698,24 @@
       "status": "open"
     },
     {
+      "id": "a_1778782340849_vfn",
+      "visitId": "v_1778759587855",
+      "description": "Take appointment of Ashwin from siemens",
+      "dueDate": "2026-05-15",
+      "status": "open"
+    },
+    {
       "id": "a_1778782315802_ym6",
       "visitId": "v_1778759587855",
       "description": "Take appointment of Ashwin from siemens",
       "dueDate": "2026-05-15",
+      "status": "open"
+    },
+    {
+      "id": "a_1778782909483_mmk",
+      "visitId": "v_1778782909483",
+      "description": "Try to call and take appointment with Anca renjith",
+      "dueDate": "2026-06-24",
       "status": "open"
     }
   ]
