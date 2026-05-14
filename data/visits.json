@@ -630,6 +630,24 @@
       "notes": "",
       "nextVisitDate": null,
       "createdAt": "2026-05-14T18:18:49.404Z"
+    },
+    {
+      "id": "v_1778782909483",
+      "oemId": "oem_1778782836076",
+      "date": "2026-05-05",
+      "type": "call",
+      "personMet": "Renjith",
+      "peopleMet": [
+        "Renjith"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Appointment"
+      ],
+      "notes": "He will be available for a meet in July",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-14T18:21:49.483Z"
     }
   ],
   "actions": [
@@ -673,6 +691,13 @@
       "visitId": "v_1778759587855",
       "description": "Take appointment of Ashwin from siemens",
       "dueDate": "2026-05-15",
+      "status": "open"
+    },
+    {
+      "id": "a_1778782909483_mmk",
+      "visitId": "v_1778782909483",
+      "description": "Try to call and take appointment with Anca renjith",
+      "dueDate": "2026-06-24",
       "status": "open"
     }
   ],
