@@ -555,7 +555,7 @@
     {
       "id": "v_1778759587855",
       "oemId": "oem_1778758811194",
-      "date": "2026-05-14",
+      "date": "2026-05-06",
       "type": "call",
       "personMet": "Ashwin",
       "peopleMet": [
@@ -569,6 +569,28 @@
       "notes": "Has asked to meet on 15th May",
       "nextVisitDate": null,
       "createdAt": "2026-05-14T11:53:07.855Z"
+    },
+    {
+      "id": "v_1778782123023",
+      "oemId": "oem_1778782059514",
+      "date": "2026-05-06",
+      "type": "visit",
+      "personMet": "Suresh",
+      "peopleMet": [
+        "Suresh"
+      ],
+      "visitLoc": "Chennai",
+      "topics": [
+        "Principal Moratorium",
+        "Rate of Interest"
+      ],
+      "customTopics": [
+        "Ultrasound Program",
+        "Asked for leads"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-14T18:08:43.023Z"
     }
   ],
   "actions": [
@@ -601,7 +623,7 @@
       "status": "open"
     },
     {
-      "id": "a_1778781845868_xy3",
+      "id": "a_1778782142060_9i4",
       "visitId": "v_1778759587855",
       "description": "Take appointment of Ashwin from siemens",
       "dueDate": "2026-05-15",
