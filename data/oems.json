@@ -1971,5 +1971,34 @@
       }
     ],
     "notes": ""
+  },
+  {
+    "id": "oem_1778782059514",
+    "name": "Shree Imaging",
+    "code": "",
+    "oemType": "Dealer",
+    "segment": "Medical",
+    "subcategories": [
+      "Imaging"
+    ],
+    "dealerBrands": "Mindray, Oki, Carestream, Kiwi, Surginova, Babycare tens",
+    "locations": [
+      {
+        "city": "Chennai",
+        "address": "",
+        "lat": "",
+        "lng": ""
+      }
+    ],
+    "contacts": [
+      {
+        "name": "Suresh",
+        "phone": "9003073732",
+        "position": "Director",
+        "location": "Chennai",
+        "note": ""
+      }
+    ],
+    "notes": ""
   }
 ]
