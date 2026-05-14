@@ -488,6 +488,22 @@
       "notes": "He doesn't have time for appointments",
       "nextVisitDate": null,
       "createdAt": "2026-05-14T10:50:00.693Z"
+    },
+    {
+      "id": "v_1778755854174",
+      "oemId": "oem_1778408453736_b9a",
+      "date": "2026-05-14",
+      "type": "call",
+      "personMet": "Chetan",
+      "peopleMet": [
+        "Chetan"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [],
+      "notes": "Spoke about collaboration about Deftech. He does not want to go ahead",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-14T10:50:54.175Z"
     }
   ],
   "actions": [
