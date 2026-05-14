@@ -609,6 +609,27 @@
       "notes": "Took update for \n1. Ultrahuman case, shivmoga case, basavaraju case",
       "nextVisitDate": null,
       "createdAt": "2026-05-14T18:16:27.162Z"
+    },
+    {
+      "id": "v_1778782729404",
+      "oemId": "oem_1778408453736_nyq",
+      "date": "2026-05-06",
+      "type": "visit",
+      "personMet": "Prasath",
+      "peopleMet": [
+        "Prasath"
+      ],
+      "visitLoc": "Chennai",
+      "topics": [
+        "Leasing",
+        "Rate of Interest"
+      ],
+      "customTopics": [
+        "Ultrasound Program"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-14T18:18:49.404Z"
     }
   ],
   "actions": [
