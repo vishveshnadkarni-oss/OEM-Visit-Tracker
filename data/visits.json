@@ -553,23 +553,20 @@
       "createdAt": "2026-05-14T11:09:29.310Z"
     },
     {
-      "id": "v_1778758579027",
-      "oemId": "oem_1778408453736_7b8",
-      "date": "2026-05-07",
+      "id": "v_1778759587855",
+      "oemId": "oem_1778758811194",
+      "date": "2026-05-14",
       "type": "call",
-      "personMet": "Hari Prasad, Maheshwaran",
-      "peopleMet": [
-        "Hari Prasad",
-        "Maheshwaran"
-      ],
-      "visitLoc": "Chennai",
+      "personMet": "",
+      "peopleMet": [],
+      "visitLoc": "Bengaluru",
       "topics": [],
       "customTopics": [
         "Appointment"
       ],
-      "notes": "Asked for appointment but were busy",
+      "notes": "Has asked to meet on 15th May",
       "nextVisitDate": null,
-      "createdAt": "2026-05-14T11:36:19.027Z"
+      "createdAt": "2026-05-14T11:53:07.855Z"
     }
   ],
   "actions": [
@@ -599,6 +596,13 @@
       "visitId": "v_1778755605163",
       "description": "Meet kanaka ma'am for Deftech event",
       "dueDate": "2026-05-16",
+      "status": "open"
+    },
+    {
+      "id": "a_1778759587856_gme",
+      "visitId": "v_1778759587855",
+      "description": "Take appointment of Ashwin from siemens",
+      "dueDate": "2026-05-15",
       "status": "open"
     }
   ],
