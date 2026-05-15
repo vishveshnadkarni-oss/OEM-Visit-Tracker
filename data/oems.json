@@ -519,22 +519,34 @@
     "oemType": "OEM",
     "segment": "Medical",
     "subcategories": [
-      "Ophthalmology",
-      "Imaging"
+      "Imaging",
+      "Ophthalmology"
     ],
     "dealerBrands": "",
     "locations": [
       {
         "city": "Bengaluru",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       },
       {
         "city": "Chennai",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       },
       {
         "city": "Kerala",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
+      },
+      {
+        "city": "Vijaywada",
+        "address": "",
+        "lat": "",
+        "lng": ""
       }
     ],
     "contacts": [
@@ -557,6 +569,13 @@
         "phone": "9989442443",
         "position": "RSM",
         "location": "Hyderabad",
+        "note": ""
+      },
+      {
+        "name": "Dastagiri",
+        "phone": "8050045176",
+        "position": "Sales",
+        "location": "Vijaywada",
         "note": ""
       }
     ],
