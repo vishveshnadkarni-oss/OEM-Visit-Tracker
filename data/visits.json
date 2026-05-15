@@ -1085,6 +1085,42 @@
       "notes": "Spoke about connect with sales team.\nReiterated about 9% ROI and 0.5% PF",
       "nextVisitDate": null,
       "createdAt": "2026-05-15T16:57:32.072Z"
+    },
+    {
+      "id": "v_1778864297455",
+      "oemId": "oem_1778408453736_de4",
+      "date": "2026-05-04",
+      "type": "visit",
+      "personMet": "Madhu Babu",
+      "peopleMet": [
+        "Madhu Babu"
+      ],
+      "visitLoc": "Chennai",
+      "topics": [
+        "Rate of Interest"
+      ],
+      "customTopics": [
+        "Asked for leads"
+      ],
+      "notes": "Spoke about connect with sales team.\nReiterated about 9% ROI and 0.5% PF",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-15T16:58:17.455Z"
+    },
+    {
+      "id": "v_1778864338385",
+      "oemId": "oem_1778408453736_de4",
+      "date": "2026-05-04",
+      "type": "call",
+      "personMet": "Abhinav Dhawan",
+      "peopleMet": [
+        "Abhinav Dhawan"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "He gave number of Madhu P and Madhu Babu.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-15T16:58:58.385Z"
     }
   ],
   "actions": [
