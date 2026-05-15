@@ -1019,6 +1019,24 @@
       "notes": "",
       "nextVisitDate": null,
       "createdAt": "2026-05-15T16:51:57.909Z"
+    },
+    {
+      "id": "v_1778864019423",
+      "oemId": "oem_1778408453736_3zk",
+      "date": "2026-05-05",
+      "type": "visit",
+      "personMet": "Manjunath",
+      "peopleMet": [
+        "Manjunath"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [
+        "Leasing"
+      ],
+      "customTopics": [],
+      "notes": "They have meetings on Monday, Wednesday and Friday.\nCases will start coming from this week.\nComes to office at 11.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-15T16:53:39.423Z"
     }
   ],
   "actions": [
