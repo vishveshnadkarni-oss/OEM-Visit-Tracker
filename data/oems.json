@@ -2036,5 +2036,41 @@
       }
     ],
     "notes": ""
+  },
+  {
+    "id": "oem_1778818312939",
+    "name": "Suba Solutions",
+    "code": "",
+    "oemType": "OEM",
+    "segment": "Industrial",
+    "subcategories": [
+      "Packaging",
+      "Printing"
+    ],
+    "dealerBrands": "",
+    "locations": [
+      {
+        "city": "Bengaluru",
+        "address": "",
+        "lat": "",
+        "lng": ""
+      },
+      {
+        "city": "Chennai",
+        "address": "",
+        "lat": "",
+        "lng": ""
+      }
+    ],
+    "contacts": [
+      {
+        "name": "Kumar",
+        "phone": "9361906516",
+        "position": "Sales head",
+        "location": "Bengaluru",
+        "note": ""
+      }
+    ],
+    "notes": ""
   }
 ]
