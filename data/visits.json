@@ -1065,6 +1065,26 @@
       "notes": "No one in office.\nThey come to office only if meeting is there.",
       "nextVisitDate": null,
       "createdAt": "2026-05-15T16:55:22.789Z"
+    },
+    {
+      "id": "v_1778864252072",
+      "oemId": "oem_1778408453736_de4",
+      "date": "2026-05-04",
+      "type": "call",
+      "personMet": "Madhu P",
+      "peopleMet": [
+        "Madhu P"
+      ],
+      "visitLoc": "Kerala",
+      "topics": [
+        "Rate of Interest"
+      ],
+      "customTopics": [
+        "Asked for leads"
+      ],
+      "notes": "Spoke about connect with sales team.\nReiterated about 9% ROI and 0.5% PF",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-15T16:57:32.072Z"
     }
   ],
   "actions": [
