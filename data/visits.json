@@ -969,7 +969,7 @@
       "id": "v_1778863084678",
       "oemId": "oem_1778818312939",
       "date": "2026-05-15",
-      "type": "visit",
+      "type": "call",
       "personMet": "Kumar",
       "peopleMet": [
         "Kumar"
@@ -1128,7 +1128,7 @@
       "id": "v_1778864387649",
       "oemId": "oem_1778408453736_nyq",
       "date": "2026-05-04",
-      "type": "visit",
+      "type": "call",
       "personMet": "Yamini",
       "peopleMet": [
         "Yamini"
@@ -1210,7 +1210,7 @@
       "status": "open"
     },
     {
-      "id": "a_1778863084678_yfk",
+      "id": "a_1778864882288_1j2",
       "visitId": "v_1778863084678",
       "description": "Call suba solutions for appointment",
       "dueDate": "2026-05-20",
