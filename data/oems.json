@@ -992,6 +992,13 @@
         "position": "Sales Head",
         "location": "Chennai",
         "note": ""
+      },
+      {
+        "name": "Satish",
+        "phone": "7548808169",
+        "position": "Sales",
+        "location": "Coimbatore",
+        "note": ""
       }
     ],
     "notes": ""
