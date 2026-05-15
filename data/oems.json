@@ -999,6 +999,13 @@
         "position": "Sales",
         "location": "Coimbatore",
         "note": ""
+      },
+      {
+        "name": "Kanakaraj",
+        "phone": "9543543502",
+        "position": "Marketing head",
+        "location": "Coimbatore",
+        "note": ""
       }
     ],
     "notes": ""
