@@ -817,15 +817,27 @@
     "locations": [
       {
         "city": "Bengaluru",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       },
       {
         "city": "Chennai",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       },
       {
         "city": "Coimbatore",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
+      },
+      {
+        "city": "Rajkot",
+        "address": "",
+        "lat": "",
+        "lng": ""
       }
     ],
     "contacts": [
@@ -897,6 +909,13 @@
         "phone": "9538145612",
         "position": "RSM",
         "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Himanshu Shaparia",
+        "phone": "8758877444",
+        "position": "Marketing head",
+        "location": "Rajkot",
         "note": ""
       }
     ],
@@ -991,6 +1010,20 @@
         "phone": "9543543517",
         "position": "Sales Head",
         "location": "Chennai",
+        "note": ""
+      },
+      {
+        "name": "Satish",
+        "phone": "7548808169",
+        "position": "Sales",
+        "location": "Coimbatore",
+        "note": ""
+      },
+      {
+        "name": "Kanakaraj",
+        "phone": "9543543502",
+        "position": "Marketing head",
+        "location": "Coimbatore",
         "note": ""
       }
     ],
