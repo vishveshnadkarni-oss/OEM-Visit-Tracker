@@ -758,16 +758,95 @@
       "notes": "",
       "nextVisitDate": null,
       "createdAt": "2026-05-15T16:21:22.984Z"
+    },
+    {
+      "id": "v_1778862171151",
+      "oemId": "oem_1778408453736_nyq",
+      "date": "2026-05-15",
+      "type": "call",
+      "personMet": "Vijaykumar Khurdagi",
+      "peopleMet": [
+        "Vijaykumar Khurdagi"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Case update"
+      ],
+      "notes": "He shared 2 leads. One is on-going and 1 was rejected because of poor CIBIL",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-15T16:22:51.151Z"
+    },
+    {
+      "id": "v_1778862313543",
+      "oemId": "oem_1778758811194",
+      "date": "2026-05-15",
+      "type": "call",
+      "personMet": "Pranav Shetty",
+      "peopleMet": [
+        "Pranav Shetty"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-15T16:25:13.544Z"
+    },
+    {
+      "id": "v_1778862350830",
+      "oemId": "oem_1778408453736_2w5",
+      "date": "2026-05-15",
+      "type": "call",
+      "personMet": "Giridhar",
+      "peopleMet": [
+        "Giridhar"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "Not available for a meeting",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-15T16:25:50.830Z"
+    },
+    {
+      "id": "v_1778862401919",
+      "oemId": "oem_1778408453736_lkn",
+      "date": "2026-05-15",
+      "type": "call",
+      "personMet": "Venugopal",
+      "peopleMet": [
+        "Venugopal"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-15T16:26:41.919Z"
+    },
+    {
+      "id": "v_1778862460146",
+      "oemId": "oem_1778758811194",
+      "date": "2026-05-15",
+      "type": "call",
+      "personMet": "Ashwin",
+      "peopleMet": [
+        "Ashwin"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "He asked to meet in Hebbal but later was not available.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-15T16:27:40.146Z"
     }
   ],
   "actions": [
-    {
-      "id": "a_1778410597348_b1m",
-      "visitId": "v_1778410597347",
-      "description": "Take appointment for a meeting",
-      "dueDate": "2026-05-11",
-      "status": "open"
-    },
     {
       "id": "a_1778557403350_wjn",
       "visitId": "v_1778557403347",
@@ -791,13 +870,6 @@
     },
     {
       "id": "a_1778782340849_vfn",
-      "visitId": "v_1778759587855",
-      "description": "Take appointment of Ashwin from siemens",
-      "dueDate": "2026-05-15",
-      "status": "open"
-    },
-    {
-      "id": "a_1778782315802_ym6",
       "visitId": "v_1778759587855",
       "description": "Take appointment of Ashwin from siemens",
       "dueDate": "2026-05-15",
