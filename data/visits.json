@@ -982,6 +982,25 @@
       "notes": "He asked to meet next week",
       "nextVisitDate": null,
       "createdAt": "2026-05-15T16:38:04.678Z"
+    },
+    {
+      "id": "v_1778863261374",
+      "oemId": "oem_1778408453736_de4",
+      "date": "2026-05-15",
+      "type": "call",
+      "personMet": "Madhu Babu, Dastagiri",
+      "peopleMet": [
+        "Madhu Babu",
+        "Dastagiri"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Case update"
+      ],
+      "notes": "Shared subvention calculation to Shivani for approval for Vijaywada case",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-15T16:41:01.374Z"
     }
   ],
   "actions": [
