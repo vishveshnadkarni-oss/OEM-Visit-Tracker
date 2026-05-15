@@ -844,6 +844,90 @@
       "notes": "He asked to meet in Hebbal but later was not available.",
       "nextVisitDate": null,
       "createdAt": "2026-05-15T16:27:40.146Z"
+    },
+    {
+      "id": "v_1778862566812",
+      "oemId": "oem_1778408453736_nbf",
+      "date": "2026-05-15",
+      "type": "call",
+      "personMet": "Hemalatha",
+      "peopleMet": [
+        "Hemalatha"
+      ],
+      "visitLoc": "Chennai",
+      "topics": [],
+      "customTopics": [],
+      "notes": "Spoke about INTEC participation. She shared number of Mr. Kanakaraj",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-15T16:29:26.812Z"
+    },
+    {
+      "id": "v_1778862643730",
+      "oemId": "oem_1778408453736_nbf",
+      "date": "2026-05-15",
+      "type": "call",
+      "personMet": "Satish",
+      "peopleMet": [
+        "Satish"
+      ],
+      "visitLoc": "Coimbatore",
+      "topics": [],
+      "customTopics": [],
+      "notes": "Spoke about INTEC participation. Asked to speak with Kanakaraj",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-15T16:30:43.730Z"
+    },
+    {
+      "id": "v_1778862717831",
+      "oemId": "oem_1778408453736_nbf",
+      "date": "2026-05-15",
+      "type": "call",
+      "personMet": "Kanakaraj",
+      "peopleMet": [
+        "Kanakaraj"
+      ],
+      "visitLoc": "Coimbatore",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "Have dropped him a WA for INTEC participation",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-15T16:31:57.831Z"
+    },
+    {
+      "id": "v_1778862778049",
+      "oemId": "oem_1778408453736_vp9",
+      "date": "2026-05-15",
+      "type": "call",
+      "personMet": "Ajay",
+      "peopleMet": [
+        "Ajay"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "Asked about INTEC participation. He asked to connect with Mr. Shaparia",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-15T16:32:58.049Z"
+    },
+    {
+      "id": "v_1778862857961",
+      "oemId": "oem_1778408453736_vp9",
+      "date": "2026-05-15",
+      "type": "call",
+      "personMet": "Himanshu Shaparia",
+      "peopleMet": [
+        "Himanshu Shaparia"
+      ],
+      "visitLoc": "Rajkot",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-15T16:34:17.961Z"
     }
   ],
   "actions": [
