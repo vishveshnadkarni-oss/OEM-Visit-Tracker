@@ -2072,5 +2072,34 @@
       }
     ],
     "notes": ""
+  },
+  {
+    "id": "oem_1778862041856",
+    "name": "Beats Medical",
+    "code": "",
+    "oemType": "Dealer",
+    "segment": "Medical",
+    "subcategories": [
+      "Imaging"
+    ],
+    "dealerBrands": "Philips",
+    "locations": [
+      {
+        "city": "Cochin",
+        "address": "",
+        "lat": "",
+        "lng": ""
+      }
+    ],
+    "contacts": [
+      {
+        "name": "Kurian",
+        "phone": "9900865320",
+        "position": "MD",
+        "location": "Cochin",
+        "note": ""
+      }
+    ],
+    "notes": ""
   }
 ]
