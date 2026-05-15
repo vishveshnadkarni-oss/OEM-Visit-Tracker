@@ -702,6 +702,22 @@
       "notes": "He asked to meet next week",
       "nextVisitDate": null,
       "createdAt": "2026-05-15T04:12:58.586Z"
+    },
+    {
+      "id": "v_1778818519101",
+      "oemId": "oem_1778576788896",
+      "date": "2026-05-05",
+      "type": "call",
+      "personMet": "Jayson Matthew",
+      "peopleMet": [
+        "Jayson Matthew"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "Spoke about MOU regarding subevntion",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-15T04:15:19.101Z"
     }
   ],
   "actions": [
