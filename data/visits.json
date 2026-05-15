@@ -894,6 +894,22 @@
       "notes": "Have dropped him a WA for INTEC participation",
       "nextVisitDate": null,
       "createdAt": "2026-05-15T16:31:57.831Z"
+    },
+    {
+      "id": "v_1778862778049",
+      "oemId": "oem_1778408453736_vp9",
+      "date": "2026-05-15",
+      "type": "call",
+      "personMet": "Ajay",
+      "peopleMet": [
+        "Ajay"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "Asked about INTEC participation. He asked to connect with Mr. Shaparia",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-15T16:32:58.049Z"
     }
   ],
   "actions": [
