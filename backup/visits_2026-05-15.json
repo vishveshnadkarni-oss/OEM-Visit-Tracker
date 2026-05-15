@@ -739,6 +739,25 @@
       "notes": "Received one lead.\nConnected with Mr. Raghu.\nThey are not doing such good business,because of dollar rate and competition. Only big clients who have their funding.\nThey have office in Coimbatore and Hyderabad.",
       "nextVisitDate": null,
       "createdAt": "2026-05-15T04:19:37.991Z"
+    },
+    {
+      "id": "v_1778862082984",
+      "oemId": "oem_1778862041856",
+      "date": "2026-05-15",
+      "type": "call",
+      "personMet": "Kurian",
+      "peopleMet": [
+        "Kurian"
+      ],
+      "visitLoc": "Cochin",
+      "topics": [],
+      "customTopics": [
+        "Case update",
+        "MOU"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-15T16:21:22.984Z"
     }
   ],
   "actions": [
@@ -799,7 +818,7 @@
       "status": "open"
     },
     {
-      "id": "a_1778818820619_s6r",
+      "id": "a_1778818845485_x7o",
       "visitId": "v_1778818777991",
       "description": "Send email to Naveen mahadevan for Collab for new machine launches",
       "dueDate": "2026-05-15",
