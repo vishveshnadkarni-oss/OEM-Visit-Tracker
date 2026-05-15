@@ -736,7 +736,7 @@
       "customTopics": [
         "Asked for leads"
       ],
-      "notes": "Received one lead.\nConnected with Mr. Raghu.\nThey are not doing such good business,because of dollar rate and competition. Only big clients who have their funding.",
+      "notes": "Received one lead.\nConnected with Mr. Raghu.\nThey are not doing such good business,because of dollar rate and competition. Only big clients who have their funding.\nThey have office in Coimbatore and Hyderabad.",
       "nextVisitDate": null,
       "createdAt": "2026-05-15T04:19:37.991Z"
     }
@@ -799,7 +799,7 @@
       "status": "open"
     },
     {
-      "id": "a_1778818777991_lk3",
+      "id": "a_1778818845485_x7o",
       "visitId": "v_1778818777991",
       "description": "Send email to Naveen mahadevan for Collab for new machine launches",
       "dueDate": "2026-05-15",
