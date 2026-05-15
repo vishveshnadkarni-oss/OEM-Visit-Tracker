@@ -1057,8 +1057,10 @@
       "oemId": "oem_1778408453736_xci",
       "date": "2026-05-05",
       "type": "visit",
-      "personMet": "",
-      "peopleMet": [],
+      "personMet": "No one in office/ security/ receptionist",
+      "peopleMet": [
+        "No one in office/ security/ receptionist"
+      ],
       "visitLoc": "Bengaluru",
       "topics": [],
       "customTopics": [],
@@ -1155,6 +1157,24 @@
       "notes": "",
       "nextVisitDate": null,
       "createdAt": "2026-05-15T17:00:53.065Z"
+    },
+    {
+      "id": "v_1778864668878",
+      "oemId": "oem_1778408453736_441",
+      "date": "2026-05-11",
+      "type": "visit",
+      "personMet": "Srivatsa",
+      "peopleMet": [
+        "Srivatsa"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Team meeting"
+      ],
+      "notes": "Planned for the teams meeting",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-15T17:04:28.879Z"
     }
   ],
   "actions": [
