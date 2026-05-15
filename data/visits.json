@@ -910,6 +910,42 @@
       "notes": "Asked about INTEC participation. He asked to connect with Mr. Shaparia",
       "nextVisitDate": null,
       "createdAt": "2026-05-15T16:32:58.049Z"
+    },
+    {
+      "id": "v_1778862857961",
+      "oemId": "oem_1778408453736_vp9",
+      "date": "2026-05-15",
+      "type": "call",
+      "personMet": "Himanshu Shaparia",
+      "peopleMet": [
+        "Himanshu Shaparia"
+      ],
+      "visitLoc": "Rajkot",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-15T16:34:17.961Z"
+    },
+    {
+      "id": "v_1778862927658",
+      "oemId": "oem_1778408453736_7b8",
+      "date": "2026-05-15",
+      "type": "call",
+      "personMet": "Gurucharan",
+      "peopleMet": [
+        "Gurucharan"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "He answered and said will call later. But he didn't.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-15T16:35:27.658Z"
     }
   ],
   "actions": [
