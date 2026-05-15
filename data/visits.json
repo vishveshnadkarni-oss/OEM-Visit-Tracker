@@ -860,6 +860,22 @@
       "notes": "Spoke about INTEC participation. She shared number of Mr. Kanakaraj",
       "nextVisitDate": null,
       "createdAt": "2026-05-15T16:29:26.812Z"
+    },
+    {
+      "id": "v_1778862643730",
+      "oemId": "oem_1778408453736_nbf",
+      "date": "2026-05-15",
+      "type": "call",
+      "personMet": "Satish",
+      "peopleMet": [
+        "Satish"
+      ],
+      "visitLoc": "Coimbatore",
+      "topics": [],
+      "customTopics": [],
+      "notes": "Spoke about INTEC participation. Asked to speak with Kanakaraj",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-15T16:30:43.730Z"
     }
   ],
   "actions": [
