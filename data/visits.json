@@ -718,6 +718,27 @@
       "notes": "Spoke about MOU regarding subevntion",
       "nextVisitDate": null,
       "createdAt": "2026-05-15T04:15:19.101Z"
+    },
+    {
+      "id": "v_1778818777991",
+      "oemId": "oem_1778408453736_xi1",
+      "date": "2026-05-05",
+      "type": "visit",
+      "personMet": "Raghu, Jambunath",
+      "peopleMet": [
+        "Raghu",
+        "Jambunath"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [
+        "Leasing"
+      ],
+      "customTopics": [
+        "Asked for leads"
+      ],
+      "notes": "Received one lead.\nConnected with Mr. Raghu.\nThey are not doing such good business,because of dollar rate and competition. Only big clients who have their funding.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-15T04:19:37.991Z"
     }
   ],
   "actions": [
@@ -774,6 +795,13 @@
       "id": "a_1778818378586_9xl",
       "visitId": "v_1778818378586",
       "description": "Meet suba solutions kumar",
+      "dueDate": "2026-05-15",
+      "status": "open"
+    },
+    {
+      "id": "a_1778818777991_lk3",
+      "visitId": "v_1778818777991",
+      "description": "Send email to Naveen mahadevan for Collab for new machine launches",
       "dueDate": "2026-05-15",
       "status": "open"
     }
