@@ -739,6 +739,43 @@
       "notes": "Received one lead.\nConnected with Mr. Raghu.\nThey are not doing such good business,because of dollar rate and competition. Only big clients who have their funding.\nThey have office in Coimbatore and Hyderabad.",
       "nextVisitDate": null,
       "createdAt": "2026-05-15T04:19:37.991Z"
+    },
+    {
+      "id": "v_1778862082984",
+      "oemId": "oem_1778862041856",
+      "date": "2026-05-15",
+      "type": "call",
+      "personMet": "Kurian",
+      "peopleMet": [
+        "Kurian"
+      ],
+      "visitLoc": "Cochin",
+      "topics": [],
+      "customTopics": [
+        "Case update",
+        "MOU"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-15T16:21:22.984Z"
+    },
+    {
+      "id": "v_1778862171151",
+      "oemId": "oem_1778408453736_nyq",
+      "date": "2026-05-15",
+      "type": "call",
+      "personMet": "Vijaykumar Khurdagi",
+      "peopleMet": [
+        "Vijaykumar Khurdagi"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Case update"
+      ],
+      "notes": "He shared 2 leads. One is on-going and 1 was rejected because of poor CIBIL",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-15T16:22:51.151Z"
     }
   ],
   "actions": [
@@ -816,6 +853,7 @@
     "Did not answer phone",
     "Asked for leads",
     "Ultrasound Program",
-    "Cross marketing"
+    "Cross marketing",
+    "MOU"
   ]
 }
