@@ -1001,6 +1001,24 @@
       "notes": "Shared subvention calculation to Shivani for approval for Vijaywada case",
       "nextVisitDate": null,
       "createdAt": "2026-05-15T16:41:01.374Z"
+    },
+    {
+      "id": "v_1778863917909",
+      "oemId": "oem_1778408453736_7b8",
+      "date": "2026-05-05",
+      "type": "call",
+      "personMet": "Gurucharan",
+      "peopleMet": [
+        "Gurucharan"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-15T16:51:57.909Z"
     }
   ],
   "actions": [
