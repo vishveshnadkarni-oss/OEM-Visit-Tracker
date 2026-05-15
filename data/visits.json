@@ -946,6 +946,42 @@
       "notes": "He answered and said will call later. But he didn't.",
       "nextVisitDate": null,
       "createdAt": "2026-05-15T16:35:27.658Z"
+    },
+    {
+      "id": "v_1778863034642",
+      "oemId": "oem_1778863020698",
+      "date": "2026-05-15",
+      "type": "call",
+      "personMet": "Nandan Chavan",
+      "peopleMet": [
+        "Nandan Chavan"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-15T16:37:14.642Z"
+    },
+    {
+      "id": "v_1778863084678",
+      "oemId": "oem_1778818312939",
+      "date": "2026-05-15",
+      "type": "visit",
+      "personMet": "Kumar",
+      "peopleMet": [
+        "Kumar"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Appointment"
+      ],
+      "notes": "He asked to meet next week",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-15T16:38:04.678Z"
     }
   ],
   "actions": [
@@ -996,6 +1032,13 @@
       "visitId": "v_1778818777991",
       "description": "Send email to Naveen mahadevan for Collab for new machine launches",
       "dueDate": "2026-05-15",
+      "status": "open"
+    },
+    {
+      "id": "a_1778863084678_yfk",
+      "visitId": "v_1778863084678",
+      "description": "Call suba solutions for appointment",
+      "dueDate": "2026-05-20",
       "status": "open"
     }
   ],
