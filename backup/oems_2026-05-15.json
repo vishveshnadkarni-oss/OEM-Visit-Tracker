@@ -488,6 +488,13 @@
         "position": "Sales head",
         "location": "Coimbatore",
         "note": ""
+      },
+      {
+        "name": "No one in office/ security/ receptionist",
+        "phone": "",
+        "position": "",
+        "location": "",
+        "note": ""
       }
     ],
     "notes": "9.99% ROI"
@@ -519,22 +526,34 @@
     "oemType": "OEM",
     "segment": "Medical",
     "subcategories": [
-      "Ophthalmology",
-      "Imaging"
+      "Imaging",
+      "Ophthalmology"
     ],
     "dealerBrands": "",
     "locations": [
       {
         "city": "Bengaluru",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       },
       {
         "city": "Chennai",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       },
       {
         "city": "Kerala",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
+      },
+      {
+        "city": "Vijaywada",
+        "address": "",
+        "lat": "",
+        "lng": ""
       }
     ],
     "contacts": [
@@ -557,6 +576,13 @@
         "phone": "9989442443",
         "position": "RSM",
         "location": "Hyderabad",
+        "note": ""
+      },
+      {
+        "name": "Dastagiri",
+        "phone": "8050045176",
+        "position": "Sales",
+        "location": "Vijaywada",
         "note": ""
       }
     ],
@@ -1025,6 +1051,13 @@
         "position": "Marketing head",
         "location": "Coimbatore",
         "note": ""
+      },
+      {
+        "name": "Sangeet Kumar",
+        "phone": "8144008380",
+        "position": "Head",
+        "location": "Coimbatore",
+        "note": ""
       }
     ],
     "notes": ""
@@ -1093,6 +1126,13 @@
         "phone": "7069011434",
         "position": "Sales",
         "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "No one in office/ security/ receptionist",
+        "phone": "",
+        "position": "",
+        "location": "",
         "note": ""
       }
     ],
@@ -1408,6 +1448,13 @@
         "position": "Sales Head",
         "location": "Bengaluru",
         "note": "Head of Bengaluru branch currently"
+      },
+      {
+        "name": "Narendra Babu",
+        "phone": "9663786648",
+        "position": "",
+        "location": "Bengaluru",
+        "note": ""
       }
     ],
     "notes": ""
@@ -2137,6 +2184,41 @@
         "phone": "9900865320",
         "position": "MD",
         "location": "Cochin",
+        "note": ""
+      }
+    ],
+    "notes": ""
+  },
+  {
+    "id": "oem_1778863020698",
+    "name": "Bodor Laser",
+    "code": "",
+    "oemType": "OEM",
+    "segment": "Industrial",
+    "subcategories": [
+      "Laser"
+    ],
+    "dealerBrands": "",
+    "locations": [
+      {
+        "city": "Bengaluru",
+        "address": "",
+        "lat": "",
+        "lng": ""
+      },
+      {
+        "city": "Chennai",
+        "address": "",
+        "lat": "",
+        "lng": ""
+      }
+    ],
+    "contacts": [
+      {
+        "name": "Nandan Chavan",
+        "phone": "8970841728",
+        "position": "Sales",
+        "location": "Bengaluru",
         "note": ""
       }
     ],
