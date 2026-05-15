@@ -52,8 +52,10 @@
       "oemId": "oem_1778408453736_wvh",
       "date": "2026-05-09",
       "type": "visit",
-      "personMet": "",
-      "peopleMet": [],
+      "personMet": "No one in office/ security/ receptionist",
+      "peopleMet": [
+        "No one in office/ security/ receptionist"
+      ],
       "visitLoc": "Bengaluru",
       "topics": [],
       "customTopics": [],
@@ -689,7 +691,7 @@
       "id": "v_1778818378586",
       "oemId": "oem_1778818312939",
       "date": "2026-05-05",
-      "type": "visit",
+      "type": "call",
       "personMet": "Kumar",
       "peopleMet": [
         "Kumar"
@@ -1196,13 +1198,6 @@
       "status": "open"
     },
     {
-      "id": "a_1778818378586_9xl",
-      "visitId": "v_1778818378586",
-      "description": "Meet suba solutions kumar",
-      "dueDate": "2026-05-15",
-      "status": "open"
-    },
-    {
       "id": "a_1778818845485_x7o",
       "visitId": "v_1778818777991",
       "description": "Send email to Naveen mahadevan for Collab for new machine launches",
@@ -1214,6 +1209,13 @@
       "visitId": "v_1778863084678",
       "description": "Call suba solutions for appointment",
       "dueDate": "2026-05-20",
+      "status": "open"
+    },
+    {
+      "id": "a_1778864895811_e4u",
+      "visitId": "v_1778818378586",
+      "description": "Meet suba solutions kumar",
+      "dueDate": "2026-05-15",
       "status": "open"
     }
   ],
