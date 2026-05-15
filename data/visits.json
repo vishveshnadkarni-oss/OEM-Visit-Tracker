@@ -684,6 +684,24 @@
       "notes": "",
       "nextVisitDate": null,
       "createdAt": "2026-05-14T18:34:03.938Z"
+    },
+    {
+      "id": "v_1778818378586",
+      "oemId": "oem_1778818312939",
+      "date": "2026-05-05",
+      "type": "visit",
+      "personMet": "Kumar",
+      "peopleMet": [
+        "Kumar"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Appointment"
+      ],
+      "notes": "He asked to meet next week",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-15T04:12:58.586Z"
     }
   ],
   "actions": [
@@ -734,6 +752,13 @@
       "visitId": "v_1778782909483",
       "description": "Try to call and take appointment with Anca renjith",
       "dueDate": "2026-06-24",
+      "status": "open"
+    },
+    {
+      "id": "a_1778818378586_9xl",
+      "visitId": "v_1778818378586",
+      "description": "Meet suba solutions kumar",
+      "dueDate": "2026-05-15",
       "status": "open"
     }
   ],
