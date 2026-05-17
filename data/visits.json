@@ -1216,6 +1216,22 @@
       "notes": "Office was closed",
       "nextVisitDate": null,
       "createdAt": "2026-05-17T10:58:51.948Z"
+    },
+    {
+      "id": "v_1779015689124",
+      "oemId": "oem_1778408453736_5wv",
+      "date": "2026-05-17",
+      "type": "visit",
+      "personMet": "No one in office/ security/ reception",
+      "peopleMet": [
+        "No one in office/ security/ reception"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "All sales teams on field",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-17T11:01:29.124Z"
     }
   ],
   "actions": [
