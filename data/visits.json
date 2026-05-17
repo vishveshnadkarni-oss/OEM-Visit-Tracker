@@ -1250,6 +1250,34 @@
       "notes": "No leads. Cases are ongoing.",
       "nextVisitDate": null,
       "createdAt": "2026-05-17T11:02:39.740Z"
+    },
+    {
+      "id": "v_1779017011994",
+      "oemId": "oem_1778408453736_g2b",
+      "date": "2026-05-16",
+      "type": "visit",
+      "personMet": "Jeevan, Gangatharan, Giridhar, Manikanand",
+      "peopleMet": [
+        "Jeevan",
+        "Gangatharan",
+        "Giridhar",
+        "Manikanand"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [
+        "Leasing",
+        "Principal Moratorium",
+        "Rate of Interest",
+        "Startups"
+      ],
+      "customTopics": [
+        "Team meeting",
+        "Hybrid Flexi",
+        "Asked for leads"
+      ],
+      "notes": "Gave training to these team members",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-17T11:23:31.995Z"
     }
   ],
   "actions": [
