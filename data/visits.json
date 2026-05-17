@@ -1182,6 +1182,24 @@
       "notes": "Connected with the entire team.\n1. They wanted support with startups.\n2. They have 2% market share whereas ACE has 37%.\n3. They sell 5-8 machines in a month.\n4. They have also started recently about 1 year back",
       "nextVisitDate": null,
       "createdAt": "2026-05-17T06:38:38.597Z"
+    },
+    {
+      "id": "v_1779015463892",
+      "oemId": "oem_1778408453736_vp9",
+      "date": "2026-05-16",
+      "type": "call",
+      "personMet": "Jagadeesh Patil",
+      "peopleMet": [
+        "Jagadeesh Patil"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Team meeting"
+      ],
+      "notes": "Meeting on 23rd at 11am for training with team.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-17T10:57:43.892Z"
     }
   ],
   "actions": [
@@ -1231,6 +1249,13 @@
       "id": "a_1778864882288_1j2",
       "visitId": "v_1778863084678",
       "description": "Call suba solutions for appointment",
+      "dueDate": "2026-05-20",
+      "status": "open"
+    },
+    {
+      "id": "a_1779015463892_flj",
+      "visitId": "v_1779015463892",
+      "description": "Call Jagadeesh sir for planning on 23rd",
       "dueDate": "2026-05-20",
       "status": "open"
     }
