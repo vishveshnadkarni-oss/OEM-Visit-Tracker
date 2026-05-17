@@ -17,7 +17,7 @@
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);max-width:480px;margin:0 auto;min-height:100vh}
-.screen{display:none;min-height:100vh;padding-bottom:calc(var(--nav)+20px)}
+.screen{display:none;min-height:100vh;padding-bottom:calc(var(--nav)+90px)}
 .screen.active{display:block}
 
 /* Header */
@@ -1167,15 +1167,19 @@ function setRptTypeFilter(f){
 }
 function renderRpt(){
   const el=document.getElementById('rpt-content');
+  const _srch=(document.getElementById('rpt-search')?.value||'').toLowerCase().trim();
   let visits=[], label='';
   if(rptMode==='day'){
-    const d=document.getElementById('rpt-date').value; if(!d) return;
-    visits=db.visits.filter(v=>v.date===d); label=fmtDate(d);
+    const d=document.getElementById('rpt-date').value;
+    if(!d&&!_srch) return;
+    visits=d?db.visits.filter(v=>v.date===d):[...db.visits];
+    label=d?fmtDate(d):'Search results';
   } else if(rptMode==='month'){
-    const m=document.getElementById('rpt-month').value; if(!m) return;
-    visits=db.visits.filter(v=>v.date.startsWith(m));
-    const [yr,mo]=m.split('-');
-    label=new Date(yr,parseInt(mo)-1,1).toLocaleDateString('en-IN',{month:'long',year:'numeric'});
+    const m=document.getElementById('rpt-month').value;
+    if(!m&&!_srch) return;
+    visits=m?db.visits.filter(v=>v.date.startsWith(m)):[...db.visits];
+    if(m){const [yr,mo]=m.split('-');label=new Date(yr,parseInt(mo)-1,1).toLocaleDateString('en-IN',{month:'long',year:'numeric'});}
+    else label='Search results';
   } else if(rptMode==='oem'){
     visits=[...db.visits].sort((a,b)=>b.date.localeCompare(a.date)); label='By OEM';
   } else if(rptMode==='person'){
@@ -1184,7 +1188,6 @@ function renderRpt(){
   // Apply visit/call filter
   if(rptTypeFilter!=='all') visits=visits.filter(v=>v.type===rptTypeFilter);
   // Full-text search
-  const _srch=(document.getElementById('rpt-search')?.value||'').toLowerCase().trim();
   if(_srch){
     visits=visits.filter(v=>{
       const o=db.oems.find(x=>x.id===v.oemId);
