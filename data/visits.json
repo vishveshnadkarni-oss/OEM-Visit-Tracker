@@ -1159,6 +1159,29 @@
       "notes": "",
       "nextVisitDate": null,
       "createdAt": "2026-05-15T17:00:53.065Z"
+    },
+    {
+      "id": "v_1778999918597",
+      "oemId": "oem_1778408453736_wvh",
+      "date": "2026-05-16",
+      "type": "visit",
+      "personMet": "Vasana",
+      "peopleMet": [
+        "Vasana"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [
+        "Leasing",
+        "Principal Moratorium",
+        "Startups",
+        "Rate of Interest"
+      ],
+      "customTopics": [
+        "Team meeting"
+      ],
+      "notes": "Connected with the entire team.\n1. They wanted support with startups.\n2. They have 2% market share whereas ACE has 37%.\n3. They sell 5-8 machines in a month.\n4. They have also started recently about 1 year back",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-17T06:38:38.597Z"
     }
   ],
   "actions": [
