@@ -266,4 +266,1138 @@ textarea{min-height:85px;resize:none;line-height:1.6}
       <div id="ai-list"></div>
       <button class="lnk" onclick="addAI()">+ Add action item</button>
     </div>
-    <div class="fg" 
+    <div class="fg" style="margin-bottom:0"><label class="lbl">Next Visit / Follow-up Date</label><input type="date" id="v-next"></div>
+  </div>
+  <div class="save-bar"><button class="btn btn-amber" onclick="saveVisit()">Save Report</button></div>
+</div>
+
+<!-- DIRECTORY -->
+<div id="s-dir" class="screen">
+  <div class="hdr">
+    <div class="hdr-row">
+      <h1>Directory</h1>
+      <div class="hdr-acts">
+        <button class="icon-btn" onclick="go('import')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="17" height="17"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg></button>
+        <button class="icon-btn" onclick="openOEMForm(null)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="17" height="17"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg></button>
+      </div>
+    </div>
+  </div>
+  <div class="swrap">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 15.803a7.5 7.5 0 0010.607 10.607z"/></svg>
+    <input type="text" class="sinput" placeholder="Search name, code or city..." oninput="renderDir(this.value)">
+  </div>
+  <div style="padding:12px 16px" id="oem-list"></div>
+</div>
+
+<!-- OEM FORM -->
+<div id="s-oem-form" class="screen">
+  <div class="hdr">
+    <div class="hdr-row">
+      <button class="back-btn" onclick="go('dir')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/></svg>Back</button>
+      <h1 id="oem-form-title" style="text-align:center">Add OEM</h1>
+      <div style="width:52px"></div>
+    </div>
+  </div>
+  <div class="p16" style="padding-bottom:8px">
+    <div class="fg"><label class="lbl">Name *</label><input type="text" id="of-name" placeholder="e.g. GPY Machine Tools"></div>
+    <div class="fg"><label class="lbl">Code</label><input type="text" id="of-code" placeholder="Optional"></div>
+    <div class="frow fg">
+      <div class="fg"><label class="lbl">Type</label>
+        <div class="tog" style="padding:2px;gap:2px"><button class="tog-btn on" id="of-t-oem" onclick="setOT('OEM')">OEM</button><button class="tog-btn" id="of-t-dlr" onclick="setOT('Dealer')">Dealer</button></div>
+      </div>
+      <div class="fg"><label class="lbl">Segment</label>
+        <div class="tog" style="padding:2px;gap:2px"><button class="tog-btn on" id="of-s-med" onclick="setOS('Medical')">Medical</button><button class="tog-btn" id="of-s-ind" onclick="setOS('Industrial')">Industrial</button></div>
+      </div>
+    </div>
+    <div class="fg" id="of-brands-wrap" style="display:none"><label class="lbl">OEM Brands Dealt In</label><input type="text" id="of-brands" placeholder="e.g. Haitian, DMG Mori"></div>
+    <div class="fg">
+      <label class="lbl" id="of-sub-lbl">Subcategories</label>
+      <div class="chips" id="of-chips"></div>
+      <div style="display:flex;gap:8px;margin-top:9px">
+        <input type="text" id="of-chip-inp" placeholder="Custom..." style="flex:1;font-size:13px;padding:9px 12px">
+        <button class="lnk" onclick="addChip()">+ Add</button>
+      </div>
+    </div>
+    <div class="div"></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+      <label class="lbl" style="margin:0">Locations</label>
+      <button class="lnk" onclick="addLoc()">+ Add</button>
+    </div>
+    <div id="of-locs"></div>
+    <div class="div"></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+      <label class="lbl" style="margin:0">Contacts</label>
+      <button class="lnk" onclick="addCt()">+ Add</button>
+    </div>
+    <div id="of-cts"></div>
+    <div class="div"></div>
+    <div class="fg" style="margin-bottom:0"><label class="lbl">Notes</label><textarea id="of-notes" placeholder="e.g. Closed subvention at 10% and 0.5% PF"></textarea></div>
+  </div>
+  <div class="save-bar">
+    <button class="btn btn-amber" onclick="saveOEM()" style="margin-bottom:10px">Save OEM</button>
+    <button class="btn btn-red" id="del-oem-btn" style="display:none" onclick="deleteOEM()">Delete OEM</button>
+  </div>
+</div>
+
+<!-- OEM DETAIL -->
+<div id="s-oem-detail" class="screen">
+  <div class="hdr">
+    <div class="hdr-row">
+      <button class="back-btn" onclick="go('dir')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/></svg>Back</button>
+      <h1 id="oem-dtl-title" style="text-align:center;flex:1"></h1>
+      <button class="icon-btn" id="oem-edit-btn"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="17" height="17"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931z"/></svg></button>
+    </div>
+  </div>
+  <div id="oem-dtl-content"></div>
+</div>
+
+<!-- TASKS -->
+<div id="s-tasks" class="screen">
+  <div class="hdr">
+    <div class="hdr-row">
+      <h1>Tasks</h1>
+      <div class="hdr-acts">
+        <button class="icon-btn" id="f-open-btn" onclick="setFilter('open')" style="background:var(--amber-bg);color:var(--amber);border-color:rgba(240,165,0,.3)">Open</button>
+        <button class="icon-btn" id="f-all-btn" onclick="setFilter('all')" style="font-size:12px;font-weight:600">All</button>
+      </div>
+    </div>
+  </div>
+  <div style="padding:12px 16px" id="task-list"></div>
+</div>
+
+<!-- VISIT DETAIL -->
+<div id="s-visit-dtl" class="screen">
+  <div class="hdr">
+    <div class="hdr-row">
+      <button class="back-btn" onclick="go('home')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/></svg>Back</button>
+      <h1 style="text-align:center;flex:1">Report</h1>
+      <button class="icon-btn" onclick="copyWA()" title="Copy for WhatsApp"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="17" height="17"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.375"/></svg></button>
+    </div>
+  </div>
+  <div id="visit-dtl-content"></div>
+  <div style="padding:0 16px 16px;display:flex;flex-direction:column;gap:10px">
+    <button class="btn btn-amber" onclick="copyWA()">Copy for WhatsApp</button>
+    <button class="btn btn-red" onclick="deleteVisit()">Delete Report</button>
+  </div>
+</div>
+
+<!-- IMPORT -->
+<div id="s-import" class="screen">
+  <div class="hdr">
+    <div class="hdr-row">
+      <button class="back-btn" onclick="go('dir')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/></svg>Back</button>
+      <h1 style="text-align:center;flex:1">Import OEMs</h1>
+      <div style="width:36px"></div>
+    </div>
+  </div>
+  <div class="p16">
+    <div class="card" style="background:var(--amber-bg);border-color:rgba(240,165,0,.3);margin-bottom:16px">
+      <div style="font-size:13px;line-height:1.7"><strong>Sheet 1</strong> — One row per OEM (name, locations, etc)<br><strong>Sheet 2</strong> — One row per contact, linked by OEM name<br>Existing OEMs will have contacts merged in.</div>
+    </div>
+    <button class="btn btn-outline" onclick="dlTemplate()" style="margin-bottom:14px">Download Template (.xlsx)</button>
+    <div class="fg"><label class="lbl">Upload File (.xlsx or .csv)</label>
+      <input type="file" accept=".csv,.xlsx,.xls" id="imp-file" onchange="importFile(this)" style="padding:12px;background:var(--surface2);border:1.5px dashed var(--border);border-radius:10px;width:100%;color:var(--text);font-size:13px">
+    </div>
+    <div id="imp-result"></div>
+  </div>
+</div>
+
+<!-- SETTINGS -->
+<div id="s-settings" class="screen">
+  <div class="hdr">
+    <div class="hdr-row">
+      <button class="back-btn" onclick="go('home')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/></svg>Back</button>
+      <h1 style="text-align:center;flex:1">Settings</h1>
+      <div style="width:36px"></div>
+    </div>
+  </div>
+  <div class="p16">
+    <div class="card" style="background:var(--amber-bg);border-color:rgba(240,165,0,.3);margin-bottom:18px">
+      <div style="font-size:13px;line-height:1.7">Your token is stored <strong>only on this device</strong>. Each device (phone, laptop) needs it entered once. It is never stored in the code.</div>
+    </div>
+    <div class="fg"><label class="lbl">GitHub Personal Access Token</label>
+      <div style="position:relative">
+        <input type="password" id="tok-inp" placeholder="Paste your token here..." style="padding-right:56px">
+        <button onclick="toggleTokVis()" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--soft);font-size:12px;font-weight:600;cursor:pointer" id="tok-vis">Show</button>
+      </div>
+      <div style="font-size:11px;color:var(--muted);margin-top:6px">
+        GitHub → Settings → Developer settings → Fine-grained tokens<br>
+        Repo: OEM-Visit-Tracker · Permission: Contents → Read & Write
+      </div>
+    </div>
+    <button class="btn btn-amber" onclick="saveToken()">Save & Test Connection</button>
+    <div id="tok-status" style="font-size:13px;text-align:center;margin-top:12px;min-height:20px;line-height:1.5"></div>
+  </div>
+</div>
+
+<!-- REPORTS -->
+<div id="s-reports" class="screen">
+  <div class="hdr">
+    <div class="hdr-row">
+      <h1>Reports</h1>
+      <div class="hdr-acts">
+        <button class="icon-btn" id="rpt-email-btn" onclick="shareRptEmail()" style="display:none" title="Send by Email">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="17" height="17"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
+        </button>
+        <button class="icon-btn" id="rpt-share-btn" onclick="shareRptWA()" style="display:none" title="Copy for WhatsApp">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="17" height="17"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.375"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="p16">
+    <!-- Mode selector -->
+    <div class="tog" style="margin-bottom:10px">
+      <button class="tog-btn on" id="rpt-day-btn" onclick="setRptMode('day')">Day</button>
+      <button class="tog-btn" id="rpt-mon-btn" onclick="setRptMode('month')">Month</button>
+      <button class="tog-btn" id="rpt-oem-btn" onclick="setRptMode('oem')">By OEM</button>
+      <button class="tog-btn" id="rpt-per-btn" onclick="setRptMode('person')">By Person</button>
+    </div>
+    <!-- Visit / Call filter -->
+    <div class="tog" style="margin-bottom:10px;padding:2px;gap:2px">
+      <button class="tog-btn on" id="rft-all" onclick="setRptTypeFilter('all')">All</button>
+      <button class="tog-btn" id="rft-visit" onclick="setRptTypeFilter('visit')">📍 Visits</button>
+      <button class="tog-btn" id="rft-call" onclick="setRptTypeFilter('call')">📞 Calls</button>
+    </div>
+    <!-- Search -->
+    <div style="position:relative;margin-bottom:10px">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="15" height="15" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 15.803a7.5 7.5 0 0010.607 10.607z"/></svg>
+      <input type="text" id="rpt-search" placeholder="Search OEM, person, topic, notes..." oninput="renderRpt()" style="width:100%;padding:11px 14px 11px 36px;background:var(--surface2);border:1.5px solid var(--border);border-radius:10px;font-family:'Inter',sans-serif;font-size:14px;color:var(--text);outline:none;transition:border-color .15s" onfocus="this.style.borderColor='var(--amber)'" onblur="this.style.borderColor='var(--border)'">
+    </div>
+    <!-- Date pickers -->
+    <div id="rpt-day-wrap"><input type="date" id="rpt-date" onchange="renderRpt()"></div>
+    <div id="rpt-mon-wrap" style="display:none"><input type="month" id="rpt-month" onchange="renderRpt()"></div>
+  </div>
+  <div id="rpt-content" style="padding:0 16px"></div>
+</div>
+
+<!-- NAV -->
+<nav class="bnav">
+  <div class="ni active" id="n-home" onclick="go('home')">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"/></svg>
+    <span>Home</span>
+  </div>
+  <div class="ni" id="n-dir" onclick="go('dir')">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21"/></svg>
+    <span>OEMs</span>
+  </div>
+  <div class="ni" id="n-reports" onclick="go('reports')">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg>
+    <span>Reports</span>
+  </div>
+  <div class="ni" id="n-tasks" onclick="go('tasks')">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+    <span>Tasks</span>
+  </div>
+</nav>
+<div class="toast" id="toast"></div>
+
+<script>
+// ── CONFIG ──
+const OWNER='vishveshnadkarni-oss', REPO='OEM-Visit-Tracker', BRANCH='main';
+const API=`https://api.github.com/repos/${OWNER}/${REPO}/contents/`;
+const FILES={oems:'data/oems.json', visits:'data/visits.json'};
+const DEF_TOPICS=['Leasing','Principal Moratorium','Startups','Rate of Interest'];
+const SUBCATS={Medical:['Imaging','Ophthalmology','Dermatology','Cosmetology','Laser Hair Removal','Lab Testing','Anaesthetic','Refurb Machines'],Industrial:['Machine Tools','Plastics','Packaging','Laser','Bending','Pharma','Solar','Wood Working']};
+
+// ── STATE ──
+let db={oems:[],visits:[],actions:[],topics:[]};
+let selTopics=[], vType='visit', oType='OEM', oSeg='Medical', custChips=[], editOEM=null, curVid=null, editVid=null, taskFilter='open', listening=false, recog=null;
+
+// ── LOCAL STORAGE ──
+function load(){try{const r=localStorage.getItem('oem_v5');if(r){db=JSON.parse(r);if(!db.topics)db.topics=[];}}catch(e){}}
+function save(){localStorage.setItem('oem_v5',JSON.stringify(db));}
+function getToken(){return localStorage.getItem('oem_tok')||'';}
+function setToken(t){localStorage.setItem('oem_tok',t.trim());}
+function allTopics(){return [...new Set([...DEF_TOPICS,...(db.topics||[])])];}
+
+// ── GITHUB API ──
+async function ghGet(path){
+  const tk=getToken(); if(!tk) return null;
+  const r=await fetch(API+path+'?ref='+BRANCH,{headers:{'Authorization':'Bearer '+tk,'Accept':'application/vnd.github+json'}});
+  if(r.status===404) return null;
+  if(!r.ok) throw new Error('GH '+r.status);
+  return r.json();
+}
+async function ghPut(path,data,sha,msg){
+  const tk=getToken(); if(!tk) throw new Error('No token');
+  const body={message:msg,content:btoa(unescape(encodeURIComponent(JSON.stringify(data,null,2)))),branch:BRANCH};
+  if(sha) body.sha=sha;
+  const r=await fetch(API+path,{method:'PUT',headers:{'Authorization':'Bearer '+tk,'Content-Type':'application/json','Accept':'application/vnd.github+json'},body:JSON.stringify(body)});
+  if(!r.ok){const txt=await r.text(); throw new Error('PUT '+r.status+' '+txt.slice(0,80));}
+  return (await r.json()).content?.sha||null;
+}
+// Write one file safely: always fetch fresh SHA right before writing
+async function ghWriteFile(path,data,msg){
+  for(let i=0;i<3;i++){
+    const ex=await ghGet(path).catch(()=>null);
+    try{return await ghPut(path,data,ex?.sha||null,msg);}
+    catch(e){
+      if(i<2&&(e.message.includes('409')||e.message.includes('422'))){
+        await new Promise(r=>setTimeout(r,800*(i+1)));continue;
+      }
+      throw e;
+    }
+  }
+}
+
+// ── SYNC ──
+// Serial queue: all GitHub writes run one at a time, never in parallel
+let _q=Promise.resolve();
+function enqueue(fn){_q=_q.then(()=>fn().catch(e=>console.warn('Queue err:',e)));}
+
+function setSS(state,msg){
+  const d=document.getElementById('sdot'),l=document.getElementById('slbl');
+  if(!d||!l)return;
+  d.className='sync-dot '+(state==='ok'?'ok':state==='err'?'err':state==='busy'?'spin':'');
+  l.textContent=msg;
+}
+
+// Pull from GitHub — merges new entries from other devices, never wipes local data
+async function doSync(force=false){
+  if(!getToken()){toast('No token — go to Settings');return;}
+  setSS('busy','Fetching...');
+  try{
+    const [of,vf]=await Promise.all([ghGet(FILES.oems),ghGet(FILES.visits)]);
+    if(of){
+      const ghOems=JSON.parse(decodeURIComponent(escape(atob(of.content.replace(/\n/g,'')))));
+      if(force){db.oems=ghOems;}
+      else{
+        // Merge: bring in OEMs from GitHub not in local
+        const localCodes=new Set(db.oems.map(o=>o.id));
+        ghOems.forEach(o=>{if(!localCodes.has(o.id))db.oems.push(o);});
+      }
+    }
+    if(vf){
+      const d=JSON.parse(decodeURIComponent(escape(atob(vf.content.replace(/\n/g,'')))));
+      const ghV=d.visits||[],ghA=d.actions||[],ghT=d.topics||[];
+      if(force){db.visits=ghV;db.actions=ghA;db.topics=ghT;}
+      else{
+        const lv=new Set(db.visits.map(v=>v.id));
+        ghV.forEach(v=>{if(!lv.has(v.id))db.visits.push(v);});
+        const la=new Set(db.actions.map(a=>a.id));
+        ghA.forEach(a=>{if(!la.has(a.id))db.actions.push(a);});
+        ghT.forEach(t=>{if(!db.topics.includes(t))db.topics.push(t);});
+      }
+    }
+    save();
+    setSS('ok','Synced '+fmtTime(new Date()));
+    renderHome();
+    if(force)toast('Synced ✓');
+  }catch(e){setSS('err','Offline — local data');}
+}
+
+// Push local data to GitHub in background via queue
+function saveSync(){
+  save();        // instant — localStorage always written first
+  renderHome();  // UI updates immediately, never waits for GitHub
+  if(!getToken())return;
+  enqueue(async()=>{
+    setSS('busy','Saving...');
+    try{
+      await ghWriteFile(FILES.oems,db.oems,'Update OEMs');
+      await ghWriteFile(FILES.visits,{visits:db.visits,actions:db.actions,topics:db.topics},'Update visits');
+      setSS('ok','Synced '+fmtTime(new Date()));
+    }catch(e){
+      // Silent fail — data is safe in localStorage, will retry on next save
+      setSS('ok','Local · '+String("'")+' sync pending');
+      console.warn('Write failed:',e.message);
+    }
+  });
+}
+
+// Backup to dated files in /backup folder
+function doBackup(){
+  if(!getToken()){toast('No token — go to Settings');return;}
+  toast('Backup queued...');
+  enqueue(async()=>{
+    setSS('busy','Backing up...');
+    try{
+      const stamp=todayStr();
+      await ghWriteFile('backup/oems_'+stamp+'.json',db.oems,'Backup OEMs '+stamp);
+      await ghWriteFile('backup/visits_'+stamp+'.json',{visits:db.visits,actions:db.actions},'Backup visits '+stamp);
+      setSS('ok','Backup done '+fmtTime(new Date()));
+      toast('Backup saved ✓');
+    }catch(e){
+      setSS('err','Backup failed');
+      toast('Backup failed: '+e.message);
+    }
+  });
+}
+
+// ── NAVIGATION ──
+const SCREENS={
+  'home':'s-home','new-visit':'s-new-visit','dir':'s-dir','oem-form':'s-oem-form',
+  'oem-detail':'s-oem-detail','tasks':'s-tasks','visit-dtl':'s-visit-dtl',
+  'import':'s-import','settings':'s-settings','reports':'s-reports'
+};
+const NAVMAP={
+  'home':'n-home','new-visit':'n-home','visit-dtl':'n-home',
+  'dir':'n-dir','oem-form':'n-dir','oem-detail':'n-dir','import':'n-dir',
+  'tasks':'n-tasks','settings':'n-home','reports':'n-reports'
+};
+function go(screen){
+  Object.values(SCREENS).forEach(id=>document.getElementById(id)?.classList.remove('active'));
+  document.querySelectorAll('.ni').forEach(n=>n.classList.remove('active'));
+  document.getElementById(SCREENS[screen])?.classList.add('active');
+  const nid=NAVMAP[screen]; if(nid) document.getElementById(nid)?.classList.add('active');
+  window.scrollTo(0,0);
+  if(screen==='home') renderHome();
+  if(screen==='new-visit') initVisit();
+  if(screen==='dir') renderDir();
+  if(screen==='tasks') renderTasks();
+  if(screen==='settings') initSettings();
+  if(screen==='reports') initRpt();
+}
+
+// ── HOME ──
+function renderHome(){
+  const today=todayStr();
+  const todayV=db.visits.filter(v=>v.date===today);
+  const openA=db.actions.filter(a=>a.status==='open');
+  const over=openA.filter(a=>a.dueDate&&a.dueDate<today).length;
+  document.getElementById('home-stats').innerHTML=`
+    <div class="scard"><div class="snum">${todayV.length}</div><div class="slbl">Today</div></div>
+    <div class="scard"><div class="snum">${db.visits.length}</div><div class="slbl">Total</div></div>
+    <div class="scard"><div class="snum" style="color:${over>0?'var(--red)':'var(--text)'}">${openA.length}</div><div class="slbl">Open Tasks</div></div>`;
+  const tl=document.getElementById('today-list');
+  if(!todayV.length){tl.innerHTML=`<div class="empty"><div class="ei">📋</div><h3>No reports today</h3><p>Tap + to log a visit or call</p></div>`;}
+  else{tl.innerHTML=todayV.map(v=>{
+    const o=db.oems.find(x=>x.id===v.oemId);
+    const topics=[...(v.topics||[]),...(v.customTopics||[])];
+    return`<div class="vcard" onclick="showVisit('${v.id}')">
+      <div class="vcard-top"><div class="vcard-name">${o?.name||'Unknown'}</div><span class="badge ${v.type==='visit'?'bv':v.type==='customer'?'bcv':'bc'}">${v.type==='visit'?'📍 Visit':v.type==='customer'?'🏢 Customer':'📞 Call'}</span></div>
+      <div class="vmeta">${o?.code||''}${v.visitLoc?' · 📍'+v.visitLoc:''}</div>
+      ${v.personMet?`<div class="vsub">👤 ${v.personMet}</div>`:''}
+      ${topics.length?`<div class="vsub">${topics.join(' · ')}</div>`:''}
+    </div>`;
+  }).join('');}
+  const ht=document.getElementById('home-tasks');
+  const up=[...openA].sort((a,b)=>(a.dueDate||'9')<(b.dueDate||'9')?-1:1).slice(0,5);
+  if(!up.length){ht.innerHTML=`<p style="font-size:13px;color:var(--muted);padding:4px 0">All clear 🎉</p>`;}
+  else{ht.innerHTML=`<div class="card">${up.map(a=>{
+    const o=oem4action(a); const od=a.dueDate&&a.dueDate<today;
+    return`<div class="ai-row">
+      <button class="acheck ${a.status==='closed'?'done':''}" onclick="toggleTask('${a.id}',event)"></button>
+      <div style="flex:1"><div class="adesc ${a.status==='closed'?'done':''}">${a.description}</div>
+      <div class="ameta">${o?.name||''}${a.dueDate?' · <span class="'+(od?'overdue':'')+'">Due '+fmtDate(a.dueDate)+'</span>':''}</div></div>
+    </div>`;
+  }).join('')}</div>`;}
+}
+
+// ── NEW VISIT ──
+function initVisit(){
+  vType='visit'; selTopics=[]; editVid=null;
+  document.getElementById('tb-v').classList.add('on');
+  document.getElementById('tb-c').classList.remove('on');
+  document.getElementById('tb-cv').classList.remove('on');
+  document.querySelector('#s-new-visit h1').textContent='New Report';
+  document.querySelector('#s-new-visit .save-bar button').textContent='Save Report';
+  document.getElementById('v-date').value=todayStr();
+  document.getElementById('v-notes').value='';
+  document.getElementById('v-next').value='';
+  document.getElementById('v-oem').value='';
+  document.getElementById('visit-banner').innerHTML='';
+  document.getElementById('ai-list').innerHTML='';
+  document.getElementById('v-loc-wrap').style.display='none';
+  document.getElementById('v-person-wrap').style.display='none';
+  document.getElementById('v-people-list').innerHTML='';
+  document.getElementById('v-new-ct').style.display='none';
+  document.getElementById('topic-tags').innerHTML='';
+  document.getElementById('topic-search').value='';
+  document.getElementById('topic-custom').value='';
+  const sel=document.getElementById('v-oem');
+  sel.innerHTML='<option value="">Select...</option>'+[...db.oems].sort((a,b)=>a.name.localeCompare(b.name)).map(o=>`<option value="${o.id}">${o.name}${o.code?' ('+o.code+')':''}</option>`).join('');
+  renderTopicDrop();
+}
+function setVType(t){vType=t;document.getElementById('tb-v').classList.toggle('on',t==='visit');document.getElementById('tb-c').classList.toggle('on',t==='call');document.getElementById('tb-cv').classList.toggle('on',t==='customer');}
+function renderTopicDrop(search=''){
+  const all=allTopics().filter(t=>!selTopics.includes(t)&&(!search||t.toLowerCase().includes(search.toLowerCase())));
+  document.getElementById('topic-sel').innerHTML='<option value="">Add a topic...</option>'+all.map(t=>`<option value="${t}">${t}</option>`).join('');
+}
+function pickTopic(sel){const v=sel.value;if(!v)return;if(!selTopics.includes(v)){selTopics.push(v);renderTopicTags();renderTopicDrop();}sel.value='';}
+function addCustomTopic(){const inp=document.getElementById('topic-custom');const v=inp.value.trim();if(!v)return;if(!selTopics.includes(v))selTopics.push(v);if(!allTopics().includes(v)){db.topics.push(v);save();}renderTopicTags();renderTopicDrop();inp.value='';}
+function removeTopic(t){selTopics=selTopics.filter(x=>x!==t);renderTopicTags();renderTopicDrop();}
+function renderTopicTags(){document.getElementById('topic-tags').innerHTML=selTopics.map(t=>`<span class="t-tag">${t}<span class="t-rm" onclick="removeTopic('${t}')">×</span></span>`).join('');}
+function onOEMPick(){
+  const oid=document.getElementById('v-oem').value;
+  document.getElementById('visit-banner').innerHTML='';
+  document.getElementById('v-loc-wrap').style.display='none';
+  document.getElementById('v-person-wrap').style.display='none';
+  document.getElementById('v-people-list').innerHTML='';
+  document.getElementById('v-new-ct').style.display='none';
+  if(!oid) return;
+  const o=db.oems.find(x=>x.id===oid);
+  const locs=(o?.locations||[]).filter(l=>l.city);
+  if(locs.length){
+    document.getElementById('v-loc').innerHTML='<option value="">Select location...</option>'+locs.map(l=>`<option value="${l.city}">${l.city}</option>`).join('');
+    document.getElementById('v-loc-wrap').style.display='block';
+  }
+  document.getElementById('v-person-wrap').style.display='block';
+  addPersonRow();
+  const today=todayStr();
+  const vids=db.visits.filter(v=>v.oemId===oid).map(v=>v.id);
+  const open=db.actions.filter(a=>vids.includes(a.visitId)&&a.status==='open');
+  if(!open.length) return;
+  document.getElementById('visit-banner').innerHTML=`<div class="banner">
+    <div class="bnr-lbl">⚠️ ${open.length} open task${open.length>1?'s':''} from previous visits</div>
+    ${open.map(a=>{const od=a.dueDate&&a.dueDate<today;return`<div class="bnr-row">
+      <button class="acheck ${a.status==='closed'?'done':''}" onclick="toggleTask('${a.id}',event)" style="margin-top:0;flex-shrink:0"></button>
+      <div><div style="font-size:13px;font-weight:500">${a.description}</div>${a.dueDate?`<div class="ameta ${od?'overdue':''}">${od?'Overdue · ':''}Due ${fmtDate(a.dueDate)}</div>`:''}</div>
+    </div>`;}).join('')}</div>`;
+}
+function addPersonRow(){
+  const oid=document.getElementById('v-oem').value;
+  const o=db.oems.find(x=>x.id===oid);
+  const cts=o?.contacts||[];
+  const list=document.getElementById('v-people-list');
+  const row=document.createElement('div');
+  row.style.cssText='display:flex;gap:7px;margin-bottom:8px;align-items:center';
+  const opts='<option value="">Select contact...</option>'+cts.map(c=>`<option value="${c.name}">${c.name}${c.position?' — '+c.position:''}</option>`).join('')+'<option value="__new__">+ Add new contact...</option>';
+  row.innerHTML=`<select style="flex:1;padding:10px 12px;font-size:13px;background:var(--surface2);border:1.5px solid var(--border);border-radius:10px;color:var(--text);-webkit-appearance:none;appearance:none">${opts}</select>
+    <button onclick="this.closest('div').remove()" style="width:34px;height:40px;background:var(--red-bg);border:1px solid rgba(248,81,73,.2);border-radius:8px;color:var(--red);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="13" height="13"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+    </button>`;
+  row.querySelector('select').onchange=function(){
+    if(this.value==='__new__'){document.getElementById('v-new-ct').style.display='block';['nc-name','nc-phone','nc-pos','nc-loc'].forEach(id=>document.getElementById(id).value='');}
+    else document.getElementById('v-new-ct').style.display='none';
+  };
+  list.appendChild(row);
+}
+function getPeopleMet(){
+  return [...document.querySelectorAll('#v-people-list select')].map(s=>s.value).filter(v=>v&&v!=='__new__');
+}
+async function addNewContact(){
+  const name=document.getElementById('nc-name').value.trim();
+  if(!name){toast('Name required');return;}
+  const oid=document.getElementById('v-oem').value;
+  const o=db.oems.find(x=>x.id===oid); if(!o) return;
+  if(!o.contacts) o.contacts=[];
+  o.contacts.push({name,phone:document.getElementById('nc-phone').value.trim(),position:document.getElementById('nc-pos').value.trim(),location:document.getElementById('nc-loc').value.trim(),note:''});
+  saveSync();
+  const opts='<option value="">Select contact...</option>'+o.contacts.map(c=>`<option value="${c.name}">${c.name}${c.position?' — '+c.position:''}</option>`).join('')+'<option value="__new__">+ Add new contact...</option>';
+  document.querySelectorAll('#v-people-list select').forEach(sel=>{const cur=sel.value;sel.innerHTML=opts;sel.value=cur;});
+  // Set the last dropdown to the new contact
+  const sels=document.querySelectorAll('#v-people-list select');
+  if(sels.length) sels[sels.length-1].value=name;
+  document.getElementById('v-new-ct').style.display='none';
+  toast('Contact added ✓');
+}
+function addAI(){
+  const d=document.createElement('div');d.className='ai-form';
+  d.innerHTML=`<input type="text" placeholder="Action item" style="flex:1;padding:11px 12px;font-size:14px"><input type="date" style="width:130px;flex-shrink:0;font-size:12px;padding:11px 8px"><button class="rm-btn" onclick="this.parentElement.remove()"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="13" height="13"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></button>`;
+  document.getElementById('ai-list').appendChild(d);d.querySelector('input').focus();
+}
+async function saveVisit(){
+  const oid=document.getElementById('v-oem').value;
+  const date=document.getElementById('v-date').value;
+  if(!oid){toast('Please select an OEM');return;}
+  if(!date){toast('Please select a date');return;}
+  const peopleMet=getPeopleMet();
+  const topics=selTopics.filter(t=>DEF_TOPICS.includes(t));
+  const customTopics=selTopics.filter(t=>!DEF_TOPICS.includes(t));
+  const visitLoc=document.getElementById('v-loc').value||'';
+  const notes=document.getElementById('v-notes').value.trim();
+  const nextDate=document.getElementById('v-next').value||null;
+  if(editVid){
+    const v=db.visits.find(x=>x.id===editVid);
+    if(v){Object.assign(v,{oemId:oid,date,type:vType,personMet:peopleMet.join(', '),peopleMet,visitLoc,topics,customTopics,notes,nextVisitDate:nextDate});}
+    db.actions=db.actions.filter(a=>a.visitId!==editVid);
+    document.querySelectorAll('#ai-list .ai-form').forEach(row=>{
+      const ins=row.querySelectorAll('input');const desc=ins[0].value.trim();const due=ins[1].value;
+      if(desc) db.actions.push({id:'a_'+Date.now()+'_'+Math.random().toString(36).slice(2,5),visitId:editVid,description:desc,dueDate:due||null,status:'open'});
+    });
+    selTopics=[];editVid=null;
+    toast('Updating...');saveSync();toast('Report updated ✓');go('home');
+  } else {
+    const vid='v_'+Date.now();
+    const v={id:vid,oemId:oid,date,type:vType,personMet:peopleMet.join(', '),peopleMet,visitLoc,topics,customTopics,notes,nextVisitDate:nextDate,createdAt:new Date().toISOString()};
+    db.visits.push(v);
+    document.querySelectorAll('#ai-list .ai-form').forEach(row=>{
+      const ins=row.querySelectorAll('input');const desc=ins[0].value.trim();const due=ins[1].value;
+      if(desc) db.actions.push({id:'a_'+Date.now()+'_'+Math.random().toString(36).slice(2,5),visitId:vid,description:desc,dueDate:due||null,status:'open'});
+    });
+    selTopics=[];
+    toast('Saving...');saveSync();toast('Report saved ✓');go('home');
+  }
+}
+
+// ── VISIT DETAIL ──
+function showVisit(vid){
+  curVid=vid; go('visit-dtl');
+  const v=db.visits.find(x=>x.id===vid);
+  const o=db.oems.find(x=>x.id===v?.oemId);
+  const acts=db.actions.filter(a=>a.visitId===vid);
+  const topics=[...(v.topics||[]),...(v.customTopics||[])];
+  const today=todayStr();
+  document.getElementById('visit-dtl-content').innerHTML=`
+    <div class="dtl"><div class="dtl-lbl">OEM</div>
+      <div class="dtl-box"><div style="font-size:16px;font-weight:700">${o?.name||'Unknown'}</div>
+        <div class="mono" style="font-size:12px;color:var(--soft);margin-top:4px">${o?.code||''}${v.visitLoc?' · 📍'+v.visitLoc:''}</div>
+        ${v.personMet?`<div style="font-size:13px;font-weight:600;color:var(--amber);margin-top:5px">👤 ${v.personMet}</div>`:''}
+      </div></div>
+    <div class="dtl"><div class="dtl-lbl">Details</div>
+      <div class="dtl-box" style="display:flex;gap:16px;flex-wrap:wrap">
+        <div><div style="font-size:11px;color:var(--muted)">Date</div><div class="mono" style="font-size:13px;margin-top:2px">${fmtDate(v.date)}</div></div>
+        <div><div style="font-size:11px;color:var(--muted)">Type</div><span class="badge ${v.type==='visit'?'bv':v.type==='customer'?'bcv':'bc'}" style="display:inline-block;margin-top:4px">${v.type==='visit'?'📍 Visit':v.type==='customer'?'🏢 Customer':'📞 Call'}</span></div>
+        ${v.nextVisitDate?`<div><div style="font-size:11px;color:var(--muted)">Follow-up</div><div class="mono" style="font-size:13px;margin-top:2px">${fmtDate(v.nextVisitDate)}</div></div>`:''}
+      </div></div>
+    ${topics.length?`<div class="dtl"><div class="dtl-lbl">Topics</div><div class="tags">${topics.map(t=>`<span class="tag">${t}</span>`).join('')}</div></div>`:''}
+    ${v.notes?`<div class="dtl"><div class="dtl-lbl">Notes</div><div class="dtl-box" style="white-space:pre-wrap">${v.notes}</div></div>`:''}
+    ${acts.length?`<div class="dtl"><div class="dtl-lbl">Action Items</div><div class="card">${acts.map(a=>{
+      const od=a.dueDate&&a.status==='open'&&a.dueDate<today;
+      return`<div class="ai-row">
+        <button class="acheck ${a.status==='closed'?'done':''}" onclick="toggleTask('${a.id}',event)"></button>
+        <div style="flex:1"><div class="adesc ${a.status==='closed'?'done':''}">${a.description}</div>${a.dueDate?`<div class="ameta ${od?'overdue':''}">Due ${fmtDate(a.dueDate)}</div>`:''}</div>
+      </div>`;
+    }).join('')}</div></div>`:''}`;}
+async function deleteVisit(){
+  if(!confirm('Delete this report and its action items?')) return;
+  db.actions=db.actions.filter(a=>a.visitId!==curVid);
+  db.visits=db.visits.filter(v=>v.id!==curVid);
+  saveSync(); toast('Deleted'); go('home');
+}
+
+// ── DIRECTORY ──
+function renderDir(search=''){
+  let oems=[...db.oems].sort((a,b)=>a.name.localeCompare(b.name));
+  if(search) oems=oems.filter(o=>o.name?.toLowerCase().includes(search.toLowerCase())||o.code?.toLowerCase().includes(search.toLowerCase())||(o.locations||[]).some(l=>l.city?.toLowerCase().includes(search.toLowerCase())));
+  const el=document.getElementById('oem-list');
+  if(!oems.length){el.innerHTML=`<div class="empty"><div class="ei">🏢</div><h3>${search?'No results':'No OEMs yet'}</h3><p>${search?'Try a different search':'Tap + to add your first OEM'}</p></div>`;return;}
+  el.innerHTML=oems.map(o=>{
+    const init=o.name.split(' ').map(w=>w[0]||'').join('').toUpperCase().slice(0,2);
+    const vc=db.visits.filter(v=>v.oemId===o.id).length;
+    const cities=(o.locations||[]).map(l=>l.city).filter(Boolean).join(', ');
+    return`<div class="oitem" onclick="showOEM('${o.id}')">
+      <div class="avatar">${init}</div>
+      <div class="oinfo"><div class="oname">${o.name}</div>
+        <div class="ometa">${o.code||''}${cities?' · '+cities:''} · ${vc} visit${vc!==1?'s':''}</div>
+        <div class="obadges"><span class="badge ${o.oemType==='Dealer'?'bdlr':'boem'}">${o.oemType||'OEM'}</span><span class="badge ${o.segment==='Medical'?'bmed':'bind'}">${o.segment||''}</span></div>
+      </div>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="14" height="14" style="color:var(--muted);flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
+    </div>`;
+  }).join('');}
+
+// ── OEM DETAIL ──
+function showOEM(id){
+  const o=db.oems.find(x=>x.id===id); if(!o) return;
+  document.getElementById('oem-dtl-title').textContent=o.name;
+  document.getElementById('oem-edit-btn').onclick=()=>openOEMForm(id);
+  const vc=db.visits.filter(v=>v.oemId===id).length;
+  document.getElementById('oem-dtl-content').innerHTML=`
+    <div class="dtl">
+      <div style="display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap">
+        <span class="badge ${o.oemType==='Dealer'?'bdlr':'boem'}" style="padding:4px 12px">${o.oemType||'OEM'}</span>
+        <span class="badge ${o.segment==='Medical'?'bmed':'bind'}" style="padding:4px 12px">${o.segment||''}</span>
+      </div>
+      <div class="dtl-box"><div style="display:flex;justify-content:space-between">
+        <span class="mono" style="font-size:13px;color:var(--soft)">${o.code||'No code'}</span>
+        <span class="mono" style="font-size:12px;color:var(--muted)">${vc} visit${vc!==1?'s':''}</span>
+      </div></div>
+    </div>
+    ${(o.subcategories||[]).length?`<div class="dtl"><div class="dtl-lbl">Subcategories</div><div class="tags">${o.subcategories.map(s=>`<span class="tag">${s}</span>`).join('')}</div></div>`:''}
+    ${o.oemType==='Dealer'&&o.dealerBrands?`<div class="dtl"><div class="dtl-lbl">Brands Dealt In</div><div class="dtl-box" style="font-size:14px">${o.dealerBrands}</div></div>`:''}
+    ${(o.locations||[]).length?`<div class="dtl"><div class="dtl-lbl">Locations</div>${o.locations.map(l=>`<div class="dtl-box" style="margin-bottom:8px;font-size:14px">${l.lat&&l.lng?`<a href="https://www.google.com/maps/dir/?api=1&destination=${l.lat},${l.lng}" target="_blank" style="text-decoration:none;color:inherit">📍 <strong>${l.city}</strong>${l.address?`<br><span style="font-size:12px;color:var(--soft)">${l.address}</span>`:''}<span style="font-size:11px;color:var(--amber);font-weight:700;display:block;margin-top:4px">Navigate →</span></a>`:(`📍 <strong>${l.city}</strong>${l.address?`<br><span style="font-size:12px;color:var(--soft)">${l.address}</span>`:''}`)}</div>`).join('')}</div>`:''}
+    ${(o.contacts||[]).length?`<div class="dtl"><div class="dtl-lbl">Contacts</div>${o.contacts.map(c=>`<div class="ccard"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px"><div><div style="font-size:14px;font-weight:700">${c.name}</div>${c.position?`<div style="font-size:12px;color:var(--amber);font-weight:600;margin-top:2px">${c.position}</div>`:''}</div>${c.phone?`<a href="tel:${c.phone}" style="font-family:'DM Mono',monospace;font-size:12px;color:var(--amber);white-space:nowrap;text-decoration:none">${c.phone}</a>`:''}</div>${c.location?`<div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--soft);margin-top:4px">📍 ${c.location}</div>`:''}${c.note?`<div style="font-size:12px;color:var(--soft);margin-top:4px;font-style:italic">${c.note}</div>`:''}</div>`).join('')}</div>`:''}
+    ${o.notes?`<div class="dtl"><div class="dtl-lbl">Notes</div><div class="dtl-box" style="white-space:pre-wrap;font-size:14px;line-height:1.6">${o.notes}</div></div>`:''}`;
+  go('oem-detail');
+}
+
+// ── OEM FORM ──
+function setOT(t){oType=t;document.getElementById('of-t-oem').classList.toggle('on',t==='OEM');document.getElementById('of-t-dlr').classList.toggle('on',t==='Dealer');document.getElementById('of-brands-wrap').style.display=t==='Dealer'?'block':'none';}
+function setOS(s){oSeg=s;document.getElementById('of-s-med').classList.toggle('on',s==='Medical');document.getElementById('of-s-ind').classList.toggle('on',s==='Industrial');renderChips([]);}
+function renderChips(sel=[]){
+  const all=[...SUBCATS[oSeg],...custChips];
+  document.getElementById('of-chips').innerHTML=all.map(v=>`<div class="chip ${sel.includes(v)?'on':''}" data-val="${v}" onclick="this.classList.toggle('on')">${v}</div>`).join('');}
+function addChip(){const inp=document.getElementById('of-chip-inp');const v=inp.value.trim();if(!v)return;custChips.push(v);const sel=[...document.querySelectorAll('.chip.on')].map(c=>c.dataset.val);renderChips([...sel,v]);inp.value='';}
+function addLoc(loc={}){
+  const c=document.createElement('div');c.className='dyn';
+  c.innerHTML=`<div class="dyn-lbl">Location</div>
+    <div class="fg"><input type="text" class="loc-city" placeholder="City *" value="${loc.city||''}"></div>
+    <div class="fg" style="margin-bottom:0"><input type="text" class="loc-addr" placeholder="Address" value="${loc.address||''}"></div>
+    <input type="hidden" class="loc-lat" value="${loc.lat||''}"><input type="hidden" class="loc-lng" value="${loc.lng||''}">
+    <button class="rm-btn" onclick="this.closest('.dyn').remove()"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="13" height="13"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></button>`;
+  document.getElementById('of-locs').appendChild(c);
+}
+function addCt(ct={}){
+  const c=document.createElement('div');c.className='dyn';
+  c.innerHTML=`<div class="dyn-lbl">Contact</div>
+    <div class="frow fg"><div class="fg"><input type="text" class="ct-name" placeholder="Name *" value="${ct.name||''}"></div><div class="fg"><input type="tel" class="ct-phone" placeholder="Phone" value="${ct.phone||''}"></div></div>
+    <div class="frow fg"><div class="fg"><input type="text" class="ct-pos" placeholder="Position" value="${ct.position||''}"></div><div class="fg"><input type="text" class="ct-loc" placeholder="Location" value="${ct.location||''}"></div></div>
+    <div class="fg" style="margin-bottom:0"><input type="text" class="ct-note" placeholder="Note (e.g. handles VMC)" value="${ct.note||''}"></div>
+    <button class="rm-btn" onclick="this.closest('.dyn').remove()"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="13" height="13"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></button>`;
+  document.getElementById('of-cts').appendChild(c);
+}
+function openOEMForm(id){
+  editOEM=id?db.oems.find(o=>o.id===id):null;
+  custChips=[];
+  document.getElementById('oem-form-title').textContent=editOEM?'Edit OEM':'Add OEM';
+  document.getElementById('of-name').value=editOEM?.name||'';
+  document.getElementById('of-code').value=editOEM?.code||'';
+  document.getElementById('of-notes').value=editOEM?.notes||'';
+  document.getElementById('of-brands').value=editOEM?.dealerBrands||'';
+  document.getElementById('of-chip-inp').value='';
+  oType=editOEM?.oemType||'OEM'; setOT(oType);
+  oSeg=editOEM?.segment||'Medical'; setOS(oSeg);
+  const saved=editOEM?.subcategories||[];
+  saved.filter(s=>!SUBCATS[oSeg].includes(s)).forEach(s=>custChips.push(s));
+  renderChips(saved);
+  document.getElementById('of-locs').innerHTML='';(editOEM?.locations||[]).forEach(l=>addLoc(l));
+  document.getElementById('of-cts').innerHTML='';(editOEM?.contacts||[]).forEach(c=>addCt(c));
+  document.getElementById('del-oem-btn').style.display=editOEM?'block':'none';
+  go('oem-form');
+}
+async function saveOEM(){
+  const name=document.getElementById('of-name').value.trim();
+  if(!name){toast('Name is required');return;}
+  const locs=[...document.querySelectorAll('.loc-city')].map((el,i)=>({city:el.value.trim(),address:document.querySelectorAll('.loc-addr')[i]?.value.trim()||'',lat:document.querySelectorAll('.loc-lat')[i]?.value||'',lng:document.querySelectorAll('.loc-lng')[i]?.value||''})).filter(l=>l.city);
+  const cts=[...document.querySelectorAll('.ct-name')].map((el,i)=>({name:el.value.trim(),phone:document.querySelectorAll('.ct-phone')[i]?.value.trim()||'',position:document.querySelectorAll('.ct-pos')[i]?.value.trim()||'',location:document.querySelectorAll('.ct-loc')[i]?.value.trim()||'',note:document.querySelectorAll('.ct-note')[i]?.value.trim()||''})).filter(c=>c.name);
+  const subs=[...document.querySelectorAll('.chip.on')].map(c=>c.dataset.val);
+  const data={name,code:document.getElementById('of-code').value.trim(),oemType:oType,segment:oSeg,subcategories:subs,dealerBrands:oType==='Dealer'?document.getElementById('of-brands').value.trim():'',locations:locs,contacts:cts,notes:document.getElementById('of-notes').value.trim()};
+  if(editOEM){Object.assign(db.oems.find(o=>o.id===editOEM.id),data);}
+  else{db.oems.push({id:'oem_'+Date.now(),...data});}
+  toast('Saving...'); saveSync(); toast('OEM saved ✓'); go('dir');
+}
+async function deleteOEM(){
+  if(!confirm('Delete '+editOEM.name+'?')) return;
+  const vids=db.visits.filter(v=>v.oemId===editOEM.id).map(v=>v.id);
+  db.oems=db.oems.filter(o=>o.id!==editOEM.id);
+  db.visits=db.visits.filter(v=>v.oemId!==editOEM.id);
+  db.actions=db.actions.filter(a=>!vids.includes(a.visitId));
+  saveSync(); toast('Deleted'); go('dir');
+}
+
+// ── TASKS ──
+function setFilter(f){
+  taskFilter=f;
+  const amb='background:var(--amber-bg);color:var(--amber);border-color:rgba(240,165,0,.3)';
+  const def='background:var(--surface2);color:var(--soft);border-color:var(--border)';
+  document.getElementById('f-open-btn').style.cssText=f==='open'?amb:def;
+  document.getElementById('f-all-btn').style.cssText=f==='all'?amb:def;
+  renderTasks();
+}
+function renderTasks(){
+  const today=todayStr();
+  let items=taskFilter==='open'?db.actions.filter(a=>a.status==='open'):[...db.actions];
+  items.sort((a,b)=>{if(a.status!==b.status)return a.status==='open'?-1:1;return(a.dueDate||'9')<(b.dueDate||'9')?-1:1;});
+  const el=document.getElementById('task-list');
+  if(!items.length){el.innerHTML=`<div class="empty"><div class="ei">✅</div><h3>All clear!</h3><p>No ${taskFilter==='open'?'open ':''}tasks</p></div>`;return;}
+  el.innerHTML=items.map(a=>{
+    const o=oem4action(a); const v=db.visits.find(x=>x.id===a.visitId);
+    const od=a.dueDate&&a.status==='open'&&a.dueDate<today;
+    return`<div class="card" style="margin-bottom:9px">
+      <div class="ai-row" style="border:none;padding:0">
+        <button class="acheck ${a.status==='closed'?'done':''}" onclick="toggleTask('${a.id}',event)"></button>
+        <div style="flex:1"><div class="adesc ${a.status==='closed'?'done':''}">${a.description}</div>
+          <div class="ameta">${o?.name||''}${v?' · '+fmtDate(v.date):''}${a.dueDate?' · <span class="'+(od?'overdue':'')+'">Due '+fmtDate(a.dueDate)+'</span>':''}</div>
+        </div>
+        <button onclick="delTask('${a.id}',event)" style="background:none;border:none;cursor:pointer;color:var(--muted);padding:4px;flex-shrink:0">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="15" height="15"><path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"/></svg>
+        </button>
+      </div></div>`;
+  }).join('');}
+async function toggleTask(id,event){
+  event.stopPropagation();
+  const a=db.actions.find(x=>x.id===id); if(!a) return;
+  a.status=a.status==='open'?'closed':'open';
+  saveSync();
+  const active=document.querySelector('.screen.active')?.id;
+  if(active==='s-home') renderHome();
+  else if(active==='s-tasks') renderTasks();
+  else if(active==='s-new-visit'){const oid=document.getElementById('v-oem').value;if(oid)onOEMPick();}
+  else if(active==='s-visit-dtl') showVisit(curVid);
+}
+async function delTask(id,event){
+  event.stopPropagation();
+  if(!confirm('Delete this task?')) return;
+  db.actions=db.actions.filter(a=>a.id!==id);
+  saveSync(); renderTasks();
+}
+function oem4action(a){const v=db.visits.find(x=>x.id===a.visitId);return v?db.oems.find(o=>o.id===v.oemId):null;}
+
+// ── WHATSAPP ──
+function copyWA(){
+  const v=db.visits.find(x=>x.id===curVid); if(!v) return;
+  const o=db.oems.find(x=>x.id===v.oemId);
+  const acts=db.actions.filter(a=>a.visitId===v.id);
+  const topics=[...(v.topics||[]),...(v.customTopics||[])];
+  let txt=`${v.type==='visit'?'📍':v.type==='customer'?'🏢':'📞'} *${v.type==='visit'?'Visit':'Call'} Report — ${fmtDate(v.date)}*\n`;
+  txt+=`*OEM:* ${o?.name||'N/A'}${o?.code?' ('+o.code+')':''} · ${o?.oemType||''} · ${o?.segment||''}\n`;
+  if(v.visitLoc) txt+=`*Location:* ${v.visitLoc}\n`;
+  if(v.personMet) txt+=`*Person Met:* ${v.personMet}\n`;
+  if(topics.length) txt+=`\n✅ *Topics:*\n${topics.map(t=>`• ${t}`).join('\n')}\n`;
+  if(v.notes) txt+=`\n📝 *Notes:*\n${v.notes}\n`;
+  if(acts.length) txt+=`\n📌 *Tasks:*\n${acts.map(a=>`• ${a.description}${a.dueDate?' — Due: '+fmtDate(a.dueDate):''}${a.status==='closed'?' ✓':''}`).join('\n')}\n`;
+  if(v.nextVisitDate) txt+=`\n🔁 *Next ${v.type==='visit'?'Visit':'Follow-up'}:* ${fmtDate(v.nextVisitDate)}`;
+  navigator.clipboard.writeText(txt).then(()=>toast('Copied for WhatsApp ✓')).catch(()=>{
+    const ta=document.createElement('textarea');ta.value=txt;ta.style.cssText='position:fixed;opacity:0';document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);toast('Copied ✓');
+  });
+}
+
+// ── EXCEL EXPORT ──
+function exportXL(){
+  if(!db.visits.length){toast('No visits to export');return;}
+  const rows=db.visits.map(v=>{
+    const o=db.oems.find(x=>x.id===v.oemId);
+    const acts=db.actions.filter(a=>a.visitId===v.id);
+    return{'Date':v.date,'Type':v.type==='visit'?'Visit':'Call','OEM':o?.name||'','Code':o?.code||'','Location':v.visitLoc||'','OEM Type':o?.oemType||'','Segment':o?.segment||'','Person Met':v.personMet||'','Topics':[...(v.topics||[]),...(v.customTopics||[])].join(', '),'Notes':v.notes||'','Action Items':acts.map(a=>a.description+(a.dueDate?' (Due:'+a.dueDate+')':'')+(a.status==='closed'?' ✓':'')).join(' | '),'Next Visit':v.nextVisitDate||''};
+  });
+  const ws=XLSX.utils.json_to_sheet(rows);
+  ws['!cols']=Object.keys(rows[0]).map(k=>({wch:Math.max(k.length,...rows.map(r=>String(r[k]||'').length))+2}));
+  const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Visits');
+  XLSX.writeFile(wb,'OEM_Visits_'+todayStr()+'.xlsx');toast('Exported ✓');
+}
+
+// ── IMPORT ──
+function dlTemplate(){
+  const oc=['Name','Code','OEM_Type','Segment','Subcategories','Dealer_Brands','City1','Address1','City2','Address2','City3','Address3','Notes'];
+  const os={Name:'GPY Machine Tools',Code:'OEM-001',OEM_Type:'Dealer',Segment:'Industrial',Subcategories:'Machine Tools, Laser',Dealer_Brands:'Haitian, DMG Mori',City1:'Bengaluru',Address1:'100 MG Road',City2:'Chennai',Address2:'50 Anna Salai',City3:'',Address3:'',Notes:'Closed subvention at 10%'};
+  const wo=XLSX.utils.json_to_sheet([os],{header:oc});wo['!cols']=oc.map(c=>({wch:Math.max(c.length,20)}));
+  const cc=['OEM_Name','Name','Phone','Position','Location','Note'];
+  const cs=[{OEM_Name:'GPY Machine Tools',Name:'Ramesh Kumar',Phone:'9876543210',Position:'Sales Manager',Location:'Bengaluru',Note:'Handles VMC'},{OEM_Name:'GPY Machine Tools',Name:'Priya S',Phone:'9123456780',Position:'Service Head',Location:'Chennai',Note:''}];
+  const wc=XLSX.utils.json_to_sheet(cs,{header:cc});wc['!cols']=cc.map(c=>({wch:Math.max(c.length,20)}));
+  const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,wo,'OEMs');XLSX.utils.book_append_sheet(wb,wc,'Contacts');
+  XLSX.writeFile(wb,'OEM_Import_Template.xlsx');toast('Template downloaded ✓');
+}
+async function importFile(inp){
+  const file=inp.files[0]; if(!file) return;
+  const isXL=file.name.match(/\.(xlsx|xls)$/i);
+  let orows=[],crows=[];
+  if(isXL){const buf=await file.arrayBuffer();const wb=XLSX.read(buf,{type:'array'});orows=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{defval:''});if(wb.SheetNames[1])crows=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[1]],{defval:''});}
+  else{const txt=await file.text();const lines=txt.split('\n').filter(l=>l.trim());const hdrs=lines[0].split(',').map(h=>h.replace(/"/g,'').trim());orows=lines.slice(1).map(l=>{const vals=[...l.matchAll(/"([^"]*)"|([^,]*)/g)].map(m=>(m[1]??m[2]??'').trim());const o={};hdrs.forEach((h,i)=>{o[h]=vals[i]||'';});return o;});}
+  orows=orows.filter(r=>String(r['Name']||'').trim());
+  const ctMap={};
+  crows.forEach(r=>{const key=String(r['OEM_Name']||'').trim();if(!key)return;if(!ctMap[key])ctMap[key]=[];const nm=String(r['Name']||'').trim();if(nm)ctMap[key].push({name:nm,phone:String(r['Phone']||'').trim(),position:String(r['Position']||'').trim(),location:String(r['Location']||'').trim(),note:String(r['Note']||'').trim()});});
+  let added=0,skipped=0,merged=0;
+  orows.forEach(r=>{
+    const name=String(r['Name']||'').trim(); if(!name) return;
+    const existing=db.oems.find(o=>o.name.toLowerCase()===name.toLowerCase());
+    if(existing){
+      const newCts=ctMap[name]||[];
+      if(newCts.length){if(!existing.contacts)existing.contacts=[];newCts.forEach(nc=>{if(!existing.contacts.find(c=>c.name.toLowerCase()===nc.name.toLowerCase()))existing.contacts.push(nc);});merged++;}
+      skipped++;return;
+    }
+    const locs=[];['1','2','3'].forEach(n=>{const c=String(r['City'+n]||'').trim();if(c)locs.push({city:c,address:String(r['Address'+n]||'').trim()});});
+    const subs=String(r['Subcategories']||'').split(',').map(s=>s.trim()).filter(Boolean);
+    db.oems.push({id:'oem_'+Date.now()+'_'+Math.random().toString(36).slice(2,5),name,code:String(r['Code']||'').trim(),oemType:String(r['OEM_Type']||'OEM').trim(),segment:String(r['Segment']||'Industrial').trim(),subcategories:subs,dealerBrands:String(r['Dealer_Brands']||'').trim(),locations:locs,contacts:ctMap[name]||[],notes:String(r['Notes']||'').trim()});
+    added++;
+  });
+  document.getElementById('imp-result').innerHTML=`<div class="card" style="background:var(--green-bg);border:1px solid rgba(63,185,80,.3);margin-top:10px"><div style="font-size:14px;font-weight:600;color:var(--green)">✓ ${added} added · ${skipped} skipped · ${merged} updated with contacts</div></div>`;
+  toast('Importing...'); saveSync(); toast(added+' OEMs imported ✓'); inp.value='';
+}
+
+// ── VOICE ──
+function toggleMic(){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){toast('Voice not supported in this browser');return;}
+  if(listening){recog.stop();return;}
+  recog=new SR();recog.lang='en-IN';recog.continuous=true;recog.interimResults=false;
+  recog.onstart=()=>{listening=true;document.getElementById('mic-btn').style.background='var(--red)';document.getElementById('mic-btn').style.color='#fff';};
+  recog.onresult=e=>{const t=Array.from(e.results).map(r=>r[0].transcript).join(' ');const ta=document.getElementById('v-notes');ta.value=(ta.value?ta.value+' ':'')+t;};
+  recog.onend=()=>{listening=false;document.getElementById('mic-btn').style.background='var(--surface)';document.getElementById('mic-btn').style.color='var(--soft)';};
+  recog.onerror=()=>{listening=false;document.getElementById('mic-btn').style.background='var(--surface)';document.getElementById('mic-btn').style.color='var(--soft)';};
+  recog.start();
+}
+
+// ── SETTINGS ──
+function initSettings(){
+  const tok=getToken();
+  document.getElementById('tok-inp').value=tok?'•'.repeat(20):'';
+  document.getElementById('tok-inp').dataset.filled=tok?'1':'0';
+  document.getElementById('tok-status').textContent=tok?'✅ Token saved on this device':'No token saved yet';
+  document.getElementById('tok-status').style.color=tok?'var(--green)':'var(--muted)';
+}
+function toggleTokVis(){
+  const inp=document.getElementById('tok-inp');
+  const btn=document.getElementById('tok-vis');
+  if(inp.type==='password'){inp.type='text';btn.textContent='Hide';if(inp.dataset.filled==='1')inp.value=getToken();}
+  else{inp.type='password';btn.textContent='Show';}
+}
+async function saveToken(){
+  const inp=document.getElementById('tok-inp');
+  const val=inp.value.trim();
+  if(!val||val.startsWith('•')){toast('Paste your new token first');return;}
+  const st=document.getElementById('tok-status');
+  st.textContent='Testing...';st.style.color='var(--soft)';
+  setToken(val);
+  try{
+    const r=await fetch('https://api.github.com/user',{headers:{'Authorization':'Bearer '+val,'Accept':'application/vnd.github+json'}});
+    const d=await r.json();
+    if(r.ok){
+      st.innerHTML='✅ Connected as <strong>'+d.login+'</strong>';st.style.color='var(--green)';
+      inp.type='password';inp.value='•'.repeat(20);inp.dataset.filled='1';
+      document.getElementById('tok-vis').textContent='Show';
+      toast('Token saved ✓ — syncing...');
+      await doSync();
+    } else {
+      st.innerHTML='❌ '+d.message+' ('+r.status+')';st.style.color='var(--red)';
+      localStorage.removeItem('oem_tok');
+    }
+  }catch(e){st.textContent='❌ Network error: '+e.message;st.style.color='var(--red)';}
+}
+
+// ── REPORTS ──
+let rptMode='day', rptTypeFilter='all', rptWA='';
+function initRpt(){
+  rptMode='day'; rptTypeFilter='all';
+  ['day','mon','oem','per'].forEach(x=>document.getElementById('rpt-'+x+'-btn')?.classList.remove('on'));
+  document.getElementById('rpt-day-btn').classList.add('on');
+  document.getElementById('rpt-day-wrap').style.display='block';
+  document.getElementById('rpt-mon-wrap').style.display='none';
+  ['all','visit','call'].forEach(x=>document.getElementById('rft-'+x)?.classList.remove('on'));
+  document.getElementById('rft-all').classList.add('on');
+  document.getElementById('rpt-date').value=todayStr();
+  const rs=document.getElementById('rpt-search');if(rs)rs.value='';
+  document.getElementById('rpt-content').innerHTML='';
+  renderRpt();
+}
+function setRptMode(m){
+  rptMode=m;
+  ['day','mon','oem','per'].forEach(x=>document.getElementById('rpt-'+x+'-btn')?.classList.remove('on'));
+  document.getElementById('rpt-'+({day:'day',month:'mon',oem:'oem',person:'per'}[m]||m)+'-btn').classList.add('on');
+  document.getElementById('rpt-day-wrap').style.display=m==='day'?'block':'none';
+  document.getElementById('rpt-mon-wrap').style.display=m==='month'?'block':'none';
+  renderRpt();
+}
+function setRptTypeFilter(f){
+  rptTypeFilter=f;
+  ['all','visit','call'].forEach(x=>document.getElementById('rft-'+x)?.classList.remove('on'));
+  document.getElementById('rft-'+f).classList.add('on');
+  renderRpt();
+}
+function renderRpt(){
+  const el=document.getElementById('rpt-content');
+  let visits=[], label='';
+  if(rptMode==='day'){
+    const d=document.getElementById('rpt-date').value; if(!d) return;
+    visits=db.visits.filter(v=>v.date===d); label=fmtDate(d);
+  } else if(rptMode==='month'){
+    const m=document.getElementById('rpt-month').value; if(!m) return;
+    visits=db.visits.filter(v=>v.date.startsWith(m));
+    const [yr,mo]=m.split('-');
+    label=new Date(yr,parseInt(mo)-1,1).toLocaleDateString('en-IN',{month:'long',year:'numeric'});
+  } else if(rptMode==='oem'){
+    visits=[...db.visits].sort((a,b)=>b.date.localeCompare(a.date)); label='By OEM';
+  } else if(rptMode==='person'){
+    visits=[...db.visits].sort((a,b)=>b.date.localeCompare(a.date)); label='By Person';
+  }
+  // Apply visit/call filter
+  if(rptTypeFilter!=='all') visits=visits.filter(v=>v.type===rptTypeFilter);
+  // Full-text search
+  const _srch=(document.getElementById('rpt-search')?.value||'').toLowerCase().trim();
+  if(_srch){
+    visits=visits.filter(v=>{
+      const o=db.oems.find(x=>x.id===v.oemId);
+      const hay=[
+        o?.name||'',o?.code||'',
+        v.personMet||'',
+        ...(v.peopleMet||[]),
+        v.visitLoc||'',v.notes||'',
+        ...(v.topics||[]),...(v.customTopics||[]),
+        v.type||'',fmtDate(v.date),
+        ...db.actions.filter(a=>a.visitId===v.id).map(a=>a.description)
+      ].join(' ').toLowerCase();
+      return hay.includes(_srch);
+    });
+  }
+  const filterLabel=rptTypeFilter==='visit'?' — Visits only':rptTypeFilter==='call'?' — Calls only':'';
+
+  if(!visits.length){
+    document.getElementById('rpt-share-btn').style.display='none';
+    document.getElementById('rpt-email-btn').style.display='none';
+    el.innerHTML=`<div class="empty"><div class="ei">📭</div><h3>No results</h3><p>${label}${filterLabel}</p></div>`;
+    rptWA=''; return;
+  }
+  document.getElementById('rpt-share-btn').style.display='flex';
+  document.getElementById('rpt-email-btn').style.display='flex';
+
+  const calls=visits.filter(v=>v.type==='call').length;
+  const vists=visits.filter(v=>v.type==='visit').length;
+  const oemSet=new Set(visits.map(v=>v.oemId));
+  const personSet=new Set(visits.flatMap(v=>(v.peopleMet&&v.peopleMet.length?v.peopleMet:[v.personMet]).filter(Boolean)));
+
+  let html=`<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-bottom:14px">
+    <div class="scard"><div class="snum">${visits.length}</div><div class="slbl">Total</div></div>
+    <div class="scard"><div class="snum">${vists}</div><div class="slbl">Visits</div></div>
+    <div class="scard"><div class="snum">${calls}</div><div class="slbl">Calls</div></div>
+    <div class="scard"><div class="snum">${rptMode==='person'?personSet.size:oemSet.size}</div><div class="slbl">${rptMode==='person'?'People':'OEMs'}</div></div>
+  </div>`;
+
+  if(rptMode==='oem'){
+    // Group by OEM, filter already applied above
+    const map={};
+    visits.forEach(v=>{if(!map[v.oemId])map[v.oemId]=[];map[v.oemId].push(v);});
+    Object.entries(map).sort((a,b)=>b[1].length-a[1].length).forEach(([oid,vs])=>{
+      const o=db.oems.find(x=>x.id===oid);
+      const vc=vs.filter(v=>v.type==='visit').length;
+      const cc=vs.filter(v=>v.type==='call').length;
+      html+=`<div class="card" style="margin-bottom:10px">
+        <div style="font-size:15px;font-weight:700;margin-bottom:3px">${o?.name||'Unknown'}</div>
+        <div style="font-size:12px;color:var(--soft);margin-bottom:8px">📍 ${vc} visit${vc!==1?'s':''} &nbsp;·&nbsp; 📞 ${cc} call${cc!==1?'s':''}</div>
+        ${vs.map(v=>`<div style="display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border)">
+          <div onclick="showVisit('${v.id}')" style="flex:1;cursor:pointer">
+            <div style="display:flex;align-items:center;gap:8px">
+              <span class="badge ${v.type==='visit'?'bv':v.type==='customer'?'bcv':'bc'}" style="font-size:10px">${v.type==='visit'?'📍':v.type==='customer'?'🏢':'📞'}</span>
+              <span style="font-size:13px;font-weight:600">${fmtDate(v.date)}</span>
+            </div>
+            ${v.personMet?`<div class="vsub" style="margin-top:3px">👤 ${v.personMet}</div>`:''}
+            ${[...(v.topics||[]),...(v.customTopics||[])].length?`<div class="vsub">${[...(v.topics||[]),...(v.customTopics||[])].join(' · ')}</div>`:''}
+          </div>
+          <button onclick="editVisit('${v.id}')" style="background:none;border:none;cursor:pointer;color:var(--muted);padding:6px;flex-shrink:0">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="15" height="15"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931z"/></svg>
+          </button>
+        </div>`).join('')}
+      </div>`;
+    });
+  } else if(rptMode==='person'){
+    // Split combined names — each person gets their own bucket
+    const map={};
+    visits.forEach(v=>{
+      const people=v.peopleMet&&v.peopleMet.length?v.peopleMet:v.personMet?v.personMet.split(',').map(x=>x.trim()).filter(Boolean):[];
+      if(!people.length){const k='Unknown';if(!map[k])map[k]=[];map[k].push(v);}
+      else people.forEach(p=>{if(!map[p])map[p]=[];map[p].push(v);});
+    });
+    Object.entries(map).sort((a,b)=>b[1].length-a[1].length).forEach(([person,vs])=>{
+      html+=`<div class="card" style="margin-bottom:10px">
+        <div style="font-size:15px;font-weight:700;margin-bottom:6px">👤 ${person} <span style="font-size:12px;color:var(--muted);font-weight:400">${vs.length} interaction${vs.length!==1?'s':''}</span></div>
+        ${vs.map(v=>{const o=db.oems.find(x=>x.id===v.oemId);return`<div style="display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border)">
+          <div onclick="showVisit('${v.id}')" style="flex:1;cursor:pointer">
+            <div style="display:flex;align-items:center;gap:8px">
+              <span class="badge ${v.type==='visit'?'bv':v.type==='customer'?'bcv':'bc'}" style="font-size:10px">${v.type==='visit'?'📍':v.type==='customer'?'🏢':'📞'}</span>
+              <span style="font-size:13px;font-weight:600">${o?.name||'Unknown'}</span>
+            </div>
+            <div class="vmeta" style="margin-top:2px">${fmtDate(v.date)}${v.visitLoc?' · 📍'+v.visitLoc:''}</div>
+          </div>
+          <button onclick="editVisit('${v.id}')" style="background:none;border:none;cursor:pointer;color:var(--muted);padding:6px;flex-shrink:0">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="15" height="15"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931z"/></svg>
+          </button>
+        </div>`;}).join('')}
+      </div>`;
+    });
+  } else {
+    visits.sort((a,b)=>a.date.localeCompare(b.date)).forEach(v=>{
+      const o=db.oems.find(x=>x.id===v.oemId);
+      const topics=[...(v.topics||[]),...(v.customTopics||[])];
+      const acts=db.actions.filter(a=>a.visitId===v.id);
+      html+=`<div style="display:flex;align-items:flex-start;gap:6px;margin-bottom:9px">
+        <div class="vcard" onclick="showVisit('${v.id}')" style="flex:1;margin-bottom:0">
+          <div class="vcard-top"><div class="vcard-name">${o?.name||'Unknown'}</div><span class="badge ${v.type==='visit'?'bv':v.type==='customer'?'bcv':'bc'}">${rptMode==='month'?fmtDate(v.date):v.type==='visit'?'📍 Visit':v.type==='customer'?'🏢 Customer':'📞 Call'}</span></div>
+          ${v.visitLoc||v.personMet?`<div class="vmeta">${v.visitLoc?'📍'+v.visitLoc:''}${v.personMet?' · 👤'+v.personMet:''}</div>`:''}
+          ${topics.length?`<div class="vsub">${topics.join(' · ')}</div>`:''}
+          ${acts.length?`<div class="vsub" style="color:${acts.some(a=>a.status==='open')?'var(--amber)':'var(--muted)'}">📌 ${acts.length} task${acts.length!==1?'s':''} · ${acts.filter(a=>a.status==='open').length} open</div>`:''}
+        </div>
+        <button onclick="editVisit('${v.id}')" style="background:var(--surface);border:1px solid var(--border);border-radius:10px;cursor:pointer;color:var(--muted);padding:10px;flex-shrink:0;margin-top:0;height:44px;width:44px;display:flex;align-items:center;justify-content:center">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="15" height="15"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931z"/></svg>
+        </button>
+      </div>`;
+    });
+  }
+
+  html+=`<div style="height:12px"></div>`;
+  el.innerHTML=html;
+
+  // Build shareable text
+  rptWA=`📊 *${label}${filterLabel}*\nTotal: ${visits.length} · Visits: ${vists} · Calls: ${calls}\n\n`;
+  if(rptMode==='oem'){
+    const map={};
+    visits.forEach(v=>{if(!map[v.oemId])map[v.oemId]=[];map[v.oemId].push(v);});
+    Object.entries(map).sort((a,b)=>b[1].length-a[1].length).forEach(([oid,vs])=>{
+      const o=db.oems.find(x=>x.id===oid);
+      rptWA+=`*${o?.name||'Unknown'}* — 📍 ${vs.filter(v=>v.type==='visit').length} visit${vs.filter(v=>v.type==='visit').length!==1?'s':''} · 📞 ${vs.filter(v=>v.type==='call').length} call${vs.filter(v=>v.type==='call').length!==1?'s':''}\n`;
+      vs.forEach(v=>{rptWA+=`  ${v.type==='visit'?'📍':v.type==='customer'?'🏢':'📞'} ${fmtDate(v.date)}${v.personMet?' · 👤'+v.personMet:''}\n`;});
+      rptWA+='\n';
+    });
+  } else if(rptMode==='person'){
+    const map={};
+    visits.forEach(v=>{
+      const people=v.peopleMet&&v.peopleMet.length?v.peopleMet:v.personMet?v.personMet.split(',').map(x=>x.trim()).filter(Boolean):['Unknown'];
+      people.forEach(p=>{if(!map[p])map[p]=[];map[p].push(v);});
+    });
+    Object.entries(map).sort((a,b)=>b[1].length-a[1].length).forEach(([person,vs])=>{
+      rptWA+=`👤 *${person}* (${vs.length} interaction${vs.length!==1?'s':''})\n`;
+      vs.forEach(v=>{const o=db.oems.find(x=>x.id===v.oemId);rptWA+=`  ${v.type==='visit'?'📍':v.type==='customer'?'🏢':'📞'} ${o?.name||'Unknown'} · ${fmtDate(v.date)}\n`;});
+      rptWA+='\n';
+    });
+  } else {
+    visits.forEach(v=>{
+      const o=db.oems.find(x=>x.id===v.oemId);
+      const topics=[...(v.topics||[]),...(v.customTopics||[])];
+      rptWA+=`${v.type==='visit'?'📍':v.type==='customer'?'🏢':'📞'} *${o?.name||'Unknown'}*${rptMode!=='day'?' — '+fmtDate(v.date):''}\n`;
+      if(v.visitLoc) rptWA+=`  📍 ${v.visitLoc}\n`;
+      if(v.personMet) rptWA+=`  👤 ${v.personMet}\n`;
+      if(topics.length) rptWA+=`  Topics: ${topics.join(', ')}\n`;
+      rptWA+='\n';
+    });
+  }
+  rptWA=rptWA.trim();
+}
+function shareRptWA(){
+  if(!rptWA){toast('Nothing to share');return;}
+  navigator.clipboard.writeText(rptWA).then(()=>toast('Copied for WhatsApp ✓')).catch(()=>{
+    const ta=document.createElement('textarea');ta.value=rptWA;ta.style.cssText='position:fixed;opacity:0';document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);toast('Copied ✓');
+  });
+}
+function shareRptEmail(){
+  if(!rptWA){toast('Nothing to share');return;}
+  window.open('mailto:?subject='+encodeURIComponent('OEM Visit Report')+'&body='+encodeURIComponent(rptWA),'_blank');
+}
+function editVisit(vid){
+  const v=db.visits.find(x=>x.id===vid); if(!v) return;
+  editVid=vid; curVid=vid;
+  // Setup form
+  const sel=document.getElementById('v-oem');
+  sel.innerHTML='<option value="">Select...</option>'+[...db.oems].sort((a,b)=>a.name.localeCompare(b.name)).map(o=>`<option value="${o.id}">${o.name}${o.code?' ('+o.code+')':''}</option>`).join('');
+  sel.value=v.oemId;
+  vType=v.type||'visit';
+  document.getElementById('tb-v').classList.toggle('on',vType==='visit');
+  document.getElementById('tb-c').classList.toggle('on',vType==='call');
+  document.getElementById('tb-cv').classList.toggle('on',vType==='customer');
+  document.getElementById('v-date').value=v.date||'';
+  document.getElementById('v-notes').value=v.notes||'';
+  document.getElementById('v-next').value=v.nextVisitDate||'';
+  document.getElementById('visit-banner').innerHTML='';
+  document.getElementById('v-new-ct').style.display='none';
+  document.getElementById('topic-search').value='';
+  document.getElementById('topic-custom').value='';
+  // Restore topics
+  selTopics=[...(v.topics||[]),...(v.customTopics||[])];
+  renderTopicTags(); renderTopicDrop();
+  // Restore location
+  onOEMPick();
+  setTimeout(()=>{
+    if(v.visitLoc) document.getElementById('v-loc').value=v.visitLoc;
+    // Restore people
+    document.getElementById('v-people-list').innerHTML='';
+    const people=v.peopleMet&&v.peopleMet.length?v.peopleMet:v.personMet?[v.personMet]:[];
+    people.forEach(p=>{addPersonRow();const sels=document.querySelectorAll('#v-people-list select');if(sels.length)sels[sels.length-1].value=p;});
+    if(!people.length) addPersonRow();
+  },50);
+  // Restore action items
+  document.getElementById('ai-list').innerHTML='';
+  const acts=db.actions.filter(a=>a.visitId===vid);
+  acts.forEach(a=>{
+    const d=document.createElement('div');d.className='ai-form';
+    d.innerHTML=`<input type="text" placeholder="Action item" style="flex:1;padding:11px 12px;font-size:14px" value="${a.description||''}"><input type="date" style="width:130px;flex-shrink:0;font-size:12px;padding:11px 8px" value="${a.dueDate||''}"><button onclick="this.parentElement.remove()" style="width:38px;height:44px;background:var(--red-bg);border:1px solid rgba(248,81,73,.2);border-radius:10px;color:var(--red);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="13" height="13"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></button>`;
+    document.getElementById('ai-list').appendChild(d);
+  });
+  document.querySelector('#s-new-visit h1').textContent='Edit Report';
+  document.querySelector('#s-new-visit .save-bar button').textContent='Update Report';
+  document.querySelector('.screen.active')?.classList.remove('active');
+  document.querySelectorAll('.ni').forEach(n=>n.classList.remove('active'));
+  document.getElementById('s-new-visit').classList.add('active');
+  document.getElementById('n-home').classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function todayStr(){return new Date().toISOString().split('T')[0];}
+function fmtDate(d){if(!d)return'—';return new Date(d+'T00:00:00').toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});}
+function fmtTime(d){return d.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
+
+// ── INIT ──
+load();
+if(!getToken()){go('settings');}
+else{renderHome();doSync();}
+</script>
+</body>
+</html>
