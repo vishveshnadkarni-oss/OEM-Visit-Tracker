@@ -1200,6 +1200,22 @@
       "notes": "Meeting on 23rd at 11am for training with team.",
       "nextVisitDate": null,
       "createdAt": "2026-05-17T10:57:43.892Z"
+    },
+    {
+      "id": "v_1779015531948",
+      "oemId": "oem_1778408453736_b9a",
+      "date": "2026-05-17",
+      "type": "visit",
+      "personMet": "No one in office/ security/ reception",
+      "peopleMet": [
+        "No one in office/ security/ reception"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "Office was closed",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-17T10:58:51.948Z"
     }
   ],
   "actions": [
