@@ -1232,6 +1232,24 @@
       "notes": "All sales teams on field",
       "nextVisitDate": null,
       "createdAt": "2026-05-17T11:01:29.124Z"
+    },
+    {
+      "id": "v_1779015759740",
+      "oemId": "oem_1778408453736_5wv",
+      "date": "2026-05-16",
+      "type": "call",
+      "personMet": "Abhilasha",
+      "peopleMet": [
+        "Abhilasha"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Asked for leads"
+      ],
+      "notes": "No leads. Cases are ongoing.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-17T11:02:39.740Z"
     }
   ],
   "actions": [
