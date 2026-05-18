@@ -1294,6 +1294,149 @@
       "notes": "Met Lakshmi Industries. He wants a lower ROI. Offered him 9%",
       "nextVisitDate": null,
       "createdAt": "2026-05-18T04:15:01.682Z"
+    },
+    {
+      "id": "v_1779102613331",
+      "oemId": "oem_1778408453736_7b8",
+      "date": "2026-05-18",
+      "type": "call",
+      "personMet": "Gurucharan",
+      "peopleMet": [
+        "Gurucharan"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "Did not answer phone",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-18T11:10:13.331Z"
+    },
+    {
+      "id": "v_1779102664552",
+      "oemId": "oem_1778408453736_73u",
+      "date": "2026-05-18",
+      "type": "call",
+      "personMet": "Samir",
+      "peopleMet": [
+        "Samir"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "Spoke about INTEC Collab. Sent mail to Payal for approval.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-18T11:11:04.552Z"
+    },
+    {
+      "id": "v_1779102739605",
+      "oemId": "oem_1778408453736_nbf",
+      "date": "2026-05-18",
+      "type": "call",
+      "personMet": "Madhu",
+      "peopleMet": [
+        "Madhu"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "Did not answer phone",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-18T11:12:19.605Z"
+    },
+    {
+      "id": "v_1779103052267",
+      "oemId": "oem_1778408453736_nbf",
+      "date": "2026-05-18",
+      "type": "call",
+      "personMet": "Dhanush Kodi",
+      "peopleMet": [
+        "Dhanush Kodi"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Appointment"
+      ],
+      "notes": "Asked for appointment. Asked to meet next monthe 1st week. They are in office on Wednesday.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-18T11:17:32.267Z"
+    },
+    {
+      "id": "v_1779103381577",
+      "oemId": "oem_1779103177052",
+      "date": "2026-05-18",
+      "type": "call",
+      "personMet": "Prashant Kulkarni",
+      "peopleMet": [
+        "Prashant Kulkarni"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Appointment"
+      ],
+      "notes": "Asked for an appointment. He asked to call in 20th for appointment.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-18T11:23:01.577Z"
+    },
+    {
+      "id": "v_1779105345193",
+      "oemId": "oem_1778408453736_vp9",
+      "date": "2026-05-18",
+      "type": "call",
+      "personMet": "Himanshu Shaparia",
+      "peopleMet": [
+        "Himanshu Shaparia"
+      ],
+      "visitLoc": "Rajkot",
+      "topics": [],
+      "customTopics": [
+        "MOU"
+      ],
+      "notes": "Resent him the MOU copy",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-18T11:55:45.193Z"
+    },
+    {
+      "id": "v_1779105415433",
+      "oemId": "oem_1778758811194",
+      "date": "2026-05-18",
+      "type": "call",
+      "personMet": "Ashwin",
+      "peopleMet": [
+        "Ashwin"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "MOU",
+        "Appointment"
+      ],
+      "notes": "He asked to meet next week",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-18T11:56:55.433Z"
+    },
+    {
+      "id": "v_1779106095127",
+      "oemId": "oem_1778408453736_nyq",
+      "date": "2026-05-18",
+      "type": "call",
+      "personMet": "Vijaykumar Khurdagi",
+      "peopleMet": [
+        "Vijaykumar Khurdagi"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Case update"
+      ],
+      "notes": "Spoke about\n1. Genea lead\n2. Basavaraj lead",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-18T12:08:15.127Z"
     }
   ],
   "actions": [
@@ -1316,13 +1459,6 @@
       "visitId": "v_1778755605163",
       "description": "Meet kanaka ma'am for Deftech event",
       "dueDate": "2026-05-16",
-      "status": "open"
-    },
-    {
-      "id": "a_1778782340849_vfn",
-      "visitId": "v_1778759587855",
-      "description": "Take appointment of Ashwin from siemens",
-      "dueDate": "2026-05-15",
       "status": "open"
     },
     {
@@ -1351,6 +1487,27 @@
       "visitId": "v_1779015463892",
       "description": "Call Jagadeesh sir for planning on 23rd",
       "dueDate": "2026-05-20",
+      "status": "open"
+    },
+    {
+      "id": "a_1779103052267_spf",
+      "visitId": "v_1779103052267",
+      "description": "Meet dhanush kodi on a Wednesday 2nd week of June",
+      "dueDate": "2026-06-10",
+      "status": "open"
+    },
+    {
+      "id": "a_1779103381577_h3r",
+      "visitId": "v_1779103381577",
+      "description": "Mtske appointment for meeting Prashant Kulkarni VEL",
+      "dueDate": "2026-05-20",
+      "status": "open"
+    },
+    {
+      "id": "a_1779105415434_vjq",
+      "visitId": "v_1779105415433",
+      "description": "Take appointment to meet Ashwin on 8th june",
+      "dueDate": "2026-06-08",
       "status": "open"
     }
   ]
