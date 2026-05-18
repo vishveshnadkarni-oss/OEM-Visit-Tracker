@@ -1346,6 +1346,24 @@
       "notes": "Did not answer phone",
       "nextVisitDate": null,
       "createdAt": "2026-05-18T11:12:19.605Z"
+    },
+    {
+      "id": "v_1779103052267",
+      "oemId": "oem_1778408453736_nbf",
+      "date": "2026-05-18",
+      "type": "call",
+      "personMet": "Dhanush Kodi",
+      "peopleMet": [
+        "Dhanush Kodi"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Appointment"
+      ],
+      "notes": "Asked for appointment. Asked to meet next monthe 1st week. They are in office on Wednesday.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-18T11:17:32.267Z"
     }
   ],
   "actions": [
@@ -1396,6 +1414,13 @@
       "visitId": "v_1779015463892",
       "description": "Call Jagadeesh sir for planning on 23rd",
       "dueDate": "2026-05-20",
+      "status": "open"
+    },
+    {
+      "id": "a_1779103052267_spf",
+      "visitId": "v_1779103052267",
+      "description": "Meet dhanush kodi on a Wednesday 2nd week of June",
+      "dueDate": "2026-06-10",
       "status": "open"
     }
   ],
