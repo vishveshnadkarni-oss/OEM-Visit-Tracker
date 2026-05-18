@@ -1471,6 +1471,25 @@
       "notes": "He asked to meet in 2nd week of june.",
       "nextVisitDate": null,
       "createdAt": "2026-05-18T12:12:46.800Z"
+    },
+    {
+      "id": "v_1779106448867",
+      "oemId": "oem_1778408453736_vgl",
+      "date": "2026-05-18",
+      "type": "call",
+      "personMet": "Fazal",
+      "peopleMet": [
+        "Fazal"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Appointment",
+        "Cross marketing"
+      ],
+      "notes": "Spoke about appointment. But he was in hospital for a heart problem",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-18T12:14:08.867Z"
     }
   ],
   "actions": [
@@ -1480,20 +1499,6 @@
       "description": "Macpower has their meeting on Saturdays at 11",
       "dueDate": "2026-05-16",
       "status": "closed"
-    },
-    {
-      "id": "a_1778647897210_ruz",
-      "visitId": "v_1778647897206",
-      "description": "As for appointment shreyas sontake",
-      "dueDate": "2026-05-15",
-      "status": "open"
-    },
-    {
-      "id": "a_1778755605164_z05",
-      "visitId": "v_1778755605163",
-      "description": "Meet kanaka ma'am for Deftech event",
-      "dueDate": "2026-05-16",
-      "status": "open"
     },
     {
       "id": "a_1778782909483_mmk",
