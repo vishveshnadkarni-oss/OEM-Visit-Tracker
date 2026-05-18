@@ -1278,6 +1278,22 @@
       "notes": "Gave training to these team members",
       "nextVisitDate": null,
       "createdAt": "2026-05-17T11:23:31.995Z"
+    },
+    {
+      "id": "v_1779077701682",
+      "oemId": "oem_1778408453736_xci",
+      "date": "2026-05-13",
+      "type": "customer",
+      "personMet": "",
+      "peopleMet": [],
+      "visitLoc": "Bengaluru",
+      "topics": [
+        "Rate of Interest"
+      ],
+      "customTopics": [],
+      "notes": "Met Lakshmi Industries. He wants a lower ROI. Offered him 9%",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-18T04:15:01.682Z"
     }
   ],
   "actions": [
