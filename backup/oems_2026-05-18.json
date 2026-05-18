@@ -603,11 +603,15 @@
     "locations": [
       {
         "city": "Bengaluru",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       },
       {
         "city": "Chennai",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       }
     ],
     "contacts": [
@@ -680,6 +684,13 @@
         "position": "GM",
         "location": "Tamil Nadu, Srilanka and Maldives",
         "note": ""
+      },
+      {
+        "name": "Mohnish",
+        "phone": "9514207073",
+        "position": "Sales",
+        "location": "Bengaluru",
+        "note": "Takes care of Ultrasound"
       }
     ],
     "notes": "9% ROI & 0.5% PF for subvention"
@@ -998,22 +1009,28 @@
     "locations": [
       {
         "city": "Bengaluru",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       },
       {
         "city": "Chennai",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       },
       {
         "city": "Coimbatore",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       }
     ],
     "contacts": [
       {
-        "name": "Deepak",
-        "phone": "7418301166",
-        "position": "Sales",
+        "name": "Dhanush Kodi",
+        "phone": "8088002355",
+        "position": "Sales head",
         "location": "Bengaluru",
         "note": ""
       },
@@ -1057,6 +1074,20 @@
         "phone": "8144008380",
         "position": "Head",
         "location": "Coimbatore",
+        "note": ""
+      },
+      {
+        "name": "Madhu",
+        "phone": "9880455973",
+        "position": "Sales",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Harshvardhan",
+        "phone": "97311 07032",
+        "position": "Sales",
+        "location": "Bengaluru",
         "note": ""
       }
     ],
@@ -2244,5 +2275,47 @@
       }
     ],
     "notes": ""
+  },
+  {
+    "id": "oem_1779103177052",
+    "name": "Vel Machines",
+    "code": "",
+    "oemType": "OEM",
+    "segment": "Industrial",
+    "subcategories": [
+      "Machine Tools"
+    ],
+    "dealerBrands": "",
+    "locations": [
+      {
+        "city": "Coimbatore",
+        "address": "",
+        "lat": "",
+        "lng": ""
+      },
+      {
+        "city": "Bengaluru",
+        "address": "",
+        "lat": "",
+        "lng": ""
+      }
+    ],
+    "contacts": [
+      {
+        "name": "Ambika",
+        "phone": "7397255333",
+        "position": "Sales head RSM",
+        "location": "Coimbatore",
+        "note": ""
+      },
+      {
+        "name": "Prashant Kulkarni",
+        "phone": "9880611336",
+        "position": "Sales",
+        "location": "Bengaluru",
+        "note": "Heads Bengaluru branch"
+      }
+    ],
+    "notes": "A partner of S&T"
   }
 ]
