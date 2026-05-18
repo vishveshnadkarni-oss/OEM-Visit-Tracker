@@ -1294,6 +1294,24 @@
       "notes": "Met Lakshmi Industries. He wants a lower ROI. Offered him 9%",
       "nextVisitDate": null,
       "createdAt": "2026-05-18T04:15:01.682Z"
+    },
+    {
+      "id": "v_1779102613331",
+      "oemId": "oem_1778408453736_7b8",
+      "date": "2026-05-18",
+      "type": "call",
+      "personMet": "Gurucharan",
+      "peopleMet": [
+        "Gurucharan"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "Did not answer phone",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-18T11:10:13.331Z"
     }
   ],
   "actions": [
