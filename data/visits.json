@@ -1419,6 +1419,40 @@
       "notes": "He asked to meet next week",
       "nextVisitDate": null,
       "createdAt": "2026-05-18T11:56:55.433Z"
+    },
+    {
+      "id": "v_1779106095127",
+      "oemId": "oem_1778408453736_nyq",
+      "date": "2026-05-18",
+      "type": "call",
+      "personMet": "Vijaykumar Khurdagi",
+      "peopleMet": [
+        "Vijaykumar Khurdagi"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Case update"
+      ],
+      "notes": "Spoke about\n1. Genea lead\n2. Basavaraj lead",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-18T12:08:15.127Z"
+    },
+    {
+      "id": "v_1779106286222",
+      "oemId": "oem_1779103177052",
+      "date": "2026-05-18",
+      "type": "call",
+      "personMet": "Ambika",
+      "peopleMet": [
+        "Ambika"
+      ],
+      "visitLoc": "Coimbatore",
+      "topics": [],
+      "customTopics": [],
+      "notes": "Spoke with Ambika regarding taking contact of Bengaluru sales head",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-18T12:11:26.222Z"
     }
   ],
   "actions": [
