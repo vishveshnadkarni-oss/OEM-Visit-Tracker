@@ -1009,21 +1009,27 @@
     "locations": [
       {
         "city": "Bengaluru",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       },
       {
         "city": "Chennai",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       },
       {
         "city": "Coimbatore",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       }
     ],
     "contacts": [
       {
-        "name": "Deepak",
-        "phone": "7418301166",
+        "name": "Dhanush Kodi",
+        "phone": "8088002355",
         "position": "Sales",
         "location": "Bengaluru",
         "note": ""
