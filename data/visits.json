@@ -1328,6 +1328,24 @@
       "notes": "Spoke about INTEC Collab. Sent mail to Payal for approval.",
       "nextVisitDate": null,
       "createdAt": "2026-05-18T11:11:04.552Z"
+    },
+    {
+      "id": "v_1779102739605",
+      "oemId": "oem_1778408453736_nbf",
+      "date": "2026-05-18",
+      "type": "call",
+      "personMet": "Madhu",
+      "peopleMet": [
+        "Madhu"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "Did not answer phone",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-18T11:12:19.605Z"
     }
   ],
   "actions": [
