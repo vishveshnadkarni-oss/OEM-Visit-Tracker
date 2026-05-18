@@ -1490,6 +1490,24 @@
       "notes": "Spoke about appointment. But he was in hospital for a heart problem",
       "nextVisitDate": null,
       "createdAt": "2026-05-18T12:14:08.867Z"
+    },
+    {
+      "id": "v_1779106511231",
+      "oemId": "oem_1778408453736_vgl",
+      "date": "2026-05-18",
+      "type": "call",
+      "personMet": "Kishor Elango",
+      "peopleMet": [
+        "Kishor Elango"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Appointment"
+      ],
+      "notes": "He asked to meet later.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-18T12:15:11.231Z"
     }
   ],
   "actions": [
