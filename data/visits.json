@@ -1400,6 +1400,25 @@
       "notes": "Resent him the MOU copy",
       "nextVisitDate": null,
       "createdAt": "2026-05-18T11:55:45.193Z"
+    },
+    {
+      "id": "v_1779105415433",
+      "oemId": "oem_1778758811194",
+      "date": "2026-05-18",
+      "type": "call",
+      "personMet": "Ashwin",
+      "peopleMet": [
+        "Ashwin"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "MOU",
+        "Appointment"
+      ],
+      "notes": "He asked to meet next week",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-18T11:56:55.433Z"
     }
   ],
   "actions": [
@@ -1464,6 +1483,13 @@
       "visitId": "v_1779103381577",
       "description": "Mtske appointment for meeting Prashant Kulkarni VEL",
       "dueDate": "2026-05-20",
+      "status": "open"
+    },
+    {
+      "id": "a_1779105415434_vjq",
+      "visitId": "v_1779105415433",
+      "description": "Take appointment to meet Ashwin on 8th june",
+      "dueDate": "2026-06-08",
       "status": "open"
     }
   ],
