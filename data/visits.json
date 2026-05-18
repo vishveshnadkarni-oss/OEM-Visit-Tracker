@@ -1382,6 +1382,24 @@
       "notes": "Asked for an appointment. He asked to call in 20th for appointment.",
       "nextVisitDate": null,
       "createdAt": "2026-05-18T11:23:01.577Z"
+    },
+    {
+      "id": "v_1779105345193",
+      "oemId": "oem_1778408453736_vp9",
+      "date": "2026-05-18",
+      "type": "call",
+      "personMet": "Himanshu Shaparia",
+      "peopleMet": [
+        "Himanshu Shaparia"
+      ],
+      "visitLoc": "Rajkot",
+      "topics": [],
+      "customTopics": [
+        "MOU"
+      ],
+      "notes": "Resent him the MOU copy",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-18T11:55:45.193Z"
     }
   ],
   "actions": [
