@@ -1453,6 +1453,24 @@
       "notes": "Spoke with Ambika regarding taking contact of Bengaluru sales head",
       "nextVisitDate": null,
       "createdAt": "2026-05-18T12:11:26.222Z"
+    },
+    {
+      "id": "v_1779106366800",
+      "oemId": "oem_1778408453736_nyq",
+      "date": "2026-05-18",
+      "type": "call",
+      "personMet": "Mohnish",
+      "peopleMet": [
+        "Mohnish"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Appointment"
+      ],
+      "notes": "He asked to meet in 2nd week of june.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-18T12:12:46.800Z"
     }
   ],
   "actions": [
@@ -1523,6 +1541,13 @@
       "id": "a_1779105415434_vjq",
       "visitId": "v_1779105415433",
       "description": "Take appointment to meet Ashwin on 8th june",
+      "dueDate": "2026-06-08",
+      "status": "open"
+    },
+    {
+      "id": "a_1779106366801_hhv",
+      "visitId": "v_1779106366800",
+      "description": "Meet Shreyas sontake",
       "dueDate": "2026-06-08",
       "status": "open"
     }
