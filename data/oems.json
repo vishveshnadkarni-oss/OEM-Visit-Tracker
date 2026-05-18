@@ -603,11 +603,15 @@
     "locations": [
       {
         "city": "Bengaluru",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       },
       {
         "city": "Chennai",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       }
     ],
     "contacts": [
@@ -680,6 +684,13 @@
         "position": "GM",
         "location": "Tamil Nadu, Srilanka and Maldives",
         "note": ""
+      },
+      {
+        "name": "Mohnish",
+        "phone": "9514207073",
+        "position": "Sales",
+        "location": "Bengaluru",
+        "note": "Takes care of Ultrasound"
       }
     ],
     "notes": "9% ROI & 0.5% PF for subvention"
