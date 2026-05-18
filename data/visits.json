@@ -1312,6 +1312,22 @@
       "notes": "Did not answer phone",
       "nextVisitDate": null,
       "createdAt": "2026-05-18T11:10:13.331Z"
+    },
+    {
+      "id": "v_1779102664552",
+      "oemId": "oem_1778408453736_73u",
+      "date": "2026-05-18",
+      "type": "call",
+      "personMet": "Samir",
+      "peopleMet": [
+        "Samir"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [],
+      "notes": "Spoke about INTEC Collab. Sent mail to Payal for approval.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-18T11:11:04.552Z"
     }
   ],
   "actions": [
