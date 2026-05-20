@@ -1562,6 +1562,54 @@
       "notes": "Gave new lead",
       "nextVisitDate": null,
       "createdAt": "2026-05-19T06:14:48.234Z"
+    },
+    {
+      "id": "v_1779257614795",
+      "oemId": "oem_1778408453736_xci",
+      "date": "2026-05-19",
+      "type": "call",
+      "personMet": "Chintan Makwana",
+      "peopleMet": [
+        "Chintan Makwana"
+      ],
+      "visitLoc": "Ahmedabad",
+      "topics": [],
+      "customTopics": [],
+      "notes": "Spoke regarding participation for INTEC",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-20T06:13:34.795Z"
+    },
+    {
+      "id": "v_1779257649041",
+      "oemId": "oem_1778408453736_441",
+      "date": "2026-05-19",
+      "type": "call",
+      "personMet": "Satish Mestha",
+      "peopleMet": [
+        "Satish Mestha"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "Spoke about participation for INTEC",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-20T06:14:09.041Z"
+    },
+    {
+      "id": "v_1779257670613",
+      "oemId": "oem_1778408453736_mjc",
+      "date": "2026-05-19",
+      "type": "call",
+      "personMet": "Khalid",
+      "peopleMet": [
+        "Khalid"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "Spoke about participation for INTEC",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-20T06:14:30.613Z"
     }
   ],
   "actions": [
