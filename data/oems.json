@@ -386,15 +386,27 @@
     "locations": [
       {
         "city": "Bengaluru",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       },
       {
         "city": "Chennai",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       },
       {
         "city": "Coimbatore",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
+      },
+      {
+        "city": "Ahmedabad",
+        "address": "",
+        "lat": "",
+        "lng": ""
       }
     ],
     "contacts": [
