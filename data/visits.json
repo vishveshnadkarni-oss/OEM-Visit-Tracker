@@ -1544,6 +1544,24 @@
       "notes": "",
       "nextVisitDate": null,
       "createdAt": "2026-05-19T06:14:12.169Z"
+    },
+    {
+      "id": "v_1779171288234",
+      "oemId": "oem_1778408453736_nyq",
+      "date": "2026-05-19",
+      "type": "call",
+      "personMet": "Vijaykumar Khurdagi",
+      "peopleMet": [
+        "Vijaykumar Khurdagi"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Case update"
+      ],
+      "notes": "Gave new lead",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-19T06:14:48.234Z"
     }
   ],
   "actions": [
