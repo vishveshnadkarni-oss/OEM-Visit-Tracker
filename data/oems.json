@@ -2336,5 +2336,47 @@
       }
     ],
     "notes": "A partner of S&T"
+  },
+  {
+    "id": "oem_1779344644898",
+    "name": "GF machine",
+    "code": "",
+    "oemType": "OEM",
+    "segment": "Industrial",
+    "subcategories": [
+      "Machine Tools"
+    ],
+    "dealerBrands": "",
+    "locations": [
+      {
+        "city": "Bengaluru",
+        "address": "",
+        "lat": "",
+        "lng": ""
+      },
+      {
+        "city": "Hyderabad",
+        "address": "",
+        "lat": "",
+        "lng": ""
+      }
+    ],
+    "contacts": [
+      {
+        "name": "Abhishek",
+        "phone": "9663303694",
+        "position": "Sales head",
+        "location": "Bengaluru",
+        "note": "Takes care of Bengaluru and Hyderabad"
+      },
+      {
+        "name": "Srinivasa Prasad",
+        "phone": "9845887593",
+        "position": "Finance head",
+        "location": "Bengaluru",
+        "note": ""
+      }
+    ],
+    "notes": ""
   }
 ]
