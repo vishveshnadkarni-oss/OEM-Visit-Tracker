@@ -1643,6 +1643,20 @@
       "notes": "Met at Deftech Bharat event 2026",
       "nextVisitDate": null,
       "createdAt": "2026-05-21T06:21:29.867Z"
+    },
+    {
+      "id": "v_1779344747054",
+      "oemId": "oem_1779344644898",
+      "date": "2026-05-20",
+      "type": "visit",
+      "personMet": "",
+      "peopleMet": [],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-21T06:25:47.054Z"
     }
   ],
   "actions": [
