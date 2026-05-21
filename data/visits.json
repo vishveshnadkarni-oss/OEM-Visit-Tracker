@@ -1626,6 +1626,23 @@
       "notes": "Spoke about participation for INTEC",
       "nextVisitDate": null,
       "createdAt": "2026-05-20T06:15:20.877Z"
+    },
+    {
+      "id": "v_1779344489867",
+      "oemId": "oem_1778408453736_b9a",
+      "date": "2026-05-20",
+      "type": "visit",
+      "personMet": "Chetan, Jayant",
+      "peopleMet": [
+        "Chetan",
+        "Jayant"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "Met at Deftech Bharat event 2026",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-21T06:21:29.867Z"
     }
   ],
   "actions": [
