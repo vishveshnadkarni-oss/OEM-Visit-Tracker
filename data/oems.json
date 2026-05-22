@@ -2470,5 +2470,34 @@
     "locations": [],
     "contacts": [],
     "notes": ""
+  },
+  {
+    "id": "oem_1779458898790",
+    "name": "Karl Storz",
+    "code": "",
+    "oemType": "OEM",
+    "segment": "Medical",
+    "subcategories": [
+      "Imaging"
+    ],
+    "dealerBrands": "",
+    "locations": [
+      {
+        "city": "Bengaluru",
+        "address": "",
+        "lat": "",
+        "lng": ""
+      }
+    ],
+    "contacts": [
+      {
+        "name": "Vikas Sharma",
+        "phone": "8588831499",
+        "position": "",
+        "location": "",
+        "note": ""
+      }
+    ],
+    "notes": ""
   }
 ]
