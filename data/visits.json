@@ -1732,6 +1732,24 @@
       "notes": "He is out of station now. Will call on Monday.",
       "nextVisitDate": null,
       "createdAt": "2026-05-22T08:53:54.092Z"
+    },
+    {
+      "id": "v_1779440190592",
+      "oemId": "oem_1779440163171",
+      "date": "2026-05-21",
+      "type": "call",
+      "personMet": "Ben Alummoottil",
+      "peopleMet": [
+        "Ben Alummoottil"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Appointment"
+      ],
+      "notes": "He is available on Monday for a meeting.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-22T08:56:30.592Z"
     }
   ],
   "actions": [
@@ -1795,6 +1813,13 @@
       "id": "a_1779440034092_eby",
       "visitId": "v_1779440034092",
       "description": "Take appointment with Surendra Bluestar for meeting",
+      "dueDate": "2026-05-25",
+      "status": "open"
+    },
+    {
+      "id": "a_1779440218742_m3n",
+      "visitId": "v_1779440190592",
+      "description": "Call ben phantom for appointment",
       "dueDate": "2026-05-25",
       "status": "open"
     }
