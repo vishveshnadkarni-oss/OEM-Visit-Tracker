@@ -1945,6 +1945,42 @@
       "notes": "Gave him subvention calculation for a 3.5cr deal",
       "nextVisitDate": null,
       "createdAt": "2026-05-22T14:42:08.472Z"
+    },
+    {
+      "id": "v_1779461798302",
+      "oemId": "oem_1778408453736_de4",
+      "date": "2026-05-22",
+      "type": "call",
+      "personMet": "Chaitanya",
+      "peopleMet": [
+        "Chaitanya"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Case update"
+      ],
+      "notes": "Spoke about running case and took details for subvention approval.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-22T14:56:38.302Z"
+    },
+    {
+      "id": "v_1779461884522",
+      "oemId": "oem_1778557584919",
+      "date": "2026-05-22",
+      "type": "call",
+      "personMet": "Rajesh Maharana",
+      "peopleMet": [
+        "Rajesh Maharana"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Contract Renewal"
+      ],
+      "notes": "Spoke about arranging a call with BPL and Bajaj legal teams on 25th",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-22T14:58:04.522Z"
     }
   ],
   "actions": [
@@ -2023,6 +2059,13 @@
       "visitId": "v_1779460255177",
       "description": "Meet mr. Rajesh kumar olympus",
       "dueDate": "2026-05-26",
+      "status": "open"
+    },
+    {
+      "id": "a_1779461884523_fzx",
+      "visitId": "v_1779461884522",
+      "description": "Setup call between bajaj and bpl legal teams in 2nd half",
+      "dueDate": "2026-05-25",
       "status": "open"
     }
   ],
