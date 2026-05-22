@@ -1750,6 +1750,43 @@
       "notes": "He is available on Monday for a meeting.",
       "nextVisitDate": null,
       "createdAt": "2026-05-22T08:56:30.592Z"
+    },
+    {
+      "id": "v_1779440332801",
+      "oemId": "oem_1779440291016",
+      "date": "2026-05-21",
+      "type": "call",
+      "personMet": "Rajendra",
+      "peopleMet": [
+        "Rajendra"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Case update",
+        "Asked for leads"
+      ],
+      "notes": "He will update on Monday. 25th May",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-22T08:58:52.801Z"
+    },
+    {
+      "id": "v_1779456328506",
+      "oemId": "oem_1778408453736_lkn",
+      "date": "2026-05-20",
+      "type": "call",
+      "personMet": "Venugopal",
+      "peopleMet": [
+        "Venugopal"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-22T13:25:28.506Z"
     }
   ],
   "actions": [
