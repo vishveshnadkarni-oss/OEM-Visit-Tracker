@@ -1871,6 +1871,26 @@
       "notes": "Asked about bangalore persons number",
       "nextVisitDate": null,
       "createdAt": "2026-05-22T14:29:58.208Z"
+    },
+    {
+      "id": "v_1779460255177",
+      "oemId": "oem_1779459190982",
+      "date": "2026-05-21",
+      "type": "call",
+      "personMet": "Rajesh Kumar",
+      "peopleMet": [
+        "Rajesh Kumar"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [
+        "Rate of Interest"
+      ],
+      "customTopics": [
+        "Appointment"
+      ],
+      "notes": "Asked to meet on Tuesday.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-22T14:30:55.177Z"
     }
   ],
   "actions": [
@@ -1942,6 +1962,13 @@
       "visitId": "v_1779440190592",
       "description": "Call ben phantom for appointment",
       "dueDate": "2026-05-25",
+      "status": "open"
+    },
+    {
+      "id": "a_1779460255177_pzl",
+      "visitId": "v_1779460255177",
+      "description": "Meet mr. Rajesh kumar olympus",
+      "dueDate": "2026-05-26",
       "status": "open"
     }
   ],
