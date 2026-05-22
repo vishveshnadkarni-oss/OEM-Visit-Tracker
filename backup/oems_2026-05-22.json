@@ -959,6 +959,13 @@
         "position": "Marketing head",
         "location": "Rajkot",
         "note": ""
+      },
+      {
+        "name": "No one in office/ security/ receptionist",
+        "phone": "",
+        "position": "",
+        "location": "",
+        "note": ""
       }
     ],
     "notes": ""
@@ -2469,6 +2476,84 @@
     "dealerBrands": "",
     "locations": [],
     "contacts": [],
+    "notes": ""
+  },
+  {
+    "id": "oem_1779458898790",
+    "name": "Karl Storz",
+    "code": "",
+    "oemType": "OEM",
+    "segment": "Medical",
+    "subcategories": [
+      "Imaging"
+    ],
+    "dealerBrands": "",
+    "locations": [
+      {
+        "city": "Bengaluru",
+        "address": "",
+        "lat": "",
+        "lng": ""
+      }
+    ],
+    "contacts": [
+      {
+        "name": "Vikas Sharma",
+        "phone": "8588831499",
+        "position": "",
+        "location": "",
+        "note": ""
+      }
+    ],
+    "notes": ""
+  },
+  {
+    "id": "oem_1779459190982",
+    "name": "Olympus",
+    "code": "",
+    "oemType": "Dealer",
+    "segment": "Medical",
+    "subcategories": [
+      "Imaging"
+    ],
+    "dealerBrands": "",
+    "locations": [
+      {
+        "city": "Bengaluru",
+        "address": "",
+        "lat": "",
+        "lng": ""
+      },
+      {
+        "city": "Hyderabad",
+        "address": "",
+        "lat": "",
+        "lng": ""
+      }
+    ],
+    "contacts": [
+      {
+        "name": "Anil sandeep",
+        "phone": "8978575556",
+        "position": "",
+        "location": "Hyderabad",
+        "note": ""
+      },
+      {
+        "name": "Sreenag",
+        "phone": "9886842244",
+        "position": "",
+        "location": "Hyderabad",
+        "note": ""
+      },
+      {
+        "name": "Rajesh Kumar",
+        "phone": "9379771120",
+        "position": "Sales",
+        "location": "Bengaluru",
+        "note": ""
+      }
+    ],
     "notes": ""
   }
 ]
