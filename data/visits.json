@@ -1839,6 +1839,22 @@
       "notes": "Aaru Plastics.\nExplained leasing.\nHe is an existing Bajaj customer",
       "nextVisitDate": null,
       "createdAt": "2026-05-22T13:31:42.395Z"
+    },
+    {
+      "id": "v_1779458984208",
+      "oemId": "oem_1779458898790",
+      "date": "2026-05-21",
+      "type": "call",
+      "personMet": "Vikas Sharma",
+      "peopleMet": [
+        "Vikas Sharma"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "They don't do business with Bajaj.\nThey tried to do it before, but commercials didn't work out.\nIf any deals come they will share.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-22T14:09:44.208Z"
     }
   ],
   "actions": [
