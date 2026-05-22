@@ -1675,6 +1675,24 @@
       "notes": "",
       "nextVisitDate": null,
       "createdAt": "2026-05-22T08:50:15.477Z"
+    },
+    {
+      "id": "v_1779439856583",
+      "oemId": "oem_1778758811194",
+      "date": "2026-05-21",
+      "type": "call",
+      "personMet": "Ashwin",
+      "peopleMet": [
+        "Ashwin"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Appointment"
+      ],
+      "notes": "He is not free. He will call",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-22T08:50:56.583Z"
     }
   ],
   "actions": [
