@@ -2443,5 +2443,34 @@
       }
     ],
     "notes": ""
+  },
+  {
+    "id": "oem_1779440291016",
+    "name": "United Meditech",
+    "code": "",
+    "oemType": "Dealer",
+    "segment": "Medical",
+    "subcategories": [
+      "Imaging"
+    ],
+    "dealerBrands": "Samsung",
+    "locations": [
+      {
+        "city": "Bengaluru",
+        "address": "",
+        "lat": "",
+        "lng": ""
+      }
+    ],
+    "contacts": [
+      {
+        "name": "Rajendra",
+        "phone": "9845438990",
+        "position": "MD",
+        "location": "Bengaluru",
+        "note": ""
+      }
+    ],
+    "notes": ""
   }
 ]
