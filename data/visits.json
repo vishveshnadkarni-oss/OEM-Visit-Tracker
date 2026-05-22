@@ -1711,6 +1711,27 @@
       "notes": "He shared one lead",
       "nextVisitDate": null,
       "createdAt": "2026-05-22T08:51:33.236Z"
+    },
+    {
+      "id": "v_1779440034092",
+      "oemId": "oem_1779439968333",
+      "date": "2026-05-21",
+      "type": "call",
+      "personMet": "Surendra",
+      "peopleMet": [
+        "Surendra"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [
+        "Principal Moratorium",
+        "Rate of Interest"
+      ],
+      "customTopics": [
+        "Appointment"
+      ],
+      "notes": "He is out of station now. Will call on Monday.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-22T08:53:54.092Z"
     }
   ],
   "actions": [
@@ -1768,6 +1789,13 @@
       "visitId": "v_1779106366800",
       "description": "Meet Shreyas sontake",
       "dueDate": "2026-06-08",
+      "status": "open"
+    },
+    {
+      "id": "a_1779440034092_eby",
+      "visitId": "v_1779440034092",
+      "description": "Take appointment with Surendra Bluestar for meeting",
+      "dueDate": "2026-05-25",
       "status": "open"
     }
   ],
