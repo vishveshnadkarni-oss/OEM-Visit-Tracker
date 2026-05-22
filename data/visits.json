@@ -1823,6 +1823,22 @@
       "notes": "",
       "nextVisitDate": null,
       "createdAt": "2026-05-22T13:26:49.143Z"
+    },
+    {
+      "id": "v_1779456702395",
+      "oemId": "oem_1779456665466",
+      "date": "2026-05-20",
+      "type": "customer",
+      "personMet": "",
+      "peopleMet": [],
+      "visitLoc": "Bengaluru",
+      "topics": [
+        "Leasing"
+      ],
+      "customTopics": [],
+      "notes": "Aaru Plastics.\nExplained leasing.\nHe is an existing Bajaj customer",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-22T13:31:42.395Z"
     }
   ],
   "actions": [
