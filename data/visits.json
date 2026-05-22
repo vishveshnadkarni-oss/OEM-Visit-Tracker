@@ -1891,6 +1891,24 @@
       "notes": "Asked to meet on Tuesday.",
       "nextVisitDate": null,
       "createdAt": "2026-05-22T14:30:55.177Z"
+    },
+    {
+      "id": "v_1779460357870",
+      "oemId": "oem_1778408453736_xci",
+      "date": "2026-05-21",
+      "type": "visit",
+      "personMet": "Milind Navale",
+      "peopleMet": [
+        "Milind Navale"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Asked for leads"
+      ],
+      "notes": "He has 2 leads working. Will share them when closed.\nAlso spoke about open house.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-22T14:32:37.870Z"
     }
   ],
   "actions": [
