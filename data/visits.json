@@ -1909,6 +1909,42 @@
       "notes": "He has 2 leads working. Will share them when closed.\nAlso spoke about open house.",
       "nextVisitDate": null,
       "createdAt": "2026-05-22T14:32:37.870Z"
+    },
+    {
+      "id": "v_1779460433318",
+      "oemId": "oem_1778408453736_vp9",
+      "date": "2026-05-21",
+      "type": "visit",
+      "personMet": "No one in office/ security/ receptionist",
+      "peopleMet": [
+        "No one in office/ security/ receptionist"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "He was busy. Couldn't meet",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-22T14:33:53.318Z"
+    },
+    {
+      "id": "v_1779460928472",
+      "oemId": "oem_1778408453736_de4",
+      "date": "2026-05-22",
+      "type": "call",
+      "personMet": "Madhu Babu",
+      "peopleMet": [
+        "Madhu Babu"
+      ],
+      "visitLoc": "",
+      "topics": [
+        "Leasing"
+      ],
+      "customTopics": [
+        "Case update"
+      ],
+      "notes": "Gave him subvention calculation for a 3.5cr deal",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-22T14:42:08.472Z"
     }
   ],
   "actions": [
