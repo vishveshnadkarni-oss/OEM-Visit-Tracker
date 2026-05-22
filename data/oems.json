@@ -2458,5 +2458,17 @@
       }
     ],
     "notes": ""
+  },
+  {
+    "id": "oem_1779456665466",
+    "name": "Customer (Name in description)",
+    "code": "",
+    "oemType": "OEM",
+    "segment": "Industrial",
+    "subcategories": [],
+    "dealerBrands": "",
+    "locations": [],
+    "contacts": [],
+    "notes": ""
   }
 ]
