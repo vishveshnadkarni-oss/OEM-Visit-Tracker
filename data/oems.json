@@ -2408,5 +2408,40 @@
       }
     ],
     "notes": ""
+  },
+  {
+    "id": "oem_1779440163171",
+    "name": "Phantom",
+    "code": "",
+    "oemType": "Dealer",
+    "segment": "Medical",
+    "subcategories": [
+      "Refurb Machines"
+    ],
+    "dealerBrands": "",
+    "locations": [
+      {
+        "city": "Bengaluru",
+        "address": "",
+        "lat": "",
+        "lng": ""
+      },
+      {
+        "city": "Hyderabad",
+        "address": "",
+        "lat": "",
+        "lng": ""
+      }
+    ],
+    "contacts": [
+      {
+        "name": "Ben Alummoottil",
+        "phone": "9526846550",
+        "position": "Sales",
+        "location": "Bengaluru",
+        "note": ""
+      }
+    ],
+    "notes": ""
   }
 ]
