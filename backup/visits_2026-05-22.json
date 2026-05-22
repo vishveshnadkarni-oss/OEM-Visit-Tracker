@@ -1839,6 +1839,92 @@
       "notes": "Aaru Plastics.\nExplained leasing.\nHe is an existing Bajaj customer",
       "nextVisitDate": null,
       "createdAt": "2026-05-22T13:31:42.395Z"
+    },
+    {
+      "id": "v_1779458984208",
+      "oemId": "oem_1779458898790",
+      "date": "2026-05-21",
+      "type": "call",
+      "personMet": "Vikas Sharma",
+      "peopleMet": [
+        "Vikas Sharma"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "They don't do business with Bajaj.\nThey tried to do it before, but commercials didn't work out.\nIf any deals come they will share.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-22T14:09:44.208Z"
+    },
+    {
+      "id": "v_1779460198208",
+      "oemId": "oem_1779459190982",
+      "date": "2026-05-21",
+      "type": "call",
+      "personMet": "Sreenag",
+      "peopleMet": [
+        "Sreenag"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "Asked about bangalore persons number",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-22T14:29:58.208Z"
+    },
+    {
+      "id": "v_1779460255177",
+      "oemId": "oem_1779459190982",
+      "date": "2026-05-21",
+      "type": "call",
+      "personMet": "Rajesh Kumar",
+      "peopleMet": [
+        "Rajesh Kumar"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [
+        "Rate of Interest"
+      ],
+      "customTopics": [
+        "Appointment"
+      ],
+      "notes": "Asked to meet on Tuesday.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-22T14:30:55.177Z"
+    },
+    {
+      "id": "v_1779460357870",
+      "oemId": "oem_1778408453736_xci",
+      "date": "2026-05-21",
+      "type": "visit",
+      "personMet": "Milind Navale",
+      "peopleMet": [
+        "Milind Navale"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Asked for leads"
+      ],
+      "notes": "He has 2 leads working. Will share them when closed.\nAlso spoke about open house.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-22T14:32:37.870Z"
+    },
+    {
+      "id": "v_1779460433318",
+      "oemId": "oem_1778408453736_vp9",
+      "date": "2026-05-21",
+      "type": "visit",
+      "personMet": "No one in office/ security/ receptionist",
+      "peopleMet": [
+        "No one in office/ security/ receptionist"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "He was busy. Couldn't meet",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-22T14:33:53.318Z"
     }
   ],
   "actions": [
@@ -1910,6 +1996,13 @@
       "visitId": "v_1779440190592",
       "description": "Call ben phantom for appointment",
       "dueDate": "2026-05-25",
+      "status": "open"
+    },
+    {
+      "id": "a_1779460255177_pzl",
+      "visitId": "v_1779460255177",
+      "description": "Meet mr. Rajesh kumar olympus",
+      "dueDate": "2026-05-26",
       "status": "open"
     }
   ]
