@@ -1855,6 +1855,22 @@
       "notes": "They don't do business with Bajaj.\nThey tried to do it before, but commercials didn't work out.\nIf any deals come they will share.",
       "nextVisitDate": null,
       "createdAt": "2026-05-22T14:09:44.208Z"
+    },
+    {
+      "id": "v_1779460198208",
+      "oemId": "oem_1779459190982",
+      "date": "2026-05-21",
+      "type": "call",
+      "personMet": "Sreenag",
+      "peopleMet": [
+        "Sreenag"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "Asked about bangalore persons number",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-22T14:29:58.208Z"
     }
   ],
   "actions": [
