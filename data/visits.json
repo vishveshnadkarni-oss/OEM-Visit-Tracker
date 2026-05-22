@@ -1693,6 +1693,24 @@
       "notes": "He is not free. He will call",
       "nextVisitDate": null,
       "createdAt": "2026-05-22T08:50:56.583Z"
+    },
+    {
+      "id": "v_1779439893236",
+      "oemId": "oem_1778408453736_g2b",
+      "date": "2026-05-21",
+      "type": "call",
+      "personMet": "Giridhar",
+      "peopleMet": [
+        "Giridhar"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Asked for leads"
+      ],
+      "notes": "He shared one lead",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-22T08:51:33.236Z"
     }
   ],
   "actions": [
