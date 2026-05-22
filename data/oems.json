@@ -2378,5 +2378,35 @@
       }
     ],
     "notes": ""
+  },
+  {
+    "id": "oem_1779439968333",
+    "name": "Bluestar",
+    "code": "",
+    "oemType": "Dealer",
+    "segment": "Medical",
+    "subcategories": [
+      "Imaging",
+      "Refurb Machines"
+    ],
+    "dealerBrands": "",
+    "locations": [
+      {
+        "city": "Bengaluru",
+        "address": "",
+        "lat": "",
+        "lng": ""
+      }
+    ],
+    "contacts": [
+      {
+        "name": "Surendra",
+        "phone": "9880252410",
+        "position": "Sales head",
+        "location": "Bengaluru",
+        "note": ""
+      }
+    ],
+    "notes": ""
   }
 ]
