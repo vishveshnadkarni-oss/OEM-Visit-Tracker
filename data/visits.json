@@ -1794,9 +1794,7 @@
       "personMet": "",
       "peopleMet": [],
       "visitLoc": "Bengaluru",
-      "topics": [
-        "Leasing"
-      ],
+      "topics": [],
       "customTopics": [],
       "notes": "Aaru Plastics.\nExplained leasing.\nHe is an existing Bajaj customer",
       "nextVisitDate": null,
@@ -1999,6 +1997,24 @@
       "notes": "AJM enterprise (S&T)\nMet Mr. Thulasi Ragavendra.\nWants loan of 1.7cr.\nWants to clear quickly within 1 yr\nExplained leasing vs loan",
       "nextVisitDate": null,
       "createdAt": "2026-05-23T18:20:29.964Z"
+    },
+    {
+      "id": "v_1779560625759",
+      "oemId": "oem_1778408453736_xci",
+      "date": "2026-05-23",
+      "type": "call",
+      "personMet": "Milind Navale",
+      "peopleMet": [
+        "Milind Navale"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Case update"
+      ],
+      "notes": "Gave him update about Lakshmi Industries login and inspire technologies Monday meeting",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-23T18:23:45.759Z"
     }
   ],
   "actions": [
