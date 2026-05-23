@@ -1985,6 +1985,20 @@
       "notes": "Halamanee Aerospace. (Makino)\nHe wants 90% LTV and 10% ROI",
       "nextVisitDate": null,
       "createdAt": "2026-05-23T18:17:53.595Z"
+    },
+    {
+      "id": "v_1779560429964",
+      "oemId": "oem_1779456665466",
+      "date": "2026-05-12",
+      "type": "customer",
+      "personMet": "",
+      "peopleMet": [],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "AJM enterprise (S&T)\nMet Mr. Thulasi Ragavendra.\nWants loan of 1.7cr.\nWants to clear quickly within 1 yr\nExplained leasing vs loan",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-23T18:20:29.964Z"
     }
   ],
   "actions": [
