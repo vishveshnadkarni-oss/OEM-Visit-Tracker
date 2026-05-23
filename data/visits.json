@@ -2015,6 +2015,42 @@
       "notes": "Gave him update about Lakshmi Industries login and inspire technologies Monday meeting",
       "nextVisitDate": null,
       "createdAt": "2026-05-23T18:23:45.759Z"
+    },
+    {
+      "id": "v_1779560650724",
+      "oemId": "oem_1778408453736_0sy",
+      "date": "2026-05-23",
+      "type": "call",
+      "personMet": "Blesiyas D'Souza",
+      "peopleMet": [
+        "Blesiyas D'Souza"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-23T18:24:10.724Z"
+    },
+    {
+      "id": "v_1779560683514",
+      "oemId": "oem_1778408453736_0sy",
+      "date": "2026-05-23",
+      "type": "call",
+      "personMet": "Subramanyam",
+      "peopleMet": [
+        "Subramanyam"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Appointment"
+      ],
+      "notes": "He Didn't give appointment. Asked to get it approved from Head office only.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-23T18:24:43.514Z"
     }
   ],
   "actions": [
