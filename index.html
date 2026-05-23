@@ -732,12 +732,12 @@ function setMode(m){
   vMode=m;
   document.getElementById('tb-v').classList.toggle('on',m==='visit');
   document.getElementById('tb-c').classList.toggle('on',m==='call');
-  // Hide location when call is selected
   const locWrap=document.getElementById('v-loc-wrap');
-  if(locWrap&&locWrap.style.display!=='none'){
-    if(m==='call') locWrap.style.display='none';
-    else if(document.getElementById('v-oem').value) locWrap.style.display='block';
-  }
+  const oid=document.getElementById('v-oem').value;
+  const oem=db.oems.find(x=>x.id===oid);
+  const hasLocs=(oem?.locations||[]).filter(l=>l.city).length>0;
+  // Show location only when visit mode AND OEM is selected AND has locations
+  if(locWrap) locWrap.style.display=(m==='visit'&&oid&&hasLocs)?'block':'none';
 }
 // Legacy alias used by edit restore
 function setVType(t){
@@ -765,8 +765,7 @@ function onOEMPick(){
   const locs=(o?.locations||[]).filter(l=>l.city);
   if(locs.length){
     document.getElementById('v-loc').innerHTML='<option value="">Select location...</option>'+locs.map(l=>`<option value="${l.city}">${l.city}</option>`).join('');
-    if(vMode!=='call') document.getElementById('v-loc-wrap').style.display='block';
-  }
+    if(vMode!=='call') document.getElementById('v-loc-wrap').style.display='block';  }
   document.getElementById('v-person-wrap').style.display='block';
   addPersonRow();
   const today=todayStr();
