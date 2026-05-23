@@ -2481,7 +2481,32 @@
     "segment": "Industrial",
     "subcategories": [],
     "dealerBrands": "",
-    "locations": [],
+    "locations": [
+      {
+        "city": "Bengaluru",
+        "address": "",
+        "lat": "",
+        "lng": ""
+      },
+      {
+        "city": "Coimbatore",
+        "address": "",
+        "lat": "",
+        "lng": ""
+      },
+      {
+        "city": "Chennai",
+        "address": "",
+        "lat": "",
+        "lng": ""
+      },
+      {
+        "city": "Hyderabad",
+        "address": "",
+        "lat": "",
+        "lng": ""
+      }
+    ],
     "contacts": [],
     "notes": ""
   },
