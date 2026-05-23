@@ -186,28 +186,6 @@
       "createdAt": "2026-05-12T03:47:36.782Z"
     },
     {
-      "id": "v_1778575375436",
-      "oemId": "oem_1778408453736_g2b",
-      "date": "2026-05-12",
-      "type": "customer",
-      "personMet": "Manikanandan",
-      "peopleMet": [
-        "Manikanandan"
-      ],
-      "visitLoc": "",
-      "topics": [
-        "Leasing",
-        "Principal Moratorium"
-      ],
-      "customTopics": [
-        "Customer update",
-        "Hybrid Flexi"
-      ],
-      "notes": "Met Mr. Thulasi Ragavendra.\nS&T customer.\nWants loan of 1.7cr.\nWants to clear quickly within 1 yr",
-      "nextVisitDate": null,
-      "createdAt": "2026-05-12T08:42:55.436Z"
-    },
-    {
       "id": "v_1778576582144",
       "oemId": "oem_1778408453736_lkn",
       "date": "2026-05-08",
@@ -1280,22 +1258,6 @@
       "createdAt": "2026-05-17T11:23:31.995Z"
     },
     {
-      "id": "v_1779077701682",
-      "oemId": "oem_1778408453736_xci",
-      "date": "2026-05-13",
-      "type": "customer",
-      "personMet": "",
-      "peopleMet": [],
-      "visitLoc": "Bengaluru",
-      "topics": [
-        "Rate of Interest"
-      ],
-      "customTopics": [],
-      "notes": "Met Lakshmi Industries. He wants a lower ROI. Offered him 9%",
-      "nextVisitDate": null,
-      "createdAt": "2026-05-18T04:15:01.682Z"
-    },
-    {
       "id": "v_1779102613331",
       "oemId": "oem_1778408453736_7b8",
       "date": "2026-05-18",
@@ -1832,9 +1794,7 @@
       "personMet": "",
       "peopleMet": [],
       "visitLoc": "Bengaluru",
-      "topics": [
-        "Leasing"
-      ],
+      "topics": [],
       "customTopics": [],
       "notes": "Aaru Plastics.\nExplained leasing.\nHe is an existing Bajaj customer",
       "nextVisitDate": null,
@@ -1981,6 +1941,134 @@
       "notes": "Spoke about arranging a call with BPL and Bajaj legal teams on 25th",
       "nextVisitDate": null,
       "createdAt": "2026-05-22T14:58:04.522Z"
+    },
+    {
+      "id": "v_1779559896492",
+      "oemId": "oem_1779456665466",
+      "date": "2026-05-23",
+      "type": "customer",
+      "personMet": "",
+      "peopleMet": [],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "Lakshmi Precision tools.\nLogged in his Cosmos case in front of him. He is a existing Bajaj customer.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-23T18:11:36.492Z"
+    },
+    {
+      "id": "v_1779560081508",
+      "oemId": "oem_1779456665466",
+      "date": "2026-05-13",
+      "type": "customer",
+      "personMet": "",
+      "peopleMet": [],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "Laxmi Industries (cosmos)\nHe wants lower ROI of 9%",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-23T18:14:41.508Z"
+    },
+    {
+      "id": "v_1779560273595",
+      "oemId": "oem_1779456665466",
+      "date": "2026-05-23",
+      "type": "customer",
+      "personMet": "",
+      "peopleMet": [],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "Halamanee Aerospace. (Makino)\nHe wants 90% LTV and 10% ROI",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-23T18:17:53.595Z"
+    },
+    {
+      "id": "v_1779560429964",
+      "oemId": "oem_1779456665466",
+      "date": "2026-05-12",
+      "type": "customer",
+      "personMet": "",
+      "peopleMet": [],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "AJM enterprise (S&T)\nMet Mr. Thulasi Ragavendra.\nWants loan of 1.7cr.\nWants to clear quickly within 1 yr\nExplained leasing vs loan",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-23T18:20:29.964Z"
+    },
+    {
+      "id": "v_1779560625759",
+      "oemId": "oem_1778408453736_xci",
+      "date": "2026-05-23",
+      "type": "call",
+      "personMet": "Milind Navale",
+      "peopleMet": [
+        "Milind Navale"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Case update"
+      ],
+      "notes": "Gave him update about Lakshmi Industries login and inspire technologies Monday meeting",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-23T18:23:45.759Z"
+    },
+    {
+      "id": "v_1779560650724",
+      "oemId": "oem_1778408453736_0sy",
+      "date": "2026-05-23",
+      "type": "call",
+      "personMet": "Blesiyas D'Souza",
+      "peopleMet": [
+        "Blesiyas D'Souza"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-23T18:24:10.724Z"
+    },
+    {
+      "id": "v_1779560683514",
+      "oemId": "oem_1778408453736_0sy",
+      "date": "2026-05-23",
+      "type": "call",
+      "personMet": "Subramanyam",
+      "peopleMet": [
+        "Subramanyam"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Appointment"
+      ],
+      "notes": "He Didn't give appointment. Asked to get it approved from Head office only.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-23T18:24:43.514Z"
+    },
+    {
+      "id": "v_1779560713728",
+      "oemId": "oem_1778408453736_vp9",
+      "date": "2026-05-23",
+      "type": "call",
+      "personMet": "Jagadeesh Patil",
+      "peopleMet": [
+        "Jagadeesh Patil"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-23T18:25:13.728Z"
     }
   ],
   "actions": [
@@ -2017,7 +2105,7 @@
       "visitId": "v_1779015463892",
       "description": "Call Jagadeesh sir for planning on 23rd",
       "dueDate": "2026-05-20",
-      "status": "open"
+      "status": "closed"
     },
     {
       "id": "a_1779103052267_spf",
