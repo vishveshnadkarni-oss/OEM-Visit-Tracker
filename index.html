@@ -218,11 +218,22 @@ textarea{min-height:85px;resize:none;line-height:1.6}
   </div>
   <div id="visit-banner"></div>
   <div class="p16" style="padding-bottom:8px">
-    <div class="fg"><label class="lbl">Type</label>
-      <div class="tog">
-        <button class="tog-btn on" id="tb-v" onclick="setVType('visit')">📍 Visit</button>
-        <button class="tog-btn" id="tb-c" onclick="setVType('call')">📞 Call</button>
-        <button class="tog-btn" id="tb-cv" onclick="setVType('customer')">🏢 Customer Visit</button>
+    <div class="fg"><label class="lbl">Interaction Type</label>
+      <div class="frow" style="gap:10px;margin-bottom:8px">
+        <div class="fg" style="margin-bottom:0">
+          <div style="font-size:10px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);margin-bottom:5px">Who</div>
+          <div class="tog" style="padding:2px;gap:2px">
+            <button class="tog-btn on" id="tb-oem" onclick="setWho('oem')">OEM</button>
+            <button class="tog-btn" id="tb-cust" onclick="setWho('customer')">Customer</button>
+          </div>
+        </div>
+        <div class="fg" style="margin-bottom:0">
+          <div style="font-size:10px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);margin-bottom:5px">Mode</div>
+          <div class="tog" style="padding:2px;gap:2px">
+            <button class="tog-btn on" id="tb-v" onclick="setMode('visit')">📍 Visit</button>
+            <button class="tog-btn" id="tb-c" onclick="setMode('call')">📞 Call</button>
+          </div>
+        </div>
       </div>
     </div>
     <div class="fg"><label class="lbl">Date</label><input type="date" id="v-date"></div>
@@ -502,7 +513,7 @@ const SUBCATS={Medical:['Imaging','Ophthalmology','Dermatology','Cosmetology','L
 
 // ── STATE ──
 let db={oems:[],visits:[],actions:[],topics:[]};
-let selTopics=[], vType='visit', oType='OEM', oSeg='Medical', custChips=[], editOEM=null, curVid=null, editVid=null, taskFilter='open', listening=false, recog=null;
+let selTopics=[], vType='visit', vWho='oem', vMode='visit', oType='OEM', oSeg='Medical', custChips=[], editOEM=null, curVid=null, editVid=null, taskFilter='open', listening=false, recog=null;
 
 // ── LOCAL STORAGE ──
 function load(){try{const r=localStorage.getItem('oem_v5');if(r){db=JSON.parse(r);if(!db.topics)db.topics=[];}}catch(e){}}
@@ -666,7 +677,7 @@ function renderHome(){
     const o=db.oems.find(x=>x.id===v.oemId);
     const topics=[...(v.topics||[]),...(v.customTopics||[])];
     return`<div class="vcard" onclick="showVisit('${v.id}')">
-      <div class="vcard-top"><div class="vcard-name">${o?.name||'Unknown'}</div><span class="badge ${v.type==='visit'?'bv':v.type==='customer'?'bcv':'bc'}">${v.type==='visit'?'📍 Visit':v.type==='customer'?'🏢 Customer':'📞 Call'}</span></div>
+      <div class="vcard-top"><div class="vcard-name">${o?.name||'Unknown'}</div><span class="badge ${v.type==='visit'?'bv':(v.type==='customer'||v.type==='customer-call')?'bcv':'bc'}">${v.type==='visit'?'📍 Visit':v.type==='customer'?'🏢 Customer Visit':v.type==='customer-call'?'🏢 Customer Call':'📞 Call'}</span></div>
       <div class="vmeta">${o?.code||''}${v.visitLoc?' · 📍'+v.visitLoc:''}</div>
       ${v.personMet?`<div class="vsub">👤 ${v.personMet}</div>`:''}
       ${topics.length?`<div class="vsub">${topics.join(' · ')}</div>`:''}
@@ -688,9 +699,11 @@ function renderHome(){
 // ── NEW VISIT ──
 function initVisit(){
   vType='visit'; selTopics=[]; editVid=null;
+  vWho='oem'; vMode='visit';
+  document.getElementById('tb-oem').classList.add('on');
+  document.getElementById('tb-cust').classList.remove('on');
   document.getElementById('tb-v').classList.add('on');
   document.getElementById('tb-c').classList.remove('on');
-  document.getElementById('tb-cv').classList.remove('on');
   document.querySelector('#s-new-visit h1').textContent='New Report';
   document.querySelector('#s-new-visit .save-bar button').textContent='Save Report';
   document.getElementById('v-date').value=todayStr();
@@ -710,7 +723,28 @@ function initVisit(){
   sel.innerHTML='<option value="">Select...</option>'+[...db.oems].sort((a,b)=>a.name.localeCompare(b.name)).map(o=>`<option value="${o.id}">${o.name}${o.code?' ('+o.code+')':''}</option>`).join('');
   renderTopicDrop();
 }
-function setVType(t){vType=t;document.getElementById('tb-v').classList.toggle('on',t==='visit');document.getElementById('tb-c').classList.toggle('on',t==='call');document.getElementById('tb-cv').classList.toggle('on',t==='customer');}
+function setWho(w){
+  vWho=w;
+  document.getElementById('tb-oem').classList.toggle('on',w==='oem');
+  document.getElementById('tb-cust').classList.toggle('on',w==='customer');
+}
+function setMode(m){
+  vMode=m;
+  document.getElementById('tb-v').classList.toggle('on',m==='visit');
+  document.getElementById('tb-c').classList.toggle('on',m==='call');
+  // Hide location when call is selected
+  const locWrap=document.getElementById('v-loc-wrap');
+  if(locWrap&&locWrap.style.display!=='none'){
+    if(m==='call') locWrap.style.display='none';
+    else if(document.getElementById('v-oem').value) locWrap.style.display='block';
+  }
+}
+// Legacy alias used by edit restore
+function setVType(t){
+  if(t==='call'){setWho('oem');setMode('call');}
+  else if(t==='customer'){setWho('customer');setMode('visit');}
+  else{setWho('oem');setMode('visit');}
+}
 function renderTopicDrop(search=''){
   const all=allTopics().filter(t=>!selTopics.includes(t)&&(!search||t.toLowerCase().includes(search.toLowerCase())));
   document.getElementById('topic-sel').innerHTML='<option value="">Add a topic...</option>'+all.map(t=>`<option value="${t}">${t}</option>`).join('');
@@ -731,7 +765,7 @@ function onOEMPick(){
   const locs=(o?.locations||[]).filter(l=>l.city);
   if(locs.length){
     document.getElementById('v-loc').innerHTML='<option value="">Select location...</option>'+locs.map(l=>`<option value="${l.city}">${l.city}</option>`).join('');
-    document.getElementById('v-loc-wrap').style.display='block';
+    if(vMode!=='call') document.getElementById('v-loc-wrap').style.display='block';
   }
   document.getElementById('v-person-wrap').style.display='block';
   addPersonRow();
@@ -801,7 +835,8 @@ async function saveVisit(){
   const nextDate=document.getElementById('v-next').value||null;
   if(editVid){
     const v=db.visits.find(x=>x.id===editVid);
-    if(v){Object.assign(v,{oemId:oid,date,type:vType,personMet:peopleMet.join(', '),peopleMet,visitLoc,topics,customTopics,notes,nextVisitDate:nextDate});}
+    const _type2=vWho==='customer'?'customer':vMode;
+    if(v){Object.assign(v,{oemId:oid,date,type:_type2,personMet:peopleMet.join(', '),peopleMet,visitLoc,topics,customTopics,notes,nextVisitDate:nextDate});}
     db.actions=db.actions.filter(a=>a.visitId!==editVid);
     document.querySelectorAll('#ai-list .ai-form').forEach(row=>{
       const ins=row.querySelectorAll('input');const desc=ins[0].value.trim();const due=ins[1].value;
@@ -811,7 +846,8 @@ async function saveVisit(){
     toast('Updating...');saveSync();toast('Report updated ✓');go('home');
   } else {
     const vid='v_'+Date.now();
-    const v={id:vid,oemId:oid,date,type:vType,personMet:peopleMet.join(', '),peopleMet,visitLoc,topics,customTopics,notes,nextVisitDate:nextDate,createdAt:new Date().toISOString()};
+    const _type=vWho==='customer'?'customer':vMode;
+    const v={id:vid,oemId:oid,date,type:_type,personMet:peopleMet.join(', '),peopleMet,visitLoc,topics,customTopics,notes,nextVisitDate:nextDate,createdAt:new Date().toISOString()};
     db.visits.push(v);
     document.querySelectorAll('#ai-list .ai-form').forEach(row=>{
       const ins=row.querySelectorAll('input');const desc=ins[0].value.trim();const due=ins[1].value;
@@ -839,7 +875,7 @@ function showVisit(vid){
     <div class="dtl"><div class="dtl-lbl">Details</div>
       <div class="dtl-box" style="display:flex;gap:16px;flex-wrap:wrap">
         <div><div style="font-size:11px;color:var(--muted)">Date</div><div class="mono" style="font-size:13px;margin-top:2px">${fmtDate(v.date)}</div></div>
-        <div><div style="font-size:11px;color:var(--muted)">Type</div><span class="badge ${v.type==='visit'?'bv':v.type==='customer'?'bcv':'bc'}" style="display:inline-block;margin-top:4px">${v.type==='visit'?'📍 Visit':v.type==='customer'?'🏢 Customer':'📞 Call'}</span></div>
+        <div><div style="font-size:11px;color:var(--muted)">Type</div><span class="badge ${v.type==='visit'?'bv':(v.type==='customer'||v.type==='customer-call')?'bcv':'bc'}" style="display:inline-block;margin-top:4px">${v.type==='visit'?'📍 Visit':v.type==='customer'?'🏢 Customer Visit':v.type==='customer-call'?'🏢 Customer Call':'📞 Call'}</span></div>
         ${v.nextVisitDate?`<div><div style="font-size:11px;color:var(--muted)">Follow-up</div><div class="mono" style="font-size:13px;margin-top:2px">${fmtDate(v.nextVisitDate)}</div></div>`:''}
       </div></div>
     ${topics.length?`<div class="dtl"><div class="dtl-lbl">Topics</div><div class="tags">${topics.map(t=>`<span class="tag">${t}</span>`).join('')}</div></div>`:''}
@@ -1021,7 +1057,7 @@ function copyWA(){
   const o=db.oems.find(x=>x.id===v.oemId);
   const acts=db.actions.filter(a=>a.visitId===v.id);
   const topics=[...(v.topics||[]),...(v.customTopics||[])];
-  let txt=`${v.type==='visit'?'📍':v.type==='customer'?'🏢':'📞'} *${v.type==='visit'?'Visit':'Call'} Report — ${fmtDate(v.date)}*\n`;
+  let txt=`${v.type==='visit'?'📍':(v.type==='customer'||v.type==='customer-call')?'🏢':'📞'} *${v.type==='visit'?'Visit':'Call'} Report — ${fmtDate(v.date)}*\n`;
   txt+=`*OEM:* ${o?.name||'N/A'}${o?.code?' ('+o.code+')':''} · ${o?.oemType||''} · ${o?.segment||''}\n`;
   if(v.visitLoc) txt+=`*Location:* ${v.visitLoc}\n`;
   if(v.personMet) txt+=`*Person Met:* ${v.personMet}\n`;
@@ -1240,7 +1276,7 @@ function renderRpt(){
         ${vs.map(v=>`<div style="display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border)">
           <div onclick="showVisit('${v.id}')" style="flex:1;cursor:pointer">
             <div style="display:flex;align-items:center;gap:8px">
-              <span class="badge ${v.type==='visit'?'bv':v.type==='customer'?'bcv':'bc'}" style="font-size:10px">${v.type==='visit'?'📍':v.type==='customer'?'🏢':'📞'}</span>
+              <span class="badge ${v.type==='visit'?'bv':(v.type==='customer'||v.type==='customer-call')?'bcv':'bc'}" style="font-size:10px">${v.type==='visit'?'📍':(v.type==='customer'||v.type==='customer-call')?'🏢':'📞'}</span>
               <span style="font-size:13px;font-weight:600">${fmtDate(v.date)}</span>
             </div>
             ${v.personMet?`<div class="vsub" style="margin-top:3px">👤 ${v.personMet}</div>`:''}
@@ -1266,7 +1302,7 @@ function renderRpt(){
         ${vs.map(v=>{const o=db.oems.find(x=>x.id===v.oemId);return`<div style="display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border)">
           <div onclick="showVisit('${v.id}')" style="flex:1;cursor:pointer">
             <div style="display:flex;align-items:center;gap:8px">
-              <span class="badge ${v.type==='visit'?'bv':v.type==='customer'?'bcv':'bc'}" style="font-size:10px">${v.type==='visit'?'📍':v.type==='customer'?'🏢':'📞'}</span>
+              <span class="badge ${v.type==='visit'?'bv':(v.type==='customer'||v.type==='customer-call')?'bcv':'bc'}" style="font-size:10px">${v.type==='visit'?'📍':(v.type==='customer'||v.type==='customer-call')?'🏢':'📞'}</span>
               <span style="font-size:13px;font-weight:600">${o?.name||'Unknown'}</span>
             </div>
             <div class="vmeta" style="margin-top:2px">${fmtDate(v.date)}${v.visitLoc?' · 📍'+v.visitLoc:''}</div>
@@ -1284,7 +1320,7 @@ function renderRpt(){
       const acts=db.actions.filter(a=>a.visitId===v.id);
       html+=`<div style="display:flex;align-items:flex-start;gap:6px;margin-bottom:9px">
         <div class="vcard" onclick="showVisit('${v.id}')" style="flex:1;margin-bottom:0">
-          <div class="vcard-top"><div class="vcard-name">${o?.name||'Unknown'}</div><span class="badge ${v.type==='visit'?'bv':v.type==='customer'?'bcv':'bc'}">${rptMode==='month'?fmtDate(v.date):v.type==='visit'?'📍 Visit':v.type==='customer'?'🏢 Customer':'📞 Call'}</span></div>
+          <div class="vcard-top"><div class="vcard-name">${o?.name||'Unknown'}</div><span class="badge ${v.type==='visit'?'bv':(v.type==='customer'||v.type==='customer-call')?'bcv':'bc'}">${rptMode==='month'?fmtDate(v.date):v.type==='visit'?'📍 Visit':v.type==='customer'?'🏢 Customer Visit':v.type==='customer-call'?'🏢 Customer Call':'📞 Call'}</span></div>
           ${v.visitLoc||v.personMet?`<div class="vmeta">${v.visitLoc?'📍'+v.visitLoc:''}${v.personMet?' · 👤'+v.personMet:''}</div>`:''}
           ${topics.length?`<div class="vsub">${topics.join(' · ')}</div>`:''}
           ${acts.length?`<div class="vsub" style="color:${acts.some(a=>a.status==='open')?'var(--amber)':'var(--muted)'}">📌 ${acts.length} task${acts.length!==1?'s':''} · ${acts.filter(a=>a.status==='open').length} open</div>`:''}
@@ -1307,7 +1343,7 @@ function renderRpt(){
     Object.entries(map).sort((a,b)=>b[1].length-a[1].length).forEach(([oid,vs])=>{
       const o=db.oems.find(x=>x.id===oid);
       rptWA+=`*${o?.name||'Unknown'}* — 📍 ${vs.filter(v=>v.type==='visit').length} visit${vs.filter(v=>v.type==='visit').length!==1?'s':''} · 📞 ${vs.filter(v=>v.type==='call').length} call${vs.filter(v=>v.type==='call').length!==1?'s':''}\n`;
-      vs.forEach(v=>{rptWA+=`  ${v.type==='visit'?'📍':v.type==='customer'?'🏢':'📞'} ${fmtDate(v.date)}${v.personMet?' · 👤'+v.personMet:''}\n`;});
+      vs.forEach(v=>{rptWA+=`  ${v.type==='visit'?'📍':(v.type==='customer'||v.type==='customer-call')?'🏢':'📞'} ${fmtDate(v.date)}${v.personMet?' · 👤'+v.personMet:''}\n`;});
       rptWA+='\n';
     });
   } else if(rptMode==='person'){
@@ -1318,14 +1354,14 @@ function renderRpt(){
     });
     Object.entries(map).sort((a,b)=>b[1].length-a[1].length).forEach(([person,vs])=>{
       rptWA+=`👤 *${person}* (${vs.length} interaction${vs.length!==1?'s':''})\n`;
-      vs.forEach(v=>{const o=db.oems.find(x=>x.id===v.oemId);rptWA+=`  ${v.type==='visit'?'📍':v.type==='customer'?'🏢':'📞'} ${o?.name||'Unknown'} · ${fmtDate(v.date)}\n`;});
+      vs.forEach(v=>{const o=db.oems.find(x=>x.id===v.oemId);rptWA+=`  ${v.type==='visit'?'📍':(v.type==='customer'||v.type==='customer-call')?'🏢':'📞'} ${o?.name||'Unknown'} · ${fmtDate(v.date)}\n`;});
       rptWA+='\n';
     });
   } else {
     visits.forEach(v=>{
       const o=db.oems.find(x=>x.id===v.oemId);
       const topics=[...(v.topics||[]),...(v.customTopics||[])];
-      rptWA+=`${v.type==='visit'?'📍':v.type==='customer'?'🏢':'📞'} *${o?.name||'Unknown'}*${rptMode!=='day'?' — '+fmtDate(v.date):''}\n`;
+      rptWA+=`${v.type==='visit'?'📍':(v.type==='customer'||v.type==='customer-call')?'🏢':'📞'} *${o?.name||'Unknown'}*${rptMode!=='day'?' — '+fmtDate(v.date):''}\n`;
       if(v.visitLoc) rptWA+=`  📍 ${v.visitLoc}\n`;
       if(v.personMet) rptWA+=`  👤 ${v.personMet}\n`;
       if(topics.length) rptWA+=`  Topics: ${topics.join(', ')}\n`;
@@ -1351,10 +1387,15 @@ function editVisit(vid){
   const sel=document.getElementById('v-oem');
   sel.innerHTML='<option value="">Select...</option>'+[...db.oems].sort((a,b)=>a.name.localeCompare(b.name)).map(o=>`<option value="${o.id}">${o.name}${o.code?' ('+o.code+')':''}</option>`).join('');
   sel.value=v.oemId;
-  vType=v.type||'visit';
-  document.getElementById('tb-v').classList.toggle('on',vType==='visit');
-  document.getElementById('tb-c').classList.toggle('on',vType==='call');
-  document.getElementById('tb-cv').classList.toggle('on',vType==='customer');
+  const _et=v.type||'visit';
+  if(_et==='customer'){vWho='customer';vMode='visit';}
+  else if(_et==='customer-call'){vWho='customer';vMode='call';}
+  else if(_et==='call'){vWho='oem';vMode='call';}
+  else{vWho='oem';vMode='visit';}
+  document.getElementById('tb-oem').classList.toggle('on',vWho==='oem');
+  document.getElementById('tb-cust').classList.toggle('on',vWho==='customer');
+  document.getElementById('tb-v').classList.toggle('on',vMode==='visit');
+  document.getElementById('tb-c').classList.toggle('on',vMode==='call');
   document.getElementById('v-date').value=v.date||'';
   document.getElementById('v-notes').value=v.notes||'';
   document.getElementById('v-next').value=v.nextVisitDate||'';
