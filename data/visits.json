@@ -1979,6 +1979,34 @@
       "notes": "Lakshmi Precision tools.\nLogged in his Cosmos case in front of him. He is a existing Bajaj customer.",
       "nextVisitDate": null,
       "createdAt": "2026-05-23T18:11:36.492Z"
+    },
+    {
+      "id": "v_1779560081508",
+      "oemId": "oem_1779456665466",
+      "date": "2026-05-13",
+      "type": "customer",
+      "personMet": "",
+      "peopleMet": [],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "Laxmi Industries (cosmos)\nHe wants lower ROI of 9%",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-23T18:14:41.508Z"
+    },
+    {
+      "id": "v_1779560273595",
+      "oemId": "oem_1779456665466",
+      "date": "2026-05-23",
+      "type": "customer",
+      "personMet": "",
+      "peopleMet": [],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "Halamanee Aerospace. (Makino)\nHe wants 90% LTV and 10% ROI",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-23T18:17:53.595Z"
     }
   ],
   "actions": [
