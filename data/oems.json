@@ -2613,5 +2613,34 @@
       }
     ],
     "notes": ""
+  },
+  {
+    "id": "oem_1779710692641",
+    "name": "Electronica Plastics",
+    "code": "",
+    "oemType": "OEM",
+    "segment": "Industrial",
+    "subcategories": [
+      "Plastics"
+    ],
+    "dealerBrands": "",
+    "locations": [
+      {
+        "city": "Bengaluru",
+        "address": "",
+        "lat": "",
+        "lng": ""
+      }
+    ],
+    "contacts": [
+      {
+        "name": "Rajshekhar",
+        "phone": "9342395718",
+        "position": "Sales head",
+        "location": "Bengaluru",
+        "note": ""
+      }
+    ],
+    "notes": ""
   }
 ]
