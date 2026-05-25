@@ -1567,11 +1567,15 @@
     "locations": [
       {
         "city": "Bengaluru",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       },
       {
         "city": "Chennai",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       }
     ],
     "contacts": [
@@ -1632,7 +1636,7 @@
         "note": ""
       },
       {
-        "name": "No one in office/ security/ reception",
+        "name": "NOIO",
         "phone": "",
         "position": "",
         "location": "",
@@ -1654,11 +1658,15 @@
     "locations": [
       {
         "city": "Bengaluru",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       },
       {
         "city": "Chennai",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       }
     ],
     "contacts": [
@@ -1712,7 +1720,7 @@
         "note": ""
       },
       {
-        "name": "No one in office/ security/ reception",
+        "name": "NOIO",
         "phone": "",
         "position": "",
         "location": "",
