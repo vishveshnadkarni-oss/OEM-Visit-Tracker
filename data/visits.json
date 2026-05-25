@@ -2101,6 +2101,24 @@
       "notes": "",
       "nextVisitDate": null,
       "createdAt": "2026-05-25T11:32:48.431Z"
+    },
+    {
+      "id": "v_1779708785315",
+      "oemId": "oem_1779440163171",
+      "date": "2026-05-25",
+      "type": "call",
+      "personMet": "Ben Alummoottil",
+      "peopleMet": [
+        "Ben Alummoottil"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-25T11:33:05.315Z"
     }
   ],
   "actions": [
@@ -2172,7 +2190,7 @@
       "visitId": "v_1779440190592",
       "description": "Call ben phantom for appointment",
       "dueDate": "2026-05-25",
-      "status": "open"
+      "status": "closed"
     },
     {
       "id": "a_1779460255177_pzl",
