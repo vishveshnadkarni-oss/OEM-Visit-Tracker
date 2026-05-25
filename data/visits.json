@@ -2119,6 +2119,24 @@
       "notes": "",
       "nextVisitDate": null,
       "createdAt": "2026-05-25T11:33:05.315Z"
+    },
+    {
+      "id": "v_1779709553055",
+      "oemId": "oem_1778818312939",
+      "date": "2026-05-25",
+      "type": "call",
+      "personMet": "Kumar",
+      "peopleMet": [
+        "Kumar"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-25T11:45:53.055Z"
     }
   ],
   "actions": [
@@ -2204,7 +2222,7 @@
       "visitId": "v_1779461884522",
       "description": "Setup call between bajaj and bpl legal teams in 2nd half",
       "dueDate": "2026-05-25",
-      "status": "open"
+      "status": "closed"
     }
   ],
   "topics": [
