@@ -807,11 +807,15 @@
     "locations": [
       {
         "city": "Bengaluru",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       },
       {
         "city": "Chennai",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       }
     ],
     "contacts": [
@@ -848,6 +852,13 @@
         "phone": "8939896784",
         "position": "RSM",
         "location": "Chennai",
+        "note": ""
+      },
+      {
+        "name": "NOIO",
+        "phone": "",
+        "position": "",
+        "location": "",
         "note": ""
       }
     ],
