@@ -186,6 +186,28 @@
       "createdAt": "2026-05-12T03:47:36.782Z"
     },
     {
+      "id": "v_1778575375436",
+      "oemId": "oem_1778408453736_g2b",
+      "date": "2026-05-12",
+      "type": "customer",
+      "personMet": "Manikanandan",
+      "peopleMet": [
+        "Manikanandan"
+      ],
+      "visitLoc": "",
+      "topics": [
+        "Leasing",
+        "Principal Moratorium"
+      ],
+      "customTopics": [
+        "Customer update",
+        "Hybrid Flexi"
+      ],
+      "notes": "Met Mr. Thulasi Ragavendra.\nS&T customer.\nWants loan of 1.7cr.\nWants to clear quickly within 1 yr",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-12T08:42:55.436Z"
+    },
+    {
       "id": "v_1778576582144",
       "oemId": "oem_1778408453736_lkn",
       "date": "2026-05-08",
@@ -2051,138 +2073,6 @@
       "notes": "He Didn't give appointment. Asked to get it approved from Head office only.",
       "nextVisitDate": null,
       "createdAt": "2026-05-23T18:24:43.514Z"
-    },
-    {
-      "id": "v_1779560713728",
-      "oemId": "oem_1778408453736_vp9",
-      "date": "2026-05-23",
-      "type": "call",
-      "personMet": "Jagadeesh Patil",
-      "peopleMet": [
-        "Jagadeesh Patil"
-      ],
-      "visitLoc": "",
-      "topics": [],
-      "customTopics": [
-        "Did not answer phone"
-      ],
-      "notes": "",
-      "nextVisitDate": null,
-      "createdAt": "2026-05-23T18:25:13.728Z"
-    },
-    {
-      "id": "v_1779698318353",
-      "oemId": "oem_1779456665466",
-      "date": "2026-05-25",
-      "type": "customer",
-      "personMet": "",
-      "peopleMet": [],
-      "visitLoc": "",
-      "topics": [],
-      "customTopics": [],
-      "notes": "GGL\nHad a teams call with Ashish and Prashant and others.",
-      "nextVisitDate": null,
-      "createdAt": "2026-05-25T08:38:38.354Z"
-    },
-    {
-      "id": "v_1779708768431",
-      "oemId": "oem_1779440291016",
-      "date": "2026-05-25",
-      "type": "call",
-      "personMet": "Rajendra",
-      "peopleMet": [
-        "Rajendra"
-      ],
-      "visitLoc": "",
-      "topics": [],
-      "customTopics": [
-        "Did not answer phone"
-      ],
-      "notes": "",
-      "nextVisitDate": null,
-      "createdAt": "2026-05-25T11:32:48.431Z"
-    },
-    {
-      "id": "v_1779708785315",
-      "oemId": "oem_1779440163171",
-      "date": "2026-05-25",
-      "type": "call",
-      "personMet": "Ben Alummoottil",
-      "peopleMet": [
-        "Ben Alummoottil"
-      ],
-      "visitLoc": "",
-      "topics": [],
-      "customTopics": [
-        "Did not answer phone"
-      ],
-      "notes": "",
-      "nextVisitDate": null,
-      "createdAt": "2026-05-25T11:33:05.315Z"
-    },
-    {
-      "id": "v_1779709553055",
-      "oemId": "oem_1778818312939",
-      "date": "2026-05-25",
-      "type": "call",
-      "personMet": "Kumar",
-      "peopleMet": [
-        "Kumar"
-      ],
-      "visitLoc": "",
-      "topics": [],
-      "customTopics": [
-        "Did not answer phone"
-      ],
-      "notes": "",
-      "nextVisitDate": null,
-      "createdAt": "2026-05-25T11:45:53.055Z"
-    },
-    {
-      "id": "v_1779709582718",
-      "oemId": "oem_1779459190982",
-      "date": "2026-05-25",
-      "type": "call",
-      "personMet": "Rajesh Kumar",
-      "peopleMet": [
-        "Rajesh Kumar"
-      ],
-      "visitLoc": "",
-      "topics": [],
-      "customTopics": [
-        "Did not answer phone"
-      ],
-      "notes": "",
-      "nextVisitDate": null,
-      "createdAt": "2026-05-25T11:46:22.718Z"
-    },
-    {
-      "id": "v_1779709609307",
-      "oemId": "oem_1779456665466",
-      "date": "2026-05-25",
-      "type": "customer",
-      "personMet": "",
-      "peopleMet": [],
-      "visitLoc": "Bengaluru",
-      "topics": [],
-      "customTopics": [],
-      "notes": "",
-      "nextVisitDate": null,
-      "createdAt": "2026-05-25T11:46:49.307Z"
-    },
-    {
-      "id": "v_1779709630107",
-      "oemId": "oem_1779456665466",
-      "date": "2026-05-25",
-      "type": "customer",
-      "personMet": "",
-      "peopleMet": [],
-      "visitLoc": "",
-      "topics": [],
-      "customTopics": [],
-      "notes": "",
-      "nextVisitDate": null,
-      "createdAt": "2026-05-25T11:47:10.107Z"
     }
   ],
   "actions": [
@@ -2191,7 +2081,28 @@
       "visitId": "v_1778557403347",
       "description": "Macpower has their meeting on Saturdays at 11",
       "dueDate": "2026-05-16",
-      "status": "closed"
+      "status": "open"
+    },
+    {
+      "id": "a_1778647897210_ruz",
+      "visitId": "v_1778647897206",
+      "description": "As for appointment shreyas sontake",
+      "dueDate": "2026-05-15",
+      "status": "open"
+    },
+    {
+      "id": "a_1778755605164_z05",
+      "visitId": "v_1778755605163",
+      "description": "Meet kanaka ma'am for Deftech event",
+      "dueDate": "2026-05-16",
+      "status": "open"
+    },
+    {
+      "id": "a_1778782340849_vfn",
+      "visitId": "v_1778759587855",
+      "description": "Take appointment of Ashwin from siemens",
+      "dueDate": "2026-05-15",
+      "status": "open"
     },
     {
       "id": "a_1778782909483_mmk",
@@ -2219,7 +2130,7 @@
       "visitId": "v_1779015463892",
       "description": "Call Jagadeesh sir for planning on 23rd",
       "dueDate": "2026-05-20",
-      "status": "closed"
+      "status": "open"
     },
     {
       "id": "a_1779103052267_spf",
@@ -2254,7 +2165,7 @@
       "visitId": "v_1779440190592",
       "description": "Call ben phantom for appointment",
       "dueDate": "2026-05-25",
-      "status": "closed"
+      "status": "open"
     },
     {
       "id": "a_1779460255177_pzl",
@@ -2268,7 +2179,7 @@
       "visitId": "v_1779461884522",
       "description": "Setup call between bajaj and bpl legal teams in 2nd half",
       "dueDate": "2026-05-25",
-      "status": "closed"
+      "status": "open"
     }
   ],
   "topics": [
