@@ -2073,6 +2073,138 @@
       "notes": "He Didn't give appointment. Asked to get it approved from Head office only.",
       "nextVisitDate": null,
       "createdAt": "2026-05-23T18:24:43.514Z"
+    },
+    {
+      "id": "v_1779560713728",
+      "oemId": "oem_1778408453736_vp9",
+      "date": "2026-05-23",
+      "type": "call",
+      "personMet": "Jagadeesh Patil",
+      "peopleMet": [
+        "Jagadeesh Patil"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-23T18:25:13.728Z"
+    },
+    {
+      "id": "v_1779698318353",
+      "oemId": "oem_1779456665466",
+      "date": "2026-05-25",
+      "type": "customer",
+      "personMet": "",
+      "peopleMet": [],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [],
+      "notes": "GGL\nHad a teams call with Ashish and Prashant and others.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-25T08:38:38.354Z"
+    },
+    {
+      "id": "v_1779708768431",
+      "oemId": "oem_1779440291016",
+      "date": "2026-05-25",
+      "type": "call",
+      "personMet": "Rajendra",
+      "peopleMet": [
+        "Rajendra"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-25T11:32:48.431Z"
+    },
+    {
+      "id": "v_1779708785315",
+      "oemId": "oem_1779440163171",
+      "date": "2026-05-25",
+      "type": "call",
+      "personMet": "Ben Alummoottil",
+      "peopleMet": [
+        "Ben Alummoottil"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-25T11:33:05.315Z"
+    },
+    {
+      "id": "v_1779709553055",
+      "oemId": "oem_1778818312939",
+      "date": "2026-05-25",
+      "type": "call",
+      "personMet": "Kumar",
+      "peopleMet": [
+        "Kumar"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-25T11:45:53.055Z"
+    },
+    {
+      "id": "v_1779709582718",
+      "oemId": "oem_1779459190982",
+      "date": "2026-05-25",
+      "type": "call",
+      "personMet": "Rajesh Kumar",
+      "peopleMet": [
+        "Rajesh Kumar"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-25T11:46:22.718Z"
+    },
+    {
+      "id": "v_1779709609307",
+      "oemId": "oem_1779456665466",
+      "date": "2026-05-25",
+      "type": "customer",
+      "personMet": "",
+      "peopleMet": [],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-25T11:46:49.307Z"
+    },
+    {
+      "id": "v_1779709630107",
+      "oemId": "oem_1779456665466",
+      "date": "2026-05-25",
+      "type": "customer",
+      "personMet": "",
+      "peopleMet": [],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-25T11:47:10.107Z"
     }
   ],
   "actions": [
