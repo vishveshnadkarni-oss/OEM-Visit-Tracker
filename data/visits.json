@@ -2205,6 +2205,38 @@
       "notes": "Met Mr. Thulasi Ragavendra.\nS&T customer.\nWants loan of 1.7cr.\nWants to clear quickly within 1 yr",
       "nextVisitDate": null,
       "createdAt": "2026-05-12T08:42:55.436Z"
+    },
+    {
+      "id": "v_1779781908527",
+      "oemId": "oem_1779439968333",
+      "date": "2026-05-26",
+      "type": "call",
+      "personMet": "",
+      "peopleMet": [],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Appointment"
+      ],
+      "notes": "He asked to meet on 1st June",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-26T07:51:48.529Z"
+    },
+    {
+      "id": "v_1779789829483",
+      "oemId": "oem_1778408453736_lkn",
+      "date": "2026-05-26",
+      "type": "visit",
+      "personMet": "Phaniraj Upadhyay",
+      "peopleMet": [
+        "Phaniraj Upadhyay"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-26T10:03:49.483Z"
     }
   ],
   "actions": [
