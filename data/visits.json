@@ -186,28 +186,6 @@
       "createdAt": "2026-05-12T03:47:36.782Z"
     },
     {
-      "id": "v_1778575375436",
-      "oemId": "oem_1778408453736_g2b",
-      "date": "2026-05-12",
-      "type": "customer",
-      "personMet": "Manikanandan",
-      "peopleMet": [
-        "Manikanandan"
-      ],
-      "visitLoc": "",
-      "topics": [
-        "Leasing",
-        "Principal Moratorium"
-      ],
-      "customTopics": [
-        "Customer update",
-        "Hybrid Flexi"
-      ],
-      "notes": "Met Mr. Thulasi Ragavendra.\nS&T customer.\nWants loan of 1.7cr.\nWants to clear quickly within 1 yr",
-      "nextVisitDate": null,
-      "createdAt": "2026-05-12T08:42:55.436Z"
-    },
-    {
       "id": "v_1778576582144",
       "oemId": "oem_1778408453736_lkn",
       "date": "2026-05-08",
@@ -2205,6 +2183,28 @@
       "notes": "",
       "nextVisitDate": null,
       "createdAt": "2026-05-25T11:47:10.107Z"
+    },
+    {
+      "id": "v_1778575375436",
+      "oemId": "oem_1778408453736_g2b",
+      "date": "2026-05-12",
+      "type": "customer",
+      "personMet": "Manikanandan",
+      "peopleMet": [
+        "Manikanandan"
+      ],
+      "visitLoc": "",
+      "topics": [
+        "Leasing",
+        "Principal Moratorium"
+      ],
+      "customTopics": [
+        "Customer update",
+        "Hybrid Flexi"
+      ],
+      "notes": "Met Mr. Thulasi Ragavendra.\nS&T customer.\nWants loan of 1.7cr.\nWants to clear quickly within 1 yr",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-12T08:42:55.436Z"
     }
   ],
   "actions": [
@@ -2213,28 +2213,7 @@
       "visitId": "v_1778557403347",
       "description": "Macpower has their meeting on Saturdays at 11",
       "dueDate": "2026-05-16",
-      "status": "open"
-    },
-    {
-      "id": "a_1778647897210_ruz",
-      "visitId": "v_1778647897206",
-      "description": "As for appointment shreyas sontake",
-      "dueDate": "2026-05-15",
-      "status": "open"
-    },
-    {
-      "id": "a_1778755605164_z05",
-      "visitId": "v_1778755605163",
-      "description": "Meet kanaka ma'am for Deftech event",
-      "dueDate": "2026-05-16",
-      "status": "open"
-    },
-    {
-      "id": "a_1778782340849_vfn",
-      "visitId": "v_1778759587855",
-      "description": "Take appointment of Ashwin from siemens",
-      "dueDate": "2026-05-15",
-      "status": "open"
+      "status": "closed"
     },
     {
       "id": "a_1778782909483_mmk",
@@ -2262,7 +2241,7 @@
       "visitId": "v_1779015463892",
       "description": "Call Jagadeesh sir for planning on 23rd",
       "dueDate": "2026-05-20",
-      "status": "open"
+      "status": "closed"
     },
     {
       "id": "a_1779103052267_spf",
@@ -2297,7 +2276,7 @@
       "visitId": "v_1779440190592",
       "description": "Call ben phantom for appointment",
       "dueDate": "2026-05-25",
-      "status": "open"
+      "status": "closed"
     },
     {
       "id": "a_1779460255177_pzl",
@@ -2311,6 +2290,20 @@
       "visitId": "v_1779461884522",
       "description": "Setup call between bajaj and bpl legal teams in 2nd half",
       "dueDate": "2026-05-25",
+      "status": "closed"
+    },
+    {
+      "id": "a_1778647897210_ruz",
+      "visitId": "v_1778647897206",
+      "description": "As for appointment shreyas sontake",
+      "dueDate": "2026-05-15",
+      "status": "open"
+    },
+    {
+      "id": "a_1778782340849_vfn",
+      "visitId": "v_1778759587855",
+      "description": "Take appointment of Ashwin from siemens",
+      "dueDate": "2026-05-15",
       "status": "open"
     }
   ],
