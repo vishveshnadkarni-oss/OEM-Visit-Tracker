@@ -2227,14 +2227,20 @@
       "oemId": "oem_1778408453736_lkn",
       "date": "2026-05-26",
       "type": "visit",
-      "personMet": "Phaniraj Upadhyay",
+      "personMet": "Phaniraj Upadhyay, Sujith",
       "peopleMet": [
-        "Phaniraj Upadhyay"
+        "Phaniraj Upadhyay",
+        "Sujith"
       ],
       "visitLoc": "Bengaluru",
-      "topics": [],
-      "customTopics": [],
-      "notes": "",
+      "topics": [
+        "Leasing"
+      ],
+      "customTopics": [
+        "Case update",
+        "Ultrasound Program"
+      ],
+      "notes": "Spoke about war and other sales price rise. He asked to reach out to Shrikant Sahoo and close the deal",
       "nextVisitDate": null,
       "createdAt": "2026-05-26T10:03:49.483Z"
     }
