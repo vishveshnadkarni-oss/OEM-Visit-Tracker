@@ -221,7 +221,7 @@
         "phone": "9513760003",
         "position": "Sales",
         "location": "Bengaluru",
-        "note": ""
+        "note": "Bommasandra"
       },
       {
         "name": "Ravi",
@@ -242,7 +242,7 @@
         "phone": "9342510359",
         "position": "Sales Head",
         "location": "Bengaluru",
-        "note": ""
+        "note": "Peenya area"
       },
       {
         "name": "Jeyaprakash",
@@ -275,16 +275,16 @@
       {
         "name": "Saravanan",
         "phone": "7406186161",
-        "position": "Sales",
+        "position": "Sales head",
         "location": "Bengaluru",
-        "note": ""
+        "note": "Hosur area"
       },
       {
         "name": "Satish Mestha",
         "phone": "9343030468",
         "position": "Sales Head",
         "location": "Bengaluru",
-        "note": ""
+        "note": "Bommasandra area"
       },
       {
         "name": "Srivatsa",
@@ -319,7 +319,7 @@
         "phone": "9620912341",
         "position": "Sales",
         "location": "Bengaluru",
-        "note": ""
+        "note": "Peenya area"
       },
       {
         "name": "Chockhlingam",
@@ -346,22 +346,8 @@
         "name": "Kiran",
         "phone": "9379049098",
         "position": "Sales",
-        "location": "",
-        "note": ""
-      },
-      {
-        "name": "Kiran",
-        "phone": "9379049098",
-        "position": "Sales",
-        "location": "",
-        "note": ""
-      },
-      {
-        "name": "Kanaka",
-        "phone": "9880461229",
-        "position": "Events",
         "location": "Bengaluru",
-        "note": ""
+        "note": "Peenya area"
       },
       {
         "name": "Kanaka",
@@ -386,15 +372,27 @@
     "locations": [
       {
         "city": "Bengaluru",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       },
       {
         "city": "Chennai",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       },
       {
         "city": "Coimbatore",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
+      },
+      {
+        "city": "Ahmedabad",
+        "address": "",
+        "lat": "",
+        "lng": ""
       }
     ],
     "contacts": [
@@ -490,10 +488,17 @@
         "note": ""
       },
       {
-        "name": "No one in office/ security/ receptionist",
+        "name": "NOIO",
         "phone": "",
         "position": "",
         "location": "",
+        "note": ""
+      },
+      {
+        "name": "Chintan Makwana",
+        "phone": "7600018076",
+        "position": "Marketing head",
+        "location": "Ahmedabad",
         "note": ""
       }
     ],
@@ -584,6 +589,13 @@
         "position": "Sales",
         "location": "Vijaywada",
         "note": ""
+      },
+      {
+        "name": "Chaitanya",
+        "phone": "9550430760",
+        "position": "Sales",
+        "location": "Vijaywada",
+        "note": ""
       }
     ],
     "notes": "9% ROI & 0.5% PF for subvention"
@@ -603,11 +615,15 @@
     "locations": [
       {
         "city": "Bengaluru",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       },
       {
         "city": "Chennai",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       }
     ],
     "contacts": [
@@ -680,6 +696,13 @@
         "position": "GM",
         "location": "Tamil Nadu, Srilanka and Maldives",
         "note": ""
+      },
+      {
+        "name": "Mohnish",
+        "phone": "9514207073",
+        "position": "Sales",
+        "location": "Bengaluru",
+        "note": "Takes care of Ultrasound"
       }
     ],
     "notes": "9% ROI & 0.5% PF for subvention"
@@ -784,11 +807,15 @@
     "locations": [
       {
         "city": "Bengaluru",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       },
       {
         "city": "Chennai",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       }
     ],
     "contacts": [
@@ -825,6 +852,13 @@
         "phone": "8939896784",
         "position": "RSM",
         "location": "Chennai",
+        "note": ""
+      },
+      {
+        "name": "NOIO",
+        "phone": "",
+        "position": "",
+        "location": "",
         "note": ""
       }
     ],
@@ -943,6 +977,13 @@
         "position": "Marketing head",
         "location": "Rajkot",
         "note": ""
+      },
+      {
+        "name": "NOIO",
+        "phone": "",
+        "position": "",
+        "location": "",
+        "note": ""
       }
     ],
     "notes": ""
@@ -998,22 +1039,28 @@
     "locations": [
       {
         "city": "Bengaluru",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       },
       {
         "city": "Chennai",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       },
       {
         "city": "Coimbatore",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       }
     ],
     "contacts": [
       {
-        "name": "Deepak",
-        "phone": "7418301166",
-        "position": "Sales",
+        "name": "Dhanush Kodi",
+        "phone": "8088002355",
+        "position": "Sales head",
         "location": "Bengaluru",
         "note": ""
       },
@@ -1057,6 +1104,20 @@
         "phone": "8144008380",
         "position": "Head",
         "location": "Coimbatore",
+        "note": ""
+      },
+      {
+        "name": "Madhu",
+        "phone": "9880455973",
+        "position": "Sales",
+        "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "Harshvardhan",
+        "phone": "97311 07032",
+        "position": "Sales",
+        "location": "Bengaluru",
         "note": ""
       }
     ],
@@ -1129,7 +1190,7 @@
         "note": ""
       },
       {
-        "name": "No one in office/ security/ receptionist",
+        "name": "NOIO",
         "phone": "",
         "position": "",
         "location": "",
@@ -1443,16 +1504,30 @@
         "note": "GM of Bangalore and Coimbatore"
       },
       {
-        "name": "Manikanandan",
-        "phone": "959758011",
-        "position": "Sales Head",
+        "name": "Giridhar",
+        "phone": "9606834180",
+        "position": "Sales",
         "location": "Bengaluru",
-        "note": "Head of Bengaluru branch currently"
+        "note": ""
       },
       {
-        "name": "Narendra Babu",
-        "phone": "9663786648",
-        "position": "",
+        "name": "Jeevan",
+        "phone": "9686607255",
+        "position": "Sales",
+        "location": "Bengaluru",
+        "note": "Takes care of Peenya"
+      },
+      {
+        "name": "Gangatharan",
+        "phone": "9606834760",
+        "position": "Sales",
+        "location": "Bengaluru",
+        "note": "Takes care of Bommasandra"
+      },
+      {
+        "name": "Prathaban",
+        "phone": "9972500090",
+        "position": "GM",
         "location": "Bengaluru",
         "note": ""
       }
@@ -1510,11 +1585,15 @@
     "locations": [
       {
         "city": "Bengaluru",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       },
       {
         "city": "Chennai",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       }
     ],
     "contacts": [
@@ -1573,6 +1652,13 @@
         "position": "Sales Head",
         "location": "Bengaluru",
         "note": ""
+      },
+      {
+        "name": "NOIO",
+        "phone": "",
+        "position": "",
+        "location": "",
+        "note": ""
       }
     ],
     "notes": ""
@@ -1590,11 +1676,15 @@
     "locations": [
       {
         "city": "Bengaluru",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       },
       {
         "city": "Chennai",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       }
     ],
     "contacts": [
@@ -1645,6 +1735,13 @@
         "phone": "9741395666",
         "position": "Director",
         "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "NOIO",
+        "phone": "",
+        "position": "",
+        "location": "",
         "note": ""
       }
     ],
@@ -2219,6 +2316,13 @@
         "phone": "8970841728",
         "position": "Sales",
         "location": "Bengaluru",
+        "note": ""
+      },
+      {
+        "name": "NOIO",
+        "phone": "",
+        "position": "",
+        "location": "",
         "note": ""
       }
     ],
