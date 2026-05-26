@@ -1193,46 +1193,54 @@ async function saveToken(){
 
 // ── VISIT IMPORT ──
 function dlVisitTemplate(){
-  if(!db.oems.length){toast('No OEMs in directory yet — add OEMs first');return;}
-
   const wb=XLSX.utils.book_new();
 
-  // ── Sheet 1: Visit Data (for user to fill) ──
-  const headers=['Date (YYYY-MM-DD)','OEM Name','Location','Person Met','Type (visit/call/customer)','Topics (comma separated)','Notes','Next Visit Date (YYYY-MM-DD)','Action Item 1','Due Date 1','Action Item 2','Due Date 2'];
-  // Sample row
+  // Sheet 1: Visits — all columns including new OEM/contact creation columns
+  const headers=[
+    'Date (YYYY-MM-DD)','OEM Name','OEM Type (OEM/Dealer)','Segment (Medical/Industrial)',
+    'Location (City)','Person Met','Person Position','Person Phone',
+    'Type (visit/call/customer)','Topics (comma separated)',
+    'Notes','Next Visit Date (YYYY-MM-DD)',
+    'Action Item 1','Due Date 1','Action Item 2','Due Date 2'
+  ];
   const firstOEM=db.oems[0];
-  const sampleLoc=(firstOEM.locations||[])[0]?.city||'';
-  const samplePerson=(firstOEM.contacts||[])[0]?.name||'';
-  const sample=[todayStr(),firstOEM.name,sampleLoc,samplePerson,'visit','Leasing, Rate of Interest','Discussion notes here','','Follow up on quotation','','Send product brochure',''];
+  const sampleLoc=firstOEM?(firstOEM.locations||[])[0]?.city||'':'Bengaluru';
+  const samplePerson=firstOEM?(firstOEM.contacts||[])[0]?.name||'':'';
+  const samplePos=firstOEM?(firstOEM.contacts||[])[0]?.position||'':'Sales Manager';
+  const samplePhone=firstOEM?(firstOEM.contacts||[])[0]?.phone||'':'';
+  const sample=[
+    todayStr(),firstOEM?firstOEM.name:'New OEM Name','OEM','Industrial',
+    sampleLoc,samplePerson,samplePos,samplePhone,
+    'visit','Leasing, Rate of Interest',
+    'Notes here','',
+    'Follow up on quotation','','',''
+  ];
   const wsData=XLSX.utils.aoa_to_sheet([headers,sample]);
-  // Column widths
-  wsData['!cols']=[{wch:18},{wch:25},{wch:15},{wch:20},{wch:20},{wch:30},{wch:35},{wch:18},{wch:30},{wch:12},{wch:30},{wch:12}];
+  wsData['!cols']=headers.map(h=>({wch:Math.max(h.length,18)}));
   XLSX.utils.book_append_sheet(wb,wsData,'Visits');
 
-  // ── Sheet 2: Reference (OEMs, locations, contacts — read only reference) ──
-  const refRows=[['OEM Name','Locations (use exact name)','Contact Names (use exact name)','Contact Phone']];
+  // Sheet 2: Reference — existing OEMs with all contacts
+  const refRows=[['OEM Name','Type','Segment','City','Contact Name','Position','Phone']];
   db.oems.sort((a,b)=>a.name.localeCompare(b.name)).forEach(o=>{
-    const locs=(o.locations||[]).map(l=>l.city).filter(Boolean).join(' | ');
+    const locs=(o.locations||[]).map(l=>l.city).filter(Boolean);
     const cts=o.contacts||[];
+    const cityStr=locs.join(' | ');
     if(!cts.length){
-      refRows.push([o.name,locs,'','']);
+      refRows.push([o.name,o.oemType||'OEM',o.segment||'Industrial',cityStr,'','','']);
     } else {
       cts.forEach((c,i)=>{
-        refRows.push([i===0?o.name:'',i===0?locs:'',c.name,c.phone||'']);
+        refRows.push([i===0?o.name:'',i===0?o.oemType||'OEM':'',i===0?o.segment||'Industrial':'',i===0?cityStr:'',c.name,c.position||'',c.phone||'']);
       });
     }
   });
   const wsRef=XLSX.utils.aoa_to_sheet(refRows);
-  wsRef['!cols']=[{wch:25},{wch:35},{wch:22},{wch:15}];
-  // Bold the header row
-  const headerStyle={font:{bold:true}};
-  ['A1','B1','C1','D1'].forEach(cell=>{if(wsRef[cell])wsRef[cell].s=headerStyle;});
-  XLSX.utils.book_append_sheet(wb,wsRef,'Reference — OEMs & Contacts');
+  wsRef['!cols']=[{wch:25},{wch:10},{wch:12},{wch:30},{wch:22},{wch:18},{wch:14}];
+  XLSX.utils.book_append_sheet(wb,wsRef,'Existing OEMs Reference');
 
-  // ── Sheet 3: Valid Topics (for reference) ──
-  const topicRows=[['Valid Topics (copy exact text into Visits sheet)'],...allTopics().map(t=>[t])];
+  // Sheet 3: Topics reference
+  const topicRows=[['Valid Topics'],...allTopics().map(t=>[t])];
   const wsTop=XLSX.utils.aoa_to_sheet(topicRows);
-  wsTop['!cols']=[{wch:40}];
+  wsTop['!cols']=[{wch:35}];
   XLSX.utils.book_append_sheet(wb,wsTop,'Topics Reference');
 
   XLSX.writeFile(wb,'Visit_Import_Template.xlsx');
@@ -1246,67 +1254,107 @@ async function importVisits(inp){
   const ws=wb.Sheets[wb.SheetNames[0]];
   const rows=XLSX.utils.sheet_to_json(ws,{defval:''});
 
-  let added=0, skipped=0, errors=[];
+  let added=0, skipped=0, newOEMs=0, newContacts=0, errors=[];
+
   rows.forEach((r,idx)=>{
-    // Skip reference/header rows
     const oemName=String(r['OEM Name']||'').trim();
     const dateVal=String(r['Date (YYYY-MM-DD)']||'').trim();
     if(!oemName||!dateVal){skipped++;return;}
 
-    // Find OEM by name (case-insensitive)
-    const oem=db.oems.find(o=>o.name.toLowerCase()===oemName.toLowerCase());
-    if(!oem){errors.push(`Row ${idx+2}: OEM "${oemName}" not found in directory`);skipped++;return;}
-
-    // Parse date
+    // Parse date — handle YYYY-MM-DD and DD/MM/YYYY and Excel serial
     let date=dateVal;
-    if(dateVal.includes('/')){
+    if(typeof r['Date (YYYY-MM-DD)'] === 'number'){
+      // Excel serial date
+      const d=XLSX.SSF.parse_date_code(r['Date (YYYY-MM-DD)']);
+      date=`${d.y}-${String(d.m).padStart(2,'0')}-${String(d.d).padStart(2,'0')}`;
+    } else if(dateVal.includes('/')){
       const p=dateVal.split('/');
-      if(p.length===3) date=`${p[2].length===2?'20'+p[2]:p[2]}-${p[0].padStart(2,'0')}-${p[1].padStart(2,'0')}`;
-    } else if(dateVal instanceof Date){
-      date=dateVal.toISOString().split('T')[0];
+      if(p.length===3){
+        const yr=p[2].length===2?'20'+p[2]:p[2];
+        // Try DD/MM/YYYY first
+        date=`${yr}-${p[1].padStart(2,'0')}-${p[0].padStart(2,'0')}`;
+      }
     }
-    // Validate date format
     if(!/^\d{4}-\d{2}-\d{2}$/.test(date)){errors.push(`Row ${idx+2}: Invalid date "${dateVal}"`);skipped++;return;}
+
+    // Find or CREATE OEM
+    let oem=db.oems.find(o=>o.name.toLowerCase()===oemName.toLowerCase());
+    if(!oem){
+      const cityVal=String(r['Location (City)']||'').trim();
+      const newLocs=cityVal?[{city:cityVal,address:''}]:[];
+      oem={
+        id:'oem_'+Date.now()+'_'+Math.random().toString(36).slice(2,5),
+        name:oemName,
+        code:'',
+        oemType:String(r['OEM Type (OEM/Dealer)']||'OEM').trim(),
+        segment:String(r['Segment (Medical/Industrial)']||'Industrial').trim(),
+        subcategories:[],
+        dealerBrands:'',
+        locations:newLocs,
+        contacts:[],
+        notes:''
+      };
+      db.oems.push(oem);
+      newOEMs++;
+    }
+
+    // Add contact to OEM if provided and not already there
+    const personName=String(r['Person Met']||'').trim();
+    const personPhone=String(r['Person Phone']||'').trim();
+    const personPos=String(r['Person Position']||'').trim();
+    const personLoc=String(r['Location (City)']||'').trim();
+    if(personName){
+      if(!oem.contacts) oem.contacts=[];
+      const existingCt=oem.contacts.find(c=>c.name.toLowerCase()===personName.toLowerCase());
+      if(!existingCt){
+        oem.contacts.push({name:personName,phone:personPhone,position:personPos,location:personLoc,note:''});
+        newContacts++;
+      }
+      // Also add location to OEM if not already there
+      if(personLoc&&!oem.locations.find(l=>l.city.toLowerCase()===personLoc.toLowerCase())){
+        oem.locations.push({city:personLoc,address:''});
+      }
+    }
 
     const typeRaw=String(r['Type (visit/call/customer)']||'visit').toLowerCase().trim();
     const type=typeRaw.includes('customer')?'customer':typeRaw.includes('call')?'call':'visit';
     const topicsRaw=String(r['Topics (comma separated)']||'').split(',').map(t=>t.trim()).filter(Boolean);
     const topics=topicsRaw.filter(t=>DEF_TOPICS.includes(t));
     const customTopics=topicsRaw.filter(t=>!DEF_TOPICS.includes(t));
-    const vid='v_'+Date.now()+'_'+Math.random().toString(36).slice(2,5);
+    // Save any new custom topics
+    customTopics.forEach(t=>{if(!db.topics.includes(t))db.topics.push(t);});
 
+    const vid='v_'+Date.now()+'_'+Math.random().toString(36).slice(2,5);
     db.visits.push({
-      id:vid,
-      oemId:oem.id,
-      date,
-      type,
-      personMet:String(r['Person Met']||'').trim(),
-      peopleMet:String(r['Person Met']||'').trim()?[String(r['Person Met']||'').trim()]:[],
-      visitLoc:String(r['Location']||'').trim(),
-      topics,
-      customTopics,
+      id:vid,oemId:oem.id,date,type,
+      personMet:personName,
+      peopleMet:personName?[personName]:[],
+      visitLoc:personLoc,
+      topics,customTopics,
       notes:String(r['Notes']||'').trim(),
       nextVisitDate:String(r['Next Visit Date (YYYY-MM-DD)']||'').trim()||null,
       createdAt:new Date().toISOString()
     });
 
-    // Action items
     ['1','2'].forEach(n=>{
       const desc=String(r[`Action Item ${n}`]||'').trim();
       const due=String(r[`Due Date ${n}`]||'').trim();
-      if(desc) db.actions.push({id:'a_'+Date.now()+'_'+Math.random().toString(36).slice(2,6),visitId:vid,description:desc,dueDate:due||null,status:'open'});
+      if(desc) db.actions.push({
+        id:'a_'+Date.now()+'_'+Math.random().toString(36).slice(2,6),
+        visitId:vid,description:desc,dueDate:due||null,status:'open'
+      });
     });
-
     added++;
   });
 
   const errHtml=errors.length?`<div style="font-size:12px;color:var(--red);margin-top:8px;line-height:1.6">${errors.join('<br>')}</div>`:'';
   document.getElementById('visit-imp-result').innerHTML=`
     <div class="card" style="background:var(--green-bg);border:1px solid rgba(63,185,80,.3);margin-top:10px">
-      <div style="font-size:14px;font-weight:600;color:var(--green)">✓ ${added} visits imported · ${skipped} skipped</div>
+      <div style="font-size:14px;font-weight:600;color:var(--green)">
+        ✓ ${added} visits imported · ${newOEMs} new OEMs created · ${newContacts} new contacts added · ${skipped} skipped
+      </div>
       ${errHtml}
     </div>`;
-  toast('Importing...');
   saveSync();
   toast(`${added} visits imported ✓`);
   inp.value='';
