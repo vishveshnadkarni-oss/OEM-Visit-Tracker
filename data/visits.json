@@ -2243,6 +2243,26 @@
       "notes": "Spoke about war and other sales price rise. He asked to reach out to Shrikant Sahoo and close the deal",
       "nextVisitDate": null,
       "createdAt": "2026-05-26T10:03:49.483Z"
+    },
+    {
+      "id": "v_1779890284451",
+      "oemId": "oem_1779890222310",
+      "date": "2026-05-27",
+      "type": "call",
+      "personMet": "Saniyo",
+      "peopleMet": [
+        "Saniyo"
+      ],
+      "visitLoc": "",
+      "topics": [
+        "Leasing"
+      ],
+      "customTopics": [
+        "Case update"
+      ],
+      "notes": "Has a customer for 30L. Wanted dealer funding.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-27T13:58:04.451Z"
     }
   ],
   "actions": [
