@@ -2698,5 +2698,34 @@
       }
     ],
     "notes": ""
+  },
+  {
+    "id": "oem_1779890222310",
+    "name": "Oreon",
+    "code": "",
+    "oemType": "Dealer",
+    "segment": "Medical",
+    "subcategories": [
+      "Imaging"
+    ],
+    "dealerBrands": "Mindray",
+    "locations": [
+      {
+        "city": "Bengaluru",
+        "address": "",
+        "lat": "",
+        "lng": ""
+      }
+    ],
+    "contacts": [
+      {
+        "name": "Saniyo",
+        "phone": "8281230838",
+        "position": "Sales head",
+        "location": "Bengaluru",
+        "note": ""
+      }
+    ],
+    "notes": ""
   }
 ]
