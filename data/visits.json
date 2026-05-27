@@ -2263,6 +2263,24 @@
       "notes": "Has a customer for 30L. Wanted dealer funding.",
       "nextVisitDate": null,
       "createdAt": "2026-05-27T13:58:04.451Z"
+    },
+    {
+      "id": "v_1779890344375",
+      "oemId": "oem_1778408453736_lkn",
+      "date": "2026-05-27",
+      "type": "call",
+      "personMet": "Sujith",
+      "peopleMet": [
+        "Sujith"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Case update"
+      ],
+      "notes": "Spoke about Dr. Shrikant Sahoo's case denial.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-27T13:59:04.375Z"
     }
   ],
   "actions": [
