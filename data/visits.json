@@ -2281,6 +2281,22 @@
       "notes": "Spoke about Dr. Shrikant Sahoo's case denial.",
       "nextVisitDate": null,
       "createdAt": "2026-05-27T13:59:04.375Z"
+    },
+    {
+      "id": "v_1779953897328",
+      "oemId": "oem_1779953748022",
+      "date": "2026-05-28",
+      "type": "call",
+      "personMet": "AS vijaykunar",
+      "peopleMet": [
+        "AS vijaykunar"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [],
+      "notes": "Spoke about special deal with Samsung. He said he will share cases of any. He was getting his cases rejected from Bajaj before. He was in touch with Kiran and Vishwanath.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-28T07:38:17.328Z"
     }
   ],
   "actions": [
