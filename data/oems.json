@@ -2727,5 +2727,34 @@
       }
     ],
     "notes": ""
+  },
+  {
+    "id": "oem_1779953748022",
+    "name": "Prime medi system",
+    "code": "",
+    "oemType": "Dealer",
+    "segment": "Medical",
+    "subcategories": [
+      "Imaging"
+    ],
+    "dealerBrands": "Samsung",
+    "locations": [
+      {
+        "city": "Nellore AP",
+        "address": "",
+        "lat": "",
+        "lng": ""
+      }
+    ],
+    "contacts": [
+      {
+        "name": "AS vijaykunar",
+        "phone": "09849257497",
+        "position": "Sales head",
+        "location": "Nellore AP",
+        "note": ""
+      }
+    ],
+    "notes": ""
   }
 ]
