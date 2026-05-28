@@ -1,0 +1,2386 @@
+{
+  "visits": [
+    {
+      "id": "v_1778410597347",
+      "oemId": "oem_1778408453736_2w5",
+      "date": "2026-05-04",
+      "type": "call",
+      "personMet": "Giridhar",
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Appointment"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-10T10:56:37.348Z"
+    },
+    {
+      "id": "v_1778410782507",
+      "oemId": "oem_1778408453736_lkn",
+      "date": "2026-05-04",
+      "type": "call",
+      "personMet": "Ramesh",
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Case update"
+      ],
+      "notes": "Spoke about Ramana Raju case from Chennai",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-10T10:59:42.507Z"
+    },
+    {
+      "id": "v_1778488849608",
+      "oemId": "oem_1778408453736_5wv",
+      "date": "2026-05-09",
+      "type": "visit",
+      "personMet": "Shrikant, Mukesh Kumar",
+      "peopleMet": [
+        "Shrikant",
+        "Mukesh Kumar"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "Received 2 contacts. Has asked to meet on 11 may.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-11T08:40:49.608Z"
+    },
+    {
+      "id": "v_1778489356421",
+      "oemId": "oem_1778408453736_wvh",
+      "date": "2026-05-09",
+      "type": "visit",
+      "personMet": "No one in office/ security/ receptionist",
+      "peopleMet": [
+        "No one in office/ security/ receptionist"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "Met a sales engineer at their bangalore office. He mentioned their meetings are there in the mornings at 10am",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-11T08:49:16.421Z"
+    },
+    {
+      "id": "v_1778498886431",
+      "oemId": "oem_1778408453736_vp9",
+      "date": "2026-05-11",
+      "type": "visit",
+      "personMet": "Ajay",
+      "peopleMet": [
+        "Ajay"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "He asked to connect with Jagadeesh Patil for any queries.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-11T11:28:06.431Z"
+    },
+    {
+      "id": "v_1778500247887",
+      "oemId": "oem_1778408453736_441",
+      "date": "2026-05-11",
+      "type": "visit",
+      "personMet": "Srivatsa",
+      "peopleMet": [
+        "Srivatsa"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Team meeting",
+        "Appointment"
+      ],
+      "notes": "- Teams meeting scheduled on 13th and 14th may for South & East and North & west respectively.\n\n- May month is slow.\n- They have been given a target of 10 machines per day and currently they are doing 3.5 machines per day\n- Annual Target is 2500cr. Last year it was 2000 cr\n- From the 300 machines per month, 250 are VMC's which are ideal value and 50 are CNC and others.\n-",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-11T11:50:47.887Z"
+    },
+    {
+      "id": "v_1778517396426",
+      "oemId": "oem_1778408453736_g2b",
+      "date": "2026-05-09",
+      "type": "visit",
+      "personMet": "Manikanandan, Rajesh, Narendra Babu",
+      "peopleMet": [
+        "Manikanandan",
+        "Rajesh",
+        "Narendra Babu"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Appointment",
+        "Customer update"
+      ],
+      "notes": "Asked for a 10 min session on a Saturday preferably 16 May.. He will share a case on wednesday.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-11T16:36:36.426Z"
+    },
+    {
+      "id": "v_1778517489044",
+      "oemId": "oem_1778408453736_xci",
+      "date": "2026-05-09",
+      "type": "visit",
+      "personMet": "Nadeem",
+      "peopleMet": [
+        "Nadeem"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [
+        "Leasing",
+        "Principal Moratorium",
+        "Rate of Interest"
+      ],
+      "customTopics": [
+        "Case update",
+        "Appointment",
+        "Hybrid Flexi"
+      ],
+      "notes": "He was very casual and said he will share any leads if he has any",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-11T16:38:09.044Z"
+    },
+    {
+      "id": "v_1778557403347",
+      "oemId": "oem_1778408453736_wvh",
+      "date": "2026-05-11",
+      "type": "visit",
+      "personMet": "Basavaraju",
+      "peopleMet": [
+        "Basavaraju"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [
+        "Principal Moratorium",
+        "Leasing",
+        "Rate of Interest",
+        "Startups"
+      ],
+      "customTopics": [
+        "Hybrid Flexi",
+        "Team meeting"
+      ],
+      "notes": "They do approximately 45 machines in a month",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-12T03:43:23.348Z"
+    },
+    {
+      "id": "v_1778557656782",
+      "oemId": "oem_1778557584919",
+      "date": "2026-05-08",
+      "type": "call",
+      "personMet": "Rajesh Maharana",
+      "peopleMet": [
+        "Rajesh Maharana"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Contract Renewal"
+      ],
+      "notes": "Sone of the clauses that Bajaj has set is not approved by BPL.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-12T03:47:36.782Z"
+    },
+    {
+      "id": "v_1778576582144",
+      "oemId": "oem_1778408453736_lkn",
+      "date": "2026-05-08",
+      "type": "call",
+      "personMet": "Pankaj Sinha",
+      "peopleMet": [
+        "Pankaj Sinha"
+      ],
+      "visitLoc": "Patna",
+      "topics": [],
+      "customTopics": [
+        "Case update"
+      ],
+      "notes": "Spoke about the Patna lead Mr. Rakesh, Tirupathi eye hospital",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-12T09:03:02.144Z"
+    },
+    {
+      "id": "v_1778578428226",
+      "oemId": "oem_1778576788896",
+      "date": "2026-05-08",
+      "type": "call",
+      "personMet": "Jayson Matthew",
+      "peopleMet": [
+        "Jayson Matthew"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Case update"
+      ],
+      "notes": "Spoke about 4% ROI for Hyderabad customer. Shravan to take it ahead.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-12T09:33:48.226Z"
+    },
+    {
+      "id": "v_1778610397811",
+      "oemId": "oem_1778408453736_xi1",
+      "date": "2026-05-08",
+      "type": "call",
+      "personMet": "Jambunath",
+      "peopleMet": [
+        "Jambunath"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Case update"
+      ],
+      "notes": "Told him about the delay from the customer. He said they are waiting for a review to take place then they will confirm the order",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-12T18:26:37.811Z"
+    },
+    {
+      "id": "v_1778610451700",
+      "oemId": "oem_1778408453736_xci",
+      "date": "2026-05-08",
+      "type": "call",
+      "personMet": "John Edwin",
+      "peopleMet": [
+        "John Edwin"
+      ],
+      "visitLoc": "Chennai",
+      "topics": [],
+      "customTopics": [],
+      "notes": "Spoke about the open house and the approval that's required.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-12T18:27:31.700Z"
+    },
+    {
+      "id": "v_1778610644452",
+      "oemId": "oem_1778408453736_7b8",
+      "date": "2026-05-07",
+      "type": "visit",
+      "personMet": "Muthuraman",
+      "peopleMet": [
+        "Muthuraman"
+      ],
+      "visitLoc": "Chennai",
+      "topics": [
+        "Rate of Interest"
+      ],
+      "customTopics": [
+        "Team meeting"
+      ],
+      "notes": "He said he has not received update from head office regarding the subvention agreement.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-12T18:30:44.452Z"
+    },
+    {
+      "id": "v_1778647318512",
+      "oemId": "oem_1778408453736_nyq",
+      "date": "2026-05-13",
+      "type": "call",
+      "personMet": "Vijaykumar Khurdagi",
+      "peopleMet": [
+        "Vijaykumar Khurdagi"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "Spoke about a case shared with arun. West case need to be disbursed. And CT case in vizag",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-13T04:41:58.512Z"
+    },
+    {
+      "id": "v_1778647897206",
+      "oemId": "oem_1778408453736_nyq",
+      "date": "2026-05-13",
+      "type": "call",
+      "personMet": "Shreyas Sontake",
+      "peopleMet": [
+        "Shreyas Sontake"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Appointment"
+      ],
+      "notes": "He is available on friday",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-13T04:51:37.206Z"
+    },
+    {
+      "id": "v_1778651545614",
+      "oemId": "oem_1778408453736_441",
+      "date": "2026-05-13",
+      "type": "call",
+      "personMet": "Kiran",
+      "peopleMet": [
+        "Kiran"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [
+        "Leasing"
+      ],
+      "customTopics": [
+        "Team meeting"
+      ],
+      "notes": "Asked to stay connected on whatsapp",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-13T05:52:25.614Z"
+    },
+    {
+      "id": "v_1778654874548",
+      "oemId": "oem_1778408453736_441",
+      "date": "2026-05-13",
+      "type": "call",
+      "personMet": "Lakshmisha",
+      "peopleMet": [
+        "Lakshmisha"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-13T06:47:54.548Z"
+    },
+    {
+      "id": "v_1778663034856",
+      "oemId": "oem_1778408453736_xci",
+      "date": "2026-05-13",
+      "type": "call",
+      "personMet": "R Mahantha",
+      "peopleMet": [
+        "R Mahantha"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-13T09:03:54.856Z"
+    },
+    {
+      "id": "v_1778663362651",
+      "oemId": "oem_1778408453736_xci",
+      "date": "2026-05-13",
+      "type": "call",
+      "personMet": "Praveen Kumar",
+      "peopleMet": [
+        "Praveen Kumar"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Asked for leads"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-13T09:09:22.655Z"
+    },
+    {
+      "id": "v_1778663950123",
+      "oemId": "oem_1778408453736_cc9",
+      "date": "2026-05-13",
+      "type": "call",
+      "personMet": "Narayan JY",
+      "peopleMet": [
+        "Narayan JY"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Asked for leads"
+      ],
+      "notes": "Business is tough cause of dollar rate",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-13T09:19:10.123Z"
+    },
+    {
+      "id": "v_1778664274275",
+      "oemId": "oem_1778408453736_xi1",
+      "date": "2026-05-13",
+      "type": "call",
+      "personMet": "Raghu",
+      "peopleMet": [
+        "Raghu"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Asked for leads"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-13T09:24:34.275Z"
+    },
+    {
+      "id": "v_1778664496892",
+      "oemId": "oem_1778408453736_mjc",
+      "date": "2026-05-13",
+      "type": "visit",
+      "personMet": "Khalid",
+      "peopleMet": [
+        "Khalid"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "He couldn't meet",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-13T09:28:16.892Z"
+    },
+    {
+      "id": "v_1778755605163",
+      "oemId": "oem_1778408453736_441",
+      "date": "2026-05-14",
+      "type": "call",
+      "personMet": "Kanaka",
+      "peopleMet": [
+        "Kanaka"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "She is coming to Bengaluru in 16th. Meet her",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-14T10:46:45.163Z"
+    },
+    {
+      "id": "v_1778755800693",
+      "oemId": "oem_1778557584919",
+      "date": "2026-05-14",
+      "type": "call",
+      "personMet": "Suman Chudhury",
+      "peopleMet": [
+        "Suman Chudhury"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Appointment"
+      ],
+      "notes": "He doesn't have time for appointments",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-14T10:50:00.693Z"
+    },
+    {
+      "id": "v_1778755854174",
+      "oemId": "oem_1778408453736_b9a",
+      "date": "2026-05-14",
+      "type": "call",
+      "personMet": "Chetan",
+      "peopleMet": [
+        "Chetan"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "Spoke about collaboration about Deftech. He does not want to go ahead",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-14T10:50:54.175Z"
+    },
+    {
+      "id": "v_1778756219511",
+      "oemId": "oem_1778408453736_73u",
+      "date": "2026-05-07",
+      "type": "visit",
+      "personMet": "Periyasamy",
+      "peopleMet": [
+        "Periyasamy"
+      ],
+      "visitLoc": "Chennai",
+      "topics": [
+        "Leasing",
+        "Principal Moratorium",
+        "Rate of Interest",
+        "Startups"
+      ],
+      "customTopics": [
+        "Hybrid Flexi"
+      ],
+      "notes": "Send him a one pager of Hybrid flexi scheme.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-14T10:56:59.511Z"
+    },
+    {
+      "id": "v_1778756969310",
+      "oemId": "oem_1778408453736_xci",
+      "date": "2026-05-07",
+      "type": "visit",
+      "personMet": "John Edwin",
+      "peopleMet": [
+        "John Edwin"
+      ],
+      "visitLoc": "Chennai",
+      "topics": [
+        "Principal Moratorium",
+        "Leasing",
+        "Rate of Interest"
+      ],
+      "customTopics": [
+        "Team meeting",
+        "Hybrid Flexi",
+        "Asked for leads"
+      ],
+      "notes": "1. He has a open house on 22may. Asked for collaboration.\n2. They have a ground team meeting on 13rth may.\n3. He gets more freedom in Cosmos.\n4. Tieing up for Texpo was discussed.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-14T11:09:29.310Z"
+    },
+    {
+      "id": "v_1778759587855",
+      "oemId": "oem_1778758811194",
+      "date": "2026-05-06",
+      "type": "call",
+      "personMet": "Ashwin",
+      "peopleMet": [
+        "Ashwin"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Appointment"
+      ],
+      "notes": "Has asked to meet on 15th May",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-14T11:53:07.855Z"
+    },
+    {
+      "id": "v_1778782123023",
+      "oemId": "oem_1778782059514",
+      "date": "2026-05-06",
+      "type": "visit",
+      "personMet": "Suresh",
+      "peopleMet": [
+        "Suresh"
+      ],
+      "visitLoc": "Chennai",
+      "topics": [
+        "Principal Moratorium",
+        "Rate of Interest"
+      ],
+      "customTopics": [
+        "Ultrasound Program",
+        "Asked for leads"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-14T18:08:43.023Z"
+    },
+    {
+      "id": "v_1778782587162",
+      "oemId": "oem_1778408453736_lkn",
+      "date": "2026-05-06",
+      "type": "call",
+      "personMet": "Venugopal",
+      "peopleMet": [
+        "Venugopal"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Case update"
+      ],
+      "notes": "Took update for \n1. Ultrahuman case, shivmoga case, basavaraju case",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-14T18:16:27.162Z"
+    },
+    {
+      "id": "v_1778782729404",
+      "oemId": "oem_1778408453736_nyq",
+      "date": "2026-05-06",
+      "type": "call",
+      "personMet": "Prasath",
+      "peopleMet": [
+        "Prasath"
+      ],
+      "visitLoc": "Chennai",
+      "topics": [
+        "Leasing",
+        "Rate of Interest"
+      ],
+      "customTopics": [
+        "Ultrasound Program"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-14T18:18:49.404Z"
+    },
+    {
+      "id": "v_1778782909483",
+      "oemId": "oem_1778782836076",
+      "date": "2026-05-05",
+      "type": "call",
+      "personMet": "Renjith",
+      "peopleMet": [
+        "Renjith"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Appointment"
+      ],
+      "notes": "He will be available for a meet in July",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-14T18:21:49.483Z"
+    },
+    {
+      "id": "v_1778783442975",
+      "oemId": "oem_1778557584919",
+      "date": "2026-05-05",
+      "type": "call",
+      "personMet": "Rajesh Maharana",
+      "peopleMet": [
+        "Rajesh Maharana"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Contract Renewal"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-14T18:30:42.976Z"
+    },
+    {
+      "id": "v_1778783643937",
+      "oemId": "oem_1778408453736_vcf",
+      "date": "2026-05-05",
+      "type": "call",
+      "personMet": "Lokanandhan",
+      "peopleMet": [
+        "Lokanandhan"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Cross marketing"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-14T18:34:03.938Z"
+    },
+    {
+      "id": "v_1778818378586",
+      "oemId": "oem_1778818312939",
+      "date": "2026-05-05",
+      "type": "call",
+      "personMet": "Kumar",
+      "peopleMet": [
+        "Kumar"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Appointment"
+      ],
+      "notes": "He asked to meet next week",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-15T04:12:58.586Z"
+    },
+    {
+      "id": "v_1778818519101",
+      "oemId": "oem_1778576788896",
+      "date": "2026-05-05",
+      "type": "call",
+      "personMet": "Jayson Matthew",
+      "peopleMet": [
+        "Jayson Matthew"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "Spoke about MOU regarding subevntion",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-15T04:15:19.101Z"
+    },
+    {
+      "id": "v_1778818777991",
+      "oemId": "oem_1778408453736_xi1",
+      "date": "2026-05-05",
+      "type": "visit",
+      "personMet": "Raghu, Jambunath",
+      "peopleMet": [
+        "Raghu",
+        "Jambunath"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [
+        "Leasing"
+      ],
+      "customTopics": [
+        "Asked for leads"
+      ],
+      "notes": "Received one lead.\nConnected with Mr. Raghu.\nThey are not doing such good business,because of dollar rate and competition. Only big clients who have their funding.\nThey have office in Coimbatore and Hyderabad.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-15T04:19:37.991Z"
+    },
+    {
+      "id": "v_1778862082984",
+      "oemId": "oem_1778862041856",
+      "date": "2026-05-15",
+      "type": "call",
+      "personMet": "Kurian",
+      "peopleMet": [
+        "Kurian"
+      ],
+      "visitLoc": "Cochin",
+      "topics": [],
+      "customTopics": [
+        "Case update",
+        "MOU"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-15T16:21:22.984Z"
+    },
+    {
+      "id": "v_1778862171151",
+      "oemId": "oem_1778408453736_nyq",
+      "date": "2026-05-15",
+      "type": "call",
+      "personMet": "Vijaykumar Khurdagi",
+      "peopleMet": [
+        "Vijaykumar Khurdagi"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Case update"
+      ],
+      "notes": "He shared 2 leads. One is on-going and 1 was rejected because of poor CIBIL",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-15T16:22:51.151Z"
+    },
+    {
+      "id": "v_1778862313543",
+      "oemId": "oem_1778758811194",
+      "date": "2026-05-15",
+      "type": "call",
+      "personMet": "Pranav Shetty",
+      "peopleMet": [
+        "Pranav Shetty"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-15T16:25:13.544Z"
+    },
+    {
+      "id": "v_1778862350830",
+      "oemId": "oem_1778408453736_2w5",
+      "date": "2026-05-15",
+      "type": "call",
+      "personMet": "Giridhar",
+      "peopleMet": [
+        "Giridhar"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "Not available for a meeting",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-15T16:25:50.830Z"
+    },
+    {
+      "id": "v_1778862401919",
+      "oemId": "oem_1778408453736_lkn",
+      "date": "2026-05-15",
+      "type": "call",
+      "personMet": "Venugopal",
+      "peopleMet": [
+        "Venugopal"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-15T16:26:41.919Z"
+    },
+    {
+      "id": "v_1778862460146",
+      "oemId": "oem_1778758811194",
+      "date": "2026-05-15",
+      "type": "call",
+      "personMet": "Ashwin",
+      "peopleMet": [
+        "Ashwin"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "He asked to meet in Hebbal but later was not available.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-15T16:27:40.146Z"
+    },
+    {
+      "id": "v_1778862566812",
+      "oemId": "oem_1778408453736_nbf",
+      "date": "2026-05-15",
+      "type": "call",
+      "personMet": "Hemalatha",
+      "peopleMet": [
+        "Hemalatha"
+      ],
+      "visitLoc": "Chennai",
+      "topics": [],
+      "customTopics": [],
+      "notes": "Spoke about INTEC participation. She shared number of Mr. Kanakaraj",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-15T16:29:26.812Z"
+    },
+    {
+      "id": "v_1778862643730",
+      "oemId": "oem_1778408453736_nbf",
+      "date": "2026-05-15",
+      "type": "call",
+      "personMet": "Satish",
+      "peopleMet": [
+        "Satish"
+      ],
+      "visitLoc": "Coimbatore",
+      "topics": [],
+      "customTopics": [],
+      "notes": "Spoke about INTEC participation. Asked to speak with Kanakaraj",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-15T16:30:43.730Z"
+    },
+    {
+      "id": "v_1778862717831",
+      "oemId": "oem_1778408453736_nbf",
+      "date": "2026-05-15",
+      "type": "call",
+      "personMet": "Kanakaraj",
+      "peopleMet": [
+        "Kanakaraj"
+      ],
+      "visitLoc": "Coimbatore",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "Have dropped him a WA for INTEC participation",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-15T16:31:57.831Z"
+    },
+    {
+      "id": "v_1778862778049",
+      "oemId": "oem_1778408453736_vp9",
+      "date": "2026-05-15",
+      "type": "call",
+      "personMet": "Ajay",
+      "peopleMet": [
+        "Ajay"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "Asked about INTEC participation. He asked to connect with Mr. Shaparia",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-15T16:32:58.049Z"
+    },
+    {
+      "id": "v_1778862857961",
+      "oemId": "oem_1778408453736_vp9",
+      "date": "2026-05-15",
+      "type": "call",
+      "personMet": "Himanshu Shaparia",
+      "peopleMet": [
+        "Himanshu Shaparia"
+      ],
+      "visitLoc": "Rajkot",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-15T16:34:17.961Z"
+    },
+    {
+      "id": "v_1778862927658",
+      "oemId": "oem_1778408453736_7b8",
+      "date": "2026-05-15",
+      "type": "call",
+      "personMet": "Gurucharan",
+      "peopleMet": [
+        "Gurucharan"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "He answered and said will call later. But he didn't.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-15T16:35:27.658Z"
+    },
+    {
+      "id": "v_1778863034642",
+      "oemId": "oem_1778863020698",
+      "date": "2026-05-15",
+      "type": "call",
+      "personMet": "Nandan Chavan",
+      "peopleMet": [
+        "Nandan Chavan"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-15T16:37:14.642Z"
+    },
+    {
+      "id": "v_1778863084678",
+      "oemId": "oem_1778818312939",
+      "date": "2026-05-15",
+      "type": "call",
+      "personMet": "Kumar",
+      "peopleMet": [
+        "Kumar"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Appointment"
+      ],
+      "notes": "He asked to meet next week",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-15T16:38:04.678Z"
+    },
+    {
+      "id": "v_1778863261374",
+      "oemId": "oem_1778408453736_de4",
+      "date": "2026-05-15",
+      "type": "call",
+      "personMet": "Madhu Babu, Dastagiri",
+      "peopleMet": [
+        "Madhu Babu",
+        "Dastagiri"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Case update"
+      ],
+      "notes": "Shared subvention calculation to Shivani for approval for Vijaywada case",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-15T16:41:01.374Z"
+    },
+    {
+      "id": "v_1778863917909",
+      "oemId": "oem_1778408453736_7b8",
+      "date": "2026-05-05",
+      "type": "call",
+      "personMet": "Gurucharan",
+      "peopleMet": [
+        "Gurucharan"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-15T16:51:57.909Z"
+    },
+    {
+      "id": "v_1778864019423",
+      "oemId": "oem_1778408453736_3zk",
+      "date": "2026-05-05",
+      "type": "visit",
+      "personMet": "Manjunath",
+      "peopleMet": [
+        "Manjunath"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [
+        "Leasing"
+      ],
+      "customTopics": [],
+      "notes": "They have meetings on Monday, Wednesday and Friday.\nCases will start coming from this week.\nComes to office at 11.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-15T16:53:39.423Z"
+    },
+    {
+      "id": "v_1778864055597",
+      "oemId": "oem_1778408453736_vp9",
+      "date": "2026-05-05",
+      "type": "visit",
+      "personMet": "",
+      "peopleMet": [],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "No one in office.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-15T16:54:15.597Z"
+    },
+    {
+      "id": "v_1778864122789",
+      "oemId": "oem_1778408453736_xci",
+      "date": "2026-05-05",
+      "type": "visit",
+      "personMet": "No one in office/ security/ receptionist",
+      "peopleMet": [
+        "No one in office/ security/ receptionist"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "No one in office.\nThey come to office only if meeting is there.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-15T16:55:22.789Z"
+    },
+    {
+      "id": "v_1778864252072",
+      "oemId": "oem_1778408453736_de4",
+      "date": "2026-05-04",
+      "type": "call",
+      "personMet": "Madhu P",
+      "peopleMet": [
+        "Madhu P"
+      ],
+      "visitLoc": "Kerala",
+      "topics": [
+        "Rate of Interest"
+      ],
+      "customTopics": [
+        "Asked for leads"
+      ],
+      "notes": "Spoke about connect with sales team.\nReiterated about 9% ROI and 0.5% PF",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-15T16:57:32.072Z"
+    },
+    {
+      "id": "v_1778864297455",
+      "oemId": "oem_1778408453736_de4",
+      "date": "2026-05-04",
+      "type": "call",
+      "personMet": "Madhu Babu",
+      "peopleMet": [
+        "Madhu Babu"
+      ],
+      "visitLoc": "Chennai",
+      "topics": [
+        "Rate of Interest"
+      ],
+      "customTopics": [
+        "Asked for leads"
+      ],
+      "notes": "Spoke about connect with sales team.\nReiterated about 9% ROI and 0.5% PF",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-15T16:58:17.455Z"
+    },
+    {
+      "id": "v_1778864338385",
+      "oemId": "oem_1778408453736_de4",
+      "date": "2026-05-04",
+      "type": "call",
+      "personMet": "Abhinav Dhawan",
+      "peopleMet": [
+        "Abhinav Dhawan"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "He gave number of Madhu P and Madhu Babu.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-15T16:58:58.385Z"
+    },
+    {
+      "id": "v_1778864387649",
+      "oemId": "oem_1778408453736_nyq",
+      "date": "2026-05-04",
+      "type": "call",
+      "personMet": "Yamini",
+      "peopleMet": [
+        "Yamini"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "Spoke about Payout and Notice of change",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-15T16:59:47.649Z"
+    },
+    {
+      "id": "v_1778864453065",
+      "oemId": "oem_1778408453736_nbf",
+      "date": "2026-05-04",
+      "type": "call",
+      "personMet": "Sangeet Kumar",
+      "peopleMet": [
+        "Sangeet Kumar"
+      ],
+      "visitLoc": "Coimbatore",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-15T17:00:53.065Z"
+    },
+    {
+      "id": "v_1778999918597",
+      "oemId": "oem_1778408453736_wvh",
+      "date": "2026-05-16",
+      "type": "visit",
+      "personMet": "Vasana",
+      "peopleMet": [
+        "Vasana"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [
+        "Leasing",
+        "Principal Moratorium",
+        "Startups",
+        "Rate of Interest"
+      ],
+      "customTopics": [
+        "Team meeting"
+      ],
+      "notes": "Connected with the entire team.\n1. They wanted support with startups.\n2. They have 2% market share whereas ACE has 37%.\n3. They sell 5-8 machines in a month.\n4. They have also started recently about 1 year back",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-17T06:38:38.597Z"
+    },
+    {
+      "id": "v_1779015463892",
+      "oemId": "oem_1778408453736_vp9",
+      "date": "2026-05-16",
+      "type": "call",
+      "personMet": "Jagadeesh Patil",
+      "peopleMet": [
+        "Jagadeesh Patil"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Team meeting"
+      ],
+      "notes": "Meeting on 23rd at 11am for training with team.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-17T10:57:43.892Z"
+    },
+    {
+      "id": "v_1779015531948",
+      "oemId": "oem_1778408453736_b9a",
+      "date": "2026-05-16",
+      "type": "visit",
+      "personMet": "No one in office/ security/ reception",
+      "peopleMet": [
+        "No one in office/ security/ reception"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "Office was closed",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-17T10:58:51.948Z"
+    },
+    {
+      "id": "v_1779015689124",
+      "oemId": "oem_1778408453736_5wv",
+      "date": "2026-05-16",
+      "type": "visit",
+      "personMet": "No one in office/ security/ reception",
+      "peopleMet": [
+        "No one in office/ security/ reception"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "All sales teams on field",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-17T11:01:29.124Z"
+    },
+    {
+      "id": "v_1779015759740",
+      "oemId": "oem_1778408453736_5wv",
+      "date": "2026-05-16",
+      "type": "call",
+      "personMet": "Abhilasha",
+      "peopleMet": [
+        "Abhilasha"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Asked for leads"
+      ],
+      "notes": "No leads. Cases are ongoing.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-17T11:02:39.740Z"
+    },
+    {
+      "id": "v_1779017011994",
+      "oemId": "oem_1778408453736_g2b",
+      "date": "2026-05-16",
+      "type": "visit",
+      "personMet": "Jeevan, Gangatharan, Giridhar, Manikanand",
+      "peopleMet": [
+        "Jeevan",
+        "Gangatharan",
+        "Giridhar",
+        "Manikanand"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [
+        "Leasing",
+        "Principal Moratorium",
+        "Rate of Interest",
+        "Startups"
+      ],
+      "customTopics": [
+        "Team meeting",
+        "Hybrid Flexi",
+        "Asked for leads"
+      ],
+      "notes": "Gave training to these team members",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-17T11:23:31.995Z"
+    },
+    {
+      "id": "v_1779102613331",
+      "oemId": "oem_1778408453736_7b8",
+      "date": "2026-05-18",
+      "type": "call",
+      "personMet": "Gurucharan",
+      "peopleMet": [
+        "Gurucharan"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "Did not answer phone",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-18T11:10:13.331Z"
+    },
+    {
+      "id": "v_1779102664552",
+      "oemId": "oem_1778408453736_73u",
+      "date": "2026-05-18",
+      "type": "call",
+      "personMet": "Samir",
+      "peopleMet": [
+        "Samir"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "Spoke about INTEC Collab. Sent mail to Payal for approval.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-18T11:11:04.552Z"
+    },
+    {
+      "id": "v_1779102739605",
+      "oemId": "oem_1778408453736_nbf",
+      "date": "2026-05-18",
+      "type": "call",
+      "personMet": "Madhu",
+      "peopleMet": [
+        "Madhu"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "Did not answer phone",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-18T11:12:19.605Z"
+    },
+    {
+      "id": "v_1779103052267",
+      "oemId": "oem_1778408453736_nbf",
+      "date": "2026-05-18",
+      "type": "call",
+      "personMet": "Dhanush Kodi",
+      "peopleMet": [
+        "Dhanush Kodi"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Appointment"
+      ],
+      "notes": "Asked for appointment. Asked to meet next monthe 1st week. They are in office on Wednesday.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-18T11:17:32.267Z"
+    },
+    {
+      "id": "v_1779103381577",
+      "oemId": "oem_1779103177052",
+      "date": "2026-05-18",
+      "type": "call",
+      "personMet": "Prashant Kulkarni",
+      "peopleMet": [
+        "Prashant Kulkarni"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Appointment"
+      ],
+      "notes": "Asked for an appointment. He asked to call in 20th for appointment.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-18T11:23:01.577Z"
+    },
+    {
+      "id": "v_1779105345193",
+      "oemId": "oem_1778408453736_vp9",
+      "date": "2026-05-18",
+      "type": "call",
+      "personMet": "Himanshu Shaparia",
+      "peopleMet": [
+        "Himanshu Shaparia"
+      ],
+      "visitLoc": "Rajkot",
+      "topics": [],
+      "customTopics": [
+        "MOU"
+      ],
+      "notes": "Resent him the MOU copy",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-18T11:55:45.193Z"
+    },
+    {
+      "id": "v_1779105415433",
+      "oemId": "oem_1778758811194",
+      "date": "2026-05-18",
+      "type": "call",
+      "personMet": "Ashwin",
+      "peopleMet": [
+        "Ashwin"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "MOU",
+        "Appointment"
+      ],
+      "notes": "He asked to meet next week",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-18T11:56:55.433Z"
+    },
+    {
+      "id": "v_1779106095127",
+      "oemId": "oem_1778408453736_nyq",
+      "date": "2026-05-18",
+      "type": "call",
+      "personMet": "Vijaykumar Khurdagi",
+      "peopleMet": [
+        "Vijaykumar Khurdagi"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Case update"
+      ],
+      "notes": "Spoke about\n1. Genea lead\n2. Basavaraj lead",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-18T12:08:15.127Z"
+    },
+    {
+      "id": "v_1779106286222",
+      "oemId": "oem_1779103177052",
+      "date": "2026-05-18",
+      "type": "call",
+      "personMet": "Ambika",
+      "peopleMet": [
+        "Ambika"
+      ],
+      "visitLoc": "Coimbatore",
+      "topics": [],
+      "customTopics": [],
+      "notes": "Spoke with Ambika regarding taking contact of Bengaluru sales head",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-18T12:11:26.222Z"
+    },
+    {
+      "id": "v_1779106366800",
+      "oemId": "oem_1778408453736_nyq",
+      "date": "2026-05-18",
+      "type": "call",
+      "personMet": "Mohnish",
+      "peopleMet": [
+        "Mohnish"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Appointment"
+      ],
+      "notes": "He asked to meet in 2nd week of june.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-18T12:12:46.800Z"
+    },
+    {
+      "id": "v_1779106448867",
+      "oemId": "oem_1778408453736_vgl",
+      "date": "2026-05-18",
+      "type": "call",
+      "personMet": "Fazal",
+      "peopleMet": [
+        "Fazal"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Appointment",
+        "Cross marketing"
+      ],
+      "notes": "Spoke about appointment. But he was in hospital for a heart problem",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-18T12:14:08.867Z"
+    },
+    {
+      "id": "v_1779106511231",
+      "oemId": "oem_1778408453736_vgl",
+      "date": "2026-05-18",
+      "type": "call",
+      "personMet": "Kishor Elango",
+      "peopleMet": [
+        "Kishor Elango"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Appointment"
+      ],
+      "notes": "He asked to meet later.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-18T12:15:11.231Z"
+    },
+    {
+      "id": "v_1779106557608",
+      "oemId": "oem_1778408453736_xci",
+      "date": "2026-05-18",
+      "type": "call",
+      "personMet": "Milind Navale",
+      "peopleMet": [
+        "Milind Navale"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Appointment"
+      ],
+      "notes": "He had a meeting after 2. But couldn't meet",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-18T12:15:57.608Z"
+    },
+    {
+      "id": "v_1779171252169",
+      "oemId": "oem_1778408453736_r86",
+      "date": "2026-05-19",
+      "type": "call",
+      "personMet": "Kiran",
+      "peopleMet": [
+        "Kiran"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-19T06:14:12.169Z"
+    },
+    {
+      "id": "v_1779171288234",
+      "oemId": "oem_1778408453736_nyq",
+      "date": "2026-05-19",
+      "type": "call",
+      "personMet": "Vijaykumar Khurdagi",
+      "peopleMet": [
+        "Vijaykumar Khurdagi"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Case update"
+      ],
+      "notes": "Gave new lead",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-19T06:14:48.234Z"
+    },
+    {
+      "id": "v_1779257614795",
+      "oemId": "oem_1778408453736_xci",
+      "date": "2026-05-19",
+      "type": "call",
+      "personMet": "Chintan Makwana",
+      "peopleMet": [
+        "Chintan Makwana"
+      ],
+      "visitLoc": "Ahmedabad",
+      "topics": [],
+      "customTopics": [],
+      "notes": "Spoke regarding participation for INTEC",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-20T06:13:34.795Z"
+    },
+    {
+      "id": "v_1779257649041",
+      "oemId": "oem_1778408453736_441",
+      "date": "2026-05-19",
+      "type": "call",
+      "personMet": "Satish Mestha",
+      "peopleMet": [
+        "Satish Mestha"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "Spoke about participation for INTEC",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-20T06:14:09.041Z"
+    },
+    {
+      "id": "v_1779257670613",
+      "oemId": "oem_1778408453736_mjc",
+      "date": "2026-05-19",
+      "type": "call",
+      "personMet": "Khalid",
+      "peopleMet": [
+        "Khalid"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "Spoke about participation for INTEC",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-20T06:14:30.613Z"
+    },
+    {
+      "id": "v_1779257720877",
+      "oemId": "oem_1778408453736_3zk",
+      "date": "2026-05-19",
+      "type": "call",
+      "personMet": "Charan",
+      "peopleMet": [
+        "Charan"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "Spoke about participation for INTEC",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-20T06:15:20.877Z"
+    },
+    {
+      "id": "v_1779344489867",
+      "oemId": "oem_1778408453736_b9a",
+      "date": "2026-05-20",
+      "type": "visit",
+      "personMet": "Chetan, Jayant",
+      "peopleMet": [
+        "Chetan",
+        "Jayant"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "Met at Deftech Bharat event 2026",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-21T06:21:29.867Z"
+    },
+    {
+      "id": "v_1779344747054",
+      "oemId": "oem_1779344644898",
+      "date": "2026-05-20",
+      "type": "visit",
+      "personMet": "",
+      "peopleMet": [],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-21T06:25:47.054Z"
+    },
+    {
+      "id": "v_1779439815477",
+      "oemId": "oem_1778408453736_r86",
+      "date": "2026-05-21",
+      "type": "call",
+      "personMet": "Kiran",
+      "peopleMet": [
+        "Kiran"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-22T08:50:15.477Z"
+    },
+    {
+      "id": "v_1779439856583",
+      "oemId": "oem_1778758811194",
+      "date": "2026-05-21",
+      "type": "call",
+      "personMet": "Ashwin",
+      "peopleMet": [
+        "Ashwin"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Appointment"
+      ],
+      "notes": "He is not free. He will call",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-22T08:50:56.583Z"
+    },
+    {
+      "id": "v_1779439893236",
+      "oemId": "oem_1778408453736_g2b",
+      "date": "2026-05-21",
+      "type": "call",
+      "personMet": "Giridhar",
+      "peopleMet": [
+        "Giridhar"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Asked for leads"
+      ],
+      "notes": "He shared one lead",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-22T08:51:33.236Z"
+    },
+    {
+      "id": "v_1779440034092",
+      "oemId": "oem_1779439968333",
+      "date": "2026-05-21",
+      "type": "call",
+      "personMet": "Surendra",
+      "peopleMet": [
+        "Surendra"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [
+        "Principal Moratorium",
+        "Rate of Interest"
+      ],
+      "customTopics": [
+        "Appointment"
+      ],
+      "notes": "He is out of station now. Will call on Monday.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-22T08:53:54.092Z"
+    },
+    {
+      "id": "v_1779440190592",
+      "oemId": "oem_1779440163171",
+      "date": "2026-05-21",
+      "type": "call",
+      "personMet": "Ben Alummoottil",
+      "peopleMet": [
+        "Ben Alummoottil"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Appointment"
+      ],
+      "notes": "He is available on Monday for a meeting.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-22T08:56:30.592Z"
+    },
+    {
+      "id": "v_1779440332801",
+      "oemId": "oem_1779440291016",
+      "date": "2026-05-21",
+      "type": "call",
+      "personMet": "Rajendra",
+      "peopleMet": [
+        "Rajendra"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Case update",
+        "Asked for leads"
+      ],
+      "notes": "He will update on Monday. 25th May",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-22T08:58:52.801Z"
+    },
+    {
+      "id": "v_1779456328506",
+      "oemId": "oem_1778408453736_lkn",
+      "date": "2026-05-20",
+      "type": "call",
+      "personMet": "Venugopal",
+      "peopleMet": [
+        "Venugopal"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-22T13:25:28.506Z"
+    },
+    {
+      "id": "v_1779456373069",
+      "oemId": "oem_1778408453736_nyq",
+      "date": "2026-05-20",
+      "type": "call",
+      "personMet": "Vijaykumar Khurdagi",
+      "peopleMet": [
+        "Vijaykumar Khurdagi"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "Wanted to talk about Genea",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-22T13:26:13.069Z"
+    },
+    {
+      "id": "v_1779456409143",
+      "oemId": "oem_1778408453736_441",
+      "date": "2026-05-20",
+      "type": "call",
+      "personMet": "Saravanan",
+      "peopleMet": [
+        "Saravanan"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-22T13:26:49.143Z"
+    },
+    {
+      "id": "v_1779456702395",
+      "oemId": "oem_1779456665466",
+      "date": "2026-05-20",
+      "type": "customer",
+      "personMet": "",
+      "peopleMet": [],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "Aaru Plastics.\nExplained leasing.\nHe is an existing Bajaj customer",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-22T13:31:42.395Z"
+    },
+    {
+      "id": "v_1779458984208",
+      "oemId": "oem_1779458898790",
+      "date": "2026-05-21",
+      "type": "call",
+      "personMet": "Vikas Sharma",
+      "peopleMet": [
+        "Vikas Sharma"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "They don't do business with Bajaj.\nThey tried to do it before, but commercials didn't work out.\nIf any deals come they will share.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-22T14:09:44.208Z"
+    },
+    {
+      "id": "v_1779460198208",
+      "oemId": "oem_1779459190982",
+      "date": "2026-05-21",
+      "type": "call",
+      "personMet": "Sreenag",
+      "peopleMet": [
+        "Sreenag"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "Asked about bangalore persons number",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-22T14:29:58.208Z"
+    },
+    {
+      "id": "v_1779460255177",
+      "oemId": "oem_1779459190982",
+      "date": "2026-05-21",
+      "type": "call",
+      "personMet": "Rajesh Kumar",
+      "peopleMet": [
+        "Rajesh Kumar"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [
+        "Rate of Interest"
+      ],
+      "customTopics": [
+        "Appointment"
+      ],
+      "notes": "Asked to meet on Tuesday.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-22T14:30:55.177Z"
+    },
+    {
+      "id": "v_1779460357870",
+      "oemId": "oem_1778408453736_xci",
+      "date": "2026-05-21",
+      "type": "visit",
+      "personMet": "Milind Navale",
+      "peopleMet": [
+        "Milind Navale"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Asked for leads"
+      ],
+      "notes": "He has 2 leads working. Will share them when closed.\nAlso spoke about open house.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-22T14:32:37.870Z"
+    },
+    {
+      "id": "v_1779460433318",
+      "oemId": "oem_1778408453736_vp9",
+      "date": "2026-05-21",
+      "type": "visit",
+      "personMet": "No one in office/ security/ receptionist",
+      "peopleMet": [
+        "No one in office/ security/ receptionist"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "He was busy. Couldn't meet",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-22T14:33:53.318Z"
+    },
+    {
+      "id": "v_1779460928472",
+      "oemId": "oem_1778408453736_de4",
+      "date": "2026-05-22",
+      "type": "call",
+      "personMet": "Madhu Babu",
+      "peopleMet": [
+        "Madhu Babu"
+      ],
+      "visitLoc": "",
+      "topics": [
+        "Leasing"
+      ],
+      "customTopics": [
+        "Case update"
+      ],
+      "notes": "Gave him subvention calculation for a 3.5cr deal",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-22T14:42:08.472Z"
+    },
+    {
+      "id": "v_1779461798302",
+      "oemId": "oem_1778408453736_de4",
+      "date": "2026-05-22",
+      "type": "call",
+      "personMet": "Chaitanya",
+      "peopleMet": [
+        "Chaitanya"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Case update"
+      ],
+      "notes": "Spoke about running case and took details for subvention approval.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-22T14:56:38.302Z"
+    },
+    {
+      "id": "v_1779461884522",
+      "oemId": "oem_1778557584919",
+      "date": "2026-05-22",
+      "type": "call",
+      "personMet": "Rajesh Maharana",
+      "peopleMet": [
+        "Rajesh Maharana"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Contract Renewal"
+      ],
+      "notes": "Spoke about arranging a call with BPL and Bajaj legal teams on 25th",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-22T14:58:04.522Z"
+    },
+    {
+      "id": "v_1779559896492",
+      "oemId": "oem_1779456665466",
+      "date": "2026-05-23",
+      "type": "customer",
+      "personMet": "",
+      "peopleMet": [],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "Lakshmi Precision tools.\nLogged in his Cosmos case in front of him. He is a existing Bajaj customer.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-23T18:11:36.492Z"
+    },
+    {
+      "id": "v_1779560081508",
+      "oemId": "oem_1779456665466",
+      "date": "2026-05-13",
+      "type": "customer",
+      "personMet": "",
+      "peopleMet": [],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "Laxmi Industries (cosmos)\nHe wants lower ROI of 9%",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-23T18:14:41.508Z"
+    },
+    {
+      "id": "v_1779560273595",
+      "oemId": "oem_1779456665466",
+      "date": "2026-05-23",
+      "type": "customer",
+      "personMet": "",
+      "peopleMet": [],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "Halamanee Aerospace. (Makino)\nHe wants 90% LTV and 10% ROI",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-23T18:17:53.595Z"
+    },
+    {
+      "id": "v_1779560429964",
+      "oemId": "oem_1779456665466",
+      "date": "2026-05-12",
+      "type": "customer",
+      "personMet": "",
+      "peopleMet": [],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "AJM enterprise (S&T)\nMet Mr. Thulasi Ragavendra.\nWants loan of 1.7cr.\nWants to clear quickly within 1 yr\nExplained leasing vs loan",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-23T18:20:29.964Z"
+    },
+    {
+      "id": "v_1779560625759",
+      "oemId": "oem_1778408453736_xci",
+      "date": "2026-05-23",
+      "type": "call",
+      "personMet": "Milind Navale",
+      "peopleMet": [
+        "Milind Navale"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Case update"
+      ],
+      "notes": "Gave him update about Lakshmi Industries login and inspire technologies Monday meeting",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-23T18:23:45.759Z"
+    },
+    {
+      "id": "v_1779560650724",
+      "oemId": "oem_1778408453736_0sy",
+      "date": "2026-05-23",
+      "type": "call",
+      "personMet": "Blesiyas D'Souza",
+      "peopleMet": [
+        "Blesiyas D'Souza"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-23T18:24:10.724Z"
+    },
+    {
+      "id": "v_1779560683514",
+      "oemId": "oem_1778408453736_0sy",
+      "date": "2026-05-23",
+      "type": "call",
+      "personMet": "Subramanyam",
+      "peopleMet": [
+        "Subramanyam"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Appointment"
+      ],
+      "notes": "He Didn't give appointment. Asked to get it approved from Head office only.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-23T18:24:43.514Z"
+    },
+    {
+      "id": "v_1779560713728",
+      "oemId": "oem_1778408453736_vp9",
+      "date": "2026-05-23",
+      "type": "call",
+      "personMet": "Jagadeesh Patil",
+      "peopleMet": [
+        "Jagadeesh Patil"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-23T18:25:13.728Z"
+    },
+    {
+      "id": "v_1779698318353",
+      "oemId": "oem_1779456665466",
+      "date": "2026-05-25",
+      "type": "customer",
+      "personMet": "",
+      "peopleMet": [],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [],
+      "notes": "GGL\nHad a teams call with Ashish and Prashant and others.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-25T08:38:38.354Z"
+    },
+    {
+      "id": "v_1779708768431",
+      "oemId": "oem_1779440291016",
+      "date": "2026-05-25",
+      "type": "call",
+      "personMet": "Rajendra",
+      "peopleMet": [
+        "Rajendra"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-25T11:32:48.431Z"
+    },
+    {
+      "id": "v_1779708785315",
+      "oemId": "oem_1779440163171",
+      "date": "2026-05-25",
+      "type": "call",
+      "personMet": "Ben Alummoottil",
+      "peopleMet": [
+        "Ben Alummoottil"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-25T11:33:05.315Z"
+    },
+    {
+      "id": "v_1779709553055",
+      "oemId": "oem_1778818312939",
+      "date": "2026-05-25",
+      "type": "call",
+      "personMet": "Kumar",
+      "peopleMet": [
+        "Kumar"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-25T11:45:53.055Z"
+    },
+    {
+      "id": "v_1779709582718",
+      "oemId": "oem_1779459190982",
+      "date": "2026-05-25",
+      "type": "call",
+      "personMet": "Rajesh Kumar",
+      "peopleMet": [
+        "Rajesh Kumar"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-25T11:46:22.718Z"
+    },
+    {
+      "id": "v_1779709609307",
+      "oemId": "oem_1779456665466",
+      "date": "2026-05-25",
+      "type": "customer",
+      "personMet": "",
+      "peopleMet": [],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-25T11:46:49.307Z"
+    },
+    {
+      "id": "v_1779709630107",
+      "oemId": "oem_1779456665466",
+      "date": "2026-05-25",
+      "type": "customer",
+      "personMet": "",
+      "peopleMet": [],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-25T11:47:10.107Z"
+    },
+    {
+      "id": "v_1778575375436",
+      "oemId": "oem_1778408453736_g2b",
+      "date": "2026-05-12",
+      "type": "customer",
+      "personMet": "Manikanandan",
+      "peopleMet": [
+        "Manikanandan"
+      ],
+      "visitLoc": "",
+      "topics": [
+        "Leasing",
+        "Principal Moratorium"
+      ],
+      "customTopics": [
+        "Customer update",
+        "Hybrid Flexi"
+      ],
+      "notes": "Met Mr. Thulasi Ragavendra.\nS&T customer.\nWants loan of 1.7cr.\nWants to clear quickly within 1 yr",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-12T08:42:55.436Z"
+    },
+    {
+      "id": "v_1779781908527",
+      "oemId": "oem_1779439968333",
+      "date": "2026-05-26",
+      "type": "call",
+      "personMet": "",
+      "peopleMet": [],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Appointment"
+      ],
+      "notes": "He asked to meet on 1st June",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-26T07:51:48.529Z"
+    },
+    {
+      "id": "v_1779789829483",
+      "oemId": "oem_1778408453736_lkn",
+      "date": "2026-05-26",
+      "type": "visit",
+      "personMet": "Phaniraj Upadhyay, Sujith",
+      "peopleMet": [
+        "Phaniraj Upadhyay",
+        "Sujith"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [
+        "Leasing"
+      ],
+      "customTopics": [
+        "Case update",
+        "Ultrasound Program"
+      ],
+      "notes": "Spoke about war and other sales price rise. He asked to reach out to Shrikant Sahoo and close the deal",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-26T10:03:49.483Z"
+    },
+    {
+      "id": "v_1779890284451",
+      "oemId": "oem_1779890222310",
+      "date": "2026-05-27",
+      "type": "call",
+      "personMet": "Saniyo",
+      "peopleMet": [
+        "Saniyo"
+      ],
+      "visitLoc": "",
+      "topics": [
+        "Leasing"
+      ],
+      "customTopics": [
+        "Case update"
+      ],
+      "notes": "Has a customer for 30L. Wanted dealer funding.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-27T13:58:04.451Z"
+    },
+    {
+      "id": "v_1779890344375",
+      "oemId": "oem_1778408453736_lkn",
+      "date": "2026-05-27",
+      "type": "call",
+      "personMet": "Sujith",
+      "peopleMet": [
+        "Sujith"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Case update"
+      ],
+      "notes": "Spoke about Dr. Shrikant Sahoo's case denial.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-27T13:59:04.375Z"
+    }
+  ],
+  "actions": [
+    {
+      "id": "a_1778557403350_wjn",
+      "visitId": "v_1778557403347",
+      "description": "Macpower has their meeting on Saturdays at 11",
+      "dueDate": "2026-05-16",
+      "status": "closed"
+    },
+    {
+      "id": "a_1778782909483_mmk",
+      "visitId": "v_1778782909483",
+      "description": "Try to call and take appointment with Anca renjith",
+      "dueDate": "2026-06-24",
+      "status": "open"
+    },
+    {
+      "id": "a_1778818845485_x7o",
+      "visitId": "v_1778818777991",
+      "description": "Send email to Naveen mahadevan for Collab for new machine launches",
+      "dueDate": "2026-05-15",
+      "status": "open"
+    },
+    {
+      "id": "a_1778864882288_1j2",
+      "visitId": "v_1778863084678",
+      "description": "Call suba solutions for appointment",
+      "dueDate": "2026-05-20",
+      "status": "open"
+    },
+    {
+      "id": "a_1779015463892_flj",
+      "visitId": "v_1779015463892",
+      "description": "Call Jagadeesh sir for planning on 23rd",
+      "dueDate": "2026-05-20",
+      "status": "closed"
+    },
+    {
+      "id": "a_1779103052267_spf",
+      "visitId": "v_1779103052267",
+      "description": "Meet dhanush kodi on a Wednesday 2nd week of June",
+      "dueDate": "2026-06-10",
+      "status": "open"
+    },
+    {
+      "id": "a_1779103381577_h3r",
+      "visitId": "v_1779103381577",
+      "description": "Mtske appointment for meeting Prashant Kulkarni VEL",
+      "dueDate": "2026-05-20",
+      "status": "open"
+    },
+    {
+      "id": "a_1779106366801_hhv",
+      "visitId": "v_1779106366800",
+      "description": "Meet Shreyas sontake",
+      "dueDate": "2026-06-08",
+      "status": "open"
+    },
+    {
+      "id": "a_1779440034092_eby",
+      "visitId": "v_1779440034092",
+      "description": "Take appointment with Surendra Bluestar for meeting",
+      "dueDate": "2026-05-25",
+      "status": "closed"
+    },
+    {
+      "id": "a_1779440218742_m3n",
+      "visitId": "v_1779440190592",
+      "description": "Call ben phantom for appointment",
+      "dueDate": "2026-05-25",
+      "status": "closed"
+    },
+    {
+      "id": "a_1779460255177_pzl",
+      "visitId": "v_1779460255177",
+      "description": "Meet mr. Rajesh kumar olympus",
+      "dueDate": "2026-05-26",
+      "status": "open"
+    },
+    {
+      "id": "a_1779461884523_fzx",
+      "visitId": "v_1779461884522",
+      "description": "Setup call between bajaj and bpl legal teams in 2nd half",
+      "dueDate": "2026-05-25",
+      "status": "closed"
+    },
+    {
+      "id": "a_1778647897210_ruz",
+      "visitId": "v_1778647897206",
+      "description": "As for appointment shreyas sontake",
+      "dueDate": "2026-05-15",
+      "status": "open"
+    },
+    {
+      "id": "a_1778782340849_vfn",
+      "visitId": "v_1778759587855",
+      "description": "Take appointment of Ashwin from siemens",
+      "dueDate": "2026-05-15",
+      "status": "open"
+    }
+  ]
+}
