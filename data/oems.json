@@ -2756,5 +2756,34 @@
       }
     ],
     "notes": ""
+  },
+  {
+    "id": "oem_1779953816329",
+    "name": "Sathyam Healthcare",
+    "code": "",
+    "oemType": "Dealer",
+    "segment": "Medical",
+    "subcategories": [
+      "Imaging"
+    ],
+    "dealerBrands": "Samsung",
+    "locations": [
+      {
+        "city": "Madurai",
+        "address": "",
+        "lat": "",
+        "lng": ""
+      }
+    ],
+    "contacts": [
+      {
+        "name": "Muthupandi",
+        "phone": "9943453499",
+        "position": "Sales head",
+        "location": "Madurai",
+        "note": ""
+      }
+    ],
+    "notes": ""
   }
 ]
