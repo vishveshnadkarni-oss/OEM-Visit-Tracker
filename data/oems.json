@@ -2785,5 +2785,17 @@
       }
     ],
     "notes": ""
+  },
+  {
+    "id": "oem_1780139914103",
+    "name": "Events (Name in description)",
+    "code": "",
+    "oemType": "OEM",
+    "segment": "Industrial",
+    "subcategories": [],
+    "dealerBrands": "",
+    "locations": [],
+    "contacts": [],
+    "notes": "IFKCC Global MSME confluence"
   }
 ]
