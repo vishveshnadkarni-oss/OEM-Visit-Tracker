@@ -2794,8 +2794,34 @@
     "segment": "Industrial",
     "subcategories": [],
     "dealerBrands": "",
-    "locations": [],
+    "locations": [
+      {
+        "city": "Bengaluru",
+        "address": "",
+        "lat": "",
+        "lng": ""
+      }
+    ],
     "contacts": [],
-    "notes": "IFKCC Global MSME confluence"
+    "notes": ""
+  },
+  {
+    "id": "oem_1780139966946",
+    "name": "Open House (OEM in description)",
+    "code": "",
+    "oemType": "OEM",
+    "segment": "Industrial",
+    "subcategories": [],
+    "dealerBrands": "",
+    "locations": [
+      {
+        "city": "Bengaluru",
+        "address": "",
+        "lat": "",
+        "lng": ""
+      }
+    ],
+    "contacts": [],
+    "notes": ""
   }
 ]
