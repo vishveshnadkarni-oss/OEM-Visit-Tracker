@@ -2366,6 +2366,20 @@
       "notes": "IFKCC global MSME conclave.\nMet customers\n1. Saiveer Diecast\n2. Micro Polymer products",
       "nextVisitDate": null,
       "createdAt": "2026-05-30T11:21:33.400Z"
+    },
+    {
+      "id": "v_1780140235551",
+      "oemId": "oem_1780139966946",
+      "date": "2026-05-29",
+      "type": "visit",
+      "personMet": "",
+      "peopleMet": [],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "Cosmos Open House Abbigere\nMet customers\n1. Golden Eagle Technologies \n2. Chamundi precisions\n3. Deccan Prefab system\n4. Machinetech Industries\n5. Royal Plastic\n6. Kavya industries \n7. Aerospace customer",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-30T11:23:55.551Z"
     }
   ],
   "actions": [
