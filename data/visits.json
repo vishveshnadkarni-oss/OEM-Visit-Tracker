@@ -2297,6 +2297,61 @@
       "notes": "Spoke about special deal with Samsung. He said he will share cases of any. He was getting his cases rejected from Bajaj before. He was in touch with Kiran and Vishwanath.",
       "nextVisitDate": null,
       "createdAt": "2026-05-28T07:38:17.328Z"
+    },
+    {
+      "id": "v_1779953941794",
+      "oemId": "oem_1779953816329",
+      "date": "2026-05-28",
+      "type": "call",
+      "personMet": "Muthupandi",
+      "peopleMet": [
+        "Muthupandi"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [],
+      "notes": "He was in touch with Muthu before.\nHe will share cases to us from now on.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-28T07:39:01.794Z"
+    },
+    {
+      "id": "v_1780034881352",
+      "oemId": "oem_1778557584919",
+      "date": "2026-05-29",
+      "type": "call",
+      "personMet": "Rajesh Maharana",
+      "peopleMet": [
+        "Rajesh Maharana"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Contract Renewal",
+        "Did not answer phone"
+      ],
+      "notes": "Didn't answer phone.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-29T06:08:01.352Z"
+    },
+    {
+      "id": "v_1780139772339",
+      "oemId": "oem_1779456665466",
+      "date": "2026-05-29",
+      "type": "customer",
+      "personMet": "",
+      "peopleMet": [],
+      "visitLoc": "Bengaluru",
+      "topics": [
+        "Principal Moratorium",
+        "Leasing",
+        "Rate of Interest"
+      ],
+      "customTopics": [
+        "Hybrid Flexi"
+      ],
+      "notes": "Chamunda enterprise.",
+      "nextVisitDate": null,
+      "createdAt": "2026-05-30T11:16:12.339Z"
     }
   ],
   "actions": [
