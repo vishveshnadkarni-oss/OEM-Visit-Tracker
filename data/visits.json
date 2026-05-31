@@ -1591,18 +1591,15 @@
     },
     {
       "id": "v_1779344489867",
-      "oemId": "oem_1778408453736_b9a",
+      "oemId": "oem_1780139914103",
       "date": "2026-05-20",
       "type": "visit",
-      "personMet": "Chetan, Jayant",
-      "peopleMet": [
-        "Chetan",
-        "Jayant"
-      ],
+      "personMet": "",
+      "peopleMet": [],
       "visitLoc": "Bengaluru",
       "topics": [],
       "customTopics": [],
-      "notes": "Met at Deftech Bharat event 2026",
+      "notes": "Deftech Bharat event 2026.\n1. Upanal CNC\n2. BFW",
       "nextVisitDate": null,
       "createdAt": "2026-05-21T06:21:29.867Z"
     },
