@@ -2395,6 +2395,24 @@
       "notes": "",
       "nextVisitDate": null,
       "createdAt": "2026-06-01T10:16:24.418Z"
+    },
+    {
+      "id": "v_1780316454528",
+      "oemId": "oem_1778408453736_nyq",
+      "date": "2026-06-01",
+      "type": "call",
+      "personMet": "Vijaykumar Khurdagi",
+      "peopleMet": [
+        "Vijaykumar Khurdagi"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-06-01T12:20:54.528Z"
     }
   ],
   "actions": [
