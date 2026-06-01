@@ -2413,6 +2413,24 @@
       "notes": "",
       "nextVisitDate": null,
       "createdAt": "2026-06-01T12:20:54.528Z"
+    },
+    {
+      "id": "v_1780349403819",
+      "oemId": "oem_1779440163171",
+      "date": "2026-06-01",
+      "type": "call",
+      "personMet": "Ben Alummoottil",
+      "peopleMet": [
+        "Ben Alummoottil"
+      ],
+      "visitLoc": "",
+      "topics": [
+        "Leasing"
+      ],
+      "customTopics": [],
+      "notes": "He shared a lead for us to work on.",
+      "nextVisitDate": null,
+      "createdAt": "2026-06-01T21:30:03.819Z"
     }
   ],
   "actions": [
