@@ -2377,6 +2377,24 @@
       "notes": "Cosmos Open House Abbigere\nMet customers\n1. Golden Eagle Technologies \n2. Chamundi precisions\n3. Deccan Prefab system\n4. Machinetech Industries\n5. Royal Plastic\n6. Kavya industries \n7. Aerospace customer",
       "nextVisitDate": null,
       "createdAt": "2026-05-30T11:23:55.551Z"
+    },
+    {
+      "id": "v_1780308984418",
+      "oemId": "oem_1778408453736_vp9",
+      "date": "2026-06-01",
+      "type": "call",
+      "personMet": "Himanshu Shaparia",
+      "peopleMet": [
+        "Himanshu Shaparia"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-06-01T10:16:24.418Z"
     }
   ],
   "actions": [
