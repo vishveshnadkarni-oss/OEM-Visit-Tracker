@@ -2449,6 +2449,24 @@
       "notes": "Checked regarding 3cr customer update.",
       "nextVisitDate": null,
       "createdAt": "2026-06-02T09:15:47.549Z"
+    },
+    {
+      "id": "v_1780391785368",
+      "oemId": "oem_1778408453736_de4",
+      "date": "2026-06-02",
+      "type": "call",
+      "personMet": "Dastagiri",
+      "peopleMet": [
+        "Dastagiri"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-06-02T09:16:25.369Z"
     }
   ],
   "actions": [
