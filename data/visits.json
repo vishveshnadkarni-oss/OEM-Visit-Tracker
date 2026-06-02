@@ -2431,6 +2431,24 @@
       "notes": "He shared a lead for us to work on.",
       "nextVisitDate": null,
       "createdAt": "2026-06-01T21:30:03.819Z"
+    },
+    {
+      "id": "v_1780391747549",
+      "oemId": "oem_1778408453736_de4",
+      "date": "2026-06-02",
+      "type": "call",
+      "personMet": "Madhu Babu",
+      "peopleMet": [
+        "Madhu Babu"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Customer update"
+      ],
+      "notes": "Checked regarding 3cr customer update.",
+      "nextVisitDate": null,
+      "createdAt": "2026-06-02T09:15:47.549Z"
     }
   ],
   "actions": [
