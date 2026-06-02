@@ -2539,6 +2539,22 @@
       "notes": "He said he will review the notes added by our legal team",
       "nextVisitDate": null,
       "createdAt": "2026-06-02T09:21:08.264Z"
+    },
+    {
+      "id": "v_1780394119905",
+      "oemId": "oem_1779890222310",
+      "date": "2026-06-02",
+      "type": "call",
+      "personMet": "Saniyo",
+      "peopleMet": [
+        "Saniyo"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [],
+      "notes": "Sent calculation for a deal",
+      "nextVisitDate": null,
+      "createdAt": "2026-06-02T09:55:19.905Z"
     }
   ],
   "actions": [
