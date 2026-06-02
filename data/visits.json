@@ -2521,6 +2521,24 @@
       "notes": "He said cases are slow in Bangalore. We can meet next week",
       "nextVisitDate": null,
       "createdAt": "2026-06-02T09:19:59.955Z"
+    },
+    {
+      "id": "v_1780392068264",
+      "oemId": "oem_1778557584919",
+      "date": "2026-06-02",
+      "type": "call",
+      "personMet": "Shreedhara Murthy",
+      "peopleMet": [
+        "Shreedhara Murthy"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Contract Renewal"
+      ],
+      "notes": "He said he will review the notes added by our legal team",
+      "nextVisitDate": null,
+      "createdAt": "2026-06-02T09:21:08.264Z"
     }
   ],
   "actions": [
