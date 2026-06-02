@@ -2485,6 +2485,42 @@
       "notes": "",
       "nextVisitDate": null,
       "createdAt": "2026-06-02T09:18:00.149Z"
+    },
+    {
+      "id": "v_1780391925301",
+      "oemId": "oem_1779440163171",
+      "date": "2026-06-02",
+      "type": "call",
+      "personMet": "Ben Alummoottil",
+      "peopleMet": [
+        "Ben Alummoottil"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Case update"
+      ],
+      "notes": "Regarding Dr. Patil. Checked machine details.",
+      "nextVisitDate": null,
+      "createdAt": "2026-06-02T09:18:45.301Z"
+    },
+    {
+      "id": "v_1780391999955",
+      "oemId": "oem_1778408453736_nyq",
+      "date": "2026-06-02",
+      "type": "call",
+      "personMet": "Taru Khullar",
+      "peopleMet": [
+        "Taru Khullar"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Appointment"
+      ],
+      "notes": "He said cases are slow in Bangalore. We can meet next week",
+      "nextVisitDate": null,
+      "createdAt": "2026-06-02T09:19:59.955Z"
     }
   ],
   "actions": [
@@ -2584,6 +2620,13 @@
       "visitId": "v_1778759587855",
       "description": "Take appointment of Ashwin from siemens",
       "dueDate": "2026-05-15",
+      "status": "open"
+    },
+    {
+      "id": "a_1780391999959_e33",
+      "visitId": "v_1780391999955",
+      "description": "Meet tarun",
+      "dueDate": "2026-06-08",
       "status": "open"
     }
   ],
