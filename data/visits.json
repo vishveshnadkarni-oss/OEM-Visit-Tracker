@@ -2573,6 +2573,42 @@
       "notes": "Spoke about calculation of a case",
       "nextVisitDate": null,
       "createdAt": "2026-06-04T01:18:25.909Z"
+    },
+    {
+      "id": "v_1780535943792",
+      "oemId": "oem_1778557584919",
+      "date": "2026-06-03",
+      "type": "call",
+      "personMet": "Shreedhara Murthy",
+      "peopleMet": [
+        "Shreedhara Murthy"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "MOU"
+      ],
+      "notes": "Regarding MOU to be finalised on Friday",
+      "nextVisitDate": null,
+      "createdAt": "2026-06-04T01:19:03.792Z"
+    },
+    {
+      "id": "v_1780535977105",
+      "oemId": "oem_1778408453736_xci",
+      "date": "2026-06-04",
+      "type": "call",
+      "personMet": "Nadeem",
+      "peopleMet": [
+        "Nadeem"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-06-04T01:19:37.105Z"
     }
   ],
   "actions": [
