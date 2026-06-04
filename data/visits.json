@@ -2555,6 +2555,24 @@
       "notes": "Sent calculation for a deal",
       "nextVisitDate": null,
       "createdAt": "2026-06-02T09:55:19.905Z"
+    },
+    {
+      "id": "v_1780535905909",
+      "oemId": "oem_1779890222310",
+      "date": "2026-06-03",
+      "type": "call",
+      "personMet": "Saniyo",
+      "peopleMet": [
+        "Saniyo"
+      ],
+      "visitLoc": "",
+      "topics": [
+        "Leasing"
+      ],
+      "customTopics": [],
+      "notes": "Spoke about calculation of a case",
+      "nextVisitDate": null,
+      "createdAt": "2026-06-04T01:18:25.909Z"
     }
   ],
   "actions": [
