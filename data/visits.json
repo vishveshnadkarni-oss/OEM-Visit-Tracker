@@ -2593,6 +2593,24 @@
       "createdAt": "2026-06-04T01:19:03.792Z"
     },
     {
+      "id": "v_1780535998584",
+      "oemId": "oem_1778408453736_xci",
+      "date": "2026-06-03",
+      "type": "call",
+      "personMet": "Nadeem",
+      "peopleMet": [
+        "Nadeem"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-06-04T01:19:58.584Z"
+    },
+    {
       "id": "v_1780535977105",
       "oemId": "oem_1778408453736_xci",
       "date": "2026-06-04",
