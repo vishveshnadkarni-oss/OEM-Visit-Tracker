@@ -2627,6 +2627,20 @@
       "notes": "",
       "nextVisitDate": null,
       "createdAt": "2026-06-04T01:19:37.105Z"
+    },
+    {
+      "id": "v_1780682398818",
+      "oemId": "oem_1780139914103",
+      "date": "2026-06-05",
+      "type": "visit",
+      "personMet": "",
+      "peopleMet": [],
+      "visitLoc": "Coimbatore",
+      "topics": [],
+      "customTopics": [],
+      "notes": "OEM\n1. Yamazen - Suresh, Haraguchi, Narayanan\n2. BFW - Logesh\n3. GMT engineers - Dinse Matthew\n4. FFG - Selvi SK\n5. Wenzel - J Saravanan\n6. Mechinex - Gokul Karat\n7. Deneb - B Raghul\n8. Machine tools magazine - Balasubramaniam",
+      "nextVisitDate": null,
+      "createdAt": "2026-06-05T17:59:58.818Z"
     }
   ],
   "actions": [
