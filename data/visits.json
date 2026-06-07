@@ -2655,6 +2655,20 @@
       "notes": "OEM\n1. Vel Machines - Hari Prasath\n2. KTM - Vimal Kantaria\n3. LMW - Manjula\n\nCustomers\nFrom list..",
       "nextVisitDate": null,
       "createdAt": "2026-06-05T18:02:00.548Z"
+    },
+    {
+      "id": "v_1780809170143",
+      "oemId": "oem_1780139914103",
+      "date": "2026-06-06",
+      "type": "visit",
+      "personMet": "",
+      "peopleMet": [],
+      "visitLoc": "Coimbatore",
+      "topics": [],
+      "customTopics": [],
+      "notes": "INTEC\n1. VMT - Praveena\n2. Yamazen - Jayson Matthew\n3. Tsugami - Mukesh\n4. Cosmos - Nitin Naidu\n5. Makino - Periyasami",
+      "nextVisitDate": null,
+      "createdAt": "2026-06-07T05:12:50.143Z"
     }
   ],
   "actions": [
