@@ -2683,6 +2683,24 @@
       "notes": "INTEC\n1. Customers\n2. BFW\n3. Cosmos",
       "nextVisitDate": null,
       "createdAt": "2026-06-10T03:32:49.205Z"
+    },
+    {
+      "id": "v_1781062464235",
+      "oemId": "oem_1778408453736_nyq",
+      "date": "2026-06-09",
+      "type": "call",
+      "personMet": "Vijaykumar Khurdagi",
+      "peopleMet": [
+        "Vijaykumar Khurdagi"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Case update"
+      ],
+      "notes": "Checked regarding case of Genea fertility centre",
+      "nextVisitDate": null,
+      "createdAt": "2026-06-10T03:34:24.235Z"
     }
   ],
   "actions": [
