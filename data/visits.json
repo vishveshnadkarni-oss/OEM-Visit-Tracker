@@ -2721,6 +2721,42 @@
       "notes": "Spoke regarding leasing deal that we have received. And documents required for leasing onboarding",
       "nextVisitDate": null,
       "createdAt": "2026-06-10T03:36:32.899Z"
+    },
+    {
+      "id": "v_1781062638366",
+      "oemId": "oem_1778557584919",
+      "date": "2026-06-08",
+      "type": "call",
+      "personMet": "Rajesh Maharana",
+      "peopleMet": [
+        "Rajesh Maharana"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "MOU"
+      ],
+      "notes": "He said by Tuesday eod he will send the MOU",
+      "nextVisitDate": null,
+      "createdAt": "2026-06-10T03:37:18.366Z"
+    },
+    {
+      "id": "v_1781062721635",
+      "oemId": "oem_1779440163171",
+      "date": "2026-06-09",
+      "type": "visit",
+      "personMet": "Ben Alummoottil",
+      "peopleMet": [
+        "Ben Alummoottil"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Case update"
+      ],
+      "notes": "Told him we can't do the case since machine was old.",
+      "nextVisitDate": null,
+      "createdAt": "2026-06-10T03:38:41.635Z"
     }
   ],
   "actions": [
