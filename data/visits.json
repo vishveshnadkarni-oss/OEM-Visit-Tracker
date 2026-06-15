@@ -2763,9 +2763,12 @@
       "oemId": "oem_1778408453736_441",
       "date": "2026-06-15",
       "type": "call",
-      "personMet": "Jeyaprakash",
+      "personMet": "Jeyaprakash, Lakshmi Prasad, Chockhlingam, Karuppa Chetty",
       "peopleMet": [
-        "Jeyaprakash"
+        "Jeyaprakash",
+        "Lakshmi Prasad",
+        "Chockhlingam",
+        "Karuppa Chetty"
       ],
       "visitLoc": "",
       "topics": [],
