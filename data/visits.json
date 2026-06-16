@@ -2885,6 +2885,38 @@
       "notes": "",
       "nextVisitDate": null,
       "createdAt": "2026-06-16T07:43:35.566Z"
+    },
+    {
+      "id": "v_1781602047398",
+      "oemId": "oem_1778408453736_b9a",
+      "date": "2026-06-16",
+      "type": "call",
+      "personMet": "Harsha (Philips)",
+      "peopleMet": [
+        "Harsha (Philips)"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-06-16T09:27:27.398Z"
+    },
+    {
+      "id": "v_1781602176034",
+      "oemId": "oem_1778408453736_b9a",
+      "date": "2026-06-16",
+      "type": "call",
+      "personMet": "",
+      "peopleMet": [],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-06-16T09:29:36.034Z"
     }
   ],
   "actions": [
