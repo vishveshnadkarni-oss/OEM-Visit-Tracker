@@ -2778,6 +2778,22 @@
       "notes": "",
       "nextVisitDate": null,
       "createdAt": "2026-06-15T12:01:09.929Z"
+    },
+    {
+      "id": "v_1781593098553",
+      "oemId": "oem_1778408453736_xci",
+      "date": "2026-06-16",
+      "type": "visit",
+      "personMet": "Kishore",
+      "peopleMet": [
+        "Kishore"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "Send him a 1 pager of all our benefits documents required. Roi, schemes, contact number, pf, leasing,",
+      "nextVisitDate": null,
+      "createdAt": "2026-06-16T06:58:18.553Z"
     }
   ],
   "actions": [
