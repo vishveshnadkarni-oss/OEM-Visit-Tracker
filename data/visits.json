@@ -2831,6 +2831,24 @@
       "notes": "",
       "nextVisitDate": null,
       "createdAt": "2026-06-16T07:34:45.114Z"
+    },
+    {
+      "id": "v_1781595514609",
+      "oemId": "oem_1778408453736_73u",
+      "date": "2026-06-16",
+      "type": "call",
+      "personMet": "Sandeep",
+      "peopleMet": [
+        "Sandeep"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Customer update"
+      ],
+      "notes": "Halamanee",
+      "nextVisitDate": null,
+      "createdAt": "2026-06-16T07:38:34.609Z"
     }
   ],
   "actions": [
