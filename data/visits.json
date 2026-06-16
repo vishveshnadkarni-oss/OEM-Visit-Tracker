@@ -2810,6 +2810,27 @@
       "notes": "Tried to meet Jagadeesh",
       "nextVisitDate": null,
       "createdAt": "2026-06-16T07:09:44.392Z"
+    },
+    {
+      "id": "v_1781595285114",
+      "oemId": "oem_1778408453736_38x",
+      "date": "2026-06-16",
+      "type": "call",
+      "personMet": "Debasish",
+      "peopleMet": [
+        "Debasish"
+      ],
+      "visitLoc": "",
+      "topics": [
+        "Startups",
+        "Leasing"
+      ],
+      "customTopics": [
+        "MOU"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-06-16T07:34:45.114Z"
     }
   ],
   "actions": [
