@@ -2794,6 +2794,22 @@
       "notes": "Send him a 1 pager of all our benefits documents required. Roi, schemes, contact number, pf, leasing,",
       "nextVisitDate": null,
       "createdAt": "2026-06-16T06:58:18.553Z"
+    },
+    {
+      "id": "v_1781593784392",
+      "oemId": "oem_1778408453736_vp9",
+      "date": "2026-06-16",
+      "type": "visit",
+      "personMet": "NOIO",
+      "peopleMet": [
+        "NOIO"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "Tried to meet Jagadeesh",
+      "nextVisitDate": null,
+      "createdAt": "2026-06-16T07:09:44.392Z"
     }
   ],
   "actions": [
