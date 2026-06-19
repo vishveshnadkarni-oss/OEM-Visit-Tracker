@@ -3064,6 +3064,25 @@
       "notes": "Gave one lead.",
       "nextVisitDate": null,
       "createdAt": "2026-06-19T11:38:53.188Z"
+    },
+    {
+      "id": "v_1781869416292",
+      "oemId": "oem_1778818312939",
+      "date": "2026-06-18",
+      "type": "call",
+      "personMet": "Kumar",
+      "peopleMet": [
+        "Kumar"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Case update",
+        "Appointment"
+      ],
+      "notes": "Sanyal met. He gave 2 leads.",
+      "nextVisitDate": null,
+      "createdAt": "2026-06-19T11:43:36.292Z"
     }
   ],
   "actions": [
