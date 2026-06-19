@@ -2979,7 +2979,7 @@
       "visitId": "v_1778818777991",
       "description": "Send email to Naveen mahadevan for Collab for new machine launches",
       "dueDate": "2026-05-15",
-      "status": "open"
+      "status": "closed"
     },
     {
       "id": "a_1778864882288_1j2",
@@ -3000,7 +3000,7 @@
       "visitId": "v_1779103052267",
       "description": "Meet dhanush kodi on a Wednesday 2nd week of June",
       "dueDate": "2026-06-10",
-      "status": "open"
+      "status": "closed"
     },
     {
       "id": "a_1779103381577_h3r",
