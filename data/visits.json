@@ -2991,6 +2991,60 @@
       "notes": "",
       "nextVisitDate": null,
       "createdAt": "2026-06-19T11:33:35.523Z"
+    },
+    {
+      "id": "v_1781868888585",
+      "oemId": "oem_1778408453736_lkn",
+      "date": "2026-06-18",
+      "type": "call",
+      "personMet": "Ganeshan",
+      "peopleMet": [
+        "Ganeshan"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Case update"
+      ],
+      "notes": "Sent calculation",
+      "nextVisitDate": null,
+      "createdAt": "2026-06-19T11:34:48.585Z"
+    },
+    {
+      "id": "v_1781868911432",
+      "oemId": "oem_1778408453736_lkn",
+      "date": "2026-06-18",
+      "type": "call",
+      "personMet": "Venugopal",
+      "peopleMet": [
+        "Venugopal"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Customer update"
+      ],
+      "notes": "Gave a lead",
+      "nextVisitDate": null,
+      "createdAt": "2026-06-19T11:35:11.432Z"
+    },
+    {
+      "id": "v_1781868956946",
+      "oemId": "oem_1778408453736_nyq",
+      "date": "2026-06-19",
+      "type": "visit",
+      "personMet": "Vijaykumar Khurdagi",
+      "peopleMet": [
+        "Vijaykumar Khurdagi"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [
+        "Customer update"
+      ],
+      "notes": "Received 2 leads. Took update on Genea",
+      "nextVisitDate": null,
+      "createdAt": "2026-06-19T11:35:56.946Z"
     }
   ],
   "actions": [
