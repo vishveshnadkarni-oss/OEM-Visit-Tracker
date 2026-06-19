@@ -2957,6 +2957,40 @@
       "notes": "",
       "nextVisitDate": null,
       "createdAt": "2026-06-19T11:31:42.911Z"
+    },
+    {
+      "id": "v_1781868784028",
+      "oemId": "oem_1778408453736_nbf",
+      "date": "2026-06-19",
+      "type": "visit",
+      "personMet": "NOIO",
+      "peopleMet": [
+        "NOIO"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "The Administrative head suggested to come on Saturday.",
+      "nextVisitDate": null,
+      "createdAt": "2026-06-19T11:33:04.028Z"
+    },
+    {
+      "id": "v_1781868815523",
+      "oemId": "oem_1778408453736_xci",
+      "date": "2026-06-19",
+      "type": "call",
+      "personMet": "Milind Navale",
+      "peopleMet": [
+        "Milind Navale"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-06-19T11:33:35.523Z"
     }
   ],
   "actions": [
