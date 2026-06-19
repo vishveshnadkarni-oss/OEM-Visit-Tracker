@@ -2937,6 +2937,26 @@
       "notes": "",
       "nextVisitDate": null,
       "createdAt": "2026-06-16T10:03:23.647Z"
+    },
+    {
+      "id": "v_1781868702911",
+      "oemId": "oem_1778408453736_de4",
+      "date": "2026-06-19",
+      "type": "call",
+      "personMet": "Madhu P, Abhinav Dhawan, Madhu Babu",
+      "peopleMet": [
+        "Madhu P",
+        "Abhinav Dhawan",
+        "Madhu Babu"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-06-19T11:31:42.911Z"
     }
   ],
   "actions": [
@@ -2987,14 +3007,14 @@
       "visitId": "v_1779103381577",
       "description": "Mtske appointment for meeting Prashant Kulkarni VEL",
       "dueDate": "2026-05-20",
-      "status": "open"
+      "status": "closed"
     },
     {
       "id": "a_1779106366801_hhv",
       "visitId": "v_1779106366800",
       "description": "Meet Shreyas sontake",
       "dueDate": "2026-06-08",
-      "status": "open"
+      "status": "closed"
     },
     {
       "id": "a_1779440034092_eby",
