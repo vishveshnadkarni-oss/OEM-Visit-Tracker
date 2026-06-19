@@ -3031,7 +3031,7 @@
     {
       "id": "v_1781868956946",
       "oemId": "oem_1778408453736_nyq",
-      "date": "2026-06-19",
+      "date": "2026-06-18",
       "type": "visit",
       "personMet": "Vijaykumar Khurdagi",
       "peopleMet": [
@@ -3045,6 +3045,25 @@
       "notes": "Received 2 leads. Took update on Genea",
       "nextVisitDate": null,
       "createdAt": "2026-06-19T11:35:56.946Z"
+    },
+    {
+      "id": "v_1781869133188",
+      "oemId": "oem_1778408453736_441",
+      "date": "2026-06-18",
+      "type": "call",
+      "personMet": "Satish Mestha, Lakshmisha",
+      "peopleMet": [
+        "Satish Mestha",
+        "Lakshmisha"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Customer update"
+      ],
+      "notes": "Gave one lead.",
+      "nextVisitDate": null,
+      "createdAt": "2026-06-19T11:38:53.188Z"
     }
   ],
   "actions": [
