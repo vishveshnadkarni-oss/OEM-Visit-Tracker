@@ -12,25 +12,24 @@
     "locations": [
       {
         "city": "Bengaluru",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       },
       {
         "city": "Chennai",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       },
       {
         "city": "Coimbatore",
-        "address": ""
+        "address": "",
+        "lat": "",
+        "lng": ""
       }
     ],
     "contacts": [
-      {
-        "name": "Balaji Nayaka",
-        "phone": "9606843670",
-        "position": "Sales Head",
-        "location": "Bengaluru",
-        "note": ""
-      },
       {
         "name": "Mugeshwaran",
         "phone": "9035607230",
@@ -50,7 +49,7 @@
         "phone": "9606874068",
         "position": "Head",
         "location": "Bengaluru",
-        "note": ""
+        "note": "Distributes leads. Ex Siemens."
       },
       {
         "name": "Blesiyas D'Souza",
