@@ -3083,6 +3083,22 @@
       "notes": "Sanyal met. He gave 2 leads.",
       "nextVisitDate": null,
       "createdAt": "2026-06-19T11:43:36.292Z"
+    },
+    {
+      "id": "v_1782125036985",
+      "oemId": "oem_1778408453736_xci",
+      "date": "2026-06-22",
+      "type": "visit",
+      "personMet": "NOIO",
+      "peopleMet": [
+        "NOIO"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "Went to inquire about cosmos open house",
+      "nextVisitDate": null,
+      "createdAt": "2026-06-22T10:43:56.985Z"
     }
   ],
   "actions": [
