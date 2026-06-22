@@ -3099,6 +3099,22 @@
       "notes": "Went to inquire about cosmos open house",
       "nextVisitDate": null,
       "createdAt": "2026-06-22T10:43:56.985Z"
+    },
+    {
+      "id": "v_1782125262668",
+      "oemId": "oem_1778408453736_5wv",
+      "date": "2026-06-22",
+      "type": "visit",
+      "personMet": "NOIO",
+      "peopleMet": [
+        "NOIO"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [],
+      "customTopics": [],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-06-22T10:47:42.668Z"
     }
   ],
   "actions": [
