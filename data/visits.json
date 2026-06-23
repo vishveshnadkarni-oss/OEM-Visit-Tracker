@@ -3137,6 +3137,42 @@
       "notes": "She asked to meet Mr. Subramanyam in July..\nMeet with manjunath whi replaced balaji nayak",
       "nextVisitDate": null,
       "createdAt": "2026-06-22T11:12:49.418Z"
+    },
+    {
+      "id": "v_1782192314102",
+      "oemId": "oem_1778408453736_nyq",
+      "date": "2026-06-23",
+      "type": "call",
+      "personMet": "Vijaykumar Khurdagi",
+      "peopleMet": [
+        "Vijaykumar Khurdagi"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Customer update"
+      ],
+      "notes": "About Genea. He said customer is waiting for PNDT",
+      "nextVisitDate": null,
+      "createdAt": "2026-06-23T05:25:14.102Z"
+    },
+    {
+      "id": "v_1782192333389",
+      "oemId": "oem_1778408453736_nyq",
+      "date": "2026-06-23",
+      "type": "call",
+      "personMet": "Yamini",
+      "peopleMet": [
+        "Yamini"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-06-23T05:25:33.389Z"
     }
   ],
   "actions": [
