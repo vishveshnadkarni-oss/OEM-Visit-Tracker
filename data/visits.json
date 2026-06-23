@@ -3173,6 +3173,24 @@
       "notes": "",
       "nextVisitDate": null,
       "createdAt": "2026-06-23T05:25:33.389Z"
+    },
+    {
+      "id": "v_1782192822384",
+      "oemId": "oem_1778818312939",
+      "date": "2026-06-22",
+      "type": "call",
+      "personMet": "Kumar",
+      "peopleMet": [
+        "Kumar"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "MOU"
+      ],
+      "notes": "Gave number of Mr. Arun from Chennai",
+      "nextVisitDate": null,
+      "createdAt": "2026-06-23T05:33:42.384Z"
     }
   ],
   "actions": [
