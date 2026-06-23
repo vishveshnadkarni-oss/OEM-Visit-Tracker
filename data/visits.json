@@ -3227,6 +3227,24 @@
       "notes": "",
       "nextVisitDate": null,
       "createdAt": "2026-06-23T06:17:58.328Z"
+    },
+    {
+      "id": "v_1782195911916",
+      "oemId": "oem_1778408453736_441",
+      "date": "2026-06-23",
+      "type": "call",
+      "personMet": "Srivatsa",
+      "peopleMet": [
+        "Srivatsa"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "Wanted to ask about Balaji Nayaka",
+      "nextVisitDate": null,
+      "createdAt": "2026-06-23T06:25:11.917Z"
     }
   ],
   "actions": [
