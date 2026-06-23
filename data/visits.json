@@ -3191,6 +3191,24 @@
       "notes": "Gave number of Mr. Arun from Chennai",
       "nextVisitDate": null,
       "createdAt": "2026-06-23T05:33:42.384Z"
+    },
+    {
+      "id": "v_1782195170520",
+      "oemId": "oem_1778408453736_mjc",
+      "date": "2026-06-22",
+      "type": "call",
+      "personMet": "Khalid",
+      "peopleMet": [
+        "Khalid"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Appointment"
+      ],
+      "notes": "He wants to speak with Ankit.",
+      "nextVisitDate": null,
+      "createdAt": "2026-06-23T06:12:50.520Z"
     }
   ],
   "actions": [
