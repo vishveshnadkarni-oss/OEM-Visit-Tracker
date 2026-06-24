@@ -3245,6 +3245,43 @@
       "notes": "Wanted to ask about Balaji Nayaka",
       "nextVisitDate": null,
       "createdAt": "2026-06-23T06:25:11.917Z"
+    },
+    {
+      "id": "v_1782195939372",
+      "oemId": "oem_1778408453736_cc9",
+      "date": "2026-06-23",
+      "type": "call",
+      "personMet": "Anil",
+      "peopleMet": [
+        "Anil"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Appointment",
+        "Asked for leads"
+      ],
+      "notes": "He is usually at customers place.",
+      "nextVisitDate": null,
+      "createdAt": "2026-06-23T06:25:39.372Z"
+    },
+    {
+      "id": "v_1782303323010",
+      "oemId": "oem_1778408453736_de4",
+      "date": "2026-06-24",
+      "type": "call",
+      "personMet": "Abhinav Dhawan",
+      "peopleMet": [
+        "Abhinav Dhawan"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-06-24T12:15:23.010Z"
     }
   ],
   "actions": [
@@ -3344,7 +3381,7 @@
       "visitId": "v_1778759587855",
       "description": "Take appointment of Ashwin from siemens",
       "dueDate": "2026-05-15",
-      "status": "open"
+      "status": "closed"
     },
     {
       "id": "a_1780391999959_e33",
