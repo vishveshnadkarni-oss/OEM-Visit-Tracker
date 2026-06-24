@@ -3282,6 +3282,25 @@
       "notes": "",
       "nextVisitDate": null,
       "createdAt": "2026-06-24T12:15:23.010Z"
+    },
+    {
+      "id": "v_1782303347084",
+      "oemId": "oem_1779890222310",
+      "date": "2026-06-24",
+      "type": "call",
+      "personMet": "Saniyo",
+      "peopleMet": [
+        "Saniyo"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Case update",
+        "Asked for leads"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-06-24T12:15:47.084Z"
     }
   ],
   "actions": [
