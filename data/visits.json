@@ -3301,6 +3301,42 @@
       "notes": "",
       "nextVisitDate": null,
       "createdAt": "2026-06-24T12:15:47.084Z"
+    },
+    {
+      "id": "v_1782303448094",
+      "oemId": "oem_1778408453736_441",
+      "date": "2026-06-23",
+      "type": "call",
+      "personMet": "Soni Hemantkumar",
+      "peopleMet": [
+        "Soni Hemantkumar"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Did not answer phone"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-06-24T12:17:28.094Z"
+    },
+    {
+      "id": "v_1782723986339",
+      "oemId": "oem_1778408453736_vp9",
+      "date": "2026-06-26",
+      "type": "call",
+      "personMet": "Jagadeesh Patil",
+      "peopleMet": [
+        "Jagadeesh Patil"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Customer update"
+      ],
+      "notes": "Spoke about customer.",
+      "nextVisitDate": null,
+      "createdAt": "2026-06-29T09:06:26.339Z"
     }
   ],
   "actions": [
