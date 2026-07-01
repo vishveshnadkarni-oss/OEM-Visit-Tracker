@@ -3375,6 +3375,25 @@
       "notes": "Bommasandra Customer visit with Sanyal. Packaging customer (Take name from Sanyal)",
       "nextVisitDate": null,
       "createdAt": "2026-07-01T05:56:37.740Z"
+    },
+    {
+      "id": "v_1782909746699",
+      "oemId": "oem_1778408453736_5wv",
+      "date": "2026-07-01",
+      "type": "call",
+      "personMet": "Suchith, Abhilasha",
+      "peopleMet": [
+        "Suchith",
+        "Abhilasha"
+      ],
+      "visitLoc": "",
+      "topics": [],
+      "customTopics": [
+        "Customer update"
+      ],
+      "notes": "Tried to take number of Deno manufacturing solutions.",
+      "nextVisitDate": null,
+      "createdAt": "2026-07-01T12:42:26.699Z"
     }
   ],
   "actions": [
