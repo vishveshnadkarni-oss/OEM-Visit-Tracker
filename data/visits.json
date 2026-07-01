@@ -3358,6 +3358,23 @@
       "notes": "",
       "nextVisitDate": null,
       "createdAt": "2026-07-01T05:53:39.622Z"
+    },
+    {
+      "id": "v_1782885397740",
+      "oemId": "oem_1779456665466",
+      "date": "2026-06-30",
+      "type": "customer",
+      "personMet": "",
+      "peopleMet": [],
+      "visitLoc": "Bengaluru",
+      "topics": [
+        "Rate of Interest",
+        "Leasing"
+      ],
+      "customTopics": [],
+      "notes": "Bommasandra Customer visit with Sanyal. Packaging customer (Take name from Sanyal)",
+      "nextVisitDate": null,
+      "createdAt": "2026-07-01T05:56:37.740Z"
     }
   ],
   "actions": [
