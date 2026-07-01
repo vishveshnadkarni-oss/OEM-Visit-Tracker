@@ -3337,6 +3337,27 @@
       "notes": "Spoke about customer.",
       "nextVisitDate": null,
       "createdAt": "2026-06-29T09:06:26.339Z"
+    },
+    {
+      "id": "v_1782885219622",
+      "oemId": "oem_1778408453736_xci",
+      "date": "2026-06-30",
+      "type": "visit",
+      "personMet": "Praveen Kumar",
+      "peopleMet": [
+        "Praveen Kumar"
+      ],
+      "visitLoc": "Bengaluru",
+      "topics": [
+        "Rate of Interest"
+      ],
+      "customTopics": [
+        "Asked for leads",
+        "Hybrid Flexi"
+      ],
+      "notes": "",
+      "nextVisitDate": null,
+      "createdAt": "2026-07-01T05:53:39.622Z"
     }
   ],
   "actions": [
